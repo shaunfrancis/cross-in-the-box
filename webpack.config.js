@@ -7,7 +7,7 @@ module.exports = {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist')
     },
-    plugins: [new HtmlWebpackPlugin({ template: "index.html" })],
+    plugins: [new HtmlWebpackPlugin({ template: "index.html", base: "/" })],
     module: {
         rules: [
             {
@@ -23,6 +23,6 @@ module.exports = {
         extensions: ['.js', '.jsx', '.ts', '.tsx']
     },
     devServer: {
-        historyApiFallback: true
+        historyApiFallback: true,
     }
 };
