@@ -4,6 +4,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Root from "./routes/Root";
 import UK from "./routes/UK";
+import UKGeneralElections from "./routes/UK/UKGeneralElections";
+
+import './style.css';
 
 const router = createBrowserRouter([
     {
@@ -15,7 +18,7 @@ const router = createBrowserRouter([
                 children: [
                     {
                         path: "general-elections",
-                        element: <div>General Elections</div>
+                        element: <UKGeneralElections />
                     },
                     {
                         path: "scottish-parliament-elections",
