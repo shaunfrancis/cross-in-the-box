@@ -1,8 +1,29 @@
+@import url(https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap);
 #Qp5xkmMJGKUSGJdCNCHD{
-    background:blue;
+    background:orange;
+}
+
+#Qp5xkmMJGKUSGJdCNCHD nav ul{
+    margin:0;
+}
+
+#Qp5xkmMJGKUSGJdCNCHD nav li{
+    display:inline-block;
+}
+.eVXPgZhNJQGcxEckQL0G{
+    background:aliceblue;
+}
+
+.RudbMMOPiUkvTJwRC7q1{
+    background:green;
+}
+
+.kqI8tIrIp9strFF0nvi7{
+    background:pink;
 }
 body{
     margin:0;
     padding:0;
     background: rgb(240,241,243);
+    font-family: "Oswald", sans-serif;
 }

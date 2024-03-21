@@ -7,9 +7,10 @@
     if(!in_array($country, $accepted_countries)) fail();
     $results_table = $country . "_results";
     $regions_table = $country . "_regions";
+    $parties_table = $country . "_parties";
     
     try{
-        $results_stmt = $pdo -> prepare("SELECT region_id, party, candidate, votes, elected FROM $results_table WHERE election_id = :election");
+        $results_stmt = $pdo -> prepare("SELECT region_id as id, party, candidate, votes, elected FROM $results_table WHERE election_id = :election");
         $results_success = $results_stmt -> execute([':election' => $election]);
         if($results_success) $election_results = $results_stmt -> fetchAll(PDO::FETCH_ASSOC);
         else fail(400, "Bad request");
@@ -19,7 +20,16 @@
         if($regions_success) $regions = $regions_stmt -> fetchAll(PDO::FETCH_ASSOC);
         else fail(400, "Bad request");
 
-        echo json_encode(array( "regions" => $regions, "results" => $election_results ));
+        $parties_stmt = $pdo -> prepare("SELECT DISTINCT parties.id, parties.title, parties.color FROM $parties_table as parties JOIN $results_table as results ON results.party = parties.id WHERE results.election_id = :election");
+        $parties_success = $parties_stmt -> execute([':election' => $election]);
+        if($parties_success) $parties = $parties_stmt -> fetchAll(PDO::FETCH_ASSOC);
+        else fail(400, "Bad request");
+
+        foreach($parties as &$party){
+            if(!isset($party['color'])) unset($party['color']);
+        }
+
+        echo json_encode(array( "regions" => $regions, "results" => $election_results, "parties" => $parties ), JSON_NUMERIC_CHECK);
     }
     catch(Exception $error){ fail(500, "Internal server error"); }
 ?>
