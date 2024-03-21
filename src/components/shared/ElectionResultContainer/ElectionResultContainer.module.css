@@ -1,0 +1,11 @@
+.election-container{
+    background:aliceblue;
+}
+
+.election-messages-container{
+    background:green;
+}
+
+.election-results-container{
+    background:pink;
+}

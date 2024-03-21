@@ -1,3 +1,11 @@
 #header{
-    background:blue;
+    background:orange;
+}
+
+#header nav ul{
+    margin:0;
+}
+
+#header nav li{
+    display:inline-block;
 }

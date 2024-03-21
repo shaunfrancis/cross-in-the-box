@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, redirect } from "react-router-dom";
 
 import Root from "./routes/Root";
 import UK from "./routes/UK";
@@ -16,6 +16,10 @@ const router = createBrowserRouter([
                 path: "/uk",
                 element: <UK />,
                 children: [
+                    {
+                        index: true,
+                        loader: async() => redirect("general-elections")
+                    },
                     {
                         path: "general-elections",
                         element: <UKGeneralElections />

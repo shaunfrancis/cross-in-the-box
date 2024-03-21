@@ -1,7 +1,11 @@
+import UKElectionResultContainer from "./UKElectionResultContainer/UKElectionResultContainer";
+
 export default function UKElectionResultsSection(){
     return (
         <section>
-            <p>UK Election Results Section!</p>
+            <UKElectionResultContainer election="2019" />
+            <UKElectionResultContainer election="2017" />
+            <UKElectionResultContainer election="2015" />
         </section>
     )
 }
