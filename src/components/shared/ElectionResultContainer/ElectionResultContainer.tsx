@@ -1,7 +1,7 @@
 import styles from './ElectionResultContainer.module.css';
 
 export default function ElectionResultContainer( 
-    { dimensions, map } : { dimensions: {w:string,h:string,minW:string,minH:string}, map: React.ReactNode }
+    { dimensions, map, children } : { dimensions: {w:string,h:string,minW:string,minH:string}, map: React.ReactNode, children: React.ReactNode }
 ){
     return (
         <div className={styles["election-container"]}>
@@ -16,6 +16,7 @@ export default function ElectionResultContainer(
                     {map}
                 </div>
             </div>
+            {children}
         </div>
     )
 }
