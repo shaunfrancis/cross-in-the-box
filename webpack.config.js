@@ -31,6 +31,12 @@ var config = {
     },
     devServer: {
         historyApiFallback: true,
+        proxy: [
+            {
+                context: ['/api'],
+                target: 'http://localhost:8888/elections'
+            }
+        ]
     }
 };
 
