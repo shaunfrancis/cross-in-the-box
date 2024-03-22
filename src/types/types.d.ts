@@ -13,6 +13,8 @@ export interface Result {
 
 export interface Party {
     id: string,
+    displayId?: string,
     title: string,
-    color?: string
+    color?: string,
+    textColor?: string
 }

@@ -1,3 +1,4 @@
+import { DefaultParty } from '../../../constants/constants';
 import { Party, Result } from '../../../types/types';
 import styles from './PopupBarGraph.module.css';
 
@@ -11,23 +12,24 @@ export default function PopupBarGraph( { results, parties } : { results : Result
             {
                 results.map( result => {
                     const percentage = (100 * result.votes / totalVotes).toFixed(2);
-                    const color = parties.find( party => party.id == result.party )?.color || "#AAA";
+                    const party = parties.find( party => party.id == result.party ) || DefaultParty;
+                    const bgColor = party.color || "#AAA";
 
                     return (
                         <div className={styles["bar-graph-row"]}>
 
-                            <div className={styles["bar-graph-party"] + " " + styles["bar-graph-bloc"]} style={{background: color}}>
-                                {result.party.toUpperCase()}
+                            <div className={styles["bar-graph-party"] + " " + styles["bar-graph-bloc"]} style={{background: bgColor, color: party.textColor}}>
+                                {party.displayId || party.id}
                             </div>
 
-                            <div className={styles["bar-graph-percentage"] + " " + styles["bar-graph-bloc"]} style={{background: color}}>
+                            <div className={styles["bar-graph-percentage"] + " " + styles["bar-graph-bloc"]} style={{background: bgColor, color: party.textColor}}>
                                 {percentage}%
                             </div>
 
                             <div className={styles["bar-graph-bar-container"]}>
                                 <div 
                                     className={styles["bar-graph-bar"] + " " + styles["bar-graph-bloc"]}
-                                    style={{background: color, width: percentage + "%"}}
+                                    style={{background: bgColor, width: percentage + "%"}}
                                 ></div>
                             </div>
 

@@ -8,11 +8,12 @@ import PopupBarGraph from "../../../shared/PopupBarGraph/PopupBarGraph";
 import ElectionSummaryBlocs from "../../../shared/ElectionSummaryBlocs/ElectionSummaryBlocs";
 
 export default function UKElectionResultContainer( 
-    { election, title = {title: election, subtitle: ["General","Election"]}, summaryBlocHoverState } : 
+    { election, title = {title: election, subtitle: ["General","Election"]}, summaryBlocHoverState, messages } : 
     { 
         election : string, 
         title? : {title : string, subtitle : string[]},
-        summaryBlocHoverState? : [boolean, React.Dispatch<React.SetStateAction<boolean>>]
+        summaryBlocHoverState? : [boolean, React.Dispatch<React.SetStateAction<boolean>>],
+        messages? : boolean
     }
 ){
 
@@ -34,6 +35,10 @@ export default function UKElectionResultContainer(
             });
             setFills(newFills);
 
+            data.parties.forEach( party => {
+                party.displayId = ["speaker","vacant"].includes(party.id) ? party.id.charAt(0).toUpperCase() + party.id.slice(1) : party.id.toUpperCase();
+            });
+
         };
         getResults();
     }, []);
@@ -46,34 +51,43 @@ export default function UKElectionResultContainer(
     };
     const map = () => {
         switch(election){
-            case "2019": case "2017": case "2015":
+            case "2019": case "2017": case "2015": case "2010":
                 return <UKGeneral2010Map hoverFun={mapHoverFun} fills={fills} />;
         }
     };
 
     const popupContent = (id? : string) => {
         const region = data.regions.find( region => region.id == id );
+        if(!region) return <h3>Missing data</h3>;
+        
         const results = data.results.filter( result => result.id == id ).sort( (a,b) => b.votes - a.votes );
         const parties = data.parties.filter( party => results.map( r => r.party ).includes(party.id) );
-
-        if(!region) return <h3>Missing data</h3>;
+        const winner = results.find(r => r.elected)?.candidate || "Missing data";
         
         return ( <>
             <h3>{region.title}</h3>
+            <h4>{winner}</h4>
             <PopupBarGraph results={results} parties={parties} />
         </> )
     }
 
     const electionSummaryBlocs = () => {
-        const summaries : {party : string, count : number, color? : string}[] = [];
+        const summaries : {party : Party, count : number}[] = [];
         data.results.filter( r => r.elected ).forEach( result => {
-            if(!summaries.find( s => s.party == result.party)){
+
+            if(!summaries.find( s => s.party.id == result.party)){
                 const party : Party = data.parties.find( p => p.id == result.party ) || DefaultParty;
-                summaries.push({ party: result.party, count: 1, color: party.color });
+                summaries.push({ party: party, count: 1 });
             }
-            else summaries.find( s => s.party == result.party )!.count++;
+            else summaries.find( s => s.party.id == result.party )!.count++;
+
         });
-        summaries.sort( (a,b) => b.count - a.count );
+        summaries.sort( (a,b) => {
+            const getCount = (x:{party: Party, count: number}) => {
+                return (["vacant","speaker","ind"].includes(x.party.id)) ? -Infinity : x.count;
+            }
+            return getCount(b) - getCount(a) || a.party.id.localeCompare(b.party.id);
+         } );
 
         return (
             <ElectionSummaryBlocs data={summaries} rowLength={5} hoverState={summaryBlocHoverState} />
@@ -81,7 +95,7 @@ export default function UKElectionResultContainer(
     }
 
     return ( <>
-        <ElectionResultContainer dimensions={dimensions} map={map()} title={title} summary={electionSummaryBlocs()}>
+        <ElectionResultContainer dimensions={dimensions} messages={messages} map={map()} title={title} summary={electionSummaryBlocs()}>
             <HoverPopup visible={popupState.visible} coordinates={popupState.coordinates}>
                 {popupContent(popupState.id)}
             </HoverPopup>

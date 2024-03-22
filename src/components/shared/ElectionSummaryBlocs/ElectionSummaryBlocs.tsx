@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import styles from './ElectionSummaryBlocs.module.css';
+import { Party } from '../../../types/types';
 
 export default function ElectionSummaryBlocs( 
     { data, rowLength, hoverState } : 
     { 
-        data : {party : string, count : number, color? : string}[], 
+        data : {party : Party, count : number}[], 
         rowLength : number, 
         hoverState? : [boolean, React.Dispatch<React.SetStateAction<boolean>>]
     }
@@ -29,7 +30,7 @@ export default function ElectionSummaryBlocs(
 
             if(i == 0 && j == 4){
                 blocs.push(
-                    <div 
+                    <div key={-1}
                         className={styles["summary-bloc"] + " " + styles["other-bloc"]}
                         onMouseOver={() => {setHover(true)}}
                         onMouseOut={() => {setHover(false)}}
@@ -41,8 +42,8 @@ export default function ElectionSummaryBlocs(
             }
             else{
                 blocs.push(
-                    <div className={styles["summary-bloc"]} style={{background: data[position].color}}>
-                        <span className={styles["summary-bloc-party"]}>{data[position].party.toUpperCase()}</span>
+                    <div key={position} className={styles["summary-bloc"]} style={{background: data[position].party.color || "#AAA", color: data[position].party.textColor}}>
+                        <span className={styles["summary-bloc-party"]}>{data[position].party.displayId || data[position].party.id}</span>
                         <span className={styles["summary-bloc-count"]}>{data[position].count}</span>
                     </div>
                 );
@@ -50,7 +51,7 @@ export default function ElectionSummaryBlocs(
         }
 
         rows.push(
-            <div className={styles["summary-bloc-row"] + (i != 0 ? " " + styles["hidden-row"] : "")}>
+            <div key={i} className={styles["summary-bloc-row"] + (i != 0 ? " " + styles["hidden-row"] : "")}>
                 {blocs}
             </div>
         );

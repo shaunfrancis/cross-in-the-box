@@ -7,12 +7,12 @@ export default function UKElectionResultsSection(){
     
     return ( 
         <div id={styles["container"]}>
-            <UKElectionResultContainer election="2019" summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]}/>
-            <UKElectionResultContainer election="2017" summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]}/>
-            <UKElectionResultContainer election="2015" summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]}/>
-            <UKElectionResultContainer election="2015" summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]}/>
-            <UKElectionResultContainer election="2015" summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]}/>
-            <UKElectionResultContainer election="2015" summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]}/>
+            <UKElectionResultContainer election="2019" summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]} messages={true} />
+            <UKElectionResultContainer election="2017" summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]} messages={true} />
+            <UKElectionResultContainer election="2015" summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]} />
+            <UKElectionResultContainer election="2010" summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]} />
+            <UKElectionResultContainer election="2010" summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]} />
+            <UKElectionResultContainer election="2010" summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]} />
         </div>
     )
 }

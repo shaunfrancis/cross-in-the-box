@@ -20,13 +20,14 @@
         if($regions_success) $regions = $regions_stmt -> fetchAll(PDO::FETCH_ASSOC);
         else fail(400, "Bad request");
 
-        $parties_stmt = $pdo -> prepare("SELECT DISTINCT parties.id, parties.title, parties.color FROM $parties_table as parties JOIN $results_table as results ON results.party = parties.id WHERE results.election_id = :election");
+        $parties_stmt = $pdo -> prepare("SELECT DISTINCT parties.id, parties.title, parties.color, parties.textColor FROM $parties_table as parties JOIN $results_table as results ON results.party = parties.id WHERE results.election_id = :election");
         $parties_success = $parties_stmt -> execute([':election' => $election]);
         if($parties_success) $parties = $parties_stmt -> fetchAll(PDO::FETCH_ASSOC);
         else fail(400, "Bad request");
 
         foreach($parties as &$party){
             if(!isset($party['color'])) unset($party['color']);
+            if(!isset($party['textColor'])) unset($party['textColor']);
         }
 
         echo json_encode(array( "regions" => $regions, "results" => $election_results, "parties" => $parties ), JSON_NUMERIC_CHECK);

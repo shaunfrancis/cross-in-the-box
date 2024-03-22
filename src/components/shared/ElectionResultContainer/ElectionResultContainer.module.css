@@ -1,18 +1,24 @@
 .election-container{
-    background:aliceblue;
     display:flex;
-    gap:20px;
 }
 
 .election-messages-container{
-    background:white;
-    width:300px;
+    background:#fff;
     height:100%;
+    box-shadow:1px 1px 0 1px rgba(200,200,200,0.1);
+    transition:width 200ms, margin 200ms;
+    width:0;
+    margin-right:0;
 }
+    .election-messages-container.visible{
+        width:300px;
+        margin-right:10px;
+    }
 
 .election-results-container{
     padding:20px;
     background:#fff;
+    box-shadow:1px 1px 0 1px rgba(200,200,200,0.1);
 
     display:flex;
     gap:20px;
@@ -37,7 +43,7 @@
 .election-title{
     cursor:default;
     display:flex;
-    align-items:center;
+    align-items:baseline;
     gap:10px;
 }
 
