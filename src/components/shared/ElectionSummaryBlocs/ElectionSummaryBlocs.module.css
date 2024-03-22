@@ -1,0 +1,53 @@
+.summary-bloc-container{
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+    align-items:center;
+    height:25px;
+}
+
+.summary-bloc-row{
+    display:flex;
+    gap:5px;
+    height:25px;
+    flex-shrink:0;
+    overflow:hidden;
+}
+    .hidden-row{
+        height:0;
+        transition:height 100ms;
+    }
+
+    .summary-bloc-container.hidden-rows-visible .hidden-row{
+        height:25px;
+    }
+
+.summary-bloc{
+    cursor:default;
+    color:#fff;
+    width:80px;
+    padding:0 10px;
+    border-radius:2px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+}
+
+.other-bloc{
+    background:#AAA;
+    cursor:pointer;
+    transition:color 100ms, background-color 100ms;
+}
+    .summary-bloc-container.hidden-rows-visible .other-bloc{
+        color:rgba(255,255,255,0);
+        background:#EEE;
+    }
+
+.summary-bloc-party{
+    font-weight:500;
+}
+
+.summary-bloc-count{
+    font-weight:400;
+}

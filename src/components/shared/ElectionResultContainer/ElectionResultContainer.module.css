@@ -25,3 +25,40 @@
     height:0;
     flex:1;
 }
+
+.election-heading-container{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    position:relative;
+    z-index:2;
+}
+
+.election-title{
+    cursor:default;
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.election-title h2{
+    display:flex;
+    align-items:center;
+    gap:5px;
+}
+
+    .election-title-text{
+        font-size:1.8em;
+    }
+
+    .election-subtitle-text{
+        font-size:0.9em;
+        line-height:1em;
+    }
+
+.election-messages-button{
+    cursor:pointer;
+    width:35px;
+}
+    
+    .election-messages-button:hover{ opacity: 0.6 }

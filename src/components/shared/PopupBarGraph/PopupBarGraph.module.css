@@ -1,0 +1,31 @@
+.bar-graph-row{
+    display:flex;
+    gap:4px;
+    margin:4px 0;
+    color:#fff;
+    font-size:9.5pt;
+}
+
+.bar-graph-bloc{
+    padding:4px;
+    border-radius:2px;
+}
+
+.bar-graph-party{
+    width:65px;
+    text-align:center;
+}
+
+.bar-graph-percentage{
+    width:65px;
+    text-align:right;
+}
+
+.bar-graph-bar-container{
+    width:120px;
+    background:rgb(227,227,227);
+}
+
+.bar-graph-bar{
+    height:100%;
+}
