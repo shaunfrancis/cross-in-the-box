@@ -1,7 +1,6 @@
-import { Outlet } from "react-router-dom";
-import Header from "../components/Header/Header";
+import Header from "src/components/shared/Header/Header";
 
-export default function UK(){
+export default function UKLayout( { children } : { children : React.ReactNode } ){
     const links = [
         {title: "General Elections", path: "general-elections"},
         {title: "Scottish Parliament", path: "scottish-parliament-elections" },
@@ -10,6 +9,6 @@ export default function UK(){
 
     return ( <>
         <Header links={links} />
-        <Outlet />
+        {children}
     </> )
 }

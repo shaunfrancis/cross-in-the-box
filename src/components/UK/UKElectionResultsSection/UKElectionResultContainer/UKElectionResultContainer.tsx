@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import UKGeneral2010Map from "../../../maps/UKGeneral2010Map";
 import ElectionResultContainer from "../../../shared/ElectionResultContainer/ElectionResultContainer";
-import { Party, Region, Result } from "../../../../types/types";
-import { DefaultParty } from "../../../../constants/constants";
 import HoverPopup from "../../../shared/HoverPopup/HoverPopup";
 import PopupBarGraph from "../../../shared/PopupBarGraph/PopupBarGraph";
 import ElectionSummaryBlocs from "../../../shared/ElectionSummaryBlocs/ElectionSummaryBlocs";
+import { Party, Region, Result } from "src/Types";
+import { DefaultParty, Endpoint } from "src/Constants";
 
 export default function UKElectionResultContainer( 
     { election, title = {title: election, subtitle: ["General","Election"]}, summaryBlocHoverState, messages } : 
@@ -24,7 +24,7 @@ export default function UKElectionResultContainer(
 
     useEffect( () => {
         const getResults = async () => {
-            const response = await fetch('/api/results/uk/' + election);
+            const response = await fetch(Endpoint + '/results/uk/' + election);
             const data : {regions : Region[], results : Result[], parties : Party[]} = await response.json();
             setData(data);
 

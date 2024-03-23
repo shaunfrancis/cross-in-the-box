@@ -1,5 +1,5 @@
-import { DefaultParty } from '../../../constants/constants';
-import { Party, Result } from '../../../types/types';
+import { DefaultParty } from '../../../Constants';
+import { Party, Result } from '../../../Types';
 import styles from './PopupBarGraph.module.css';
 
 export default function PopupBarGraph( { results, parties } : { results : Result[], parties : Party[] } ){
@@ -10,13 +10,13 @@ export default function PopupBarGraph( { results, parties } : { results : Result
     return ( 
         <div className={styles["bar-graph-container"]}>
             {
-                results.map( result => {
+                results.map( (result, index) => {
                     const percentage = (100 * result.votes / totalVotes).toFixed(2);
                     const party = parties.find( party => party.id == result.party ) || DefaultParty;
                     const bgColor = party.color || "#AAA";
 
                     return (
-                        <div className={styles["bar-graph-row"]}>
+                        <div key={index} className={styles["bar-graph-row"]}>
 
                             <div className={styles["bar-graph-party"] + " " + styles["bar-graph-bloc"]} style={{background: bgColor, color: party.textColor}}>
                                 {party.displayId || party.id}

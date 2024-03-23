@@ -1,4 +1,4 @@
-import UKElectionResultsSection from "../../components/UK/UKElectionResultsSection/UKElectionResultsSection";
+import UKElectionResultsSection from "../../../components/UK/UKElectionResultsSection/UKElectionResultsSection";
 
 export default function UKGeneralElections(){
     return ( <>

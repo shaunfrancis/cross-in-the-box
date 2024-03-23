@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from './ElectionSummaryBlocs.module.css';
-import { Party } from '../../../types/types';
+import { Party } from '../../../Types';
 
 export default function ElectionSummaryBlocs( 
     { data, rowLength, hoverState } : 

@@ -24,7 +24,7 @@ export default function ElectionResultContainer(
                 <div className={styles["election-heading-container"]}>
                     <div className={styles["election-title"]}>
                         { messages &&
-                            <img src="/messages.svg" className={styles["election-messages-button"]} onClick={() => {setMessagesVisiblity(!messagesVisibility)}} />
+                            <img src="/images/messages.svg" className={styles["election-messages-button"]} onClick={() => {setMessagesVisiblity(!messagesVisibility)}} />
                         }
                         <h2>
                             <div className={styles["election-title-text"]}>{title.title}</div>

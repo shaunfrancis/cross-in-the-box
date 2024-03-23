@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from "react";
 import UKElectionResultContainer from "./UKElectionResultContainer/UKElectionResultContainer";
 import styles from "./UKElectionResultsSection.module.css";
