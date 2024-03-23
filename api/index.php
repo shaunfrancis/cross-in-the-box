@@ -1,6 +1,4 @@
 <?php
-    include './credentials.php';
-
     $request = array_filter( explode( '/', str_replace('/elections/api/', '', $_SERVER['REQUEST_URI']) ) );
     $resource = array_shift($request);
 
@@ -9,6 +7,9 @@
     switch($resource){
         case "results": // results/{country}/{election}
             require 'results.php';
+            break;
+        case "region": // results/{country}/{region}
+            require 'region.php';
             break;
         default:
             fail(404, "Not found");
