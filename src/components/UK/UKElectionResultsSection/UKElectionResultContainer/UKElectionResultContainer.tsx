@@ -6,6 +6,8 @@ import PopupBarGraph from "../../../shared/PopupBarGraph/PopupBarGraph";
 import ElectionSummaryBlocs from "../../../shared/ElectionSummaryBlocs/ElectionSummaryBlocs";
 import { Party, Region, Result } from "src/Types";
 import { DefaultParty, Endpoint } from "src/Constants";
+import { useRouter } from "next/navigation";
+import { constituencyToSlug } from "src/lib/UK";
 
 export default function UKElectionResultContainer( 
     { election, title = {title: election, subtitle: ["General","Election"]}, summaryBlocHoverState, messages } : 
@@ -49,10 +51,16 @@ export default function UKElectionResultContainer(
         if(id) newPopupState.id = id;
         setPopupState(newPopupState);
     };
+
+    const router = useRouter();
+    const mapClickFun = (id: string) => {
+        let region = data.regions.find( r => r.id == id );
+        if(region) router.push('general-elections/constituency/' + constituencyToSlug(region.title));
+    };
     const map = () => {
         switch(election){
             case "2019": case "2017": case "2015": case "2010":
-                return <UKGeneral2010Map hoverFun={mapHoverFun} fills={fills} />;
+                return <UKGeneral2010Map hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
         }
     };
 

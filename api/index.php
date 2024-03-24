@@ -5,11 +5,17 @@
     $accepted_countries = array("uk");
     
     switch($resource){
-        case "results": // results/{country}/{election}
+        case "results": // results/{country}/{election} - get results for a country by election ID
             require 'results.php';
             break;
-        case "region": // results/{country}/{region}
+        case "region": // region/{country}/{region} - get results for a region by country and region ID
             require 'region.php';
+            break;
+        case "regions": // regions/{country} - get list of regions by country ID
+            require 'regions.php';
+            break;
+        case "slug-lookup": // slug-lookup/{country}/{region-slug} - get country region ID from region slug
+            require 'slug-lookup.php';
             break;
         default:
             fail(404, "Not found");
