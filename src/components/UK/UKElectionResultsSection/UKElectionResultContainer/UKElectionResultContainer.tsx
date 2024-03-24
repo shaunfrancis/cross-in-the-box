@@ -7,7 +7,7 @@ import ElectionSummaryBlocs from "../../../shared/ElectionSummaryBlocs/ElectionS
 import { Party, Region, Result } from "src/Types";
 import { DefaultParty, Endpoint } from "src/Constants";
 import { useRouter } from "next/navigation";
-import { constituencyToSlug } from "src/lib/UK";
+import { constituencyToSlug, partyIdToDisplayId } from "src/lib/UK";
 
 export default function UKElectionResultContainer( 
     { election, title = {title: election, subtitle: ["General","Election"]}, summaryBlocHoverState, messages } : 
@@ -37,10 +37,7 @@ export default function UKElectionResultContainer(
             });
             setFills(newFills);
 
-            data.parties.forEach( party => {
-                party.displayId = ["speaker","vacant"].includes(party.id) ? party.id.charAt(0).toUpperCase() + party.id.slice(1) : party.id.toUpperCase();
-            });
-
+            data.parties.forEach( party => { party.displayId = partyIdToDisplayId(party.id) });
         };
         getResults();
     }, []);

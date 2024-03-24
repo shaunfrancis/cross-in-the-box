@@ -1,6 +1,6 @@
 import { Endpoint } from "src/Constants"
-import { constituencyToSlug } from "src/lib/UK";
 import UKConstituencyPage from "src/components/UK/UKConstituencyPage/UKConstituencyPage";
+import { constituencyToSlug } from "src/lib/UK";
 
 export default function Constituency( { params } : { params: {slug : string} } ){
 

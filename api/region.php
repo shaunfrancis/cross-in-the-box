@@ -9,6 +9,7 @@
     if(!in_array($country, $accepted_countries)) fail();
     $results_table = $country . "_results";
     $regions_table = $country . "_regions";
+    $parties_table = $country . "_parties";
     $boundary_changes_table = $country . "_boundary_changes";
     $elections_table = $country . "_elections";
     
@@ -59,69 +60,57 @@
             }
         }
         $results = fetch(
-            "SELECT region_id as region, election_id as election, party, candidate, votes, elected FROM $results_table WHERE region_id IN (" . str_repeat("?,", count($direct_regions) - 1) . "?)",
+            "SELECT res.region_id, reg.title as region_title, res.election_id as election, e.date as election_date, res.party, res.candidate, res.votes, res.elected 
+            FROM $results_table as res
+            JOIN $elections_table as e ON e.id = res.election_id
+            JOIN $regions_table as reg ON reg.id = res.region_id
+            WHERE region_id IN (" . str_repeat("?,", count($direct_regions) - 1) . "?)",
             $direct_regions
         );
 
-        //get election data for all elections returned
-        $election_ids = array();
-        foreach($results as &$result){
-            if(!in_array($result['election'], $election_ids)) $election_ids[] = $result['election'];
-        }
-        $elections = fetch(
-            "SELECT id, date from $elections_table WHERE id IN (" . str_repeat("?,", count($election_ids) - 1) . "?) ORDER BY date DESC",
-            $election_ids
+        //get party data
+        $parties = fetch(
+            "SELECT DISTINCT parties.id, parties.title, parties.color, parties.textColor FROM $parties_table as parties JOIN $results_table as results ON results.party = parties.id WHERE results.region_id IN (" . str_repeat("?,", count($direct_regions) - 1) . "?)",
+            $direct_regions
         );
+        foreach($parties as &$party){
+            if(!isset($party['color'])) unset($party['color']);
+            if(!isset($party['textColor'])) unset($party['textColor']);
+        }
 
-        /*format response
-        { 
-            tree: Array<{
-                region_id,
-                successor_id,
-                direct_successor,
-                note,
-                title
-            }>, 
-            elections: Array<{
-                id,
-                date
-            }>,
-            results: Array<{
-                election,
-                region,
-                results: Array<{party, candidate, votes, elected}>
-            }>
-        }*/
-        $election_results = array();
-        foreach($direct_regions as &$direct_region){
+        //format events
+        $events = array();
+        foreach($results as $result){
 
-            $regional_election_ids = array();
-            $region_results = array_filter($results, function($result) use ($direct_region){
-                return $result['region'] == $direct_region;
-            });
-            foreach($region_results as &$result){
-                if(!in_array($result['election'], $regional_election_ids)) $regional_election_ids[] = $result['election'];
+            $matching_event = false;
+            foreach($events as &$event){
+                if($event['data']['region']['id'] == $result['region_id'] && $event['data']['id'] == $result['election']){
+                    $matching_event = true;
+                    unset($result['region_id'], $result['region_title'], $result['election'], $result['election_date']);
+                    $event['data']['results'][] = $result;
+                    break;
+                }
             }
 
-            foreach($regional_election_ids as &$election_id){
-                $region_election_results = array_filter( $region_results, function($result) use ($election_id){
-                    return $result['election'] == $election_id;
-                });
-
-                $regional_election_results = array();
-                array_walk( $region_election_results, function($result) use (&$regional_election_results){
-                    $regional_election_results[] = array( "party" => $result['party'], "candidate" => $result['candidate'], "votes" => $result['votes'], "elected" => $result['elected'] );
-                });
-
-                $election_results[] = array(
-                    "election" => $election_id,
-                    "region" => $direct_region,
-                    "results" => $regional_election_results
+            if(!$matching_event){
+                $new_event = array( 
+                    "type" => "election",
+                    "date" => $result['election_date'], 
+                    "data" => array(
+                        "id" => $result['election'], 
+                        "region" => array(
+                            "id" => $result['region_id'],
+                            "title" => $result['region_title']
+                        )
+                    )
                 );
+                unset($result['region_id'], $result['region_title'], $result['election'], $result['election_date']);
+                $new_event['data']['results'] = array($result);
+                $events[] = $new_event;
             }
         }
 
-        echo json_encode(array( "tree" => $tree_results, "elections" => $elections, "results" => $election_results ), JSON_NUMERIC_CHECK);
+        echo json_encode(array( "events" => $events, "parties" => $parties, "tree" => $tree ), JSON_NUMERIC_CHECK);
     }
     catch(Exception $error){ fail(500, "Internal server error"); }
 ?>

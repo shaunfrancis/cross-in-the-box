@@ -3,12 +3,15 @@ export interface Region {
     title: string
 }
 
-export interface Result {
-    id: string,
+export interface AnonymousResult{
     party: string,
     candidate: string,
     votes: number,
     elected: boolean
+}
+
+export interface Result extends AnonymousResult {
+    id: string
 }
 
 export interface Party {

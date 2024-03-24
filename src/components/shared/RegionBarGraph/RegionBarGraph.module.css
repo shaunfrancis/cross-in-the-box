@@ -1,0 +1,44 @@
+.bar-graph-container{
+    margin:50px 0;
+}
+
+.bar-graph-row{
+    display:flex;
+    color:#fff;
+    gap:5px;
+    margin:5px;
+    font-weight:350;
+}
+
+.bar-graph-bloc{
+    border-radius:2px;
+    padding:4px 8px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.bar-graph-party{
+    width:80px;
+    text-align:center;
+    font-weight:450;
+}
+
+.bar-graph-candidate{
+    width:150px;
+    text-align:center;
+}
+
+.bar-graph-votes, .bar-graph-percentage{
+    width:80px;
+    text-align:right;
+}
+
+.bar-graph-bar-container{
+    flex:1;
+    background:rgb(227,227,227);
+}
+
+.bar-graph-bar{
+    height:100%;
+}

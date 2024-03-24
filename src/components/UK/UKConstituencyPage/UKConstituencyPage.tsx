@@ -1,7 +1,18 @@
 'use client';
 import { useEffect, useState } from "react";
 import { Endpoint } from "src/Constants";
-import { slugToLookupSlug } from "src/lib/UK";
+import { AnonymousResult, Party } from "src/Types";
+import RegionBarGraph from "src/components/shared/RegionBarGraph/RegionBarGraph";
+import RegionPage from "src/components/shared/RegionPage/RegionPage";
+import { partyIdToDisplayId, slugToLookupSlug } from "src/lib/UK";
+
+interface Event{
+    type : string,
+    date : Date,
+    data : { 
+        results : AnonymousResult[] 
+    }
+}
 
 export default function UKConstituencyPage( { slug } : { slug : string } ){
 
@@ -12,24 +23,50 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
     });
     let [region, setRegion] = useState<{id? : string, title : string}>({ title: prettySlug });
 
-    let [results, setResults] = useState<any>();
+    let [data, setData] = useState< {events : Event[], parties : Party[]}>({ events: [], parties: [] });
 
     useEffect( () => {
         const useAsyncEffect = async () => {
-            const regionData = await fetch(Endpoint + "/slug-lookup/uk/" + slugToLookupSlug(slug)).then((res) => res.json());
+            const regionData = await fetch(Endpoint + "/slug-lookup/uk/" + slugToLookupSlug(slug)).then( res => res.json() );
             if(regionData.error){
                 //error handling
             }
             setRegion(regionData);
 
-            const resultData = await fetch(Endpoint + "/region/uk/" + regionData.id).then((res) => res.json());
-            setResults(resultData);
+            const resultData : {events : Event[], parties : Party[]} = await fetch(Endpoint + "/region/uk/" + regionData.id)
+                .then( res => res.text() )
+                .then( text => {
+                    return JSON.parse(text, (key, value) => {
+                        if(key == "date") return new Date(value);
+                        return value;
+                    });
+                });
+            resultData.events.sort( (a,b) => b.date.valueOf() - a.date.valueOf() );
+            resultData.parties.forEach( party => { party.displayId = partyIdToDisplayId(party.id) });
+            setData(resultData);
         };
         useAsyncEffect();
     }, []);
 
+    const eventNodes : React.ReactNode[] = [];
+    let index = 0;
+    data.events.forEach( event => {
+        switch(event.type){
+            case "election":
+                event.data.results.sort( (a,b) => b.votes - a.votes );
+                eventNodes.push(
+                    <RegionBarGraph key={index} results={event.data.results} parties={data.parties} />
+                );
+                break;
+        }
+        index++;
+    });
+
+
     return ( <>
-        <h1>{region.title}</h1>
-        <p>{JSON.stringify(results)}</p>
+        <RegionPage>
+            <h1>{region.title}</h1>
+            {eventNodes}
+        </RegionPage>
     </> )
 }
