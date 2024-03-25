@@ -1,12 +1,19 @@
+.container{
+    margin:30px 0;
+    padding:30px;
+    background:#fff;
+    box-shadow:1px 1px 0 1px rgba(200,200,200,0.1);
+}
+
 .bar-graph-container{
-    margin:50px 0;
+    margin-top:20px;
 }
 
 .bar-graph-row{
     display:flex;
     color:#fff;
     gap:5px;
-    margin:5px;
+    margin:5px 0;
     font-weight:350;
 }
 
@@ -16,13 +23,36 @@
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
+    cursor:default;
 }
 
 .bar-graph-party{
     width:80px;
     text-align:center;
     font-weight:450;
+    position:relative;
+    overflow:visible;
+    cursor:pointer;
 }
+
+.bar-detail-hover{
+    position:absolute;
+    background:#fff;
+    color:#000;
+    height:100%;
+    top:0;
+    left:100%;
+    margin-left:5px;
+    border-radius:2px;
+    padding:4px 8px;
+    opacity:0;
+    z-index:2;
+    pointer-events:none;
+    transition:opacity 100ms;
+}
+    .bar-graph-party:hover .bar-detail-hover{
+        opacity:1;
+    }
 
 .bar-graph-candidate{
     width:150px;

@@ -2,7 +2,10 @@ import './style.css'
 import type { Metadata } from 'next'
  
 export const metadata: Metadata = {
-  title: '',
+  title: {
+    template: '%s - Elections',
+    default: 'Elections'
+  },
   description: '',
 }
 

@@ -14,6 +14,9 @@
         case "regions": // regions/{country} - get list of regions by country ID
             require 'regions.php';
             break;
+        case "search": // search/{country}/{query} - get list of regions by country with title or candidate name similarity to query
+            require 'search.php';
+            break;
         case "slug-lookup": // slug-lookup/{country}/{region-slug} - get country region ID from region slug
             require 'slug-lookup.php';
             break;

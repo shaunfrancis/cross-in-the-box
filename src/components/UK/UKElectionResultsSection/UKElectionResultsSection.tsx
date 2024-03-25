@@ -13,8 +13,6 @@ export default function UKElectionResultsSection(){
             <UKElectionResultContainer election="2017" summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]} messages={true} />
             <UKElectionResultContainer election="2015" summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]} />
             <UKElectionResultContainer election="2010" summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]} />
-            <UKElectionResultContainer election="2010" summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]} />
-            <UKElectionResultContainer election="2010" summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]} />
         </div>
     )
 }

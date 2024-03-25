@@ -2,16 +2,15 @@
     height:calc(100svh - 80px);
     display:flex;
     gap:20px;
-    padding:0 50px;
 }
 
 #container aside{
     flex:0 0 350px;
-    padding:50px 0;
+    padding:50px;
 }
 
 #container main{
     flex:1;
-    padding:50px 0;
+    padding:50px;
     overflow:auto;
 }

@@ -10,6 +10,8 @@ interface Event{
     type : string,
     date : Date,
     data : { 
+        id : string,
+        title : string[],
         results : AnonymousResult[] 
     }
 }
@@ -55,7 +57,7 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
             case "election":
                 event.data.results.sort( (a,b) => b.votes - a.votes );
                 eventNodes.push(
-                    <RegionBarGraph key={index} results={event.data.results} parties={data.parties} />
+                    <RegionBarGraph key={index} title={event.data.title} results={event.data.results} parties={data.parties} />
                 );
                 break;
         }

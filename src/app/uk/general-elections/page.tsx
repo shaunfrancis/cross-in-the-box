@@ -1,3 +1,4 @@
+import UKConstituencySearchSection from "src/components/UK/UKConstituencySearchSection/UKConstituencySearchSection";
 import UKElectionResultsSection from "../../../components/UK/UKElectionResultsSection/UKElectionResultsSection";
 
 export default function UKGeneralElections(){
@@ -9,6 +10,7 @@ export default function UKGeneralElections(){
             </section>
             <section style={{background: "rgb(220,220,245)"}}>
                 <h1>Find A Constituency</h1>
+                <UKConstituencySearchSection />
             </section>
             <section>
                 <h1>Opinion Polls</h1>

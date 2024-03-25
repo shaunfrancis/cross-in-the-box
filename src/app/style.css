@@ -3,6 +3,7 @@
 *{
     -webkit-box-sizing:border-box;
     box-sizing:border-box;
+    font-family: "Oswald", sans-serif;
 }
 
 html{
@@ -13,7 +14,6 @@ body{
     margin:0;
     padding:0;
     background: rgb(240,241,243);
-    font-family: "Oswald", sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6{ margin: unset }

@@ -60,7 +60,7 @@
             }
         }
         $results = fetch(
-            "SELECT res.region_id, reg.title as region_title, res.election_id as election, e.date as election_date, res.party, res.candidate, res.votes, res.elected 
+            "SELECT res.region_id, reg.title as region_title, res.election_id as election, e.date as election_date, e.title as election_title, res.party, res.candidate, res.votes, res.elected 
             FROM $results_table as res
             JOIN $elections_table as e ON e.id = res.election_id
             JOIN $regions_table as reg ON reg.id = res.region_id
@@ -86,7 +86,7 @@
             foreach($events as &$event){
                 if($event['data']['region']['id'] == $result['region_id'] && $event['data']['id'] == $result['election']){
                     $matching_event = true;
-                    unset($result['region_id'], $result['region_title'], $result['election'], $result['election_date']);
+                    unset($result['region_id'], $result['region_title'], $result['election'], $result['election_date'], $result['election_title']);
                     $event['data']['results'][] = $result;
                     break;
                 }
@@ -98,13 +98,14 @@
                     "date" => $result['election_date'], 
                     "data" => array(
                         "id" => $result['election'], 
+                        "title" => json_decode($result['election_title']),
                         "region" => array(
                             "id" => $result['region_id'],
                             "title" => $result['region_title']
                         )
                     )
                 );
-                unset($result['region_id'], $result['region_title'], $result['election'], $result['election_date']);
+                unset($result['region_id'], $result['region_title'], $result['election'], $result['election_date'], $result['election_title']);
                 $new_event['data']['results'] = array($result);
                 $events[] = $new_event;
             }
