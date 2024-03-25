@@ -3,9 +3,15 @@
     padding:20px 20px 50px 20px;
 }
 
-#search-bar{
+#search-container{
     width:100%;
     max-width:800px;
+    background:blue;
+    display:inline-block;
+}
+
+#search-bar{
+    width:100%;
     font-size:2.5em;
     font-weight:500;
     padding:10px 20px;
@@ -13,4 +19,20 @@
     border-radius:2px;
     box-shadow:2px 2px 0 2px rgba(200,200,200,0.5);
     text-align:center;
+}
+
+#results-container{
+    display:grid;
+    grid-template-columns: repeat(auto-fill,minmax(300px, 1fr));
+    gap:30px;
+    margin:30px 30px 0 30px;
+}
+
+.result{
+    text-align:left;
+    background:#fff;
+    border-radius:2px;
+    box-shadow:1px 1px 0 1px rgba(200,200,200,0.1);
+    padding:30px;
+    cursor:pointer;
 }

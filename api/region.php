@@ -111,7 +111,7 @@
             }
         }
 
-        echo json_encode(array( "events" => $events, "parties" => $parties, "tree" => $tree ), JSON_NUMERIC_CHECK);
+        echo json_encode(array( "events" => $events, "parties" => $parties, "tree" => $tree_results ), JSON_NUMERIC_CHECK);
     }
     catch(Exception $error){ fail(500, "Internal server error"); }
 ?>
