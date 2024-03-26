@@ -12,7 +12,7 @@
 
 #search-bar{
     width:100%;
-    font-size:2.5em;
+    font-size:2.5rem;
     font-weight:500;
     padding:10px 20px;
     border:none;
@@ -35,4 +35,23 @@
     box-shadow:1px 1px 0 1px rgba(200,200,200,0.1);
     padding:30px;
     cursor:pointer;
+}
+
+.result-title > *{
+    vertical-align:middle;
+}
+
+.title-bloc{
+    display:inline-block;
+    border-radius:2px;
+    color:#fff;
+    font-size:1rem;
+    padding:0 10px;
+    margin-right:10px;
+    width:60px;
+    text-align:center;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    vertical-align:-5px;
 }

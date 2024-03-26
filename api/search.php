@@ -8,7 +8,9 @@
 
     if(!in_array($country, $accepted_countries)) fail();
     $regions_table = $country . "_regions";
+    $elections_table = $country . "_elections";
     $results_table = $country . "_results";
+    $parties_table = $country . "_parties";
 
     function getOverlap($a, $b){
         $a_words = explode(" ", strtolower($a));
@@ -30,7 +32,7 @@
         $filtered_words = array_filter($words, function($word){
             return !in_array($word, ["and", "the"]);
         });
-        if(count($filtered_words) > 0) $words = $filtered_words;
+        if(count($filtered_words) > 0) $words = array_values($filtered_words);
         
 
         foreach($words as &$word){
@@ -48,16 +50,40 @@
         });
 
         $candidates = fetch(
-            "SELECT DISTINCT regions.id, regions.title, results.candidate
-            FROM $results_table as results
-            JOIN $regions_table as regions
-            ON regions.id = results.region_id
-            WHERE " . str_repeat("LOWER(results.candidate) LIKE ? OR ", count($words) - 1) . "LOWER(results.candidate) LIKE ?",
+            "SELECT * FROM (
+                SELECT regions.id, regions.title, results.candidate, results.party, elections.title as election, elections.date, parties.title as party_title, parties.color, parties.textColor
+                FROM $results_table as results
+                JOIN $regions_table as regions
+                ON regions.id = results.region_id
+                JOIN $elections_table as elections
+                ON elections.id = results.election_id
+                JOIN $parties_table as parties
+                ON parties.id = results.party
+                WHERE " . str_repeat("LOWER(results.candidate) LIKE ? OR ", count($words) - 1) . "LOWER(results.candidate) LIKE ?
+                ORDER BY elections.date DESC
+                LIMIT 18446744073709551615
+            ) as res
+            GROUP BY res.candidate",
             $words
-        );
+        ); //LIMIT 2^64 - 1 forces MariaDB subquery to respect ORDER
+        
+        foreach($candidates as &$candidate){
+            $candidate['election'] = json_decode($candidate['election']);
+            $party = array(
+                "id" => $candidate['party'],
+                "title" => $candidate['party_title']
+            );
+            if(isset($candidate['color'])) $party['color'] = $candidate['color'];
+            if(isset($candidate['textColor'])) $party['textColor'] = $candidate['textColor'];
+            $candidate['party'] = $party;
+            unset($candidate['party_title'], $candidate['color'], $candidate['textColor']);
+        }
         usort($candidates, function($a, $b) use ($query){
             $overlap = getOverlap($b['candidate'], $query) <=> getOverlap($a['candidate'], $query);
             if($overlap != 0) return $overlap;
+
+            $latest = $b['date'] <=> $a['date'];
+            if($latest != 0) return $latest; 
             else return $a['title'] <=> $b['title'];
         });
 
