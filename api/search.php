@@ -51,7 +51,7 @@
 
         $candidates = fetch(
             "SELECT * FROM (
-                SELECT regions.id, regions.title, results.candidate, results.party, elections.title as election, elections.date, parties.title as party_title, parties.color, parties.textColor
+                SELECT regions.id, regions.title, results.candidate, results.party, results.votes, elections.title as election, elections.date, parties.title as party_title, parties.color, parties.textColor
                 FROM $results_table as results
                 JOIN $regions_table as regions
                 ON regions.id = results.region_id
@@ -66,7 +66,15 @@
             GROUP BY res.candidate",
             $words
         ); //LIMIT 2^64 - 1 forces MariaDB subquery to respect ORDER
-        
+        usort($candidates, function($a, $b) use ($query){
+            $overlap = getOverlap($b['candidate'], $query) <=> getOverlap($a['candidate'], $query);
+            if($overlap != 0) return $overlap;
+
+            $latest = $b['date'] <=> $a['date'];
+            if($latest != 0) return $latest; 
+            else return $b['votes'] <=> $a['votes'];
+        });
+
         foreach($candidates as &$candidate){
             $candidate['election'] = json_decode($candidate['election']);
             $party = array(
@@ -76,16 +84,8 @@
             if(isset($candidate['color'])) $party['color'] = $candidate['color'];
             if(isset($candidate['textColor'])) $party['textColor'] = $candidate['textColor'];
             $candidate['party'] = $party;
-            unset($candidate['party_title'], $candidate['color'], $candidate['textColor']);
+            unset($candidate['party_title'], $candidate['color'], $candidate['textColor'], $candidate['votes']);
         }
-        usort($candidates, function($a, $b) use ($query){
-            $overlap = getOverlap($b['candidate'], $query) <=> getOverlap($a['candidate'], $query);
-            if($overlap != 0) return $overlap;
-
-            $latest = $b['date'] <=> $a['date'];
-            if($latest != 0) return $latest; 
-            else return $a['title'] <=> $b['title'];
-        });
 
         echo json_encode( array( "regions" => $regions, "candidates" => $candidates ), JSON_NUMERIC_CHECK);
     }

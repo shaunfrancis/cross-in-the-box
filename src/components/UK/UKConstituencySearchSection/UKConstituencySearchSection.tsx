@@ -67,7 +67,9 @@ export default function UKConstituencySearchSection(){
                                 className={styles["result"]} 
                                 onClick={ () => { router.push('general-elections/constituency/' + constituencyToSlug(region.title)) } }
                             >
-                                <h2>{highlightRelevance(region.title)}</h2>
+                                <h2 className={styles["result-title"]}>
+                                    {highlightRelevance(region.title)}
+                                </h2>
                             </div>
                         )
                     })

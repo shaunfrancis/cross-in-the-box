@@ -3,7 +3,7 @@ const data = [{x:156,y:754,id:"2010001"},{x:182,y:624,id:"2010002"},{x:520,y:52,
 export default function UKGeneral2010Map( 
     { fills = [], hoverFun = () => {}, clickFun = () => {} } : 
     { 
-        fills? : {id:string,color:string}[],
+        fills? : {id : string, color : string, opacity? : number}[],
         hoverFun? : (active?: boolean, event?: React.MouseEvent, id?: string) => void,
         clickFun? : (id?: string) => void
     }
@@ -12,13 +12,17 @@ export default function UKGeneral2010Map(
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 884 1040" strokeWidth="1" stroke="white" fill="black" width="100%" height="100%">
             {
                 data.map( (square, index) => {
-                    const fill = fills.find( f => f.id == square.id )?.color || "#EEE";
+                    const fill = fills.find( f => f.id == square.id );
+                    const color = fill?.color || "#EEE";
+                    const opacity = fill?.opacity;
+
                     return (
                         <rect key={index} x={square.x} y={square.y} width="25" height="25" 
                         onMouseMove={(event) => { hoverFun(true, event, square.id) }} 
                         onMouseOut={() => { hoverFun(false) }}
                         onClick={() => {clickFun(square.id)}}
-                        fill={fill} />
+                        fill={color}
+                        style={{opacity: opacity}} />
                     )
                 })
             }

@@ -6,11 +6,12 @@ export default function ElectionResultContainer(
         dimensions: {w:string,h:string,minW:string,minH:string}, 
         messages?: boolean,
         map: React.ReactNode, 
-        title : {title: string, subtitle: string[]}, 
+        title : string[]
         summary? : React.ReactNode,
         children: React.ReactNode 
     }
 ){
+    while(title.length < 3) title.push("");
     let [messagesVisibility, setMessagesVisiblity] = useState<boolean>(false);
 
     return (
@@ -27,17 +28,10 @@ export default function ElectionResultContainer(
                             <img src="/images/messages.svg" className={styles["election-messages-button"]} onClick={() => {setMessagesVisiblity(!messagesVisibility)}} />
                         }
                         <h2>
-                            <div className={styles["election-title-text"]}>{title.title}</div>
+                            <div className={styles["election-title-text"]}>{title[0]}</div>
                             <div className={styles["election-subtitle-text"]}>
-                                {
-                                    title.subtitle.map( (line, index) => {
-                                        return ( 
-                                            <Fragment key={index}>
-                                                <span>{line}</span><br/>
-                                            </Fragment>
-                                        )
-                                    })
-                                }
+                                <span>{title[1]}</span><br/>
+                                <span>{title[2]}</span>
                             </div>
                         </h2>
                     </div>

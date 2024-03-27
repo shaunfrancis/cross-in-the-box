@@ -10,10 +10,10 @@ import { useRouter } from "next/navigation";
 import { constituencyToSlug, partyIdToDisplayId } from "src/lib/UK";
 
 export default function UKElectionResultContainer( 
-    { election, title = {title: election, subtitle: ["General","Election"]}, summaryBlocHoverState, messages } : 
+    { election, title = [election, "General", "Election"], summaryBlocHoverState, messages } : 
     { 
         election : string, 
-        title? : {title : string, subtitle : string[]},
+        title? : string[],
         summaryBlocHoverState? : [boolean, React.Dispatch<React.SetStateAction<boolean>>],
         messages? : boolean
     }
@@ -28,6 +28,7 @@ export default function UKElectionResultContainer(
         const getResults = async () => {
             const response = await fetch(Endpoint + '/results/uk/' + election);
             const data : {regions : Region[], results : Result[], parties : Party[]} = await response.json();
+            data.parties.forEach( party => { party.displayId = partyIdToDisplayId(party.id) });
             setData(data);
 
             const newFills : {id: string, color: string}[] = [];
@@ -36,8 +37,6 @@ export default function UKElectionResultContainer(
                 if(party && party.color) newFills.push({ id: result.id, color: party.color });
             });
             setFills(newFills);
-
-            data.parties.forEach( party => { party.displayId = partyIdToDisplayId(party.id) });
         };
         getResults();
     }, []);
