@@ -8,6 +8,7 @@ import { Party, Region, Result } from "src/Types";
 import { DefaultParty, Endpoint } from "src/Constants";
 import { useRouter } from "next/navigation";
 import { constituencyToSlug, partyIdToDisplayId } from "src/lib/UK";
+import UKGeneral2010GeographicMap from "src/components/maps/UKGeneral2010GeographicMap";
 
 interface Updates{
     updates : {
@@ -19,12 +20,13 @@ interface Updates{
 }
 
 export default function UKElectionChangesContainer( 
-    { election, title, summaryBlocHoverState, messages } : 
+    { election, title, summaryBlocHoverState, messages, geographic } : 
     { 
         election : string, 
         title : string[],
         summaryBlocHoverState? : [boolean, React.Dispatch<React.SetStateAction<boolean>>],
-        messages? : boolean
+        messages? : boolean,
+        geographic? : boolean
     }
 ){
 
@@ -86,7 +88,8 @@ export default function UKElectionChangesContainer(
     const map = () => {
         switch(election){
             case "2019": case "2017": case "2015": case "2010":
-                return <UKGeneral2010Map hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
+                if(geographic) return <UKGeneral2010GeographicMap hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
+                else return <UKGeneral2010Map hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
         }
     };
 

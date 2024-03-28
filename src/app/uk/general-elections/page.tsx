@@ -5,7 +5,6 @@ export default function UKGeneralElections(){
     return ( 
         <main>
             <section>
-                <h1>Election Results</h1>
                 <UKElectionResultsSection />
             </section>
             <section style={{background: "rgb(220,220,245)"}}>

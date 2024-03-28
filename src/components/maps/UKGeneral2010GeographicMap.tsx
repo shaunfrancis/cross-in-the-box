@@ -1,6 +1,6 @@
 import { SvgLoader, SvgProxy } from 'react-svgmt';
 
-export default function UKGeneral2010Map( 
+export default function UKGeneral2010GeographicMap( 
     { fills = [], hoverFun = () => {}, clickFun = () => {} } : 
     { 
         fills? : {id : string, color : string, opacity? : number}[],
@@ -9,17 +9,17 @@ export default function UKGeneral2010Map(
     }
 ){
     return (
-        <SvgLoader path="/maps/UK-2010.svg">
+        <SvgLoader path="/maps/UK-2010-geographic.svg">
             {
                 fills.map( (fill, index) => {
                     return (
                         <SvgProxy 
                             key={index} 
-                            selector={'rect[name="' + fill.id + '"]'} 
+                            selector={'[name="' + fill.id + '"]'} 
                             onMouseMove={(event) => { hoverFun(true, event, fill.id) }} 
                             onMouseOut={() => { hoverFun(false) }}
                             onClick={() => {clickFun(fill.id)}}
-                            fill={fill.color}
+                            fill={fill.color} 
                             style={fill.opacity !== undefined ? "opacity:" + fill.opacity : ""}
                         />
                     )
