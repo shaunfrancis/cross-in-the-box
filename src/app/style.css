@@ -32,6 +32,8 @@ section{
 
 section > h1{
     margin:50px;
+    display:inline-block;
+    vertical-align:middle;
 }
 
 rect{
