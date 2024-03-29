@@ -2,15 +2,7 @@
     if(count($request) != 2) fail(404, "Not found");
 
     require_once './functions/fetch.php';
-    
-    $country = $request[0];
     $query = urldecode($request[1]);
-
-    if(!in_array($country, $accepted_countries)) fail();
-    $regions_table = $country . "_regions";
-    $elections_table = $country . "_elections";
-    $results_table = $country . "_results";
-    $parties_table = $country . "_parties";
 
     function getOverlap($a, $b){
         $a_words = explode(" ", strtolower($a));

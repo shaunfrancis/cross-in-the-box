@@ -3,11 +3,6 @@
 
     require_once './functions/fetch.php';
     
-    $country = $request[0];
-
-    if(!in_array($country, $accepted_countries)) fail();
-    $regions_table = $country . "_regions";
-    
     try{
         $regions = fetch("SELECT id, title FROM $regions_table");
 

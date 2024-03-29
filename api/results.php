@@ -2,14 +2,7 @@
     if(count($request) != 2) fail(404, "Not found");
 
     require_once './functions/fetch.php';
-    
-    $country = $request[0];
     $election = $request[1];
-
-    if(!in_array($country, $accepted_countries)) fail();
-    $results_table = $country . "_results";
-    $regions_table = $country . "_regions";
-    $parties_table = $country . "_parties";
     
     try{
         $election_results = fetch(
