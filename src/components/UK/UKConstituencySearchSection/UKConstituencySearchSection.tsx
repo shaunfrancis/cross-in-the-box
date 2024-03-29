@@ -41,8 +41,6 @@ export default function UKConstituencySearchSection(){
         })
         regexPattern += ")";
 
-        console.log(regexPattern);
-
         const spans : React.ReactNode[] = [];
         text.split( new RegExp(regexPattern, "gi") ).forEach( (fragment, index) => {
             if(fragment != "") spans.push(
@@ -85,7 +83,7 @@ export default function UKConstituencySearchSection(){
                                 <h2 className={styles["result-title"]}>
                                     <div 
                                         className={styles["title-bloc"]}
-                                        style={{background: region.party.color || "#AAA", color: region.party.textColor}}
+                                        style={{background: region.party.color || "var(--default-color)", color: region.party.textColor}}
                                     >
                                         {partyIdToDisplayId(region.party.id)}
                                     </div>

@@ -21,7 +21,7 @@ export default function RegionBarGraph(
                 results.map( (result, index) => {
                     const percentage = (100 * result.votes / totalVotes).toFixed(2);
                     const party = parties.find( p => p.id == result.party ) || DefaultParty;
-                    const bgColor = party.color || "#AAA";
+                    const bgColor = party.color || "var(--default-color)";
 
                     return ( 
                         <div key={index} className={styles["bar-graph-row"]}>

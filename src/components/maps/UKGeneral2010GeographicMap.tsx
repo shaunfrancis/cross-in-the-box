@@ -19,7 +19,7 @@ export default function UKGeneral2010GeographicMap(
                             onMouseMove={(event) => { hoverFun(true, event, fill.id) }} 
                             onMouseOut={() => { hoverFun(false) }}
                             onClick={() => {clickFun(fill.id)}}
-                            fill={fill.color} 
+                            fill={fill.color}
                             style={fill.opacity !== undefined ? "opacity:" + fill.opacity : ""}
                         />
                     )

@@ -36,7 +36,7 @@ export default function UKElectionResultContainer(
             const newFills : {id: string, color: string}[] = [];
             data.results.filter(r => r.elected).forEach( result => {
                 const party : Party = data.parties.find( p => p.id == result.party ) || DefaultParty;
-                if(party && party.color) newFills.push({ id: result.id, color: party.color });
+                if(party) newFills.push({ id: result.id, color: party.color || "var(--default-color)" });
             });
             setFills(newFills);
         };

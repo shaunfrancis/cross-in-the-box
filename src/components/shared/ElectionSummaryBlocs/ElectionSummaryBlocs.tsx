@@ -42,7 +42,11 @@ export default function ElectionSummaryBlocs(
             }
             else{
                 blocs.push(
-                    <div key={position} className={styles["summary-bloc"]} style={{background: data[position].party.color || "#AAA", color: data[position].party.textColor}}>
+                    <div 
+                        key={position} 
+                        className={styles["summary-bloc"]}
+                        style={{background: data[position].party.color || "var(--default-color)", color: data[position].party.textColor}}
+                    >
                         <span className={styles["summary-bloc-party"]}>{data[position].party.displayId || data[position].party.id}</span>
                         <span className={styles["summary-bloc-count"]}>{data[position].count}</span>
                     </div>

@@ -13,7 +13,7 @@ export default function PopupBarGraph( { results, parties } : { results : Result
                 results.map( (result, index) => {
                     const percentage = (100 * result.votes / totalVotes).toFixed(2);
                     const party = parties.find( party => party.id == result.party ) || DefaultParty;
-                    const bgColor = party.color || "#AAA";
+                    const bgColor = party.color || "var(--default-color)";
 
                     return (
                         <div key={index} className={styles["bar-graph-row"]}>

@@ -9,6 +9,7 @@ import { DefaultParty, Endpoint } from "src/Constants";
 import { useRouter } from "next/navigation";
 import { constituencyToSlug, partyIdToDisplayId } from "src/lib/UK";
 import UKGeneral2010GeographicMap from "src/components/maps/UKGeneral2010GeographicMap";
+import PartyProgressionBlocs from "src/components/shared/PartyProgressionBlocs/PartyProgressionBlocs";
 
 interface Updates{
     updates : {
@@ -50,7 +51,7 @@ export default function UKElectionChangesContainer(
                         return value;
                     });
                 });
-            updateData.updates.sort( (a,b) => b.date.valueOf() - a.date.valueOf() );
+            updateData.updates.sort( (a,b) => a.date.valueOf() - b.date.valueOf() );
             updateData.parties.forEach( party => { party.displayId = partyIdToDisplayId(party.id) });
             setUpdates(updateData);
 
@@ -59,13 +60,13 @@ export default function UKElectionChangesContainer(
             resultData.results.filter(r => r.elected).forEach( result => {
                 const regionUpdates = updateData.updates.filter( u => u.id == result.id );
                 if(regionUpdates.length > 0){
-                    const latestUpdate = regionUpdates[0];
+                    const latestUpdate = regionUpdates[regionUpdates.length - 1];
                     const party : Party = updateData.parties.find( p => p.id == latestUpdate.party ) || DefaultParty;
-                    if(party && party.color) newFills.push({ id: latestUpdate.id, color: party.color });
+                    if(party) newFills.push({ id: latestUpdate.id, color: party.color || "var(--default-color)" });
                 }
                 else{
                     const party : Party = resultData.parties.find( p => p.id == result.party ) || DefaultParty;
-                    if(party && party.color) newFills.push({ id: result.id, color: party.color, opacity: 0.2 });
+                    if(party) newFills.push({ id: result.id, color: party.color || "var(--default-color)", opacity: 0.2 });
                 }
             });
             setFills(newFills);
@@ -100,10 +101,17 @@ export default function UKElectionChangesContainer(
         const regionResults = results.results.filter( result => result.id == id ).sort( (a,b) => b.votes - a.votes );
         const parties = results.parties.filter( party => regionResults.map( r => r.party ).includes(party.id) );
         const winner = regionResults.find(r => r.elected)?.candidate || "Missing data";
+
+        const regionUpdates = updates.updates.filter( u => u.id == region.id );
+        const partyProgression : Party[] = [parties.find(p => p.id == regionResults.find(r => r.elected)?.party) || DefaultParty];
+        regionUpdates.forEach( update => {
+            partyProgression.push( updates.parties.find(p => p.id == update.party) || DefaultParty );
+        });
         
         return ( <>
             <h3>{region.title}</h3>
             <h4>{winner}</h4>
+            { partyProgression.length > 1 && <PartyProgressionBlocs parties={partyProgression} /> }
             <PopupBarGraph results={regionResults} parties={parties} />
         </> )
     }
@@ -113,7 +121,7 @@ export default function UKElectionChangesContainer(
         results.results.filter( r => r.elected ).forEach( result => {
             
             const regionUpdates = updates.updates.filter( u => u.id == result.id );
-            const winner = regionUpdates.length > 0 ? regionUpdates[0].party : result.party;
+            const winner = regionUpdates.length > 0 ? regionUpdates[regionUpdates.length - 1].party : result.party;
 
             if(!summaries.find( s => s.party.id == winner)){
                 const party : Party = [...results.parties,...updates.parties].find( p => p.id == winner ) || DefaultParty;

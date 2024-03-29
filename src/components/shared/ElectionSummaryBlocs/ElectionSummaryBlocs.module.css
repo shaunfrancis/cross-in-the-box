@@ -36,7 +36,7 @@
 }
 
 .other-bloc{
-    background:#AAA;
+    background:var(--default-color);
     cursor:pointer;
     transition:color 100ms, background-color 100ms;
 }
