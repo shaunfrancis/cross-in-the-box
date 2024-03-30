@@ -10,16 +10,7 @@
             [':election' => $election]
         );
 
-        $parties = fetch(
-            "SELECT DISTINCT parties.id, parties.title, parties.color, parties.textColor FROM $parties_table as parties JOIN $updates_table as updates ON updates.party = parties.id WHERE updates.election_id = :election",
-            [':election' => $election]
-        );
-        foreach($parties as &$party){
-            if(!isset($party['color'])) unset($party['color']);
-            if(!isset($party['textColor'])) unset($party['textColor']);
-        }
-
-        echo json_encode( array("updates" => $updates, "parties" => $parties), JSON_NUMERIC_CHECK);
+        echo json_encode($updates, JSON_NUMERIC_CHECK);
     }
     catch(Exception $error){ fail(500, "Internal server error"); }
 ?>

@@ -29,11 +29,18 @@ class SearchHandler{
         if(query != this.previousQuery) return null;
         return response;
     }
+}
 
+const parseJSONWithDates = (text : string, keys : string | string[]) => {
+    if(typeof keys === "string") keys = [keys];
+    return JSON.parse(text, (key, value) => {
+        if(keys.includes(key)) return new Date(value);
+        return value;
+    });
 }
 
 const addThousandsSpacing = ( votes : number | string ) => {
     return votes.toString().split('').reverse().join('').replace(/([0-9]{3})/g, "$1 ").split('').reverse().join('');
 }
 
-export { SearchHandler, addThousandsSpacing }
+export { SearchHandler, parseJSONWithDates, addThousandsSpacing }

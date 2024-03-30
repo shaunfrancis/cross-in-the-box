@@ -5,6 +5,7 @@ import { AnonymousResult, Party } from "src/Types";
 import RegionBarGraph from "src/components/shared/RegionBarGraph/RegionBarGraph";
 import RegionPage from "src/components/shared/RegionPage/RegionPage";
 import { partyIdToDisplayId, slugToLookupSlug } from "src/lib/UK";
+import { parseJSONWithDates } from "src/lib/shared";
 
 interface Event{
     type : string,
@@ -37,12 +38,8 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
 
             const resultData : {events : Event[], parties : Party[]} = await fetch(Endpoint + "/region/uk/" + regionData.id)
                 .then( res => res.text() )
-                .then( text => {
-                    return JSON.parse(text, (key, value) => {
-                        if(key == "date") return new Date(value);
-                        return value;
-                    });
-                });
+                .then( text => parseJSONWithDates(text, "date") );
+                
             resultData.events.sort( (a,b) => b.date.valueOf() - a.date.valueOf() );
             resultData.parties.forEach( party => { party.displayId = partyIdToDisplayId(party.id) });
             setData(resultData);

@@ -22,6 +22,9 @@
         case "messages": // messages/{country}/{election} - get messages for a country by election ID
             require 'messages.php';
             break;
+        case "parties": // parties/{country} - get parties by country ID
+            require 'parties.php';
+            break;
         case "region": // region/{country}/{region} - get results for a region by country and region ID
             require 'region.php';
             break;

@@ -1,8 +1,8 @@
 import { DefaultParty } from '../../../Constants';
-import { Party, Result } from '../../../Types';
+import { AnonymousResult, Party } from '../../../Types';
 import styles from './PopupBarGraph.module.css';
 
-export default function PopupBarGraph( { results, parties } : { results : Result[], parties : Party[] } ){
+export default function PopupBarGraph( { results, parties } : { results : AnonymousResult[], parties : Party[] } ){
 
     let totalVotes = 0;
     results.forEach( result => totalVotes += result.votes );

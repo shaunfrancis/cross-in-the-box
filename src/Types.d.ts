@@ -5,13 +5,15 @@ export interface Region {
 
 export interface AnonymousResult{
     party: string,
-    candidate: string,
     votes: number,
-    elected: boolean
+    candidate?: string,
+    elected?: boolean
 }
 
 export interface Result extends AnonymousResult {
     id: string
+    candidate: string,
+    elected: boolean
 }
 
 export interface Party {
@@ -20,4 +22,10 @@ export interface Party {
     title: string,
     color?: string,
     textColor?: string
+}
+
+export interface MessageData {
+    date : Date,
+    text : string,
+    results? : AnonymousResult[]
 }
