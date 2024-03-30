@@ -1,21 +1,22 @@
-import { Fragment, useState } from 'react';
+import { RefObject, forwardRef, useState } from 'react';
 import styles from './ElectionResultContainer.module.css';
 
-export default function ElectionResultContainer( 
+export default forwardRef(function ElectionResultContainer( 
     { dimensions, messages = [], map, title, summary, children } : { 
         dimensions: {w:string,h:string,minW:string,minH:string}, 
         messages?: React.ReactNode[],
         map: React.ReactNode, 
         title : string[]
         summary? : React.ReactNode,
-        children: React.ReactNode 
-    }
+        children : React.ReactNode 
+    }, 
+    ref : RefObject<HTMLDivElement>
 ){
     while(title.length < 3) title.push("");
     let [messagesVisibility, setMessagesVisiblity] = useState<boolean>(false);
 
     return (
-        <div className={styles["election-container"]} style={{height:dimensions.h, minHeight:dimensions.minH}}>
+        <div ref={ref} className={styles["election-container"]} style={{height:dimensions.h, minHeight:dimensions.minH}}>
             { messages.length > 0 &&
                 <div className={styles["election-messages-container"] + (messagesVisibility ? " " + styles["visible"] : "")}>
                     {messages}
@@ -24,7 +25,7 @@ export default function ElectionResultContainer(
             <div className={styles["election-results-container"]} style={{width:dimensions.w, minWidth:dimensions.minW}}>
                 <div className={styles["election-heading-container"]}>
                     <div className={styles["election-title"]}>
-                        { messages.length > 0 &&
+                        { messages &&
                             <img src="/images/messages.svg" className={styles["election-messages-button"]} onClick={() => {setMessagesVisiblity(!messagesVisibility)}} />
                         }
                         <h2>
@@ -44,4 +45,4 @@ export default function ElectionResultContainer(
             {children}
         </div>
     )
-}
+});

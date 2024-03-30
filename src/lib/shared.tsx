@@ -1,3 +1,6 @@
+'use client';
+import { RefObject, useEffect, useState } from "react";
+
 class SearchHandler{
     url : string;
     previousQuery : string;
@@ -31,6 +34,24 @@ class SearchHandler{
     }
 }
 
+const useOnScreen = (ref : RefObject<Element>) : boolean => {
+    const [onScreen, setOnScreen] = useState<boolean>(false);
+
+    useEffect( () => {
+        if(ref.current){
+            const observer = new IntersectionObserver( ([entry]) => {
+                setOnScreen(entry.isIntersecting);
+            });
+
+            observer.observe(ref.current);
+
+            return observer.disconnect;
+        }
+    }, [ref]);
+
+    return onScreen;
+}
+
 const parseJSONWithDates = (text : string, keys : string | string[]) => {
     if(typeof keys === "string") keys = [keys];
     return JSON.parse(text, (key, value) => {
@@ -43,4 +64,4 @@ const addThousandsSpacing = ( votes : number | string ) => {
     return votes.toString().split('').reverse().join('').replace(/([0-9]{3})/g, "$1 ").split('').reverse().join('');
 }
 
-export { SearchHandler, parseJSONWithDates, addThousandsSpacing }
+export { SearchHandler, useOnScreen, parseJSONWithDates, addThousandsSpacing }

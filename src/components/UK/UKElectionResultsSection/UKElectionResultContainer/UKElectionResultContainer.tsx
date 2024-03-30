@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import UKGeneral2010Map from "../../../maps/UKGeneral2010Map";
 import ElectionResultContainer from "../../../shared/ElectionResultContainer/ElectionResultContainer";
 import HoverPopup from "../../../shared/HoverPopup/HoverPopup";
@@ -7,10 +7,10 @@ import ElectionSummaryBlocs from "../../../shared/ElectionSummaryBlocs/ElectionS
 import { MessageData, Party, Region, Result } from "src/Types";
 import { DefaultParty, Endpoint } from "src/Constants";
 import { useRouter } from "next/navigation";
-import { constituencyToSlug, partyIdToDisplayId } from "src/lib/UK";
+import { constituencyToSlug } from "src/lib/UK";
 import UKGeneral2010GeographicMap from "src/components/maps/UKGeneral2010GeographicMap";
 import PartyProgressionBlocs from "src/components/shared/PartyProgressionBlocs/PartyProgressionBlocs";
-import { parseJSONWithDates } from "src/lib/shared";
+import { parseJSONWithDates, useOnScreen } from "src/lib/shared";
 import Message from "src/components/shared/Message/Message";
 
 interface Update{
@@ -20,10 +20,11 @@ interface Update{
 }
 
 export default function UKElectionResultContainer( 
-    { election, title = [election, "General", "Election"], parties, summaryBlocHoverState, messageGroup, geographic, changes } : 
+    { election, title = [election, "General", "Election"], regions, parties, summaryBlocHoverState, messageGroup, geographic, changes } : 
     { 
         election : string, 
         title? : string[],
+        regions : Region[],
         parties : Party[],
         summaryBlocHoverState? : [boolean, React.Dispatch<React.SetStateAction<boolean>>],
         messageGroup? : string,
@@ -33,14 +34,19 @@ export default function UKElectionResultContainer(
 ){
 
     const dimensions = {w:"calc( 0.85 * (100vh - 100px) )", h:"calc(100vh - 100px)", minW:"425px", minH:"500px"};
+    const container = useRef<HTMLDivElement>(null);
+    const onScreen = useOnScreen(container);
+    const loadingComplete = useRef<boolean>(false);
+    
     let [fills, setFills] = useState<{id: string, color: string, opacity?: number}[]>([]);
     let [popupState, setPopupState] = useState<{visible: boolean, coordinates:[number,number], id?: string}>( { visible: false, coordinates:[0,0] } );
-    let [results, setResults] = useState<{regions : Region[], results : Result[]}>({regions:[], results:[]});
+    let [results, setResults] = useState<Result[]>([]);
     let [updates, setUpdates] = useState<Update[]>([]);
     let [messages, setMessages] = useState<React.ReactNode[]>([]);
 
     useEffect( () => {
-        if(parties.length == 0) return;
+        if(loadingComplete.current || !onScreen || parties.length == 0 || regions.length == 0) return;
+        loadingComplete.current = true;
         
         const getResults = async () => {
             let updateData : Update[] = [];
@@ -53,11 +59,11 @@ export default function UKElectionResultContainer(
                 setUpdates(updateData);
             }
 
-            const resultData : {regions : Region[], results : Result[]} = await fetch(Endpoint + '/results/uk/' + election).then( res => res.json() );
+            const resultData : Result[] = await fetch(Endpoint + '/results/uk/' + election).then( res => res.json() );
             setResults(resultData);
 
             const newFills : {id: string, color: string, opacity?: number}[] = [];
-            resultData.results.filter(r => r.elected).forEach( result => {
+            resultData.filter(r => r.elected).forEach( result => {
                 const regionUpdates = updateData.filter( u => u.id == result.id );
                 if(regionUpdates.length > 0){
                     const latestUpdate = regionUpdates[regionUpdates.length - 1];
@@ -96,7 +102,7 @@ export default function UKElectionResultContainer(
             }
         };
         getResults();
-    }, [parties]);
+    }, [onScreen, parties, regions]);
 
     const mapHoverFun = (active : boolean = false, event?: React.MouseEvent, id?: string) => {
         const newPopupState = {...popupState, visible: active};
@@ -107,7 +113,7 @@ export default function UKElectionResultContainer(
 
     const router = useRouter();
     const mapClickFun = (id: string) => {
-        let region = results.regions.find( r => r.id == id );
+        let region = regions.find( r => r.id == id );
         if(region) router.push('general-elections/constituency/' + constituencyToSlug(region.title));
     };
     const map = () => {
@@ -119,10 +125,10 @@ export default function UKElectionResultContainer(
     };
 
     const popupContent = (id? : string) => {
-        const region = results.regions.find( region => region.id == id );
+        const region = regions.find( region => region.id == id );
         if(!region) return <h3>Missing data</h3>;
         
-        const regionResults = results.results.filter( result => result.id == id ).sort( (a,b) => b.votes - a.votes );
+        const regionResults = results.filter( result => result.id == id ).sort( (a,b) => b.votes - a.votes );
         const winner = regionResults.find(r => r.elected)?.candidate || "Missing data";
 
         const regionUpdates = updates.filter( u => u.id == region.id );
@@ -141,7 +147,7 @@ export default function UKElectionResultContainer(
 
     const electionSummaryBlocs = () => {
         const summaries : {party : Party, count : number}[] = [];
-        results.results.filter( r => r.elected ).forEach( result => {
+        results.filter( r => r.elected ).forEach( result => {
             
             const regionUpdates = updates.filter( u => u.id == result.id );
             const winner = regionUpdates.length > 0 ? regionUpdates[regionUpdates.length - 1].party : result.party;
@@ -166,7 +172,7 @@ export default function UKElectionResultContainer(
     }
 
     return ( <>
-        <ElectionResultContainer dimensions={dimensions} messages={messages} map={map()} title={title} summary={electionSummaryBlocs()}>
+        <ElectionResultContainer ref={container} dimensions={dimensions} messages={messages} map={map()} title={title} summary={electionSummaryBlocs()}>
             <HoverPopup visible={popupState.visible} coordinates={popupState.coordinates}>
                 {popupContent(popupState.id)}
             </HoverPopup>
