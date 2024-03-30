@@ -26,9 +26,9 @@ export default function ElectionSummaryBlocs(
         const blocs : React.ReactNode[] = [];
         for(let j = 0; j < rowLength; j++){
             const position = (shouldShowOther && (i > 0 || j >= 4)) ? i*rowLength + j - 1 : i*rowLength + j;
-            if(position >= data.length - 1 + (shouldShowOther ? 1 : 0)) break;
+            if(position >= data.length) break;
 
-            if(i == 0 && j == 4){
+            if(shouldShowOther && i == 0 && j == 4){
                 blocs.push(
                     <div key={-1}
                         className={styles["summary-bloc"] + " " + styles["other-bloc"]}
