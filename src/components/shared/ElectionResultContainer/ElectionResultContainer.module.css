@@ -12,6 +12,11 @@
         width:310px;
     }
 
+.election-messages-inner-container{
+    width:300px;
+    overflow:auto;
+}
+
 .election-results-container{
     padding:20px;
     background:#fff;

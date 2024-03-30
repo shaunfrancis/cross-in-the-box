@@ -45,7 +45,7 @@ const useOnScreen = (ref : RefObject<Element>) : boolean => {
 
             observer.observe(ref.current);
 
-            return observer.disconnect;
+            return () => { if(observer) observer.disconnect() };
         }
     }, [ref]);
 

@@ -40,6 +40,13 @@ section > h1{
     vertical-align:middle;
 }
 
-rect{
+span.interactive{
     cursor:pointer;
+    text-decoration:underline;
+    text-underline-offset:2px;
+    transition:background-color 100ms;
+    padding:0 1px;
+}
+span.interactive:hover{
+    background-color:rgb(230,230,230);
 }

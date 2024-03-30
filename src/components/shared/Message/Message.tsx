@@ -1,10 +1,10 @@
 import styles from './Message.module.css';
 
-export default function Message( { children } : { children : React.ReactNode } ){
+export default function Message( { date, children } : { date : string, children : React.ReactNode } ){
     return (
         <div className={styles["container"]}>
             <div className={styles["header"]}>
-                14:56
+                {date}
             </div>
             <div className={styles["body"]}>
                 {children}

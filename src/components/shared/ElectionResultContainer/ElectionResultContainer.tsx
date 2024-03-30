@@ -2,7 +2,7 @@ import { RefObject, forwardRef, useState } from 'react';
 import styles from './ElectionResultContainer.module.css';
 
 export default forwardRef(function ElectionResultContainer( 
-    { dimensions, messages = [], map, title, summary, children } : { 
+    { dimensions, messages, map, title, summary, children } : { 
         dimensions: {w:string,h:string,minW:string,minH:string}, 
         messages?: React.ReactNode[],
         map: React.ReactNode, 
@@ -17,9 +17,11 @@ export default forwardRef(function ElectionResultContainer(
 
     return (
         <div ref={ref} className={styles["election-container"]} style={{height:dimensions.h, minHeight:dimensions.minH}}>
-            { messages.length > 0 &&
+            { messages && messages.length > 0 &&
                 <div className={styles["election-messages-container"] + (messagesVisibility ? " " + styles["visible"] : "")}>
-                    {messages}
+                    <div className={styles["election-messages-inner-container"]}>
+                        {messages}
+                    </div>
                 </div>
             }
             <div className={styles["election-results-container"]} style={{width:dimensions.w, minWidth:dimensions.minW}}>

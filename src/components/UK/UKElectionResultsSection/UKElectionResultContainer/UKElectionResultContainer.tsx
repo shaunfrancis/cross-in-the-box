@@ -34,6 +34,7 @@ export default function UKElectionResultContainer(
 ){
 
     const dimensions = {w:"calc( 0.85 * (100vh - 100px) )", h:"calc(100vh - 100px)", minW:"425px", minH:"500px"};
+    const router = useRouter();
     const container = useRef<HTMLDivElement>(null);
     const onScreen = useOnScreen(container);
     const loadingComplete = useRef<boolean>(false);
@@ -43,6 +44,29 @@ export default function UKElectionResultContainer(
     let [results, setResults] = useState<Result[]>([]);
     let [updates, setUpdates] = useState<Update[]>([]);
     let [messages, setMessages] = useState<React.ReactNode[]>([]);
+
+    const addConstituencyLinks = (text : string) : React.ReactNode[] => {
+        const spans : React.ReactNode[] = [];
+        text.split("#").forEach( (fragment, index) => {
+            if(fragment == "") return;
+
+            const linkedRegion = regions.find( r => r.title.toLowerCase() == fragment.toLowerCase() );
+
+            if(index % 2 && linkedRegion){
+                spans.push(
+                    <span 
+                        key={index}
+                        className="interactive"
+                        onClick={ () => { router.push('general-elections/constituency/' + constituencyToSlug(linkedRegion.title)) } }
+                    >
+                        {fragment}
+                    </span> 
+                );
+            }
+            else spans.push( <span key={index}>{fragment}</span> );
+        });
+        return spans;
+    }
 
     useEffect( () => {
         if(loadingComplete.current || !onScreen || parties.length == 0 || regions.length == 0) return;
@@ -88,9 +112,10 @@ export default function UKElectionResultContainer(
 
                 const newMessages : React.ReactNode[] = [];
                 messagesData.forEach( (message, index) => {
+                    const date = message.date.getHours().toString().padStart(2,'0') + ":" + message.date.getMinutes().toString().padStart(2,'0');
                     newMessages.push( (
-                        <Message key={index}>
-                            {message.text}
+                        <Message key={index} date={date}>
+                            {addConstituencyLinks(message.text)}
                             {
                                 message.results && 
                                 <PopupBarGraph parties={parties} results={message.results.sort( (a,b) => b.votes - a.votes )} />
@@ -111,7 +136,6 @@ export default function UKElectionResultContainer(
         setPopupState(newPopupState);
     };
 
-    const router = useRouter();
     const mapClickFun = (id: string) => {
         let region = regions.find( r => r.id == id );
         if(region) router.push('general-elections/constituency/' + constituencyToSlug(region.title));
@@ -172,7 +196,7 @@ export default function UKElectionResultContainer(
     }
 
     return ( <>
-        <ElectionResultContainer ref={container} dimensions={dimensions} messages={messages} map={map()} title={title} summary={electionSummaryBlocs()}>
+        <ElectionResultContainer ref={container} dimensions={dimensions} messages={messageGroup ? messages : undefined} map={map()} title={title} summary={electionSummaryBlocs()}>
             <HoverPopup visible={popupState.visible} coordinates={popupState.coordinates}>
                 {popupContent(popupState.id)}
             </HoverPopup>
