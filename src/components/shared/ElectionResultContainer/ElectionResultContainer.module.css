@@ -20,7 +20,7 @@
 .election-results-container{
     padding:20px;
     background:#fff;
-    box-shadow:1px 1px 0 1px rgba(200,200,200,0.1);
+    box-shadow:1px 1px 0 1px var(--box-shadow-color);
 
     display:flex;
     gap:20px;

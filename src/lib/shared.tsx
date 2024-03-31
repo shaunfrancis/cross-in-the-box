@@ -28,7 +28,7 @@ class SearchHandler{
         const permissionToProceed = await this.permission(query);
         if(!permissionToProceed) return null;
 
-        const response : Type = await fetch(this.url + query).then( res => res.json() );
+        const response : Type = await fetch(this.url + encodeURIComponent(query)).then( res => res.json() );
         if(query != this.previousQuery) return null;
         return response;
     }

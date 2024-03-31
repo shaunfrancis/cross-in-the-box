@@ -2,6 +2,7 @@
 
 :root{
     --default-color: #AAA;
+    --box-shadow-color: rgba(200,200,200,0.1);
 }
 
 *{
@@ -27,11 +28,21 @@ h2{ font-weight: 600 }
 h3{ font-weight: 500 }
 h4{ font-weight: 400 }
 
+a.unstyled{
+    text-decoration:inherit;
+    color:inherit;
+}
+
 section{
     position:relative;
     padding:30px 0;
     margin:50px 0;
     margin-top:1px;
+}
+
+main > section.shaded{
+    --box-shadow-color:rgba(190,190,215,1);
+    background:rgb(220,220,245);
 }
 
 section > h1{
@@ -49,4 +60,18 @@ span.interactive{
 }
 span.interactive:hover{
     background-color:rgb(230,230,230);
+}
+
+button{
+    -webkit-appearance:none;
+    appearance:none;
+    border:none;
+    cursor:pointer;
+    border-radius:2px;
+    box-shadow:2px 2px 0 2px rgba(170,170,195,1);
+}
+
+button:active{
+    box-shadow:none;
+    transform:translate(1px,1px);
 }

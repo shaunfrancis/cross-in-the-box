@@ -8,7 +8,7 @@ export default function UKGeneralElections(){
                 <h1>Election Results</h1>
                 <UKElectionResultsSection />
             </section>
-            <section style={{background: "rgb(220,220,245)"}}>
+            <section className="shaded">
                 <h1>Find A Constituency</h1>
                 <UKConstituencySearchSection />
             </section>

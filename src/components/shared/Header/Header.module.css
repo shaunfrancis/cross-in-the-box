@@ -1,6 +1,6 @@
 #header{
     background:#fff;
-    box-shadow:1px 1px 0 1px rgba(200,200,200,0.1);
+    box-shadow:1px 1px 0 1px var(--box-shadow-color);
     height:80px;
 }
 
