@@ -26,7 +26,8 @@
 .summary-bloc{
     cursor:default;
     color:#fff;
-    width:80px;
+    min-width:80px;
+    flex:1;
     padding:0 10px;
     border-radius:2px;
     display:flex;

@@ -31,6 +31,7 @@ export default function UKPollingSection({ parties } : { parties : Party[] }){
 
     return (
         <div id={styles["graph-container"]}>
+            <h1>Poll Tracker</h1>
             <PollGraph polls={pollData} parties={parties} />
         </div>
     )

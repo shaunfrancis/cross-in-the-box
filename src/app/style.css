@@ -36,14 +36,17 @@ a.unstyled{
 section{
     position:relative;
     padding:30px 0;
-    margin:50px 0;
-    margin-top:1px;
+    margin:0 0 50px 0;
 }
 
 main > section.shaded{
-    --box-shadow-color:rgba(190,190,215,1);
     background:rgb(220,220,245);
+    border-radius:2px;
+    color:rgb(24,24,84);
+    margin:0 50px 50px 50px;
+    box-shadow:1px 1px 0 1px var(--box-shadow-color);
 }
+main > section.shaded *{ --box-shadow-color:rgba(190,190,215,1) }
 
 section > h1{
     margin:50px;
@@ -68,7 +71,7 @@ button{
     border:none;
     cursor:pointer;
     border-radius:2px;
-    box-shadow:2px 2px 0 2px rgba(170,170,195,1);
+    box-shadow:2px 2px 0 2px var(--box-shadow-color);
 }
 
 button:active{

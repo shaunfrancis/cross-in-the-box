@@ -3,10 +3,10 @@ import styles from './ElectionSummaryBlocs.module.css';
 import { Party } from '../../../Types';
 
 export default function ElectionSummaryBlocs( 
-    { data, rowLength, hoverState } : 
+    { data, rowLength = 99, hoverState } : 
     { 
-        data : {party : Party, count : number}[], 
-        rowLength : number, 
+        data : {party : Party, count : number, displayCount?: string}[], 
+        rowLength? : number, 
         hoverState? : [boolean, React.Dispatch<React.SetStateAction<boolean>>]
     }
 ){
@@ -48,7 +48,7 @@ export default function ElectionSummaryBlocs(
                         style={{background: data[position].party.color || "var(--default-color)", color: data[position].party.textColor}}
                     >
                         <span className={styles["summary-bloc-party"]}>{data[position].party.displayId || data[position].party.id}</span>
-                        <span className={styles["summary-bloc-count"]}>{data[position].count}</span>
+                        <span className={styles["summary-bloc-count"]}>{data[position].displayCount || data[position].count}</span>
                     </div>
                 );
             }

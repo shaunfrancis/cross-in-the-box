@@ -1,14 +1,15 @@
 import { Party, Poll } from 'src/Types';
 import styles from './PollGraph.module.css';
 import { Fragment } from 'react';
+import ElectionSummaryBlocs from '../ElectionSummaryBlocs/ElectionSummaryBlocs';
 
 export default function PollGraph({ polls, parties } : { polls : Poll[], parties : Party[] }){
     if(polls.length == 0) return;
 
-    const w = 1000;
+    const w = 1200;
     const h = 500;
 
-    const xAxisOffset = 40;
+    const xAxisOffset = 2;
     const yAxisOffset = 40;
 
     let yLimit = 0;
@@ -28,14 +29,16 @@ export default function PollGraph({ polls, parties } : { polls : Poll[], parties
     });
     yLimit = Math.ceil( yLimit / 5 ) * 5;
 
-    const yAxis = () => {
+    const yTicks = () => {
         const ticks : React.ReactNode[] = [];
         for(let i = 0; i < yLimit/5; i ++){
             const yPos = (h - xAxisOffset)/(yLimit/5) * i;
             ticks.push(
                 <Fragment key={i}>
-                    <path d={"m" + yAxisOffset + " " + yPos + "l" + w + " 0"} stroke="#DDD" strokeWidth="2" />
-                    <text x={yAxisOffset - 10} y={yPos} alignmentBaseline="middle" textAnchor="end" fontSize={10}>
+                    <path d={"m" + yAxisOffset + " " + yPos + "l" + w + " 0"} stroke="#EEE" strokeWidth="2" />
+                    <text x={yAxisOffset - 8} y={yPos} 
+                        alignmentBaseline="middle" textAnchor="end" fontSize={12} style={{fontWeight:"500"}}
+                    >
                         {(yLimit/5 - i)*5}%
                     </text>
                 </Fragment>
@@ -43,14 +46,7 @@ export default function PollGraph({ polls, parties } : { polls : Poll[], parties
         }
         return ( <>
             {ticks}
-            <path d={"m" + yAxisOffset + " 0l0 " + (h - xAxisOffset)} stroke="#000" strokeWidth="3" strokeLinecap="square" />
         </> )
-    }
-
-    const xAxis = () => {
-        return (
-            <path d={"m" + yAxisOffset + " " + (h - xAxisOffset) + "l" + w + " 0"} stroke="#000" strokeWidth="3" strokeLinecap="square" />
-        )
     }
 
     const polledParties : Party[] = [];
@@ -58,8 +54,6 @@ export default function PollGraph({ polls, parties } : { polls : Poll[], parties
         const pointsArray : React.ReactNode[] = [];
         polls.forEach( (poll, pollIndex) => {
             poll.figures.forEach( (figure, figIndex) => {
-                if(figure.party == "other") return;
-
                 const party = parties.find(p => p.id == figure.party);
                 if(!party) return;
 
@@ -80,8 +74,8 @@ export default function PollGraph({ polls, parties } : { polls : Poll[], parties
     }
     const points = getPoints();
 
-    const lines = () => {
-        const averageLines : React.ReactNode[] = [];
+    const getLines = () => {
+        const averageLines : { path : React.ReactNode, party: Party, todaysAverage : number}[] = [];
         const dayValue = 1000 * 60 * 60 * 24, avgOverDays = 30;
         const dailyXShift = (dayValue / (lastPoll - firstPoll)) * (w - yAxisOffset);
 
@@ -95,6 +89,7 @@ export default function PollGraph({ polls, parties } : { polls : Poll[], parties
             let currentDate = relevantPolls[0].centre!;
             let day = ((relevantPolls[0].centre! - firstPoll) / dayValue);
             let endDate = Math.min((new Date()).valueOf(), relevantPolls[relevantPolls.length - 1].centre! + avgOverDays*dayValue);
+            let average = 0;
             while(currentDate < endDate){
                 currentDate += dayValue;
                 day++;
@@ -111,28 +106,48 @@ export default function PollGraph({ polls, parties } : { polls : Poll[], parties
                     numerator += weight * figure;
                     denominator += weight;
                 });
-                if(denominator == 0) continue;
+                if(denominator == 0){
+                    average = -1;
+                    continue;
+                }
 
-                const average = numerator / denominator;
+                average = numerator / denominator;
 
                 d += "L" + (dailyXShift*day + yAxisOffset).toFixed(1) + " " + ((1 - (average / yLimit)) * (h - xAxisOffset)).toFixed(1);
             }
 
-            averageLines.push(
-                <path key={index} d={d} fill="none" stroke={color} strokeWidth="3" strokeLinejoin="round" />
-            )
+            averageLines.push( {
+                path: <path key={index} d={d} fill="none" stroke={color} strokeWidth="3" strokeLinejoin="round" strokeLinecap="round" />,
+                party: party,
+                todaysAverage: average
+            })
         });
+        averageLines.sort( (a,b) => a.todaysAverage - b.todaysAverage );
         return averageLines;
     }
+    const lines = getLines();
+
+    const summaryBlocData = lines
+        .filter(l => l.todaysAverage >= 0) //remove parties that have no figures in last {avgOverDays} days
+        .map(l => { 
+            return { 
+                party: l.party,
+                count: l.todaysAverage,
+                displayCount: l.todaysAverage.toFixed(1) + "%"
+            } 
+        })
+        .sort( (a,b) => b.count - a.count );
 
 
-    return (
-        <svg width="100%" height="100%" viewBox={"0 -10 " + w + " " + h}>
-            <rect x="0" y="-10" width={w} height={h} fill="rgba(0,0,255,0.0)" />
-            {yAxis()}
-            {xAxis()}
+    return ( <>
+        <ElectionSummaryBlocs data={summaryBlocData} />
+        <svg className={styles["graph"]} width="100%" height="100%" viewBox={"0 -10 " + (w+5) + " " + (h+10)}>
+            <rect x="0" y="-10" width={w} height={h} fill="rgba(0,0,255,0.0 )" />
+            {yTicks()}
             {points}
-            {lines()}
+            {lines.map(l => l.path)}
+            <path d={"m" + yAxisOffset + " 0l0 " + (h - xAxisOffset)} stroke="#000" strokeWidth="3" strokeLinecap="square" />
+            <path d={"m" + yAxisOffset + " " + (h - xAxisOffset) + "l" + w + " 0"} stroke="#000" strokeWidth="3" strokeLinecap="square" />
         </svg>
-    )
+    </> )
 }
