@@ -13,6 +13,9 @@
     $message_links_table = $country . "_message_links";
     $messages_table = $country . "_messages";
     $parties_table = $country . "_parties";
+    $polls_table = $country . "_polls";
+    $poll_figures_table = $country . "_poll_figures";
+    $pollsters_table = $country . "_pollsters";
     $results_table = $country . "_results";
     $regions_table = $country . "_regions";
     $updates_table = $country . "_updates";
@@ -24,6 +27,9 @@
             break;
         case "parties": // parties/{country} - get parties by country ID
             require 'parties.php';
+            break;
+        case "polls":   // polls/{country} - get opinion polls by country ID
+            require 'polls.php';
             break;
         case "region": // region/{country}/{region} - get results for a region by country and region ID
             require 'region.php';

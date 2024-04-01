@@ -29,3 +29,24 @@ export interface MessageData {
     text : string,
     results? : AnonymousResult[]
 }
+
+export interface PollSkeleton {
+    id: number,
+    pollster: string,
+    start: Date,
+    end: Date,
+    centre?: number,
+    client?: string,
+    source?: string,
+    sample?: number
+}
+
+export interface PollFigure {
+    poll_id?: number,
+    party: string,
+    figure: number
+}
+
+export interface Poll extends PollSkeleton {
+    figures: PollFigure[]
+}

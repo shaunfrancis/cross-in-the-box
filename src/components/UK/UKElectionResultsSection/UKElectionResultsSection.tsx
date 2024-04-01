@@ -5,26 +5,10 @@ import styles from "./UKElectionResultsSection.module.css";
 import Toggle from "src/components/shared/Toggle/Toggle";
 import UKElectionResultContainer from "./UKElectionResultContainer/UKElectionResultContainer";
 import { Party, Region } from "src/Types";
-import { Endpoint } from "src/Constants";
-import { partyIdToDisplayId } from "src/lib/UK";
 
-export default function UKElectionResultsSection(){
-    const [regions, setRegions] = useState<Region[]>([]);
-    const [parties, setParties] = useState<Party[]>([]);
+export default function UKElectionResultsSection({ regions, parties } : { regions : Region[], parties : Party[] }){
     const [summaryBlocHover, setSummaryBlocHover] = useState<boolean>(false);
     const [geographic, setGeographic] = useState<boolean>(false);
-
-    useEffect( () => {
-        const getData = async () => {
-            const partyData : Party[] = await fetch(Endpoint + "/parties/uk").then( res => res.json() );
-            partyData.forEach( party => party.displayId = partyIdToDisplayId(party.id) );
-            setParties(partyData);
-
-            const regionData : Region[] = await fetch(Endpoint + "/regions/uk").then( res => res.json() );
-            setRegions(regionData);
-        };
-        getData();
-    }, []);
     
     return ( <>
         <Toggle 

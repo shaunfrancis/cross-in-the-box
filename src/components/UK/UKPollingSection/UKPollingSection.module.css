@@ -1,0 +1,6 @@
+#graph-container{
+    background:#fff;
+    margin:0 50px;
+    padding:30px;
+    box-shadow:1px 1px 0 1px var(--box-shadow-color)
+}
