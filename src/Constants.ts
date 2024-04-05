@@ -5,7 +5,8 @@ const Endpoint = process.env.NODE_ENV == "development" ? "http://localhost:8888/
 const DefaultParty : Party = {
     id: "?",
     displayId: "?",
-    title: "Missing data"
+    title: "Missing data",
+    color: "var(--default-color)"
 };
 
 export { Endpoint, DefaultParty }

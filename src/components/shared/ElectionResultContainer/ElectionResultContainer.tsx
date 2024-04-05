@@ -2,9 +2,10 @@ import { RefObject, forwardRef, useState } from 'react';
 import styles from './ElectionResultContainer.module.css';
 
 export default forwardRef(function ElectionResultContainer( 
-    { dimensions, messages, map, title, summary, children } : { 
+    { dimensions, messages, messagesOpenOnLoad, map, title, summary, children } : { 
         dimensions: {w:string,h:string,minW:string,minH:string}, 
         messages?: React.ReactNode[],
+        messagesOpenOnLoad?: boolean,
         map: React.ReactNode, 
         title : string[]
         summary? : React.ReactNode,
@@ -13,7 +14,7 @@ export default forwardRef(function ElectionResultContainer(
     ref : RefObject<HTMLDivElement>
 ){
     while(title.length < 3) title.push("");
-    let [messagesVisibility, setMessagesVisiblity] = useState<boolean>(false);
+    let [messagesVisibility, setMessagesVisiblity] = useState<boolean>(messagesOpenOnLoad || false);
 
     return (
         <div ref={ref} className={styles["election-container"]} style={{height:dimensions.h, minHeight:dimensions.minH}}>

@@ -20,7 +20,7 @@ interface Update{
 }
 
 export default function UKElectionResultContainer( 
-    { election, title = [election, "General", "Election"], regions, parties, summaryBlocHoverState, messageGroup, geographic, changes } : 
+    { election, title = [election, "General", "Election"], regions, parties, summaryBlocHoverState, messageGroup, messagesOpenOnLoad, geographic, changes } : 
     { 
         election : string, 
         title? : string[],
@@ -28,6 +28,7 @@ export default function UKElectionResultContainer(
         parties : Party[],
         summaryBlocHoverState? : [boolean, React.Dispatch<React.SetStateAction<boolean>>],
         messageGroup? : string,
+        messagesOpenOnLoad?: boolean,
         geographic? : boolean,
         changes? : boolean
     }
@@ -196,7 +197,13 @@ export default function UKElectionResultContainer(
     }
 
     return ( <>
-        <ElectionResultContainer ref={container} dimensions={dimensions} messages={messageGroup ? messages : undefined} map={map()} title={title} summary={electionSummaryBlocs()}>
+        <ElectionResultContainer ref={container} 
+            dimensions={dimensions} 
+            messages={messageGroup ? messages : undefined} messagesOpenOnLoad={messagesOpenOnLoad} 
+            map={map()} 
+            title={title} 
+            summary={electionSummaryBlocs()}
+        >
             <HoverPopup visible={popupState.visible} coordinates={popupState.coordinates}>
                 {popupContent(popupState.id)}
             </HoverPopup>

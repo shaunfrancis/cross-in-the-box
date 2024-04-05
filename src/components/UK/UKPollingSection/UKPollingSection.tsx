@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { Endpoint } from 'src/Constants';
 import { parseJSONWithDates } from 'src/lib/shared';
 import { Party, Poll, PollFigure, PollSkeleton } from 'src/Types';
+import PollTable from 'src/components/shared/PollTable/PollTable';
 
 export default function UKPollingSection({ parties } : { parties : Party[] }){
 
@@ -20,9 +21,13 @@ export default function UKPollingSection({ parties } : { parties : Party[] }){
 
             data.polls.forEach( skeleton => {
                 const figures : PollFigure[] = data.figures.filter( f => f.poll_id == skeleton.id );
-                downloadedPolls.push({...skeleton, figures: figures});
-            });
 
+                const centre = (skeleton.end.valueOf() - skeleton.start.valueOf()) / 2 + skeleton.start.valueOf();
+
+                downloadedPolls.push({...skeleton, centre: centre, figures: figures});
+            });
+            
+            downloadedPolls.sort((a,b) => b.start.valueOf() - a.start.valueOf());
 
             setPollData(downloadedPolls);
         };
@@ -30,9 +35,15 @@ export default function UKPollingSection({ parties } : { parties : Party[] }){
     }, []);
 
     return (
-        <div id={styles["graph-container"]}>
-            <h1>Poll Tracker</h1>
-            <PollGraph polls={pollData} parties={parties} />
+        <div id={styles["tracker-container"]}>
+            <div id={styles["graph-container"]}>
+                <h2>Voting Intention</h2>
+                <PollGraph polls={pollData} parties={parties} />
+            </div>
+            <div>
+                <h2>Latest Polls</h2>
+                <PollTable polls={pollData} parties={parties} maxPolls={10} maxParties={5} />
+            </div>
         </div>
     )
 }

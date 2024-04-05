@@ -1,0 +1,45 @@
+.poll-table{
+    margin-top:30px;
+    display:grid;
+    grid-template-columns: [pollster] minmax(100px, max-content) [fieldwork] max-content [figures] minmax(250px, max-content);
+    column-gap:30px;
+    row-gap:10px;
+    text-align:left;
+    font-size:1.2em;
+}
+
+.pollster{
+    grid-column: pollster;
+}
+
+.fieldwork{
+    grid-column: fieldwork;
+}
+
+.figures{
+    grid-column: figures;
+    display: flex;
+    text-align: center;
+    gap:2px;
+}
+
+.figures-header{
+    color:#fff;
+}
+
+.figures > div{
+    flex:1 1 0px;
+    width:0;
+    padding:0 10px;
+    border-radius:2px;
+}
+
+.pollster{
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.client-span{
+    color:rgb(102, 102, 102);
+}

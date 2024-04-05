@@ -6,7 +6,7 @@ import ElectionSummaryBlocs from '../ElectionSummaryBlocs/ElectionSummaryBlocs';
 export default function PollGraph({ polls, parties } : { polls : Poll[], parties : Party[] }){
     if(polls.length == 0) return;
 
-    const w = 1200;
+    const w = 1000;
     const h = 500;
 
     const xAxisOffset = 2;
@@ -21,10 +21,8 @@ export default function PollGraph({ polls, parties } : { polls : Poll[], parties
             if(figure.figure > yLimit) yLimit = figure.figure;
         });
         
-        const pollCentre = (poll.end.valueOf() - poll.start.valueOf()) / 2 + poll.start.valueOf();
-        if(pollCentre < firstPoll) firstPoll = pollCentre;
-        if(pollCentre > lastPoll) lastPoll = pollCentre;
-        poll.centre = pollCentre;
+        if(poll.centre < firstPoll) firstPoll = poll.centre;
+        if(poll.centre > lastPoll) lastPoll = poll.centre;
             
     });
     yLimit = Math.ceil( yLimit / 5 ) * 5;
@@ -37,7 +35,7 @@ export default function PollGraph({ polls, parties } : { polls : Poll[], parties
                 <Fragment key={i}>
                     <path d={"m" + yAxisOffset + " " + yPos + "l" + w + " 0"} stroke="#EEE" strokeWidth="2" />
                     <text x={yAxisOffset - 8} y={yPos} 
-                        alignmentBaseline="middle" textAnchor="end" fontSize={12} style={{fontWeight:"500"}}
+                        alignmentBaseline="middle" textAnchor="end" fontSize={15} style={{fontWeight:"500"}}
                     >
                         {(yLimit/5 - i)*5}%
                     </text>
@@ -59,7 +57,7 @@ export default function PollGraph({ polls, parties } : { polls : Poll[], parties
 
                 if(!polledParties.includes(party)) polledParties.push(party);
 
-                const x = (( (poll.centre! - firstPoll) / (lastPoll - firstPoll) ) * (w - yAxisOffset) + yAxisOffset).toFixed(1);
+                const x = (( (poll.centre - firstPoll) / (lastPoll - firstPoll) ) * (w - yAxisOffset) + yAxisOffset).toFixed(1);
                 const y = ((1 - (figure.figure / yLimit)) * (h - xAxisOffset)).toFixed(1);
                 const color = party.color || "var(--default-color)";
                 pointsArray.push(
@@ -83,25 +81,25 @@ export default function PollGraph({ polls, parties } : { polls : Poll[], parties
             const color = party.color || "var(--default-color)";
             const relevantPolls = polls.filter(p => p.figures.find(f => f.party == party.id));
 
-            const x = ( (relevantPolls[0].centre! - firstPoll) / (lastPoll - firstPoll) ) * (w - yAxisOffset) + yAxisOffset;
+            const x = ( (relevantPolls[0].centre - firstPoll) / (lastPoll - firstPoll) ) * (w - yAxisOffset) + yAxisOffset;
             let d = "m" + x + " " + (1 - relevantPolls[0].figures.find(f => f.party == party.id)!.figure / yLimit) * (h - xAxisOffset);
 
-            let currentDate = relevantPolls[0].centre!;
-            let day = ((relevantPolls[0].centre! - firstPoll) / dayValue);
-            let endDate = Math.min((new Date()).valueOf(), relevantPolls[relevantPolls.length - 1].centre! + avgOverDays*dayValue);
+            let currentDate = relevantPolls[0].centre;
+            let day = ((relevantPolls[0].centre - firstPoll) / dayValue);
+            let endDate = Math.min((new Date()).valueOf(), relevantPolls[relevantPolls.length - 1].centre + avgOverDays*dayValue);
             let average = 0;
             while(currentDate < endDate){
                 currentDate += dayValue;
                 day++;
 
                 const lastMonthOfPolls = relevantPolls.filter( p => {
-                    return p.centre! >= currentDate - avgOverDays * dayValue && p.centre! <= currentDate;
+                    return p.centre >= currentDate - avgOverDays * dayValue && p.centre <= currentDate;
                 });
 
                 let numerator = 0, denominator = 0;
                 lastMonthOfPolls.forEach( poll => {
                     const figure = poll.figures.find(f => f.party == party.id)!.figure;
-                    const weight = avgOverDays - ((currentDate - poll.centre!) / dayValue);
+                    const weight = avgOverDays - ((currentDate - poll.centre) / dayValue);
 
                     numerator += weight * figure;
                     denominator += weight;
@@ -141,8 +139,7 @@ export default function PollGraph({ polls, parties } : { polls : Poll[], parties
 
     return ( <>
         <ElectionSummaryBlocs data={summaryBlocData} />
-        <svg className={styles["graph"]} width="100%" height="100%" viewBox={"0 -10 " + (w+5) + " " + (h+10)}>
-            <rect x="0" y="-10" width={w} height={h} fill="rgba(0,0,255,0.0 )" />
+        <svg className={styles["graph"]} viewBox={"0 -10 " + (w+5) + " " + (h+10)}>
             {yTicks()}
             {points}
             {lines.map(l => l.path)}

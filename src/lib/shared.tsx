@@ -1,5 +1,6 @@
 'use client';
 import { RefObject, useEffect, useState } from "react";
+import { Poll } from "src/Types";
 
 class SearchHandler{
     url : string;
@@ -60,8 +61,52 @@ const parseJSONWithDates = (text : string, keys : string | string[]) => {
     });
 }
 
+const getPollAverages = (polls : Poll[], nDays : number = 30) => {
+    if(polls.length == 0) return [];
+
+    const dayValue = 1000 * 60 * 60 * 24;
+
+    let currentDate = Math.min((new Date()).valueOf(), polls[polls.length - 1].centre + nDays*dayValue);
+    const lastNDaysOfPolls = polls.filter( p => {
+        return p.centre >= currentDate - nDays * dayValue && p.centre <= currentDate;
+    });
+
+    const averages : {id : string, average : number}[] = [];
+    lastNDaysOfPolls.forEach( poll => {
+        poll.figures.forEach( figure => {
+            if(!averages.find(p => p.id == figure.party)) averages.push({id: figure.party, average: -1});
+        })
+    })
+
+    averages.forEach( party => {
+        const relevantPolls = lastNDaysOfPolls.filter(p => p.figures.find(f => f.party == party.id));
+        
+        let numerator = 0, denominator = 0;
+        relevantPolls.forEach( poll => {
+            const figure = poll.figures.find(f => f.party == party.id)!.figure;
+            const weight = nDays - ((currentDate - poll.centre) / dayValue);
+
+            numerator += weight * figure;
+            denominator += weight;
+        });
+        
+        if(denominator != 0) party.average = numerator / denominator;
+    });
+
+    return averages.sort( (a,b) => {
+        const value = (x : {id : string, average : number}) => {
+            return x.id == "other" ? -Infinity : x.average;
+        }
+        return value(b) - value(a);
+     } );
+}
+
 const addThousandsSpacing = ( votes : number | string ) => {
     return votes.toString().split('').reverse().join('').replace(/([0-9]{3})/g, "$1 ").split('').reverse().join('');
 }
 
-export { SearchHandler, useOnScreen, parseJSONWithDates, addThousandsSpacing }
+const monthAbbrev = (month : number) => {
+    return ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][month] || "?";
+}
+
+export { SearchHandler, useOnScreen, parseJSONWithDates, getPollAverages, addThousandsSpacing, monthAbbrev }

@@ -35,7 +35,6 @@ export interface PollSkeleton {
     pollster: string,
     start: Date,
     end: Date,
-    centre?: number,
     client?: string,
     source?: string,
     sample?: number
@@ -48,5 +47,6 @@ export interface PollFigure {
 }
 
 export interface Poll extends PollSkeleton {
+    centre: number,
     figures: PollFigure[]
 }
