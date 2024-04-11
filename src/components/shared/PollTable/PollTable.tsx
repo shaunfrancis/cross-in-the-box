@@ -17,9 +17,9 @@ export default function PollTable(
     return (
         <div className={styles["poll-table"]}>
             
-                <div className={styles["pollster"]}>Pollster</div>
-                <div className={styles["fieldwork"]}>Fieldwork</div>
-                <div className={styles["figures"] + " " + styles["figures-header"]}>
+                <div className={styles["pollster"] + " " + styles["header"]}>Pollster</div>
+                <div className={styles["fieldwork"] + " " + styles["header"]}>Fieldwork</div>
+                <div className={styles["figures"] + " " + styles["header"]}>
                     {
                         averages.map( (average, averageIndex) => {
                             const party = parties.find(p => p.id == average.id) || DefaultParty;

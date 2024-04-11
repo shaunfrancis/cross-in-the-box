@@ -3,9 +3,8 @@
     display:grid;
     grid-template-columns: [pollster] minmax(100px, max-content) [fieldwork] max-content [figures] minmax(250px, max-content);
     column-gap:30px;
-    row-gap:10px;
+    row-gap:2px;
     text-align:left;
-    font-size:1.2em;
 }
 
 .pollster{
@@ -21,16 +20,21 @@
     display: flex;
     text-align: center;
     gap:2px;
+    font-size:1.2em;
 }
 
-.figures-header{
+.header{
+    font-size:1.2em;
+}
+
+.figures.header{
     color:#fff;
 }
 
 .figures > div{
     flex:1 1 0px;
     width:0;
-    padding:0 10px;
+    padding:5px 10px;
     border-radius:2px;
 }
 
@@ -40,6 +44,6 @@
     text-overflow:ellipsis;
 }
 
-.client-span{
+.client-span, .fieldwork:not(.header){
     color:rgb(102, 102, 102);
 }

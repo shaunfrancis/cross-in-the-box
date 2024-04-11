@@ -4,7 +4,7 @@
     require_once './functions/fetch.php';
     $query = urldecode($request[1]);
 
-    function getOverlap($a, $b){
+    function get_overlap($a, $b){
         $a_words = explode(" ", strtolower($a));
         $b_words = explode(" ", strtolower($b));
         $overlap = 0;
@@ -36,10 +36,25 @@
             $words
         );
         usort($regions, function($a, $b) use ($query){
-            $overlap = getOverlap($b['title'], $query) <=> getOverlap($a['title'], $query);
+            $overlap = get_overlap($b['title'], $query) <=> get_overlap($a['title'], $query);
             if($overlap != 0) return $overlap;
             else return $a['title'] <=> $b['title'];
         });
+
+
+        if($country == "uk"){
+            require_once './functions/uk_postcode_search.php';
+            $region_titles = uk_postcode_search($query);
+
+            if(count($region_titles) > 0){
+                $postcode_regions = fetch(
+                    "SELECT id, title FROM $regions_table WHERE " . str_repeat("LOWER(title) LIKE ? OR ", count($region_titles) - 1) . "LOWER(title) LIKE ?",
+                    $region_titles
+                );
+                
+                $regions = array_merge($postcode_regions, $regions);
+            }
+        }
 
         $candidates = fetch(
             "SELECT * FROM (
@@ -59,7 +74,7 @@
             $words
         ); //LIMIT 2^64 - 1 forces MariaDB subquery to respect ORDER
         usort($candidates, function($a, $b) use ($query){
-            $overlap = getOverlap($b['candidate'], $query) <=> getOverlap($a['candidate'], $query);
+            $overlap = get_overlap($b['candidate'], $query) <=> get_overlap($a['candidate'], $query);
             if($overlap != 0) return $overlap;
 
             $latest = $b['date'] <=> $a['date'];

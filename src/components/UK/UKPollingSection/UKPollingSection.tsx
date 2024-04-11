@@ -40,9 +40,9 @@ export default function UKPollingSection({ parties } : { parties : Party[] }){
                 <h2>Voting Intention</h2>
                 <PollGraph polls={pollData} parties={parties} />
             </div>
-            <div>
+            <div style={{width:"550px"}}>
                 <h2>Latest Polls</h2>
-                <PollTable polls={pollData} parties={parties} maxPolls={10} maxParties={5} />
+                <PollTable polls={pollData} parties={parties} maxPolls={9} maxParties={5} />
             </div>
         </div>
     )
