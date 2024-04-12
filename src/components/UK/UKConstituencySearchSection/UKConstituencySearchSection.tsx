@@ -77,7 +77,7 @@ export default function UKConstituencySearchSection(){
                     results.regions.map( (region, index) => {
                         if(index >= displayCount) return;
                         return (
-                            <Link key={index} href={'general-elections/constituency/' + constituencyToSlug(region.title)} className={styles["result"] + " unstyled"}>
+                            <Link key={index} href={'/uk/general-elections/constituency/' + constituencyToSlug(region.title)} className={styles["result"] + " unstyled"}>
                                 <h2 className={styles["result-title"]}>
                                     {highlightRelevance(region.title)}
                                 </h2>
@@ -89,7 +89,7 @@ export default function UKConstituencySearchSection(){
                 results.candidates.map( (region, index) => {
                     if(results.regions.length + index >= displayCount) return;
                     return (
-                        <Link key={index} href={'general-elections/constituency/' + constituencyToSlug(region.title)} className={styles["result"] + " unstyled"}>
+                        <Link key={index} href={'/uk/general-elections/constituency/' + constituencyToSlug(region.title)} className={styles["result"] + " unstyled"}>
                             <h2 className={styles["result-title"]}>
                                 <div 
                                     className={styles["title-bloc"]}

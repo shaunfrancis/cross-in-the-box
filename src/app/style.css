@@ -12,7 +12,7 @@
 }
 
 html{
-    font-size: 12pt;
+    font-size: 16px;
 }
 
 body{
@@ -39,20 +39,25 @@ section{
     margin:0 0 50px 0;
 }
 
-main > section.shaded{
+section.shaded{
     background:rgb(220,220,245);
     border-radius:2px;
     color:rgb(24,24,84);
-    margin:0 50px 50px 50px;
     box-shadow:1px 1px 0 1px var(--box-shadow-color);
 }
-main > section.shaded *{ --box-shadow-color:rgba(190,190,215,1) }
+section.shaded *{ --box-shadow-color:rgba(190,190,215,1) }
 
-section > h1{
+main > section.shaded{
+    margin:0 50px 50px 50px;
+    padding:20px 50px 50px 50px;
+}
+
+main > section > h1{
     margin:50px;
     display:inline-block;
     vertical-align:middle;
 }
+section.shaded > h1{ margin-left: 0 }
 
 span.interactive{
     cursor:pointer;

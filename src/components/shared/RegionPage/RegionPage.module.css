@@ -1,12 +1,12 @@
 #container{
     height:calc(100svh - 80px);
     display:flex;
-    gap:20px;
 }
 
 #container aside{
-    flex:0 0 350px;
-    padding:50px;
+    flex:0 0 400px;
+    padding:30px;
+    overflow-y:auto;
 }
 
 #container main{

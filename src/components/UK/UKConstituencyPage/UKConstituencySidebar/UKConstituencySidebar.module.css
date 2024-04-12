@@ -1,0 +1,11 @@
+#container{
+    font-size:12px;
+}
+
+#container > section{
+    padding:30px;
+}
+
+#container > section > h1{
+    margin-bottom:30px;
+}

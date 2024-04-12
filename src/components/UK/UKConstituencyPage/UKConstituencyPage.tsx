@@ -6,6 +6,8 @@ import RegionBarGraph from "src/components/shared/RegionBarGraph/RegionBarGraph"
 import RegionPage from "src/components/shared/RegionPage/RegionPage";
 import { partyIdToDisplayId, slugToLookupSlug } from "src/lib/UK";
 import { parseJSONWithDates } from "src/lib/shared";
+import UKConstituencySearchSection from "../UKConstituencySearchSection/UKConstituencySearchSection";
+import UKConstituencySidebar from "./UKConstituencySidebar/UKConstituencySidebar";
 
 interface Event{
     type : string,
@@ -63,7 +65,7 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
 
 
     return ( <>
-        <RegionPage>
+        <RegionPage sidebar={<UKConstituencySidebar />}>
             <h1>{region.title}</h1>
             {eventNodes}
         </RegionPage>

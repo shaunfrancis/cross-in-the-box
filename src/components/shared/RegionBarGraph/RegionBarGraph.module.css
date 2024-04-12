@@ -67,8 +67,11 @@
 .bar-graph-bar-container{
     flex:1;
     background:rgb(227,227,227);
+    border-radius:2px;
+    overflow:hidden;
 }
 
 .bar-graph-bar{
     height:100%;
+    padding:0;
 }
