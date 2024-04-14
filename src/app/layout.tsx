@@ -3,8 +3,8 @@ import type { Metadata } from 'next'
  
 export const metadata: Metadata = {
   title: {
-    template: '%s - Elections',
-    default: 'Elections'
+    template: '%s - Cross In The Box',
+    default: 'Cross In The Box'
   },
   description: '',
 }

@@ -29,7 +29,7 @@ export default function UKGeneralElections(){
                 <h1>Election Results</h1>
                 <UKElectionResultsSection regions={regions} parties={parties} />
             </section>
-            <section className="shaded">
+            <section className="shaded purple">
                 <h1>Find A Constituency</h1>
                 <UKConstituencySearchSection />
             </section>
