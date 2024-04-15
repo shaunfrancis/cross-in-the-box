@@ -49,6 +49,9 @@
         case "updates": // updates/{country}/{election} - get list of changes/updates to regions by country since election
             require 'updates.php';
             break;
+        case "special": // special/{country}/{function}/{params} - for special functions unique to country ID
+            require $country . '/index.php';
+            break;
         default:
             fail(404, "Not found");
     }

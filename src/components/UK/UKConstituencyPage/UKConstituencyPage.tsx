@@ -65,7 +65,7 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
 
 
     return ( <>
-        <RegionPage sidebar={<UKConstituencySidebar />}>
+        <RegionPage sidebar={<UKConstituencySidebar region={region} />}>
             <h1>{region.title}</h1>
             {eventNodes}
         </RegionPage>
