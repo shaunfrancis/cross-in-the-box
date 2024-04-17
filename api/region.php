@@ -45,7 +45,8 @@
         //get election results for all direct successors
         $direct_regions = array($region);
         foreach($tree_results as &$branch){
-            if($branch['direct_successor'] == 1){
+            $branch['direct_successor'] = boolval($branch['direct_successor']);
+            if($branch['direct_successor']){
                 if(!in_array($branch['region_id'], $direct_regions)) $direct_regions[] = $branch['region_id'];
                 if(!in_array($branch['successor_id'], $direct_regions)) $direct_regions[] = $branch['successor_id'];
             }
@@ -75,7 +76,7 @@
 
             $matching_event = false;
             foreach($events as &$event){
-                if($event['data']['region']['id'] == $result['region_id'] && $event['data']['id'] == $result['election']){
+                if($event['region']['id'] == $result['region_id'] && $event['data']['id'] == $result['election']){
                     $matching_event = true;
                     unset($result['region_id'], $result['region_title'], $result['election'], $result['election_date'], $result['election_title']);
                     $event['data']['results'][] = $result;
@@ -86,14 +87,14 @@
             if(!$matching_event){
                 $new_event = array( 
                     "type" => "election",
-                    "date" => $result['election_date'], 
+                    "date" => $result['election_date'],
+                    "region" => array(
+                        "id" => $result['region_id'],
+                        "title" => $result['region_title']
+                    ),
                     "data" => array(
                         "id" => $result['election'], 
-                        "title" => json_decode($result['election_title']),
-                        "region" => array(
-                            "id" => $result['region_id'],
-                            "title" => $result['region_title']
-                        )
+                        "title" => json_decode($result['election_title'])
                     )
                 );
                 unset($result['region_id'], $result['region_title'], $result['election'], $result['election_date'], $result['election_title']);

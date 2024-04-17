@@ -1,17 +1,29 @@
 'use client';
+import styles from './UKConstituencyPage.module.css';
 import { useEffect, useState } from "react";
 import { Endpoint } from "src/Constants";
-import { AnonymousResult, Party } from "src/Types";
+import { AnonymousResult, Party, Region } from "src/Types";
 import RegionBarGraph from "src/components/shared/RegionBarGraph/RegionBarGraph";
 import RegionPage from "src/components/shared/RegionPage/RegionPage";
 import { partyIdToDisplayId, slugToLookupSlug } from "src/lib/UK";
 import { parseJSONWithDates } from "src/lib/shared";
-import UKConstituencySearchSection from "../UKConstituencySearchSection/UKConstituencySearchSection";
 import UKConstituencySidebar from "./UKConstituencySidebar/UKConstituencySidebar";
+
+interface FullRegionData{
+    events : Event[],
+    parties : Party[],
+    tree : {
+        region_id: string,
+        successor_id: string,
+        direct_successor: boolean,
+        note?: string
+    }[]
+}
 
 interface Event{
     type : string,
     date : Date,
+    region : Region,
     data : { 
         id : string,
         title : string[],
@@ -28,7 +40,7 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
     });
     let [region, setRegion] = useState<{id? : string, title : string}>({ title: prettySlug });
 
-    let [data, setData] = useState< {events : Event[], parties : Party[]}>({ events: [], parties: [] });
+    let [data, setData] = useState<FullRegionData>({ events: [], parties: [], tree: [] });
 
     useEffect( () => {
         const useAsyncEffect = async () => {
@@ -38,7 +50,7 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
             }
             setRegion(regionData);
 
-            const resultData : {events : Event[], parties : Party[]} = await fetch(Endpoint + "/region/uk/" + regionData.id)
+            const resultData : FullRegionData = await fetch(Endpoint + "/region/uk/" + regionData.id)
                 .then( res => res.text() )
                 .then( text => parseJSONWithDates(text, "date") );
                 
@@ -50,8 +62,33 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
     }, []);
 
     const eventNodes : React.ReactNode[] = [];
-    let index = 0;
-    data.events.forEach( event => {
+    let currentRegion : Region;
+    data.events.forEach( (event, index) => {
+
+        if(!currentRegion){ //first event, show title and set region
+            eventNodes.push( <h1>{event.region.title}</h1> );
+            currentRegion = event.region;
+        }
+
+        else if(event.region.id != currentRegion.id){ //find note explaining change from tree
+            const treeLink = data.tree.find(t => t.region_id == event.region.id && t.successor_id == currentRegion.id);
+            if(treeLink){
+                let note = "";
+                if(event.region.title != currentRegion.title) note += "The constituency was renamed to " + currentRegion.title + ".";
+                eventNodes.push(
+                    <p className={styles["boundary-change-note"]}>{note} {treeLink.note}</p>
+                );
+            }
+            else{
+                eventNodes.push(
+                    <p className={styles["boundary-change-note"]}>Boundary changes.</p>
+                );
+            }
+
+            if(event.region.title != currentRegion.title) eventNodes.push( <h1>{event.region.title}</h1> );
+            currentRegion = event.region;
+        }
+
         switch(event.type){
             case "election":
                 event.data.results.sort( (a,b) => b.votes - a.votes );
@@ -60,13 +97,11 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
                 );
                 break;
         }
-        index++;
     });
 
 
     return ( <>
         <RegionPage sidebar={<UKConstituencySidebar region={region} />}>
-            <h1>{region.title}</h1>
             {eventNodes}
         </RegionPage>
     </> )

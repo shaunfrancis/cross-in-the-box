@@ -1,0 +1,7 @@
+.boundary-change-note{
+    padding:30px 30px;
+    margin:60px 0;
+    border-top:3px dashed var(--default-color);
+    border-bottom:3px dashed var(--default-color);
+    color:#333;
+}
