@@ -1,12 +1,12 @@
 <?php
-    $request = array_filter( explode( '/', str_replace('/elections/api/', '', $_SERVER['REQUEST_URI']) ) );
+    $request = array_filter( explode( '/', str_replace(['/elections/api/','/api/'], '', $_SERVER['REQUEST_URI']) ) );
     $resource = array_shift($request);
 
     if(count($request) == 0) fail(404, "Not found");
 
     $country = $request[0];
     $accepted_countries = array("uk");
-    if(!in_array($country, $accepted_countries)) fail();
+    if(!in_array($country, $accepted_countries)) fail(404, "Not Found");
 
     $boundary_changes_table = $country . "_boundary_changes";
     $elections_table = $country . "_elections";

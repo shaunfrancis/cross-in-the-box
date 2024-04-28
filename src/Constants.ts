@@ -1,6 +1,6 @@
 import { Party } from "./Types";
 
-const Endpoint = process.env.NODE_ENV == "development" ? "http://localhost:8888/elections/api" : "https://tennessine.co.uk/elections/api";
+const Endpoint = process.env.NODE_ENV == "development" ? "http://localhost:8888/elections/api" : "https://crossinthebox.com/api";
 
 const DefaultParty : Party = {
     id: "?",
