@@ -60,6 +60,14 @@
             $direct_regions
         );
 
+        //get update notes
+        $updates = fetch(
+            "SELECT updates.election_id, updates.region_id, regions.title, updates.date, updates.party, updates.note FROM $updates_table as updates
+            JOIN $regions_table as regions ON regions.id = updates.region_id
+            WHERE region_id IN (" . str_repeat("?,", count($direct_regions) - 1) . "?)",
+            $direct_regions
+        );
+
         //get party data
         $parties = fetch(
             "SELECT DISTINCT parties.id, parties.title, parties.color, parties.textColor FROM $parties_table as parties JOIN $results_table as results ON results.party = parties.id WHERE results.region_id IN (" . str_repeat("?,", count($direct_regions) - 1) . "?)",
@@ -70,7 +78,12 @@
             if(!isset($party['textColor'])) unset($party['textColor']);
         }
 
-        //format events
+        /*Format events:
+            "type" => string,
+            "date" => string,
+            "region" => array( "id" => string, "title" => string,
+            "data" => array( ... )
+        */
         $events = array();
         foreach($results as $result){
 
@@ -101,6 +114,23 @@
                 $new_event['data']['results'] = array($result);
                 $events[] = $new_event;
             }
+        }
+
+        foreach($updates as $update){
+            $new_event = array(
+                "type" => "update",
+                "date" => $update['date'],
+                "region" => array(
+                    "id" => $update["region_id"],
+                    "title" => $update["title"]
+                ),
+                "data" => array(
+                    "party" => $update['party'],
+                    "note" => $update['note']
+                )
+
+            );
+            $events[] = $new_event;
         }
 
         echo json_encode(array( "events" => $events, "parties" => $parties, "tree" => $tree_results ), JSON_NUMERIC_CHECK);

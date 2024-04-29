@@ -1,6 +1,6 @@
 import styles from './Message.module.css';
 
-export default function Message( { date, children } : { date : string, children : React.ReactNode } ){
+export default function Message( { date, children } : { date? : string, children : React.ReactNode } ){
     return (
         <div className={styles["container"]}>
             <div className={styles["header"]}>

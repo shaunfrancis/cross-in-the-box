@@ -6,7 +6,7 @@ import { AnonymousResult, Party, Region } from "src/Types";
 import RegionBarGraph from "src/components/shared/RegionBarGraph/RegionBarGraph";
 import RegionPage from "src/components/shared/RegionPage/RegionPage";
 import { partyIdToDisplayId, slugToLookupSlug } from "src/lib/UK";
-import { parseJSONWithDates } from "src/lib/shared";
+import { dateToLongDate, parseJSONWithDates } from "src/lib/shared";
 import UKConstituencySidebar from "./UKConstituencySidebar/UKConstituencySidebar";
 
 interface FullRegionData{
@@ -23,11 +23,21 @@ interface FullRegionData{
 interface Event{
     type : string,
     date : Date,
-    region : Region,
+    region : Region
+}
+
+interface ElectionEvent extends Event{
     data : { 
         id : string,
         title : string[],
         results : AnonymousResult[] 
+    }
+}
+
+interface UpdateEvent extends Event{
+    data: {
+        party: string,
+        note: string
     }
 }
 
@@ -76,12 +86,12 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
                 let note = "";
                 if(event.region.title != currentRegion.title) note += "The constituency was renamed to " + currentRegion.title + ".";
                 eventNodes.push(
-                    <p className={styles["boundary-change-note"]}>{note} {treeLink.note}</p>
+                    <section className={styles["boundary-change-note"]}>{note} {treeLink.note}</section>
                 );
             }
             else{
                 eventNodes.push(
-                    <p className={styles["boundary-change-note"]}>Boundary changes.</p>
+                    <section className={styles["boundary-change-note"]}>Boundary changes.</section>
                 );
             }
 
@@ -90,12 +100,24 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
         }
 
         switch(event.type){
-            case "election":
-                event.data.results.sort( (a,b) => b.votes - a.votes );
+            case "election": {
+                let castEvent = event as ElectionEvent;
+                castEvent.data.results.sort( (a,b) => b.votes - a.votes );
                 eventNodes.push(
-                    <RegionBarGraph key={index} title={event.data.title} results={event.data.results} parties={data.parties} />
+                    <RegionBarGraph key={index} title={castEvent.data.title} results={castEvent.data.results} parties={data.parties} />
                 );
                 break;
+            }
+            case "update": {
+                let castEvent = event as UpdateEvent;
+                eventNodes.push(
+                    <section className={styles["update-note"]} key={index}>
+                        <h2>{dateToLongDate(castEvent.date)}</h2>
+                        <p>{castEvent.data.note}</p>
+                    </section>
+                );
+                break;
+            }
         }
     });
 

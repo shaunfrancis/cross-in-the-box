@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { constituencyToSlug } from "src/lib/UK";
 import UKGeneral2010GeographicMap from "src/components/maps/UKGeneral2010GeographicMap";
 import PartyProgressionBlocs from "src/components/shared/PartyProgressionBlocs/PartyProgressionBlocs";
-import { parseJSONWithDates, useOnScreen } from "src/lib/shared";
+import { dateToLongDate, parseJSONWithDates, useOnScreen } from "src/lib/shared";
 import Message from "src/components/shared/Message/Message";
 
 interface Update{
@@ -58,7 +58,7 @@ export default function UKElectionResultContainer(
                     <span 
                         key={index}
                         className="interactive"
-                        onClick={ () => { router.push('general-elections/constituency/' + constituencyToSlug(linkedRegion.title)) } }
+                        onClick={ () => { router.push('constituency/' + constituencyToSlug(linkedRegion.title)) } }
                     >
                         {fragment}
                     </span> 
@@ -113,7 +113,10 @@ export default function UKElectionResultContainer(
 
                 const newMessages : React.ReactNode[] = [];
                 messagesData.forEach( (message, index) => {
-                    const date = message.date.getHours().toString().padStart(2,'0') + ":" + message.date.getMinutes().toString().padStart(2,'0');
+                    let date : string;
+                    if(changes) date = dateToLongDate(message.date);
+                    else date = message.date.getHours().toString().padStart(2,'0') + ":" + message.date.getMinutes().toString().padStart(2,'0');
+
                     newMessages.push( (
                         <Message key={index} date={date}>
                             {addConstituencyLinks(message.text)}
@@ -139,7 +142,7 @@ export default function UKElectionResultContainer(
 
     const mapClickFun = (id: string) => {
         let region = regions.find( r => r.id == id );
-        if(region) router.push('general-elections/constituency/' + constituencyToSlug(region.title));
+        if(region) router.push('constituency/' + constituencyToSlug(region.title));
     };
     const map = () => {
         switch(election){

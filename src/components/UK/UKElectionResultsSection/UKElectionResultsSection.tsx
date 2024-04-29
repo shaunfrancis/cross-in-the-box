@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "./UKElectionResultsSection.module.css";
 import Toggle from "src/components/shared/Toggle/Toggle";
 import UKElectionResultContainer from "./UKElectionResultContainer/UKElectionResultContainer";
@@ -17,7 +17,7 @@ export default function UKElectionResultsSection({ regions, parties } : { region
             fun={(state) => { setGeographic(state) }}
         />
         <div id={styles["container"]}>
-            <UKElectionResultContainer election="2019" title={["Today"]} changes={true} messageGroup="2019" messagesOpenOnLoad={true}
+            <UKElectionResultContainer election="2019" title={["Today"]} changes={true} messageGroup="2019U" messagesOpenOnLoad={true}
                 summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]}
                 regions={regions}
                 parties={parties}

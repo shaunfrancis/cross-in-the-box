@@ -14,3 +14,14 @@
     padding:50px;
     overflow:auto;
 }
+
+#container main section:not(:last-child):before{
+    content:"";
+    position:absolute;
+    background:#DDD;
+    width:4px;
+    height:30px;
+    top:100%;
+    left:calc(50% - 2px);
+    z-index:-1;
+}

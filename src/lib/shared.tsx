@@ -101,6 +101,20 @@ const getPollAverages = (polls : Poll[], nDays : number = 30) => {
      } );
 }
 
+const dateToLongDate = ( date : Date ) : string => {
+    let ordinalIndicator = "th";
+    if(![11,12,13].includes(date.getDate())) switch(date.getDate() % 10){
+        case 1: ordinalIndicator = "st"; break;
+        case 2: ordinalIndicator = "nd"; break;
+        case 3: ordinalIndicator = "rd";
+    }
+
+    const month = ["January","February","March","April","May","June","July","August","September","October","November","December"][date.getMonth()];
+
+    return date.getDate().toString() + ordinalIndicator + " " + month + " " + date.getFullYear();
+
+}
+
 const addThousandsSpacing = ( votes : number | string ) => {
     return votes.toString().split('').reverse().join('').replace(/([0-9]{3})/g, "$1 ").split('').reverse().join('');
 }
@@ -109,4 +123,4 @@ const monthAbbrev = (month : number) => {
     return ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][month] || "?";
 }
 
-export { SearchHandler, useOnScreen, parseJSONWithDates, getPollAverages, addThousandsSpacing, monthAbbrev }
+export { SearchHandler, useOnScreen, parseJSONWithDates, getPollAverages, dateToLongDate, addThousandsSpacing, monthAbbrev }
