@@ -4,7 +4,7 @@ import { useState } from "react";
 import styles from "./UKElectionResultsSection.module.css";
 import Toggle from "src/components/shared/Toggle/Toggle";
 import UKElectionResultContainer from "./UKElectionResultContainer/UKElectionResultContainer";
-import { Party, Region } from "src/Types";
+import { Party, Region, Result } from "src/Types";
 
 export default function UKElectionResultsSection({ regions, parties } : { regions : Region[], parties : Party[] }){
     const [summaryBlocHover, setSummaryBlocHover] = useState<boolean>(false);
@@ -27,7 +27,7 @@ export default function UKElectionResultsSection({ regions, parties } : { region
                 summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]} 
                 regions={regions}
                 parties={parties}
-                geographic={geographic} 
+                geographic={geographic}
             />
 
             <UKElectionResultContainer election="2017" messageGroup="2017"

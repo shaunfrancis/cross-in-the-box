@@ -20,12 +20,13 @@ interface Update{
 }
 
 export default function UKElectionResultContainer( 
-    { election, title = [election, "General", "Election"], regions, parties, summaryBlocHoverState, messageGroup, messagesOpenOnLoad, geographic, changes } : 
+    { election, title = [election, "General", "Election"], regions, parties, summaryBlocHoverState, messageGroup, messagesOpenOnLoad, geographic, changes, winFormula = (results : Result[]) => results.filter(r => r.elected) } : 
     { 
         election : string, 
         title? : string[],
         regions : Region[],
         parties : Party[],
+        winFormula? : (results : Result[]) => Result[],
         summaryBlocHoverState? : [boolean, React.Dispatch<React.SetStateAction<boolean>>],
         messageGroup? : string,
         messagesOpenOnLoad?: boolean,
@@ -88,7 +89,7 @@ export default function UKElectionResultContainer(
             setResults(resultData);
 
             const newFills : {id: string, color: string, opacity?: number}[] = [];
-            resultData.filter(r => r.elected).forEach( result => {
+            winFormula(resultData).forEach( result => {
                 const regionUpdates = updateData.filter( u => u.id == result.id );
                 if(regionUpdates.length > 0){
                     const latestUpdate = regionUpdates[regionUpdates.length - 1];
@@ -157,10 +158,10 @@ export default function UKElectionResultContainer(
         if(!region) return <h3>Missing data</h3>;
         
         const regionResults = results.filter( result => result.id == id ).sort( (a,b) => b.votes - a.votes );
-        const winner = regionResults.find(r => r.elected)?.candidate || "Missing data";
+        const winner = winFormula(regionResults)[0]?.candidate || "Missing data";
 
         const regionUpdates = updates.filter( u => u.id == region.id );
-        const partyProgression : Party[] = [parties.find(p => p.id == regionResults.find(r => r.elected)?.party) || DefaultParty];
+        const partyProgression : Party[] = [parties.find(p => p.id == winFormula(regionResults)[0]?.party) || DefaultParty];
         regionUpdates.forEach( update => {
             partyProgression.push( parties.find(p => p.id == update.party) || DefaultParty );
         });
@@ -175,7 +176,7 @@ export default function UKElectionResultContainer(
 
     const electionSummaryBlocs = () => {
         const summaries : {party : Party, count : number}[] = [];
-        results.filter( r => r.elected ).forEach( result => {
+        winFormula(results).forEach( result => {
             
             const regionUpdates = updates.filter( u => u.id == result.id );
             const winner = regionUpdates.length > 0 ? regionUpdates[regionUpdates.length - 1].party : result.party;

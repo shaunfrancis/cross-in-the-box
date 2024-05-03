@@ -16,3 +16,22 @@
     align-items:center;
     gap:20px;
 }
+
+.update-note h2{
+    flex-shrink:0;
+}
+
+.party-bloc{
+    flex-shrink:0;
+    color:#fff;
+    background:var(--default-color);
+    width:80px;
+    border-radius:2px;
+    padding:4px 8px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    cursor:default;
+    text-align:center;
+    font-weight:450;
+}

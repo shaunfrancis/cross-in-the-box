@@ -1,5 +1,10 @@
 const partyIdToDisplayId = (partyId : string) => {
-    return ["speaker","vacant"].includes(partyId) ? partyId.charAt(0).toUpperCase() + partyId.slice(1) : partyId.toUpperCase();
+    let displayId = partyId.toUpperCase();
+
+    if(["speaker","vacant"].includes(partyId)) displayId = partyId.charAt(0).toUpperCase() + partyId.slice(1);
+    else if(displayId.startsWith("IND_")) displayId = displayId.substring(4);
+
+    return displayId;
 }
 
 const constituencyToSlug = (constituency : string) => {

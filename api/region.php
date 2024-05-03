@@ -70,8 +70,12 @@
 
         //get party data
         $parties = fetch(
-            "SELECT DISTINCT parties.id, parties.title, parties.color, parties.textColor FROM $parties_table as parties JOIN $results_table as results ON results.party = parties.id WHERE results.region_id IN (" . str_repeat("?,", count($direct_regions) - 1) . "?)",
-            $direct_regions
+            "SELECT DISTINCT parties.id, parties.title, parties.color, parties.textColor 
+            FROM $parties_table as parties 
+            LEFT JOIN $results_table as results ON results.party = parties.id AND results.region_id IN (" . str_repeat("?,", count($direct_regions) - 1) . "?)
+            LEFT JOIN $updates_table as updates ON updates.party = parties.id AND updates.region_id IN (" . str_repeat("?,", count($direct_regions) - 1) . "?)
+            WHERE results.party IS NOT NULL OR updates.party IS NOT NULL",
+            array(...$direct_regions, ...$direct_regions)
         );
         foreach($parties as &$party){
             if(!isset($party['color'])) unset($party['color']);
@@ -81,7 +85,7 @@
         /*Format events:
             "type" => string,
             "date" => string,
-            "region" => array( "id" => string, "title" => string,
+            "region" => array( "id" => string, "title" => string ),
             "data" => array( ... )
         */
         $events = array();

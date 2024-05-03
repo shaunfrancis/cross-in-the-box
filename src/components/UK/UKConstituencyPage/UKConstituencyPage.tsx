@@ -1,7 +1,7 @@
 'use client';
 import styles from './UKConstituencyPage.module.css';
 import { useEffect, useState } from "react";
-import { Endpoint } from "src/Constants";
+import { DefaultParty, Endpoint } from "src/Constants";
 import { AnonymousResult, Party, Region } from "src/Types";
 import RegionBarGraph from "src/components/shared/RegionBarGraph/RegionBarGraph";
 import RegionPage from "src/components/shared/RegionPage/RegionPage";
@@ -76,7 +76,7 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
     data.events.forEach( (event, index) => {
 
         if(!currentRegion){ //first event, show title and set region
-            eventNodes.push( <h1>{event.region.title}</h1> );
+            eventNodes.push( <h1 key={"h1-" + index}>{event.region.title}</h1> );
             currentRegion = event.region;
         }
 
@@ -86,12 +86,12 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
                 let note = "";
                 if(event.region.title != currentRegion.title) note += "The constituency was renamed to " + currentRegion.title + ".";
                 eventNodes.push(
-                    <section className={styles["boundary-change-note"]}>{note} {treeLink.note}</section>
+                    <section key={"boundary-note-" + index} className={styles["boundary-change-note"]}>{note} {treeLink.note}</section>
                 );
             }
             else{
                 eventNodes.push(
-                    <section className={styles["boundary-change-note"]}>Boundary changes.</section>
+                    <section key={"boundary-note-" + index} className={styles["boundary-change-note"]}>Boundary changes.</section>
                 );
             }
 
@@ -110,10 +110,16 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
             }
             case "update": {
                 let castEvent = event as UpdateEvent;
+                const party = data.parties.find( p => p.id == castEvent.data.party ) || DefaultParty;
                 eventNodes.push(
                     <section className={styles["update-note"]} key={index}>
+
+                        <div className={styles["party-bloc"]} style={{background:party.color, color:party.textColor}}>
+                            {party.displayId}
+                        </div>
                         <h2>{dateToLongDate(castEvent.date)}</h2>
                         <p>{castEvent.data.note}</p>
+
                     </section>
                 );
                 break;
