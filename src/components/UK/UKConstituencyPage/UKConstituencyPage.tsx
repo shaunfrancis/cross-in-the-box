@@ -8,6 +8,7 @@ import RegionPage from "src/components/shared/RegionPage/RegionPage";
 import { partyIdToDisplayId, slugToLookupSlug } from "src/lib/UK";
 import { dateToLongDate, parseJSONWithDates } from "src/lib/shared";
 import UKConstituencySidebar from "./UKConstituencySidebar/UKConstituencySidebar";
+import UKTernaryPlot from '../UKAnalysisSection/UKTernaryPlot/UKTernaryPlot';
 
 interface FullRegionData{
     events : Event[],
@@ -49,7 +50,6 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
         else prettySlug += slugPiece.charAt(0).toUpperCase() + slugPiece.slice(1) + " ";
     });
     let [region, setRegion] = useState<{id? : string, title : string}>({ title: prettySlug });
-
     let [data, setData] = useState<FullRegionData>({ events: [], parties: [], tree: [] });
 
     useEffect( () => {
@@ -67,6 +67,7 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
             resultData.events.sort( (a,b) => b.date.valueOf() - a.date.valueOf() );
             resultData.parties.forEach( party => { party.displayId = partyIdToDisplayId(party.id) });
             setData(resultData);
+
         };
         useAsyncEffect();
     }, []);
@@ -76,7 +77,6 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
     data.events.forEach( (event, index) => {
 
         if(!currentRegion){ //first event, show title and set region
-            eventNodes.push( <h1 key={"h1-" + index}>{event.region.title}</h1> );
             currentRegion = event.region;
         }
 
@@ -130,6 +130,16 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
 
     return ( <>
         <RegionPage sidebar={<UKConstituencySidebar region={region} />}>
+            <h1>{region.title}</h1>
+            <UKTernaryPlot highlightChanges={false} parties={data.parties} resultSets={
+                ( () => { 
+                    const sets : AnonymousResult[][] = [];
+                    data.events.forEach( event => {
+                        if(event.type == "election") sets.push((event as ElectionEvent).data.results);
+                    }) 
+                    return sets.reverse();
+                } )()
+            } />
             {eventNodes}
         </RegionPage>
     </> )

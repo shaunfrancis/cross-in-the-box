@@ -4,5 +4,6 @@
     background:#fff;
     box-shadow:1px 1px 0 1px var(--box-shadow-color);
 
-    flex:0 0 600px;
+    flex:0 0 500px;
+    width:500px;
 }
