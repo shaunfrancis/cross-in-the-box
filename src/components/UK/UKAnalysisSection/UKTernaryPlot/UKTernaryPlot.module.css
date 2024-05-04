@@ -1,0 +1,8 @@
+.container{
+    margin:0;
+    padding:20px;
+    background:#fff;
+    box-shadow:1px 1px 0 1px var(--box-shadow-color);
+
+    flex:0 0 600px;
+}

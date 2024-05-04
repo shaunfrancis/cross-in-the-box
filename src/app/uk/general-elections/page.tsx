@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { Party, Region } from "src/Types";
 import { Endpoint } from "src/Constants";
 import { partyIdToDisplayId } from "src/lib/UK";
+import UKAnalysisSection from "src/components/UK/UKAnalysisSection/UKAnalysisSection";
 
 export default function UKGeneralElections(){
     const [regions, setRegions] = useState<Region[]>([]);
@@ -36,6 +37,10 @@ export default function UKGeneralElections(){
             <section>
                 <h1>Opinion Polls</h1>
                 <UKPollingSection parties={parties} />
+            </section>
+            <section>
+                <h1>Analysis</h1>
+                <UKAnalysisSection regions={regions} parties={parties} />
             </section>
         </main>
     )

@@ -20,10 +20,11 @@ interface Update{
 }
 
 export default function UKElectionResultContainer( 
-    { election, title = [election, "General", "Election"], regions, parties, summaryBlocHoverState, messageGroup, messagesOpenOnLoad, geographic, changes, winFormula = (results : Result[]) => results.filter(r => r.elected) } : 
+    { election, title = [election, "General", "Election"], preloadedResults, regions, parties, summaryBlocHoverState, messageGroup, messagesOpenOnLoad, geographic, changes, winFormula = (results : Result[]) => results.filter(r => r.elected) } : 
     { 
         election : string, 
         title? : string[],
+        preloadedResults? : Result[],
         regions : Region[],
         parties : Party[],
         winFormula? : (results : Result[]) => Result[],
@@ -71,7 +72,7 @@ export default function UKElectionResultContainer(
     }
 
     useEffect( () => {
-        if(loadingComplete.current || !onScreen || parties.length == 0 || regions.length == 0) return;
+        if(loadingComplete.current || !onScreen || parties.length == 0 || regions.length == 0 || (preloadedResults && preloadedResults.length == 0)) return;
         loadingComplete.current = true;
         
         const getResults = async () => {
@@ -85,7 +86,9 @@ export default function UKElectionResultContainer(
                 setUpdates(updateData);
             }
 
-            const resultData : Result[] = await fetch(Endpoint + '/results/uk/' + election).then( res => res.json() );
+            let resultData : Result[];
+            if(!preloadedResults) resultData = await fetch(Endpoint + '/results/uk/' + election).then( res => res.json() );
+            else resultData = preloadedResults;
             setResults(resultData);
 
             const newFills : {id: string, color: string, opacity?: number}[] = [];
@@ -132,7 +135,7 @@ export default function UKElectionResultContainer(
             }
         };
         getResults();
-    }, [onScreen, parties, regions]);
+    }, [onScreen, preloadedResults, parties, regions]);
 
     const mapHoverFun = (active : boolean = false, event?: React.MouseEvent, id?: string) => {
         const newPopupState = {...popupState, visible: active};
