@@ -1,5 +1,6 @@
 import './style.css'
 import type { Metadata } from 'next'
+import { GoogleAnalytics } from '@next/third-parties/google'
  
 export const metadata: Metadata = {
     title: {
@@ -26,6 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }){
             <body>
                 <div id="root">{children}</div>
             </body>
+            <GoogleAnalytics gaId="G-P2JNCEPZW2" />
         </html>
     )
   }

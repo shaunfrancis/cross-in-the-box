@@ -35,3 +35,20 @@
     text-align:center;
     font-weight:450;
 }
+
+#heading-section{
+    display:flex;
+    gap:20px;
+}
+#heading-section > article:before{ width:0 !important }
+
+.graph-container{
+    margin:0;
+    padding:20px;
+    background:#fff;
+    box-shadow:1px 1px 0 1px var(--box-shadow-color);
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    flex:1;
+}

@@ -15,7 +15,8 @@
     overflow:auto;
 }
 
-#container main section:not(:last-child):before{
+#container main article{ position: relative }
+#container main article:not(:last-child):before{
     content:"";
     position:absolute;
     background:#DDD;

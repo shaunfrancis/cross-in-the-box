@@ -58,7 +58,6 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
             if(regionData.error){
                 //error handling
             }
-            setRegion(regionData);
 
             const resultData : FullRegionData = await fetch(Endpoint + "/region/uk/" + regionData.id)
                 .then( res => res.text() )
@@ -66,6 +65,8 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
                 
             resultData.events.sort( (a,b) => b.date.valueOf() - a.date.valueOf() );
             resultData.parties.forEach( party => { party.displayId = partyIdToDisplayId(party.id) });
+
+            if(resultData.events.length > 0) setRegion(resultData.events[0].region);
             setData(resultData);
 
         };
@@ -86,12 +87,12 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
                 let note = "";
                 if(event.region.title != currentRegion.title) note += "The constituency was renamed to " + currentRegion.title + ".";
                 eventNodes.push(
-                    <section key={"boundary-note-" + index} className={styles["boundary-change-note"]}>{note} {treeLink.note}</section>
+                    <article key={"boundary-note-" + index} className={styles["boundary-change-note"]}>{note} {treeLink.note}</article>
                 );
             }
             else{
                 eventNodes.push(
-                    <section key={"boundary-note-" + index} className={styles["boundary-change-note"]}>Boundary changes.</section>
+                    <article key={"boundary-note-" + index} className={styles["boundary-change-note"]}>Boundary changes.</article>
                 );
             }
 
@@ -112,7 +113,7 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
                 let castEvent = event as UpdateEvent;
                 const party = data.parties.find( p => p.id == castEvent.data.party ) || DefaultParty;
                 eventNodes.push(
-                    <section className={styles["update-note"]} key={index}>
+                    <article className={styles["update-note"]} key={index}>
 
                         <div className={styles["party-bloc"]} style={{background:party.color, color:party.textColor}}>
                             {party.displayId}
@@ -120,7 +121,7 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
                         <h2>{dateToLongDate(castEvent.date)}</h2>
                         <p>{castEvent.data.note}</p>
 
-                    </section>
+                    </article>
                 );
                 break;
             }
@@ -130,17 +131,28 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
 
     return ( <>
         <RegionPage sidebar={<UKConstituencySidebar region={region} />}>
+
             <h1>{region.title}</h1>
-            <UKTernaryPlot highlightChanges={false} parties={data.parties} resultSets={
-                ( () => { 
-                    const sets : AnonymousResult[][] = [];
-                    data.events.forEach( event => {
-                        if(event.type == "election") sets.push((event as ElectionEvent).data.results);
-                    }) 
-                    return sets.reverse();
-                } )()
-            } />
+
+            <section id={styles["heading-section"]}>
+            <article className={styles["graph-container"]}>
+                    <UKTernaryPlot highlightChanges={false} parties={data.parties} resultSets={
+                        ( () => { 
+                            const sets : AnonymousResult[][] = [];
+                            data.events.filter(e => e.type == "election").forEach( event => {
+                                sets.push((event as ElectionEvent).data.results);
+                            }) 
+                            return sets.reverse();
+                        } )()
+                    } />
+                </article>
+                <article className={styles["graph-container"]}>
+                    data
+                </article>
+            </section>
+
             {eventNodes}
+            
         </RegionPage>
     </> )
 }

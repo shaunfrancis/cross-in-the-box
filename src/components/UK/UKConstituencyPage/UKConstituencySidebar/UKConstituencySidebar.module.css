@@ -3,9 +3,13 @@
 }
 
 #container > section{
+    padding:10px;
+}
+
+#container > section:global(.shaded){
     padding:30px;
 }
 
 #container > section > h1{
-    margin-bottom:30px;
+    margin-bottom:20px;
 }

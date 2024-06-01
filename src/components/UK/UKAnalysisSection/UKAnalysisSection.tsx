@@ -45,7 +45,12 @@ export default function UKAnalysisSection( { regions, parties } : { regions : Re
                 preloadedResults={currentResults}
                 geographic={geographic} />
 
-            <UKTernaryPlot resultSets={[previousResults, currentResults]} parties={parties} />
+
+            <section className={styles["graph-container"]}>
+                <h1>How Seats Changed</h1>
+                <p>Removing other parties and normalising the vote share of the Conservatives, Labour and Liberal Democrats, almost every constituency in England and Wales can be plotted, showing how these parties' vote shares changed from the previous election.</p>
+                <UKTernaryPlot resultSets={[previousResults, currentResults]} parties={parties} />
+            </section>
 
             <UKElectionResultContainer election="2019" title={["2019","Result Excluding the Conservatives,","Labour, the DUP and Sinn Féin"]}
                 summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]} 

@@ -14,7 +14,7 @@ export default function RegionBarGraph(
     });
 
     return (
-        <section className={styles["container"]}>
+        <article className={styles["container"]}>
             <h2>{title[0]} {title[1] + (title[1].slice(-1) == "-" ? "" : " ") + title[2]}</h2>
             <div className={styles["bar-graph-container"]}>
             {
@@ -61,6 +61,6 @@ export default function RegionBarGraph(
                 })
             }
             </div>
-        </section>
+        </article>
     )
 }

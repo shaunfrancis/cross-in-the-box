@@ -130,7 +130,7 @@ export default function UKTernaryPlot( { resultSets, parties, highlightChanges =
             <path d={`M50 0 L25 ${25*Math.sqrt(3)} L50 ${100/3*Math.sqrt(3)} L75 ${25*Math.sqrt(3)}Z`} fill={ld.color} opacity={0.1} />
             <path d={`M0 ${50*Math.sqrt(3)} L25 ${25*Math.sqrt(3)} L50 ${100/3*Math.sqrt(3)} L50 ${50*Math.sqrt(3)}Z`} fill={lab.color} opacity={0.1} />
             <path d={`M100 ${50*Math.sqrt(3)} L75 ${25*Math.sqrt(3)} L50 ${100/3*Math.sqrt(3)} L50 ${50*Math.sqrt(3)}Z`} fill={con.color} opacity={0.1} />
-            <path d={`M25 ${25*Math.sqrt(3)} L50 ${100/3*Math.sqrt(3)} L75 ${25*Math.sqrt(3)} M50 ${100/3*Math.sqrt(3)} L50 100`} fill="none" stroke="#fff" strokeWidth="1" />
+            <path d={`M25 ${25*Math.sqrt(3)} L50 ${100/3*Math.sqrt(3)} L75 ${25*Math.sqrt(3)} M50 ${100/3*Math.sqrt(3)} L50 ${50*Math.sqrt(3)}`} fill="none" stroke="#fff" strokeWidth="1" />
 
             <rect x={7} y={25} width={12} height={3.8} fill={lab.color} stroke={lab.color} strokeWidth={0.5} strokeLinejoin="round"  />
             <text x={13} y={27.2} fill="#fff" fontSize={3} textAnchor="middle">
@@ -154,9 +154,5 @@ export default function UKTernaryPlot( { resultSets, parties, highlightChanges =
         </svg>
     )
 
-    return (
-        <section className={styles["container"]}>
-            {ternaryPlot}
-        </section>
-    )
+    return ternaryPlot;
 }
