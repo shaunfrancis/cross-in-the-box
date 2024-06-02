@@ -5,10 +5,11 @@ import { DefaultParty, Endpoint } from "src/Constants";
 import { AnonymousResult, Party, Region } from "src/Types";
 import RegionBarGraph from "src/components/shared/RegionBarGraph/RegionBarGraph";
 import RegionPage from "src/components/shared/RegionPage/RegionPage";
-import { partyIdToDisplayId, slugToLookupSlug } from "src/lib/UK";
+import { constituencyToSlug, partyIdToDisplayId, slugToLookupSlug } from "src/lib/UK";
 import { dateToLongDate, parseJSONWithDates } from "src/lib/shared";
 import UKConstituencySidebar from "./UKConstituencySidebar/UKConstituencySidebar";
 import UKTernaryPlot from '../UKAnalysisSection/UKTernaryPlot/UKTernaryPlot';
+import Link from 'next/link';
 
 interface FullRegionData{
     events : Event[],
@@ -17,6 +18,7 @@ interface FullRegionData{
         region_id: string,
         successor_id: string,
         direct_successor: boolean,
+        title: string,
         note?: string
     }[]
 }
@@ -73,9 +75,25 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
         useAsyncEffect();
     }, []);
 
+    
+
     const eventNodes : React.ReactNode[] = [];
+    const succeededByNodes : React.ReactNode[] = [];
+
     let currentRegion : Region;
     data.events.forEach( (event, index) => {
+        if(index == 0){
+            if(data.tree.find(t => t.region_id == event.region.id && !t.direct_successor)){
+                data.tree.filter(t => t.region_id == event.region.id && !t.direct_successor).forEach( treeBranch => {
+                    succeededByNodes.push(
+                        <Link href={'/uk/general-elections/constituency/' + constituencyToSlug(treeBranch.title)} className={styles["abolished-link"] + " unstyled"}>
+                            <h3>{treeBranch.title}</h3>
+                        </Link>
+                    )
+                });
+            }
+        }
+
 
         if(!currentRegion){ //first event, show title and set region
             currentRegion = event.region;
@@ -86,6 +104,7 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
             if(treeLink){
                 let note = "";
                 if(event.region.title != currentRegion.title) note += "The constituency was renamed to " + currentRegion.title + ".";
+                else note += "Boundary changes occurred.";
                 eventNodes.push(
                     <article key={"boundary-note-" + index} className={styles["boundary-change-note"]}>{note} {treeLink.note}</article>
                 );
@@ -132,10 +151,19 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
     return ( <>
         <RegionPage sidebar={<UKConstituencySidebar region={region} />}>
 
+            {succeededByNodes.length > 0 &&
+                <section id={styles["abolished-container"]} className="shaded yellow">
+                    <h2>This constituency was abolished following a boundary review. It was succeeded by:</h2>
+                    <div id={styles["abolished-links-container"]}>
+                        {succeededByNodes}
+                    </div>
+                </section>
+            }
+
             <h1>{region.title}</h1>
 
-            <section id={styles["heading-section"]}>
-            <article className={styles["graph-container"]}>
+            <section id={styles["heading-section"]} style={{display:"none"}}>
+                <article className={styles["graph-container"]}>
                     <UKTernaryPlot highlightChanges={false} parties={data.parties} resultSets={
                         ( () => { 
                             const sets : AnonymousResult[][] = [];

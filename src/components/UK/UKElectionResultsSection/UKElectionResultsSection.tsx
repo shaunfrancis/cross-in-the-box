@@ -17,6 +17,13 @@ export default function UKElectionResultsSection({ regions, parties } : { region
             fun={(state) => { setGeographic(state) }}
         />
         <div id={styles["container"]}>
+            <UKElectionResultContainer election="2024" messageGroup="2024"
+                summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]} 
+                regions={regions}
+                parties={parties}
+                geographic={geographic}
+            />
+
             <UKElectionResultContainer election="2019" title={["Today"]} changes={true} messageGroup="2019U" messagesOpenOnLoad={true}
                 summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]}
                 regions={regions}

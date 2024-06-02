@@ -45,16 +45,16 @@ section.shaded{
     box-shadow:1px 1px 0 1px var(--box-shadow-color);
 }
 
-section.shaded.purple { background:rgb(220,220,245); color:rgb(24,24,84) }
+section.shaded.purple { background:rgb(220,220,245); color:rgb(22, 22, 76) }
 section.shaded.purple *{ --box-shadow-color:rgb(190,190,215) }
 
-section.shaded.yellow { background:rgb(248, 250, 220); color:rgb(91, 91, 6) }
+section.shaded.yellow { background:rgb(248, 250, 220); color:rgb(78, 82, 12) }
 section.shaded.yellow *{ --box-shadow-color: rgb(211, 215, 190) }
 
-section.shaded.red { background:rgb(244, 212, 212); color:rgb(128, 49, 49) }
+section.shaded.red { background:rgb(244, 212, 212); color:rgb(73, 19, 19) }
 section.shaded.red *{ --box-shadow-color: rgb(200, 190, 190) }
 
-section.shaded.green { background:rgb(220, 250, 225); color:rgb(39, 129, 43) }
+section.shaded.green { background:rgb(220, 250, 225); color:rgb(12, 82, 23) }
 section.shaded.green *{ --box-shadow-color: rgb(190, 200, 180) }
 
 main > section.shaded{

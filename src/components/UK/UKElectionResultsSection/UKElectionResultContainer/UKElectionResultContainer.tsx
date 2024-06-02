@@ -1,5 +1,10 @@
 import { useEffect, useRef, useState } from "react";
+
 import UKGeneral2010Map from "../../../maps/UKGeneral2010Map";
+import UKGeneral2010GeographicMap from "src/components/maps/UKGeneral2010GeographicMap";
+import UKGeneral2024Map from "src/components/maps/UKGeneral2024Map";
+import UKGeneral2024GeographicMap from "src/components/maps/UKGeneral2024GeographicMap";
+
 import ElectionResultContainer from "../../../shared/ElectionResultContainer/ElectionResultContainer";
 import HoverPopup from "../../../shared/HoverPopup/HoverPopup";
 import PopupBarGraph from "../../../shared/PopupBarGraph/PopupBarGraph";
@@ -8,7 +13,6 @@ import { MessageData, Party, Region, Result } from "src/Types";
 import { DefaultParty, Endpoint } from "src/Constants";
 import { useRouter } from "next/navigation";
 import { constituencyToSlug } from "src/lib/UK";
-import UKGeneral2010GeographicMap from "src/components/maps/UKGeneral2010GeographicMap";
 import PartyProgressionBlocs from "src/components/shared/PartyProgressionBlocs/PartyProgressionBlocs";
 import { dateToLongDate, parseJSONWithDates, useOnScreen } from "src/lib/shared";
 import Message from "src/components/shared/Message/Message";
@@ -150,6 +154,9 @@ export default function UKElectionResultContainer(
     };
     const map = () => {
         switch(election){
+            case "2024":
+                if(geographic) return <UKGeneral2024GeographicMap hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
+                else return <UKGeneral2024Map hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
             case "2019": case "2017": case "2015": case "2010":
                 if(geographic) return <UKGeneral2010GeographicMap hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
                 else return <UKGeneral2010Map hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
