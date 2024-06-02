@@ -4,13 +4,12 @@ import { Endpoint } from 'src/Constants';
 import styles from './UKConstituencySearchSection.module.css';
 import { SearchHandler } from 'src/lib/shared';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { constituencyToSlug, partyIdToDisplayId } from 'src/lib/UK';
 import { Party } from 'src/Types';
 import Link from 'next/link';
 
 interface SearchResults{
-    regions : {id : string, title : string}[], 
+    regions : {id : string, title : string, current : boolean}[], 
     candidates : {
         id : string,
         title : string,
@@ -81,6 +80,7 @@ export default function UKConstituencySearchSection(){
                                 <h2 className={styles["result-title"]}>
                                     {highlightRelevance(region.title)}
                                 </h2>
+                                {!region.current && <span style={{color: "#666"}}>Abolished constituency</span>}
                             </Link>
                         )
                     })

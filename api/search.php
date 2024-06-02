@@ -8,15 +8,17 @@
         $a_words = explode(" ", strtolower($a));
         $b_words = explode(" ", strtolower($b));
         $overlap = 0;
+        $coverage = 0;
         foreach($a_words as $a_word){
             foreach($b_words as $b_word){
                 if(str_contains($a_word, $b_word)){
                     $overlap++;
+                    $coverage += strlen($b_word) / strlen($a);
                     break;
                 }
             }
         }
-        return $overlap;
+        return $overlap + min($coverage, 0.99);
     }
     
     try{
@@ -32,13 +34,24 @@
         }
 
         $regions = fetch(
-            "SELECT id, title FROM $regions_table WHERE " . str_repeat("LOWER(title) LIKE ? OR ", count($words) - 1) . "LOWER(title) LIKE ?",
+            "SELECT id, title, current FROM $regions_table WHERE " . str_repeat("LOWER(title) LIKE ? OR ", count($words) - 1) . "LOWER(title) LIKE ?",
             $words
         );
-        usort($regions, function($a, $b) use ($query){
+        
+        //remove abolished regions with identical names to current regions
+        $regions = array_filter( $regions, function($region) use ($regions){
+            if($region['current'] == 1) return TRUE;
+            foreach($regions as $r){
+                if($r['current'] == 1 && $r['title'] == $region['title']) return FALSE;
+            }
+            return TRUE;
+        });
+
+        usort($regions, function($a, $b) use ($query){ //sort by currentness, then overlap, then title
             $overlap = get_overlap($b['title'], $query) <=> get_overlap($a['title'], $query);
-            if($overlap != 0) return $overlap;
-            else return $a['title'] <=> $b['title'];
+            if( ($a['current'] <=> $b['current']) != 0) return $b['current'] <=> $a['current'];
+            else if($overlap != 0) return $overlap;
+            else return $b['title'] <=> $a['title'];
         });
 
 
@@ -48,7 +61,7 @@
 
             if(count($region_titles) > 0){
                 $postcode_regions = fetch(
-                    "SELECT id, title FROM $regions_table WHERE " . str_repeat("LOWER(title) LIKE ? OR ", count($region_titles) - 1) . "LOWER(title) LIKE ?",
+                    "SELECT id, title, current FROM $regions_table WHERE current = 1 AND (" . str_repeat("LOWER(title) LIKE ? OR ", count($region_titles) - 1) . "LOWER(title) LIKE ?)",
                     $region_titles
                 );
                 

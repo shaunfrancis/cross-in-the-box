@@ -14,8 +14,8 @@
 
         $constituency_titles = [];
         foreach($data['result'] as $postcode){
-            if(isset($postcode['parliamentary_constituency']) && !in_array($postcode['parliamentary_constituency'], $constituency_titles)){
-                $constituency_titles[] = strtolower($postcode['parliamentary_constituency']);
+            if(isset($postcode['parliamentary_constituency_2024']) && !in_array($postcode['parliamentary_constituency_2024'], $constituency_titles)){
+                $constituency_titles[] = strtolower($postcode['parliamentary_constituency_2024']);
             }
         }
         

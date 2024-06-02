@@ -4,7 +4,7 @@
     require_once './functions/fetch.php';
     
     try{
-        $regions = fetch("SELECT id, title FROM $regions_table");
+        $regions = fetch("SELECT id, title, current FROM $regions_table");
 
         echo json_encode($regions, JSON_NUMERIC_CHECK);
     }
