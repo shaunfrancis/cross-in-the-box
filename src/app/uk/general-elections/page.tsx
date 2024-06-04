@@ -12,6 +12,13 @@ import UKAnalysisSection from "src/components/UK/UKAnalysisSection/UKAnalysisSec
 export default function UKGeneralElections(){
     const [regions, setRegions] = useState<Region[]>([]);
     const [parties, setParties] = useState<Party[]>([]);
+    const [geographic, setGeographic] = useState<boolean>(false);
+
+    const updateGeographicState = (state : boolean) => {
+        setGeographic(state);
+        localStorage.setItem("geographic", state ? "1" : "0");
+    };
+
     useEffect( () => {
         const getData = async () => {
             const partyData : Party[] = await fetch(Endpoint + "/parties/uk").then( res => res.json() );
@@ -22,13 +29,16 @@ export default function UKGeneralElections(){
             setRegions(regionData);
         };
         getData();
+
+        const geographicStoredState = localStorage.getItem("geographic");
+        if(geographicStoredState && geographicStoredState == "1") setGeographic(true);
     }, []);
     
     return ( 
         <main>
             <section>
                 <h1>Election Results</h1>
-                <UKElectionResultsSection regions={regions} parties={parties} />
+                <UKElectionResultsSection regions={regions} parties={parties} geographic={geographic} updateGeographicState={updateGeographicState} />
             </section>
             <section className="shaded purple">
                 <h1>Find A Constituency</h1>
@@ -40,7 +50,7 @@ export default function UKGeneralElections(){
             </section>
             <section>
                 <h1>Analysis</h1>
-                <UKAnalysisSection regions={regions} parties={parties} />
+                <UKAnalysisSection regions={regions} parties={parties} geographic={geographic} updateGeographicState={updateGeographicState} />
             </section>
         </main>
     )

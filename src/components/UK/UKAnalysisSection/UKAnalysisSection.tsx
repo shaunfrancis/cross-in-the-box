@@ -2,12 +2,13 @@ import { Party, Region, Result } from 'src/Types';
 import UKElectionResultContainer from '../UKElectionResultsSection/UKElectionResultContainer/UKElectionResultContainer';
 import styles from './UKAnalysisSection.module.css';
 import Toggle from 'src/components/shared/Toggle/Toggle';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Endpoint } from 'src/Constants';
 import UKTernaryPlot from './UKTernaryPlot/UKTernaryPlot';
 
-export default function UKAnalysisSection( { regions, parties } : { regions : Region[], parties : Party[] }){
-    const [geographic, setGeographic] = useState<boolean>(false);
+export default function UKAnalysisSection( { regions, parties, geographic, updateGeographicState } : 
+    { regions : Region[], parties : Party[], geographic: boolean, updateGeographicState: (state : boolean) => void }
+){
     const [summaryBlocHover, setSummaryBlocHover] = useState<boolean>(false);
 
     let [currentResults, setCurrentResults] = useState<Result[]>([]);
@@ -26,7 +27,8 @@ export default function UKAnalysisSection( { regions, parties } : { regions : Re
         <Toggle 
             from={"/images/uk-cartographic-icon.svg"} 
             to={"/images/uk-geographic-icon.svg"} 
-            fun={(state) => { setGeographic(state) }}
+            fun={(state) => { updateGeographicState(state) }}
+            value={geographic}
         />
         <div id={styles["container"]}>
 
