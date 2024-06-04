@@ -1,6 +1,7 @@
 #header{
     background:#fff;
     box-shadow:1px 1px 0 1px var(--box-shadow-color);
+    line-height:1.8em;
     height:80px;
     display:flex;
     align-items:center;
@@ -46,4 +47,11 @@
 
 #header nav li.selected a, #header nav li a:hover{
     background:rgb(240,241,243);
+}
+
+@media screen and (max-width: 750px){
+    #header{
+        padding:0 20px;
+        gap:30px;
+    }
 }

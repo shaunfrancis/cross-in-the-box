@@ -1,5 +1,6 @@
 .election-container{
     display:flex;
+    scroll-snap-align: center;
 }
 
 .election-messages-container{
@@ -21,7 +22,7 @@
     padding:20px;
     background:#fff;
     box-shadow:1px 1px 0 1px var(--box-shadow-color);
-    max-width:100vw;
+    max-width:calc(100vw - 30px);
 
     display:flex;
     gap:20px;

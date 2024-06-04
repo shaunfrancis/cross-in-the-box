@@ -25,7 +25,7 @@ export default forwardRef(function ElectionResultContainer(
                     </div>
                 </div>
             }
-            <div className={styles["election-results-container"]} style={{width:dimensions.w, minWidth:"min(100vw, " + dimensions.minW + ")"}}>
+            <div className={styles["election-results-container"]} style={{width:dimensions.w, minWidth:"min( calc(100vw - 30px), " + dimensions.minW + ")"}}>
                 <div className={styles["election-heading-container"]}>
                     <div className={styles["election-title"]}>
                         { messages &&

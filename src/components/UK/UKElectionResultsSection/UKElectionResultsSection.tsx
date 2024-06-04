@@ -1,23 +1,16 @@
 'use client';
 
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import styles from "./UKElectionResultsSection.module.css";
-import Toggle from "src/components/shared/Toggle/Toggle";
 import UKElectionResultContainer from "./UKElectionResultContainer/UKElectionResultContainer";
 import { Party, Region, Result } from "src/Types";
 
-export default function UKElectionResultsSection({ regions, parties, geographic, updateGeographicState } : 
-    { regions : Region[], parties : Party[], geographic: boolean, updateGeographicState: (state : boolean) => void }
+export default function UKElectionResultsSection({ regions, parties, geographic } : 
+    { regions : Region[], parties : Party[], geographic: boolean }
 ){
     const [summaryBlocHover, setSummaryBlocHover] = useState<boolean>(false);
     
     return ( <>
-        <Toggle 
-            from={"/images/uk-cartographic-icon.svg"} 
-            to={"/images/uk-geographic-icon.svg"} 
-            fun={(state) => { updateGeographicState(state) }}
-            value={geographic}
-        />
         <div id={styles["container"]}>
             <UKElectionResultContainer election="2024" messageGroup="2024"
                 summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]} 

@@ -8,6 +8,7 @@ import { Party, Region } from "src/Types";
 import { Endpoint } from "src/Constants";
 import { partyIdToDisplayId } from "src/lib/UK";
 import UKAnalysisSection from "src/components/UK/UKAnalysisSection/UKAnalysisSection";
+import Toggle from "src/components/shared/Toggle/Toggle";
 
 export default function UKGeneralElections(){
     const [regions, setRegions] = useState<Region[]>([]);
@@ -37,8 +38,16 @@ export default function UKGeneralElections(){
     return ( 
         <main>
             <section>
-                <h1>Election Results</h1>
-                <UKElectionResultsSection regions={regions} parties={parties} geographic={geographic} updateGeographicState={updateGeographicState} />
+                <div className="section-heading">
+                    <h1>Election Results</h1>
+                    <Toggle 
+                        from={"/images/uk-cartographic-icon.svg"} 
+                        to={"/images/uk-geographic-icon.svg"} 
+                        fun={(state) => { updateGeographicState(state) }}
+                        value={geographic}
+                    />
+                </div>
+                <UKElectionResultsSection regions={regions} parties={parties} geographic={geographic} />
             </section>
             <section className="shaded purple">
                 <h1>Find A Constituency</h1>
@@ -49,8 +58,16 @@ export default function UKGeneralElections(){
                 <UKPollingSection parties={parties} />
             </section>
             <section>
-                <h1>Analysis</h1>
-                <UKAnalysisSection regions={regions} parties={parties} geographic={geographic} updateGeographicState={updateGeographicState} />
+                <div className="section-heading">
+                    <h1>Analysis</h1>
+                    <Toggle 
+                        from={"/images/uk-cartographic-icon.svg"} 
+                        to={"/images/uk-geographic-icon.svg"} 
+                        fun={(state) => { updateGeographicState(state) }}
+                        value={geographic}
+                    />
+                </div>
+                <UKAnalysisSection regions={regions} parties={parties} geographic={geographic} />
             </section>
         </main>
     )

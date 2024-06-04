@@ -69,6 +69,14 @@ main > section > h1{
 }
 section.shaded > h1{ margin-left: 0 }
 
+main > section > .section-heading{
+    margin:50px;
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:20px 50px;
+}
+
 span.interactive{
     cursor:pointer;
     text-decoration:underline;
@@ -92,4 +100,19 @@ button{
 button:active{
     box-shadow:none;
     transform:translate(1px,1px);
+}
+
+@media screen and (max-width: 750px){
+    html{ font-size: 12px }
+    main > section{
+        text-align:center;
+    }
+    .section-heading{
+        justify-content:center;
+    }
+
+    main > section.shaded{
+        margin:0 20px 20px 20px;
+        padding:20px 30px 30px 30px;
+    }
 }

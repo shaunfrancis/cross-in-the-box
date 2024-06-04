@@ -1,13 +1,12 @@
 import { Party, Region, Result } from 'src/Types';
 import UKElectionResultContainer from '../UKElectionResultsSection/UKElectionResultContainer/UKElectionResultContainer';
 import styles from './UKAnalysisSection.module.css';
-import Toggle from 'src/components/shared/Toggle/Toggle';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Endpoint } from 'src/Constants';
 import UKTernaryPlot from './UKTernaryPlot/UKTernaryPlot';
 
-export default function UKAnalysisSection( { regions, parties, geographic, updateGeographicState } : 
-    { regions : Region[], parties : Party[], geographic: boolean, updateGeographicState: (state : boolean) => void }
+export default function UKAnalysisSection( { regions, parties, geographic } : 
+    { regions : Region[], parties : Party[], geographic: boolean }
 ){
     const [summaryBlocHover, setSummaryBlocHover] = useState<boolean>(false);
 
@@ -24,12 +23,6 @@ export default function UKAnalysisSection( { regions, parties, geographic, updat
     }, []);
     
     return ( <>
-        <Toggle 
-            from={"/images/uk-cartographic-icon.svg"} 
-            to={"/images/uk-geographic-icon.svg"} 
-            fun={(state) => { updateGeographicState(state) }}
-            value={geographic}
-        />
         <div id={styles["container"]}>
 
             <UKElectionResultContainer election="2019" title={["2019","Result at","General Election"]} messageGroup="2019"
