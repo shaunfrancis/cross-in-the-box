@@ -26,7 +26,7 @@
 .summary-bloc{
     cursor:default;
     color:#fff;
-    min-width:80px;
+    width:80px;
     flex:1;
     padding:0 10px;
     border-radius:2px;
@@ -52,4 +52,10 @@
 
 .summary-bloc-count{
     font-weight:400;
+}
+
+@media screen and (max-width: 750px){
+    .summary-bloc{
+        width:60px;
+    }
 }

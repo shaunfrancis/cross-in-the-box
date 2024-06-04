@@ -1,5 +1,6 @@
 #tracker-container{
     display:flex;
+    flex-wrap:wrap;
     margin:0 50px;
     gap:30px;
 }
@@ -11,6 +12,7 @@
     text-align:center;
 }
 
-#graph-container{
+#graph-container, #table-container{
     flex:1;
+    max-width:100%;
 }
