@@ -9,7 +9,7 @@ export default function UKGeneral2024GeographicMap(
     }
 ){
     return (
-        <SvgLoader path="/maps/UK-2010-geographic.svg">
+        <SvgLoader path="/maps/UK-2024-geographic.svg">
             {
                 fills.map( (fill, index) => {
                     return (

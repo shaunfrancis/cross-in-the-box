@@ -1,655 +1,655 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 884 1040" stroke-width="1" stroke="white" fill="#EEE" width="100%" height="100%">
    <style>#uk-2010-svg rect{ cursor:pointer; transition: fill 1000ms, opacity 500ms }</style>
-   <g id="uk-2010-svg">
-      <rect x="156" y="754" width="25" height="25" name="2010001"/>
-      <rect x="182" y="624" width="25" height="25" name="2010002"/>
-      <rect x="520" y="52" width="25" height="25" name="2024562"/>
-      <rect x="520" y="78" width="25" height="25" name="2024563"/>
-      <rect x="416" y="78" width="25" height="25" name="2024618"/>
-      <rect x="416" y="156" width="25" height="25" name="2024564"/>
-      <rect x="494" y="936" width="25" height="25" name="2024001"/>
-      <rect x="390" y="624" width="25" height="25" name="2024002"/>
-      <rect x="312" y="520" width="25" height="25" name="2024003"/>
-      <rect x="260" y="598" width="25" height="25" name="2024621"/>
-      <rect x="468" y="494" width="25" height="25" name="2024004"/>
-      <rect x="520" y="104" width="25" height="25" name="2005005"/>
-      <rect x="104" y="182" width="25" height="25" name="2024548"/>
-      <rect x="78" y="182" width="25" height="25" name="2024555"/>
-      <rect x="78" y="208" width="25" height="25" name="2024557"/>
-      <rect x="156" y="624" width="25" height="25" name="2010016"/>
-      <rect x="312" y="104" width="25" height="25" name="2024567"/>
-      <rect x="650" y="962" width="25" height="25" name="2024005"/>
-      <rect x="546" y="494" width="25" height="25" name="2024006"/>
-      <rect x="806" y="884" width="25" height="25" name="2024007"/>
-      <rect x="390" y="468" width="25" height="25" name="2024008"/>
-      <rect x="494" y="780" width="25" height="25" name="2024009"/>
-      <rect x="338" y="234" width="25" height="25" name="2024568"/>
-      <rect x="312" y="208" width="25" height="25" name="2024573"/>
-      <rect x="286" y="208" width="25" height="25" name="2024612"/>
-      <rect x="494" y="728" width="25" height="25" name="2024010"/>
-      <rect x="468" y="52" width="25" height="25" name="2005010"/>
-      <rect x="754" y="780" width="25" height="25" name="2024011"/>
-      <rect x="494" y="416" width="25" height="25" name="2010029"/>
-      <rect x="520" y="416" width="25" height="25" name="2010030"/>
-      <rect x="390" y="312" width="25" height="25" name="2024014"/>
-      <rect x="754" y="728" width="25" height="25" name="2024015"/>
-      <rect x="806" y="754" width="25" height="25" name="2024435"/>
-      <rect x="442" y="936" width="25" height="25" name="2024016"/>
-      <rect x="598" y="468" width="25" height="25" name="2024017"/>
-      <rect x="364" y="884" width="25" height="25" name="2024018"/>
-      <rect x="468" y="364" width="25" height="25" name="2010037"/>
-      <rect x="598" y="832" width="25" height="25" name="2024021"/>
-      <rect x="494" y="832" width="25" height="25" name="2024022"/>
-      <rect x="702" y="884" width="25" height="25" name="2010040"/>
-      <rect x="598" y="624" width="25" height="25" name="2024025"/>
-      <rect x="572" y="650" width="25" height="25" name="2024322"/>
-      <rect x="572" y="624" width="25" height="25" name="2010043"/>
-      <rect x="546" y="676" width="25" height="25" name="2024450"/>
-      <rect x="130" y="234" width="25" height="25" name="2024544"/>
-      <rect x="104" y="208" width="25" height="25" name="2024545"/>
-      <rect x="104" y="234" width="25" height="25" name="2024546"/>
-      <rect x="78" y="234" width="25" height="25" name="2024547"/>
-      <rect x="650" y="806" width="25" height="25" name="2024026"/>
-      <rect x="442" y="208" width="25" height="25" name="2024027"/>
-      <rect x="416" y="208" width="25" height="25" name="2024571"/>
-      <rect x="676" y="806" width="25" height="25" name="2010052"/>
-      <rect x="676" y="338" width="25" height="25" name="2024030"/>
-      <rect x="754" y="910" width="25" height="25" name="2024031"/>
-      <rect x="754" y="806" width="25" height="25" name="2024032"/>
-      <rect x="182" y="546" width="25" height="25" name="2024033"/>
-      <rect x="338" y="702" width="25" height="25" name="2024034"/>
-      <rect x="390" y="650" width="25" height="25" name="2024035"/>
-      <rect x="364" y="702" width="25" height="25" name="2024036"/>
-      <rect x="416" y="650" width="25" height="25" name="2010060"/>
-      <rect x="390" y="676" width="25" height="25" name="2024038"/>
-      <rect x="364" y="728" width="25" height="25" name="2024040"/>
-      <rect x="364" y="650" width="25" height="25" name="2024041"/>
-      <rect x="390" y="728" width="25" height="25" name="2024042"/>
-      <rect x="416" y="676" width="25" height="25" name="2024039"/>
-      <rect x="468" y="260" width="25" height="25" name="2024043"/>
-      <rect x="390" y="364" width="25" height="25" name="2024044"/>
-      <rect x="364" y="442" width="25" height="25" name="2010068"/>
-      <rect x="364" y="338" width="25" height="25" name="2010069"/>
-      <rect x="286" y="364" width="25" height="25" name="2024050"/>
-      <rect x="208" y="728" width="25" height="25" name="2010071"/>
-      <rect x="494" y="260" width="25" height="25" name="2010072"/>
-      <rect x="520" y="208" width="25" height="25" name="2010073"/>
-      <rect x="572" y="988" width="25" height="25" name="2024056"/>
-      <rect x="546" y="468" width="25" height="25" name="2024057"/>
-      <rect x="312" y="416" width="25" height="25" name="2024058"/>
-      <rect x="312" y="442" width="25" height="25" name="2010077"/>
-      <rect x="286" y="416" width="25" height="25" name="2024060"/>
-      <rect x="182" y="494" width="25" height="25" name="2024061"/>
-      <rect x="624" y="520" width="25" height="25" name="2024062"/>
-      <rect x="468" y="650" width="25" height="25" name="2024063"/>
-      <rect x="390" y="962" width="25" height="25" name="2024064"/>
-      <rect x="364" y="962" width="25" height="25" name="2024065"/>
-      <rect x="520" y="910" width="25" height="25" name="2024066"/>
-      <rect x="494" y="338" width="25" height="25" name="2024067"/>
-      <rect x="468" y="390" width="25" height="25" name="2024068"/>
-      <rect x="442" y="364" width="25" height="25" name="2024069"/>
-      <rect x="754" y="676" width="25" height="25" name="2024070"/>
-      <rect x="234" y="702" width="25" height="25" name="2024645"/>
-      <rect x="572" y="780" width="25" height="25" name="2010090"/>
-      <rect x="572" y="754" width="25" height="25" name="2010091"/>
-      <rect x="520" y="832" width="25" height="25" name="2024075"/>
-      <rect x="728" y="702" width="25" height="25" name="2024076"/>
-      <rect x="182" y="806" width="25" height="25" name="2024649"/>
-      <rect x="260" y="910" width="25" height="25" name="2010095"/>
-      <rect x="598" y="416" width="25" height="25" name="2010096"/>
-      <rect x="754" y="936" width="25" height="25" name="2024084"/>
-      <rect x="728" y="936" width="25" height="25" name="2024085"/>
-      <rect x="338" y="884" width="25" height="25" name="2024086"/>
-      <rect x="338" y="858" width="25" height="25" name="2024087"/>
-      <rect x="312" y="884" width="25" height="25" name="2024088"/>
-      <rect x="364" y="858" width="25" height="25" name="2010102"/>
-      <rect x="650" y="572" width="25" height="25" name="2024090"/>
-      <rect x="728" y="858" width="25" height="25" name="2010104"/>
-      <rect x="338" y="728" width="25" height="25" name="2024093"/>
-      <rect x="676" y="676" width="25" height="25" name="2024094"/>
-      <rect x="494" y="520" width="25" height="25" name="2024095"/>
-      <rect x="520" y="728" width="25" height="25" name="2010108"/>
-      <rect x="416" y="416" width="25" height="25" name="2024098"/>
-      <rect x="442" y="598" width="25" height="25" name="2024099"/>
-      <rect x="338" y="416" width="25" height="25" name="2024100"/>
-      <rect x="338" y="442" width="25" height="25" name="2024048"/>
-      <rect x="754" y="650" width="25" height="25" name="2024101"/>
-      <rect x="234" y="780" width="25" height="25" name="2024639"/>
-      <rect x="416" y="26" width="25" height="25" name="2024572"/>
-      <rect x="442" y="416" width="25" height="25" name="2024102"/>
-      <rect x="650" y="832" width="25" height="25" name="2010117"/>
-      <rect x="104" y="988" width="25" height="25" name="2024107"/>
-      <rect x="676" y="624" width="25" height="25" name="2024108"/>
-      <rect x="598" y="572" width="25" height="25" name="2024350"/>
-      <rect x="572" y="598" width="25" height="25" name="2024363"/>
-      <rect x="650" y="624" width="25" height="25" name="2024436"/>
-      <rect x="702" y="650" width="25" height="25" name="2010123"/>
-      <rect x="390" y="598" width="25" height="25" name="2024109"/>
-      <rect x="832" y="858" width="25" height="25" name="2024110"/>
-      <rect x="260" y="780" width="25" height="25" name="2010126"/>
-      <rect x="234" y="806" width="25" height="25" name="2024630"/>
-      <rect x="234" y="832" width="25" height="25" name="2024629"/>
-      <rect x="208" y="832" width="25" height="25" name="2024650"/>
-      <rect x="442" y="260" width="25" height="25" name="2024111"/>
-      <rect x="182" y="702" width="25" height="25" name="2010131"/>
-      <rect x="130" y="754" width="25" height="25" name="2010132"/>
-      <rect x="624" y="910" width="25" height="25" name="2024112"/>
-      <rect x="832" y="754" width="25" height="25" name="2024113"/>
-      <rect x="208" y="676" width="25" height="25" name="2024642"/>
-      <rect x="572" y="520" width="25" height="25" name="2010136"/>
-      <rect x="780" y="884" width="25" height="25" name="2024118"/>
-      <rect x="338" y="546" width="25" height="25" name="2024119"/>
-      <rect x="728" y="676" width="25" height="25" name="2024120"/>
-      <rect x="572" y="832" width="25" height="25" name="2024121"/>
-      <rect x="390" y="832" width="25" height="25" name="2024122"/>
-      <rect x="494" y="754" width="25" height="25" name="2024123"/>
-      <rect x="494" y="494" width="25" height="25" name="2024124"/>
-      <rect x="546" y="962" width="25" height="25" name="2024125"/>
-      <rect x="702" y="728" width="25" height="25" name="2024126"/>
-      <rect x="390" y="884" width="25" height="25" name="2024127"/>
-      <rect x="624" y="702" width="25" height="25" name="2024128"/>
-      <rect x="364" y="390" width="25" height="25" name="2024129"/>
-      <rect x="390" y="936" width="25" height="25" name="2024130"/>
-      <rect x="624" y="806" width="25" height="25" name="2024131"/>
-      <rect x="260" y="572" width="25" height="25" name="2010151"/>
-      <rect x="520" y="286" width="25" height="25" name="2024135"/>
-      <rect x="832" y="676" width="25" height="25" name="2024136"/>
-      <rect x="624" y="416" width="25" height="25" name="2010154"/>
-      <rect x="234" y="650" width="25" height="25" name="2010155"/>
-      <rect x="208" y="624" width="25" height="25" name="2010156"/>
-      <rect x="364" y="130" width="25" height="25" name="2024574"/>
-      <rect x="780" y="676" width="25" height="25" name="2024138"/>
-      <rect x="442" y="442" width="25" height="25" name="2024187"/>
-      <rect x="390" y="546" width="25" height="25" name="2024139"/>
-      <rect x="416" y="286" width="25" height="25" name="2010161"/>
-      <rect x="546" y="650" width="25" height="25" name="2024142"/>
-      <rect x="156" y="936" width="25" height="25" name="2024345"/>
-      <rect x="130" y="962" width="25" height="25" name="2024441"/>
-      <rect x="442" y="702" width="25" height="25" name="2010165"/>
-      <rect x="416" y="702" width="25" height="25" name="2024145"/>
-      <rect x="442" y="728" width="25" height="25" name="2024144"/>
-      <rect x="676" y="936" width="25" height="25" name="2024146"/>
-      <rect x="364" y="546" width="25" height="25" name="2024147"/>
-      <rect x="676" y="884" width="25" height="25" name="2010170"/>
-      <rect x="650" y="884" width="25" height="25" name="2010171"/>
-      <rect x="650" y="910" width="25" height="25" name="2024150"/>
-      <rect x="364" y="104" width="25" height="25" name="2024575"/>
-      <rect x="182" y="728" width="25" height="25" name="2010174"/>
-      <rect x="780" y="780" width="25" height="25" name="2024152"/>
-      <rect x="494" y="312" width="25" height="25" name="2024153"/>
-      <rect x="780" y="806" width="25" height="25" name="2024154"/>
-      <rect x="468" y="702" width="25" height="25" name="2024155"/>
-      <rect x="234" y="598" width="25" height="25" name="2010179"/>
-      <rect x="390" y="494" width="25" height="25" name="2010180"/>
-      <rect x="468" y="546" width="25" height="25" name="2024158"/>
-      <rect x="468" y="572" width="25" height="25" name="2024159"/>
-      <rect x="442" y="572" width="25" height="25" name="2024160"/>
-      <rect x="468" y="520" width="25" height="25" name="2024323"/>
-      <rect x="520" y="468" width="25" height="25" name="2024351"/>
-      <rect x="468" y="598" width="25" height="25" name="2024437"/>
-      <rect x="416" y="884" width="25" height="25" name="2010187"/>
-      <rect x="208" y="936" width="25" height="25" name="2024114"/>
-      <rect x="260" y="962" width="25" height="25" name="2010189"/>
-      <rect x="234" y="910" width="25" height="25" name="2024346"/>
-      <rect x="182" y="962" width="25" height="25" name="2024451"/>
-      <rect x="182" y="936" width="25" height="25" name="2024495"/>
-      <rect x="494" y="390" width="25" height="25" name="2010193"/>
-      <rect x="546" y="442" width="25" height="25" name="2010194"/>
-      <rect x="572" y="416" width="25" height="25" name="2024165"/>
-      <rect x="546" y="390" width="25" height="25" name="2024166"/>
-      <rect x="338" y="936" width="25" height="25" name="2024324"/>
-      <rect x="364" y="936" width="25" height="25" name="2024347"/>
-      <rect x="312" y="962" width="25" height="25" name="2024438"/>
-      <rect x="286" y="962" width="25" height="25" name="2024518"/>
-      <rect x="832" y="884" width="25" height="25" name="2024167"/>
-      <rect x="130" y="208" width="25" height="25" name="2024556"/>
-      <rect x="104" y="260" width="25" height="25" name="2024558"/>
-      <rect x="312" y="676" width="25" height="25" name="2010204"/>
-      <rect x="286" y="676" width="25" height="25" name="2010205"/>
-      <rect x="650" y="858" width="25" height="25" name="2024106"/>
-      <rect x="364" y="234" width="25" height="25" name="2024576"/>
-      <rect x="390" y="234" width="25" height="25" name="2024577"/>
-      <rect x="338" y="130" width="25" height="25" name="2005017"/>
-      <rect x="312" y="130" width="25" height="25" name="2024597"/>
-      <rect x="494" y="78" width="25" height="25" name="2005019"/>
-      <rect x="468" y="78" width="25" height="25" name="2005020"/>
-      <rect x="416" y="104" width="25" height="25" name="2024579"/>
-      <rect x="468" y="286" width="25" height="25" name="2024348"/>
-      <rect x="468" y="234" width="25" height="25" name="2010215"/>
-      <rect x="208" y="650" width="25" height="25" name="2024636"/>
-      <rect x="546" y="806" width="25" height="25" name="2024171"/>
-      <rect x="546" y="780" width="25" height="25" name="2024172"/>
-      <rect x="520" y="806" width="25" height="25" name="2024173"/>
-      <rect x="546" y="286" width="25" height="25" name="2024174"/>
-      <rect x="728" y="780" width="25" height="25" name="2024178"/>
-      <rect x="390" y="208" width="25" height="25" name="2024582"/>
-      <rect x="468" y="182" width="25" height="25" name="2024583"/>
-      <rect x="780" y="936" width="25" height="25" name="2024183"/>
-      <rect x="520" y="988" width="25" height="25" name="2024184"/>
-      <rect x="286" y="572" width="25" height="25" name="2010226"/>
-      <rect x="494" y="130" width="25" height="25" name="2024585"/>
-      <rect x="468" y="130" width="25" height="25" name="2024586"/>
-      <rect x="494" y="156" width="25" height="25" name="2024587"/>
-      <rect x="468" y="156" width="25" height="25" name="2024588"/>
-      <rect x="442" y="130" width="25" height="25" name="2024589"/>
-      <rect x="676" y="728" width="25" height="25" name="2010232"/>
-      <rect x="234" y="572" width="25" height="25" name="2010233"/>
-      <rect x="598" y="390" width="25" height="25" name="2010234"/>
-      <rect x="728" y="832" width="25" height="25" name="2010235"/>
-      <rect x="676" y="702" width="25" height="25" name="2024195"/>
-      <rect x="650" y="702" width="25" height="25" name="2010237"/>
-      <rect x="702" y="702" width="25" height="25" name="2024196"/>
-      <rect x="598" y="936" width="25" height="25" name="2024197"/>
-      <rect x="494" y="546" width="25" height="25" name="2024198"/>
-      <rect x="728" y="806" width="25" height="25" name="2024194"/>
-      <rect x="572" y="936" width="25" height="25" name="2024199"/>
-      <rect x="234" y="962" width="25" height="25" name="2024177"/>
-      <rect x="390" y="130" width="25" height="25" name="2024591"/>
-      <rect x="468" y="988" width="25" height="25" name="2010245"/>
-      <rect x="806" y="858" width="25" height="25" name="2024202"/>
-      <rect x="520" y="858" width="25" height="25" name="2024203"/>
-      <rect x="26" y="234" width="25" height="25" name="2024550"/>
-      <rect x="494" y="104" width="25" height="25" name="2024599"/>
-      <rect x="338" y="832" width="25" height="25" name="2024204"/>
-      <rect x="598" y="728" width="25" height="25" name="2024205"/>
-      <rect x="832" y="910" width="25" height="25" name="2024206"/>
-      <rect x="390" y="780" width="25" height="25" name="2024207"/>
-      <rect x="26" y="182" width="25" height="25" name="2024551"/>
-      <rect x="312" y="364" width="25" height="25" name="2024208"/>
-      <rect x="624" y="468" width="25" height="25" name="2024209"/>
-      <rect x="234" y="546" width="25" height="25" name="2010257"/>
-      <rect x="520" y="260" width="25" height="25" name="2010258"/>
-      <rect x="546" y="546" width="25" height="25" name="2024213"/>
-      <rect x="780" y="858" width="25" height="25" name="2024214"/>
-      <rect x="312" y="182" width="25" height="25" name="2005031"/>
-      <rect x="390" y="156" width="25" height="25" name="2024592"/>
-      <rect x="338" y="156" width="25" height="25" name="2024593"/>
-      <rect x="364" y="156" width="25" height="25" name="2024581"/>
-      <rect x="312" y="156" width="25" height="25" name="2005035"/>
-      <rect x="338" y="182" width="25" height="25" name="2024595"/>
-      <rect x="286" y="182" width="25" height="25" name="2024594"/>
-      <rect x="468" y="104" width="25" height="25" name="2005038"/>
-      <rect x="416" y="780" width="25" height="25" name="2024215"/>
-      <rect x="494" y="52" width="25" height="25" name="2005039"/>
-      <rect x="468" y="1014" width="25" height="25" name="2024216"/>
-      <rect x="156" y="806" width="25" height="25" name="2024624"/>
-      <rect x="572" y="546" width="25" height="25" name="2010273"/>
-      <rect x="780" y="832" width="25" height="25" name="2024219"/>
-      <rect x="598" y="442" width="25" height="25" name="2010275"/>
-      <rect x="702" y="572" width="25" height="25" name="2024220"/>
-      <rect x="702" y="832" width="25" height="25" name="2024221"/>
-      <rect x="598" y="962" width="25" height="25" name="2024222"/>
-      <rect x="650" y="754" width="25" height="25" name="2024223"/>
-      <rect x="676" y="780" width="25" height="25" name="2024224"/>
-      <rect x="312" y="702" width="25" height="25" name="2010281"/>
-      <rect x="442" y="390" width="25" height="25" name="2024228"/>
-      <rect x="624" y="338" width="25" height="25" name="2010283"/>
-      <rect x="260" y="546" width="25" height="25" name="2010284"/>
-      <rect x="572" y="806" width="25" height="25" name="2010285"/>
-      <rect x="520" y="962" width="25" height="25" name="2024179"/>
-      <rect x="468" y="936" width="25" height="25" name="2024352"/>
-      <rect x="416" y="910" width="25" height="25" name="2024364"/>
-      <rect x="598" y="754" width="25" height="25" name="2010289"/>
-      <rect x="520" y="598" width="25" height="25" name="2024234"/>
-      <rect x="702" y="676" width="25" height="25" name="2024235"/>
-      <rect x="468" y="312" width="25" height="25" name="2024236"/>
-      <rect x="546" y="728" width="25" height="25" name="2024074"/>
-      <rect x="546" y="754" width="25" height="25" name="2024541"/>
-      <rect x="572" y="286" width="25" height="25" name="2024237"/>
-      <rect x="806" y="676" width="25" height="25" name="2024238"/>
-      <rect x="806" y="910" width="25" height="25" name="2024239"/>
-      <rect x="546" y="1014" width="25" height="25" name="2024240"/>
-      <rect x="494" y="806" width="25" height="25" name="2024241"/>
-      <rect x="416" y="520" width="25" height="25" name="2024242"/>
-      <rect x="572" y="702" width="25" height="25" name="2024243"/>
-      <rect x="520" y="364" width="25" height="25" name="2010302"/>
-      <rect x="572" y="728" width="25" height="25" name="2024245"/>
-      <rect x="468" y="806" width="25" height="25" name="2024246"/>
-      <rect x="338" y="754" width="25" height="25" name="2024247"/>
-      <rect x="286" y="728" width="25" height="25" name="2024355"/>
-      <rect x="650" y="650" width="25" height="25" name="2024248"/>
-      <rect x="676" y="650" width="25" height="25" name="2024353"/>
-      <rect x="546" y="702" width="25" height="25" name="2024452"/>
-      <rect x="650" y="676" width="25" height="25" name="2024249"/>
-      <rect x="442" y="234" width="25" height="25" name="2024250"/>
-      <rect x="364" y="416" width="25" height="25" name="2024251"/>
-      <rect x="442" y="546" width="25" height="25" name="2024252"/>
-      <rect x="598" y="650" width="25" height="25" name="2010314"/>
-      <rect x="624" y="780" width="25" height="25" name="2024233"/>
-      <rect x="780" y="754" width="25" height="25" name="2024255"/>
-      <rect x="624" y="728" width="25" height="25" name="2010317"/>
-      <rect x="624" y="962" width="25" height="25" name="2024258"/>
-      <rect x="572" y="260" width="25" height="25" name="2024259"/>
-      <rect x="676" y="962" width="25" height="25" name="2024260"/>
-      <rect x="468" y="416" width="25" height="25" name="2024261"/>
-      <rect x="650" y="364" width="25" height="25" name="2024277"/>
-      <rect x="650" y="338" width="25" height="25" name="2010323"/>
-      <rect x="624" y="364" width="25" height="25" name="2010324"/>
-      <rect x="598" y="598" width="25" height="25" name="2024262"/>
-      <rect x="390" y="390" width="25" height="25" name="2024263"/>
-      <rect x="728" y="728" width="25" height="25" name="2024264"/>
-      <rect x="728" y="754" width="25" height="25" name="2024265"/>
-      <rect x="286" y="130" width="25" height="25" name="2024601"/>
-      <rect x="390" y="78" width="25" height="25" name="2005041"/>
-      <rect x="806" y="650" width="25" height="25" name="2024266"/>
-      <rect x="416" y="1014" width="25" height="25" name="2010332"/>
-      <rect x="624" y="754" width="25" height="25" name="2024269"/>
-      <rect x="650" y="780" width="25" height="25" name="2024270"/>
-      <rect x="234" y="728" width="25" height="25" name="2010335"/>
-      <rect x="546" y="234" width="25" height="25" name="2010336"/>
-      <rect x="442" y="338" width="25" height="25" name="2024272"/>
-      <rect x="468" y="728" width="25" height="25" name="2024273"/>
-      <rect x="598" y="806" width="25" height="25" name="2024274"/>
-      <rect x="520" y="624" width="25" height="25" name="2024275"/>
-      <rect x="364" y="208" width="25" height="25" name="2024604"/>
-      <rect x="572" y="884" width="25" height="25" name="2024276"/>
-      <rect x="390" y="858" width="25" height="25" name="2010343"/>
-      <rect x="442" y="104" width="25" height="25" name="2024600"/>
-      <rect x="260" y="494" width="25" height="25" name="2024281"/>
-      <rect x="78" y="260" width="25" height="25" name="2024552"/>
-      <rect x="416" y="182" width="25" height="25" name="2005044"/>
-      <rect x="260" y="416" width="25" height="25" name="2024520"/>
-      <rect x="390" y="338" width="25" height="25" name="2010349"/>
-      <rect x="546" y="364" width="25" height="25" name="2010350"/>
-      <rect x="598" y="338" width="25" height="25" name="2024192"/>
-      <rect x="572" y="364" width="25" height="25" name="2024287"/>
-      <rect x="572" y="338" width="25" height="25" name="2024288"/>
-      <rect x="546" y="338" width="25" height="25" name="2010354"/>
-      <rect x="546" y="598" width="25" height="25" name="2024290"/>
-      <rect x="520" y="572" width="25" height="25" name="2024291"/>
-      <rect x="494" y="598" width="25" height="25" name="2024292"/>
-      <rect x="468" y="624" width="25" height="25" name="2024365"/>
-      <rect x="494" y="624" width="25" height="25" name="2024443"/>
-      <rect x="312" y="468" width="25" height="25" name="2010360"/>
-      <rect x="702" y="936" width="25" height="25" name="2024296"/>
-      <rect x="676" y="832" width="25" height="25" name="2010362"/>
-      <rect x="702" y="858" width="25" height="25" name="2024297"/>
-      <rect x="676" y="858" width="25" height="25" name="2010364"/>
-      <rect x="702" y="754" width="25" height="25" name="2024299"/>
-      <rect x="416" y="598" width="25" height="25" name="2024300"/>
-      <rect x="598" y="494" width="25" height="25" name="2024301"/>
-      <rect x="416" y="130" width="25" height="25" name="2005045"/>
-      <rect x="208" y="520" width="25" height="25" name="2024302"/>
-      <rect x="208" y="494" width="25" height="25" name="2024303"/>
-      <rect x="234" y="520" width="25" height="25" name="2024304"/>
-      <rect x="234" y="494" width="25" height="25" name="2024305"/>
-      <rect x="442" y="156" width="25" height="25" name="2024610"/>
-      <rect x="156" y="780" width="25" height="25" name="2024623"/>
-      <rect x="52" y="182" width="25" height="25" name="2024549"/>
-      <rect x="494" y="572" width="25" height="25" name="2024306"/>
-      <rect x="624" y="494" width="25" height="25" name="2024307"/>
-      <rect x="260" y="650" width="25" height="25" name="2024308"/>
-      <rect x="572" y="676" width="25" height="25" name="2024309"/>
-      <rect x="598" y="676" width="25" height="25" name="2024310"/>
-      <rect x="416" y="546" width="25" height="25" name="2024311"/>
-      <rect x="494" y="884" width="25" height="25" name="2024312"/>
-      <rect x="780" y="910" width="25" height="25" name="2010383"/>
-      <rect x="286" y="442" width="25" height="25" name="2024295"/>
-      <rect x="780" y="702" width="25" height="25" name="2024315"/>
-      <rect x="364" y="468" width="25" height="25" name="2024046"/>
-      <rect x="364" y="494" width="25" height="25" name="2010387"/>
-      <rect x="338" y="494" width="25" height="25" name="2024317"/>
-      <rect x="572" y="468" width="25" height="25" name="2024318"/>
-      <rect x="546" y="988" width="25" height="25" name="2010390"/>
-      <rect x="416" y="728" width="25" height="25" name="2010391"/>
-      <rect x="208" y="780" width="25" height="25" name="2010392"/>
-      <rect x="572" y="312" width="25" height="25" name="2010393"/>
-      <rect x="598" y="312" width="25" height="25" name="2024329"/>
-      <rect x="442" y="182" width="25" height="25" name="2024611"/>
-      <rect x="520" y="676" width="25" height="25" name="2024330"/>
-      <rect x="520" y="702" width="25" height="25" name="2010397"/>
-      <rect x="624" y="884" width="25" height="25" name="2024332"/>
-      <rect x="572" y="962" width="25" height="25" name="2010399"/>
-      <rect x="312" y="754" width="25" height="25" name="2024633"/>
-      <rect x="234" y="676" width="25" height="25" name="2010401"/>
-      <rect x="442" y="52" width="25" height="25" name="2005048"/>
-      <rect x="416" y="338" width="25" height="25" name="2024283"/>
-      <rect x="494" y="364" width="25" height="25" name="2010404"/>
-      <rect x="390" y="182" width="25" height="25" name="2005049"/>
-      <rect x="338" y="52" width="25" height="25" name="2024590"/>
-      <rect x="208" y="702" width="25" height="25" name="2010407"/>
-      <rect x="442" y="962" width="25" height="25" name="2024335"/>
-      <rect x="416" y="962" width="25" height="25" name="2024336"/>
-      <rect x="572" y="494" width="25" height="25" name="2024337"/>
-      <rect x="442" y="884" width="25" height="25" name="2024338"/>
-      <rect x="494" y="234" width="25" height="25" name="2010412"/>
-      <rect x="520" y="234" width="25" height="25" name="2010413"/>
-      <rect x="468" y="208" width="25" height="25" name="2024340"/>
-      <rect x="312" y="572" width="25" height="25" name="2024342"/>
-      <rect x="286" y="754" width="25" height="25" name="2024634"/>
-      <rect x="260" y="754" width="25" height="25" name="2010417"/>
-      <rect x="26" y="260" width="25" height="25" name="2024554"/>
-      <rect x="208" y="962" width="25" height="25" name="2024343"/>
-      <rect x="624" y="572" width="25" height="25" name="2024325"/>
-      <rect x="650" y="546" width="25" height="25" name="2024356"/>
-      <rect x="624" y="546" width="25" height="25" name="2024366"/>
-      <rect x="676" y="598" width="25" height="25" name="2024444"/>
-      <rect x="624" y="598" width="25" height="25" name="2024453"/>
-      <rect x="572" y="390" width="25" height="25" name="2024344"/>
-      <rect x="494" y="650" width="25" height="25" name="2024368"/>
-      <rect x="494" y="676" width="25" height="25" name="2024369"/>
-      <rect x="494" y="702" width="25" height="25" name="2024445"/>
-      <rect x="676" y="572" width="25" height="25" name="2024370"/>
-      <rect x="650" y="598" width="25" height="25" name="2024371"/>
-      <rect x="546" y="572" width="25" height="25" name="2024372"/>
-      <rect x="520" y="494" width="25" height="25" name="2010432"/>
-      <rect x="520" y="520" width="25" height="25" name="2024374"/>
-      <rect x="442" y="676" width="25" height="25" name="2024375"/>
-      <rect x="390" y="104" width="25" height="25" name="2005051"/>
-      <rect x="182" y="754" width="25" height="25" name="2010436"/>
-      <rect x="754" y="832" width="25" height="25" name="2024376"/>
-      <rect x="416" y="468" width="25" height="25" name="2024377"/>
-      <rect x="390" y="442" width="25" height="25" name="2024378"/>
-      <rect x="572" y="0" width="25" height="25" name="2024615"/>
-      <rect x="728" y="884" width="25" height="25" name="2024092"/>
-      <rect x="468" y="884" width="25" height="25" name="2024379"/>
-      <rect x="468" y="858" width="25" height="25" name="2024380"/>
-      <rect x="286" y="156" width="25" height="25" name="2024616"/>
-      <rect x="260" y="182" width="25" height="25" name="2005054"/>
-      <rect x="416" y="390" width="25" height="25" name="2010446"/>
-      <rect x="442" y="468" width="25" height="25" name="2024382"/>
-      <rect x="416" y="234" width="25" height="25" name="2010448"/>
-      <rect x="442" y="78" width="25" height="25" name="2024617"/>
-      <rect x="572" y="572" width="25" height="25" name="2024384"/>
-      <rect x="156" y="962" width="25" height="25" name="2024385"/>
-      <rect x="156" y="988" width="25" height="25" name="2024386"/>
-      <rect x="208" y="806" width="25" height="25" name="2024647"/>
-      <rect x="338" y="962" width="25" height="25" name="2024387"/>
-      <rect x="702" y="806" width="25" height="25" name="2024388"/>
-      <rect x="494" y="1014" width="25" height="25" name="2024389"/>
-      <rect x="520" y="1014" width="25" height="25" name="2024390"/>
-      <rect x="130" y="728" width="25" height="25" name="2010458"/>
-      <rect x="338" y="364" width="25" height="25" name="2024391"/>
-      <rect x="520" y="338" width="25" height="25" name="2010460"/>
-      <rect x="546" y="832" width="25" height="25" name="2024392"/>
-      <rect x="780" y="728" width="25" height="25" name="2024393"/>
-      <rect x="442" y="910" width="25" height="25" name="2010463"/>
-      <rect x="468" y="910" width="25" height="25" name="2010464"/>
-      <rect x="598" y="286" width="25" height="25" name="2024397"/>
-      <rect x="442" y="754" width="25" height="25" name="2024398"/>
-      <rect x="624" y="936" width="25" height="25" name="2024399"/>
-      <rect x="338" y="208" width="25" height="25" name="2024584"/>
-      <rect x="234" y="754" width="25" height="25" name="2010469"/>
-      <rect x="338" y="390" width="25" height="25" name="2024446"/>
-      <rect x="416" y="364" width="25" height="25" name="2024400"/>
-      <rect x="442" y="286" width="25" height="25" name="2024401"/>
-      <rect x="572" y="858" width="25" height="25" name="2024402"/>
-      <rect x="416" y="442" width="25" height="25" name="2024403"/>
-      <rect x="806" y="832" width="25" height="25" name="2024543"/>
-      <rect x="832" y="728" width="25" height="25" name="2024404"/>
-      <rect x="754" y="754" width="25" height="25" name="2024405"/>
-      <rect x="416" y="936" width="25" height="25" name="2024406"/>
-      <rect x="416" y="52" width="25" height="25" name="2005057"/>
-      <rect x="390" y="416" width="25" height="25" name="2024407"/>
-      <rect x="520" y="442" width="25" height="25" name="2024408"/>
-      <rect x="494" y="442" width="25" height="25" name="2024409"/>
-      <rect x="468" y="676" width="25" height="25" name="2024410"/>
-      <rect x="520" y="754" width="25" height="25" name="2024411"/>
-      <rect x="546" y="884" width="25" height="25" name="2024412"/>
-      <rect x="520" y="546" width="25" height="25" name="2024413"/>
-      <rect x="364" y="182" width="25" height="25" name="2005058"/>
-      <rect x="546" y="624" width="25" height="25" name="2010488"/>
-      <rect x="728" y="650" width="25" height="25" name="2024414"/>
-      <rect x="338" y="468" width="25" height="25" name="2010490"/>
-      <rect x="390" y="910" width="25" height="25" name="2024415"/>
-      <rect x="624" y="286" width="25" height="25" name="2024416"/>
-      <rect x="572" y="442" width="25" height="25" name="2024083"/>
-      <rect x="494" y="286" width="25" height="25" name="2010494"/>
-      <rect x="182" y="468" width="25" height="25" name="2024419"/>
-      <rect x="598" y="364" width="25" height="25" name="2010496"/>
-      <rect x="754" y="858" width="25" height="25" name="2024421"/>
-      <rect x="468" y="442" width="25" height="25" name="2024424"/>
-      <rect x="442" y="494" width="25" height="25" name="2024422"/>
-      <rect x="442" y="520" width="25" height="25" name="2024425"/>
-      <rect x="468" y="468" width="25" height="25" name="2024426"/>
-      <rect x="494" y="468" width="25" height="25" name="2024423"/>
-      <rect x="546" y="520" width="25" height="25" name="2024427"/>
-      <rect x="468" y="338" width="25" height="25" name="2024428"/>
-      <rect x="260" y="624" width="25" height="25" name="2024429"/>
-      <rect x="286" y="598" width="25" height="25" name="2024357"/>
-      <rect x="832" y="832" width="25" height="25" name="2024430"/>
-      <rect x="442" y="312" width="25" height="25" name="2024420"/>
-      <rect x="598" y="520" width="25" height="25" name="2024431"/>
-      <rect x="494" y="858" width="25" height="25" name="2024432"/>
-      <rect x="390" y="702" width="25" height="25" name="2010511"/>
-      <rect x="286" y="884" width="25" height="25" name="2024542"/>
-      <rect x="338" y="910" width="25" height="25" name="2010513"/>
-      <rect x="312" y="936" width="25" height="25" name="2010514"/>
-      <rect x="598" y="546" width="25" height="25" name="2024442"/>
-      <rect x="572" y="234" width="25" height="25" name="2024271"/>
-      <rect x="494" y="988" width="25" height="25" name="2024456"/>
-      <rect x="468" y="962" width="25" height="25" name="2024457"/>
-      <rect x="806" y="728" width="25" height="25" name="2024458"/>
-      <rect x="312" y="390" width="25" height="25" name="2024459"/>
-      <rect x="572" y="910" width="25" height="25" name="2024460"/>
-      <rect x="624" y="676" width="25" height="25" name="2024461"/>
-      <rect x="130" y="936" width="25" height="25" name="2024462"/>
-      <rect x="286" y="468" width="25" height="25" name="2024463"/>
-      <rect x="260" y="520" width="25" height="25" name="2024464"/>
-      <rect x="78" y="988" width="25" height="25" name="2024465"/>
-      <rect x="364" y="598" width="25" height="25" name="2024466"/>
-      <rect x="416" y="572" width="25" height="25" name="2024467"/>
-      <rect x="260" y="676" width="25" height="25" name="2010529"/>
-      <rect x="416" y="494" width="25" height="25" name="2024468"/>
-      <rect x="624" y="624" width="25" height="25" name="2024469"/>
-      <rect x="338" y="104" width="25" height="25" name="2024614"/>
-      <rect x="364" y="520" width="25" height="25" name="2024157"/>
-      <rect x="546" y="312" width="25" height="25" name="2024470"/>
-      <rect x="520" y="312" width="25" height="25" name="2010535"/>
-      <rect x="364" y="572" width="25" height="25" name="2024471"/>
-      <rect x="338" y="572" width="25" height="25" name="2024472"/>
-      <rect x="390" y="572" width="25" height="25" name="2024473"/>
-      <rect x="338" y="598" width="25" height="25" name="2010539"/>
-      <rect x="286" y="702" width="25" height="25" name="2024170"/>
-      <rect x="156" y="234" width="25" height="25" name="2024559"/>
-      <rect x="468" y="754" width="25" height="25" name="2024474"/>
-      <rect x="624" y="858" width="25" height="25" name="2010543"/>
-      <rect x="312" y="494" width="25" height="25" name="2024476"/>
-      <rect x="416" y="806" width="25" height="25" name="2024477"/>
-      <rect x="754" y="624" width="25" height="25" name="2024115"/>
-      <rect x="780" y="624" width="25" height="25" name="2024478"/>
-      <rect x="780" y="650" width="25" height="25" name="2024448"/>
-      <rect x="702" y="624" width="25" height="25" name="2024521"/>
-      <rect x="598" y="260" width="25" height="25" name="2024479"/>
-      <rect x="676" y="910" width="25" height="25" name="2024180"/>
-      <rect x="520" y="936" width="25" height="25" name="2024480"/>
-      <rect x="546" y="936" width="25" height="25" name="2010553"/>
-      <rect x="650" y="936" width="25" height="25" name="2024326"/>
-      <rect x="598" y="910" width="25" height="25" name="2024481"/>
-      <rect x="416" y="624" width="25" height="25" name="2024482"/>
-      <rect x="208" y="754" width="25" height="25" name="2010557"/>
-      <rect x="156" y="728" width="25" height="25" name="2024625"/>
-      <rect x="416" y="832" width="25" height="25" name="2024358"/>
-      <rect x="442" y="858" width="25" height="25" name="2024449"/>
-      <rect x="442" y="624" width="25" height="25" name="2024483"/>
-      <rect x="390" y="520" width="25" height="25" name="2024484"/>
-      <rect x="260" y="936" width="25" height="25" name="2024485"/>
-      <rect x="286" y="624" width="25" height="25" name="2024486"/>
-      <rect x="442" y="780" width="25" height="25" name="2024487"/>
-      <rect x="858" y="832" width="25" height="25" name="2010566"/>
-      <rect x="858" y="858" width="25" height="25" name="2010567"/>
-      <rect x="442" y="806" width="25" height="25" name="2010568"/>
-      <rect x="312" y="598" width="25" height="25" name="2024489"/>
-      <rect x="650" y="286" width="25" height="25" name="2024490"/>
-      <rect x="364" y="832" width="25" height="25" name="2024280"/>
-      <rect x="806" y="780" width="25" height="25" name="2024491"/>
-      <rect x="234" y="936" width="25" height="25" name="2010573"/>
-      <rect x="728" y="910" width="25" height="25" name="2010574"/>
-      <rect x="598" y="858" width="25" height="25" name="2024493"/>
-      <rect x="208" y="988" width="25" height="25" name="2024494"/>
-      <rect x="260" y="728" width="25" height="25" name="2024632"/>
-      <rect x="182" y="988" width="25" height="25" name="2024496"/>
-      <rect x="650" y="728" width="25" height="25" name="2024257"/>
-      <rect x="104" y="962" width="25" height="25" name="2024497"/>
-      <rect x="754" y="884" width="25" height="25" name="2024498"/>
-      <rect x="546" y="858" width="25" height="25" name="2024499"/>
-      <rect x="572" y="208" width="25" height="25" name="2024361"/>
-      <rect x="546" y="208" width="25" height="25" name="2010584"/>
-      <rect x="0" y="208" width="25" height="25" name="2024561"/>
-      <rect x="26" y="208" width="25" height="25" name="2024553"/>
-      <rect x="52" y="260" width="25" height="25" name="2024560"/>
-      <rect x="520" y="780" width="25" height="25" name="2024500"/>
-      <rect x="208" y="598" width="25" height="25" name="2010589"/>
-      <rect x="182" y="780" width="25" height="25" name="2024641"/>
-      <rect x="624" y="832" width="25" height="25" name="2010591"/>
-      <rect x="520" y="390" width="25" height="25" name="2010592"/>
-      <rect x="156" y="520" width="25" height="25" name="2024501"/>
-      <rect x="338" y="624" width="25" height="25" name="2010594"/>
-      <rect x="364" y="624" width="25" height="25" name="2010595"/>
-      <rect x="676" y="754" width="25" height="25" name="2024505"/>
-      <rect x="494" y="208" width="25" height="25" name="2010597"/>
-      <rect x="442" y="832" width="25" height="25" name="2010598"/>
-      <rect x="364" y="676" width="25" height="25" name="2024227"/>
-      <rect x="286" y="520" width="25" height="25" name="2024508"/>
-      <rect x="312" y="546" width="25" height="25" name="2024509"/>
-      <rect x="416" y="754" width="25" height="25" name="2024510"/>
-      <rect x="442" y="650" width="25" height="25" name="2024362"/>
-      <rect x="546" y="260" width="25" height="25" name="2010604"/>
-      <rect x="598" y="702" width="25" height="25" name="2024511"/>
-      <rect x="728" y="624" width="25" height="25" name="2024512"/>
-      <rect x="702" y="910" width="25" height="25" name="2010607"/>
-      <rect x="286" y="546" width="25" height="25" name="2010608"/>
-      <rect x="520" y="650" width="25" height="25" name="2024515"/>
-      <rect x="312" y="910" width="25" height="25" name="2010610"/>
-      <rect x="624" y="650" width="25" height="25" name="2024516"/>
-      <rect x="546" y="416" width="25" height="25" name="2010612"/>
-      <rect x="338" y="650" width="25" height="25" name="2010613"/>
-      <rect x="338" y="676" width="25" height="25" name="2010614"/>
-      <rect x="702" y="780" width="25" height="25" name="2010615"/>
-      <rect x="598" y="780" width="25" height="25" name="2010616"/>
-      <rect x="416" y="312" width="25" height="25" name="2024383"/>
-      <rect x="286" y="910" width="25" height="25" name="2024523"/>
-      <rect x="260" y="442" width="25" height="25" name="2024524"/>
-      <rect x="416" y="858" width="25" height="25" name="2010620"/>
-      <rect x="364" y="910" width="25" height="25" name="2024455"/>
-      <rect x="598" y="884" width="25" height="25" name="2024525"/>
-      <rect x="494" y="962" width="25" height="25" name="2024319"/>
-      <rect x="520" y="884" width="25" height="25" name="2024538"/>
-      <rect x="208" y="546" width="25" height="25" name="2010625"/>
-      <rect x="156" y="546" width="25" height="25" name="2024526"/>
-      <rect x="754" y="702" width="25" height="25" name="2024527"/>
-      <rect x="468" y="780" width="25" height="25" name="2024507"/>
-      <rect x="546" y="910" width="25" height="25" name="2024528"/>
-      <rect x="494" y="910" width="25" height="25" name="2024529"/>
-      <rect x="312" y="624" width="25" height="25" name="2024503"/>
-      <rect x="312" y="650" width="25" height="25" name="2024504"/>
-      <rect x="286" y="650" width="25" height="25" name="2010633"/>
-      <rect x="390" y="754" width="25" height="25" name="2024531"/>
-      <rect x="364" y="754" width="25" height="25" name="2024327"/>
-      <rect x="312" y="728" width="25" height="25" name="2024522"/>
-      <rect x="416" y="260" width="25" height="25" name="2010637"/>
-      <rect x="286" y="494" width="25" height="25" name="2010638"/>
-      <rect x="624" y="988" width="25" height="25" name="2024181"/>
-      <rect x="598" y="988" width="25" height="25" name="2024532"/>
-      <rect x="234" y="624" width="25" height="25" name="2024622"/>
-      <rect x="468" y="832" width="25" height="25" name="2024533"/>
-      <rect x="364" y="364" width="25" height="25" name="2010643"/>
-      <rect x="260" y="702" width="25" height="25" name="2024534"/>
-      <rect x="338" y="520" width="25" height="25" name="2024535"/>
-      <rect x="286" y="936" width="25" height="25" name="2024434"/>
-      <rect x="130" y="598" width="25" height="25" name="2024619"/>
-      <rect x="624" y="312" width="25" height="25" name="2024536"/>
-      <rect x="650" y="312" width="25" height="25" name="2024537"/>
-      <rect x="676" y="312" width="25" height="25" name="2010650"/>
+   <g id="uk-2024-svg">
+      <rect x="208" y="754" width="25" height="25" name="2024627" data-title="Aberafan Maesteg"/>
+      <rect x="182" y="624" width="25" height="25" name="2024637" data-title="Bangor Aberconwy"/>
+      <rect x="520" y="52" width="25" height="25" name="2024562" data-title="Aberdeen North"/>
+      <rect x="520" y="78" width="25" height="25" name="2024563" data-title="Aberdeen South"/>
+      <rect x="520" y="104" width="25" height="25" name="2024618" data-title="West Aberdeenshire and Kincardine"/>
+      <rect x="416" y="156" width="25" height="25" name="2024564" data-title="Airdrie and Shotts"/>
+      <rect x="494" y="936" width="25" height="25" name="2024001" data-title="Aldershot"/>
+      <rect x="364" y="624" width="25" height="25" name="2024002" data-title="Aldridge-Brownhills"/>
+      <rect x="312" y="520" width="25" height="25" name="2024003" data-title="Altrincham and Sale West"/>
+      <rect x="260" y="598" width="25" height="25" name="2024621" data-title="Alyn and Deeside"/>
+      <rect x="468" y="494" width="25" height="25" name="2024004" data-title="Amber Valley"/>
+      <rect x="416" y="78" width="25" height="25" name="2024565" data-title="Angus and Perthshire Glens"/>
+      <rect x="104" y="182" width="25" height="25" name="2024548" data-title="East Antrim"/>
+      <rect x="78" y="182" width="25" height="25" name="2024555" data-title="North Antrim"/>
+      <rect x="78" y="208" width="25" height="25" name="2024557" data-title="South Antrim"/>
+      <rect x="312" y="104" width="25" height="25" name="2024567" data-title="Argyll, Bute and South Lochaber"/>
+      <rect x="676" y="962" width="25" height="25" name="2024005" data-title="Arundel and South Downs"/>
+      <rect x="546" y="494" width="25" height="25" name="2024006" data-title="Ashfield"/>
+      <rect x="832" y="884" width="25" height="25" name="2024007" data-title="Ashford"/>
+      <rect x="390" y="468" width="25" height="25" name="2024008" data-title="Ashton-under-Lyne"/>
+      <rect x="494" y="754" width="25" height="25" name="2024009" data-title="Aylesbury"/>
+      <rect x="494" y="728" width="25" height="25" name="2024096" data-title="Mid Buckinghamshire"/>
+      <rect x="338" y="234" width="25" height="25" name="2024568" data-title="Ayr, Carrick and Cumnock"/>
+      <rect x="312" y="208" width="25" height="25" name="2024573" data-title="Central Ayrshire"/>
+      <rect x="286" y="208" width="25" height="25" name="2024612" data-title="North Ayrshire and Arran"/>
+      <rect x="468" y="728" width="25" height="25" name="2024010" data-title="Banbury"/>
+      <rect x="468" y="754" width="25" height="25" name="2024539" data-title="Bicester and Woodstock"/>
+      <rect x="468" y="52" width="25" height="25" name="2024569" data-title="Aberdeenshire North and Moray East"/>
+      <rect x="754" y="780" width="25" height="25" name="2024011" data-title="Barking"/>
+      <rect x="546" y="390" width="25" height="25" name="2024012" data-title="Barnsley North"/>
+      <rect x="520" y="416" width="25" height="25" name="2024013" data-title="Barnsley South"/>
+      <rect x="390" y="312" width="25" height="25" name="2024014" data-title="Barrow and Furness"/>
+      <rect x="754" y="728" width="25" height="25" name="2024015" data-title="Basildon and Billericay"/>
+      <rect x="806" y="754" width="25" height="25" name="2024435" data-title="South Basildon and East Thurrock"/>
+      <rect x="442" y="962" width="25" height="25" name="2024016" data-title="Basingstoke"/>
+      <rect x="598" y="468" width="25" height="25" name="2024017" data-title="Bassetlaw"/>
+      <rect x="364" y="884" width="25" height="25" name="2024018" data-title="Bath"/>
+      <rect x="494" y="364" width="25" height="25" name="2024019" data-title="Spen Valley"/>
+      <rect x="598" y="832" width="25" height="25" name="2024021" data-title="Battersea"/>
+      <rect x="494" y="832" width="25" height="25" name="2024022" data-title="Beaconsfield"/>
+      <rect x="702" y="884" width="25" height="25" name="2024023" data-title="Beckenham and Penge"/>
+      <rect x="572" y="624" width="25" height="25" name="2024025" data-title="Bedford"/>
+      <rect x="572" y="650" width="25" height="25" name="2024322" data-title="Mid Bedfordshire"/>
+      <rect x="546" y="624" width="25" height="25" name="2024349" data-title="North Bedfordshire"/>
+      <rect x="546" y="676" width="25" height="25" name="2024450" data-title="Dunstable and Leighton Buzzard"/>
+      <rect x="572" y="676" width="25" height="25" name="2024254" data-title="Harpenden and Berkhamsted"/>
+      <rect x="130" y="234" width="25" height="25" name="2024544" data-title="Belfast East"/>
+      <rect x="104" y="208" width="25" height="25" name="2024545" data-title="Belfast North"/>
+      <rect x="104" y="234" width="25" height="25" name="2024546" data-title="Belfast South and Mid Down"/>
+      <rect x="78" y="234" width="25" height="25" name="2024547" data-title="Belfast West"/>
+      <rect x="650" y="806" width="25" height="25" name="2024026" data-title="Bermondsey and Old Southwark"/>
+      <rect x="442" y="208" width="25" height="25" name="2024027" data-title="North Northumberland"/>
+      <rect x="416" y="208" width="25" height="25" name="2024571" data-title="Berwickshire, Roxburgh and Selkirk"/>
+      <rect x="676" y="806" width="25" height="25" name="2024028" data-title="Bethnal Green and Stepney"/>
+      <rect x="676" y="364" width="25" height="25" name="2024030" data-title="Beverley and Holderness"/>
+      <rect x="754" y="910" width="25" height="25" name="2024031" data-title="Bexhill and Battle"/>
+      <rect x="780" y="806" width="25" height="25" name="2024032" data-title="Bexleyheath and Crayford"/>
+      <rect x="182" y="520" width="25" height="25" name="2024033" data-title="Birkenhead"/>
+      <rect x="338" y="702" width="25" height="25" name="2024034" data-title="Birmingham Edgbaston"/>
+      <rect x="390" y="624" width="25" height="25" name="2024035" data-title="Birmingham Erdington"/>
+      <rect x="364" y="702" width="25" height="25" name="2024036" data-title="Birmingham Hall Green and Moseley"/>
+      <rect x="390" y="650" width="25" height="25" name="2024037" data-title="Birmingham Hodge Hill and Solihull North"/>
+      <rect x="364" y="676" width="25" height="25" name="2024038" data-title="Birmingham Ladywood"/>
+      <rect x="364" y="728" width="25" height="25" name="2024040" data-title="Birmingham Northfield"/>
+      <rect x="364" y="650" width="25" height="25" name="2024041" data-title="Birmingham Perry Barr"/>
+      <rect x="390" y="702" width="25" height="25" name="2024042" data-title="Birmingham Selly Oak"/>
+      <rect x="416" y="650" width="25" height="25" name="2024039" data-title="Birmingham Yardley"/>
+      <rect x="468" y="260" width="25" height="25" name="2024043" data-title="Bishop Auckland"/>
+      <rect x="390" y="364" width="25" height="25" name="2024044" data-title="Blackburn"/>
+      <rect x="364" y="442" width="25" height="25" name="2024045" data-title="Blackley and Middleton South"/>
+      <rect x="364" y="338" width="25" height="25" name="2024049" data-title="Blackpool North and Fleetwood"/>
+      <rect x="312" y="364" width="25" height="25" name="2024050" data-title="Blackpool South"/>
+      <rect x="234" y="702" width="25" height="25" name="2024648" data-title="Blaenau Gwent and Rhymney"/>
+      <rect x="494" y="260" width="25" height="25" name="2024051" data-title="Blaydon and Consett"/>
+      <rect x="468" y="208" width="25" height="25" name="2024055" data-title="Blyth and Ashington"/>
+      <rect x="572" y="988" width="25" height="25" name="2024056" data-title="Bognor Regis and Littlehampton"/>
+      <rect x="546" y="468" width="25" height="25" name="2024057" data-title="Bolsover"/>
+      <rect x="338" y="416" width="25" height="25" name="2024058" data-title="Bolton North East"/>
+      <rect x="312" y="442" width="25" height="25" name="2024059" data-title="Bolton South and Walkden"/>
+      <rect x="312" y="416" width="25" height="25" name="2024060" data-title="Bolton West"/>
+      <rect x="260" y="468" width="25" height="25" name="2024061" data-title="Bootle"/>
+      <rect x="650" y="520" width="25" height="25" name="2024062" data-title="Boston and Skegness"/>
+      <rect x="468" y="650" width="25" height="25" name="2024063" data-title="Hinckley and Bosworth"/>
+      <rect x="390" y="962" width="25" height="25" name="2024064" data-title="Bournemouth East"/>
+      <rect x="364" y="962" width="25" height="25" name="2024065" data-title="Bournemouth West"/>
+      <rect x="520" y="910" width="25" height="25" name="2024066" data-title="Bracknell"/>
+      <rect x="468" y="364" width="25" height="25" name="2024067" data-title="Bradford East"/>
+      <rect x="468" y="390" width="25" height="25" name="2024068" data-title="Bradford South"/>
+      <rect x="442" y="364" width="25" height="25" name="2024069" data-title="Bradford West"/>
+      <rect x="754" y="676" width="25" height="25" name="2024070" data-title="Braintree"/>
+      <rect x="234" y="676" width="25" height="25" name="2024645" data-title="Brecon, Radnor and Cwm Tawe"/>
+      <rect x="572" y="780" width="25" height="25" name="2024071" data-title="Brent East"/>
+      <rect x="572" y="754" width="25" height="25" name="2024072" data-title="Brent West"/>
+      <rect x="520" y="832" width="25" height="25" name="2024075" data-title="Brentford and Isleworth"/>
+      <rect x="728" y="702" width="25" height="25" name="2024076" data-title="Brentwood and Ongar"/>
+      <rect x="182" y="780" width="25" height="25" name="2024649" data-title="Bridgend"/>
+      <rect x="260" y="910" width="25" height="25" name="2024077" data-title="Bridgwater"/>
+      <rect x="598" y="416" width="25" height="25" name="2024082" data-title="Brigg and Immingham"/>
+      <rect x="754" y="962" width="25" height="25" name="2024084" data-title="Brighton Kemptown and Peacehaven"/>
+      <rect x="728" y="962" width="25" height="25" name="2024085" data-title="Brighton Pavilion"/>
+      <rect x="338" y="884" width="25" height="25" name="2024086" data-title="Bristol East"/>
+      <rect x="312" y="858" width="25" height="25" name="2024087" data-title="Bristol North West"/>
+      <rect x="312" y="884" width="25" height="25" name="2024088" data-title="Bristol South"/>
+      <rect x="338" y="858" width="25" height="25" name="2024089" data-title="Bristol Central"/>
+      <rect x="364" y="858" width="25" height="25" name="2024279" data-title="Bristol North East"/>
+      <rect x="390" y="858" width="25" height="25" name="2024162" data-title="Melksham and Devizes"/>
+      <rect x="650" y="572" width="25" height="25" name="2024090" data-title="Broadland and Fakenham"/>
+      <rect x="728" y="858" width="25" height="25" name="2024024" data-title="Bromley and Biggin Hill"/>
+      <rect x="338" y="728" width="25" height="25" name="2024093" data-title="Bromsgrove"/>
+      <rect x="676" y="676" width="25" height="25" name="2024094" data-title="Broxbourne"/>
+      <rect x="494" y="520" width="25" height="25" name="2024095" data-title="Broxtowe"/>
+      <rect x="520" y="728" width="25" height="25" name="2024097" data-title="Buckingham and Bletchley"/>
+      <rect x="416" y="390" width="25" height="25" name="2024098" data-title="Burnley"/>
+      <rect x="442" y="598" width="25" height="25" name="2024099" data-title="Burton and Uttoxeter"/>
+      <rect x="364" y="416" width="25" height="25" name="2024100" data-title="Bury North"/>
+      <rect x="338" y="442" width="25" height="25" name="2024048" data-title="Bury South"/>
+      <rect x="754" y="650" width="25" height="25" name="2024101" data-title="Bury St Edmunds and Stowmarket"/>
+      <rect x="234" y="728" width="25" height="25" name="2024639" data-title="Caerphilly"/>
+      <rect x="442" y="26" width="25" height="25" name="2024572" data-title="Caithness, Sutherland and Easter Ross"/>
+      <rect x="442" y="416" width="25" height="25" name="2024102" data-title="Calder Valley"/>
+      <rect x="650" y="832" width="25" height="25" name="2024103" data-title="Peckham"/>
+      <rect x="104" y="988" width="25" height="25" name="2024107" data-title="Camborne and Redruth"/>
+      <rect x="676" y="624" width="25" height="25" name="2024108" data-title="Cambridge"/>
+      <rect x="598" y="572" width="25" height="25" name="2024350" data-title="North East Cambridgeshire"/>
+      <rect x="572" y="598" width="25" height="25" name="2024363" data-title="North West Cambridgeshire"/>
+      <rect x="702" y="650" width="25" height="25" name="2024436" data-title="South Cambridgeshire"/>
+      <rect x="650" y="624" width="25" height="25" name="2024440" data-title="St Neots and Mid Cambridgeshire"/>
+      <rect x="702" y="624" width="25" height="25" name="2024439" data-title="Ely and East Cambridgeshire"/>
+      <rect x="390" y="598" width="25" height="25" name="2024109" data-title="Cannock Chase"/>
+      <rect x="832" y="858" width="25" height="25" name="2024110" data-title="Canterbury"/>
+      <rect x="260" y="780" width="25" height="25" name="2024628" data-title="Cardiff East"/>
+      <rect x="234" y="780" width="25" height="25" name="2024630" data-title="Cardiff North"/>
+      <rect x="234" y="806" width="25" height="25" name="2024629" data-title="Cardiff South and Penarth"/>
+      <rect x="208" y="806" width="25" height="25" name="2024650" data-title="Cardiff West"/>
+      <rect x="416" y="234" width="25" height="25" name="2024111" data-title="Carlisle"/>
+      <rect x="624" y="910" width="25" height="25" name="2024112" data-title="Carshalton and Wallington"/>
+      <rect x="832" y="754" width="25" height="25" name="2024113" data-title="Castle Point"/>
+      <rect x="208" y="676" width="25" height="25" name="2024642" data-title="Ceredigion Preseli"/>
+      <rect x="780" y="884" width="25" height="25" name="2024118" data-title="Chatham and Aylesford"/>
+      <rect x="338" y="546" width="25" height="25" name="2024119" data-title="Cheadle"/>
+      <rect x="728" y="676" width="25" height="25" name="2024120" data-title="Chelmsford"/>
+      <rect x="572" y="832" width="25" height="25" name="2024121" data-title="Chelsea and Fulham"/>
+      <rect x="390" y="832" width="25" height="25" name="2024122" data-title="Cheltenham"/>
+      <rect x="494" y="780" width="25" height="25" name="2024123" data-title="Chesham and Amersham"/>
+      <rect x="494" y="494" width="25" height="25" name="2024124" data-title="Chesterfield"/>
+      <rect x="572" y="962" width="25" height="25" name="2024125" data-title="Chichester"/>
+      <rect x="702" y="728" width="25" height="25" name="2024126" data-title="Chingford and Woodford Green"/>
+      <rect x="390" y="884" width="25" height="25" name="2024127" data-title="Chippenham"/>
+      <rect x="624" y="702" width="25" height="25" name="2024128" data-title="Chipping Barnet"/>
+      <rect x="364" y="390" width="25" height="25" name="2024129" data-title="Chorley"/>
+      <rect x="390" y="936" width="25" height="25" name="2024130" data-title="Christchurch"/>
+      <rect x="624" y="806" width="25" height="25" name="2024131" data-title="Cities of London and Westminster"/>
+      <rect x="260" y="572" width="25" height="25" name="2024134" data-title="Runcorn and Helsby"/>
+      <rect x="494" y="286" width="25" height="25" name="2024135" data-title="City of Durham"/>
+      <rect x="520" y="286" width="25" height="25" name="2024417" data-title="Newton Aycliffe and Spennymoor"/>
+      <rect x="832" y="676" width="25" height="25" name="2024136" data-title="Clacton"/>
+      <rect x="234" y="650" width="25" height="25" name="2024640" data-title="Montgomeryshire and Glyndwr"/>
+      <rect x="208" y="624" width="25" height="25" name="2024638" data-title="Clwyd North"/>
+      <rect x="364" y="130" width="25" height="25" name="2024574" data-title="Coatbridge and Bellshill"/>
+      <rect x="780" y="676" width="25" height="25" name="2024138" data-title="Colchester"/>
+      <rect x="442" y="442" width="25" height="25" name="2024187" data-title="Colne Valley"/>
+      <rect x="390" y="546" width="25" height="25" name="2024139" data-title="Congleton"/>
+      <rect x="546" y="650" width="25" height="25" name="2024142" data-title="Corby and East Northamptonshire"/>
+      <rect x="156" y="936" width="25" height="25" name="2024345" data-title="North Cornwall"/>
+      <rect x="130" y="962" width="25" height="25" name="2024441" data-title="South East Cornwall"/>
+      <rect x="442" y="702" width="25" height="25" name="2024143" data-title="Coventry East"/>
+      <rect x="416" y="702" width="25" height="25" name="2024145" data-title="Coventry North West"/>
+      <rect x="416" y="728" width="25" height="25" name="2024144" data-title="Coventry South"/>
+      <rect x="676" y="936" width="25" height="25" name="2024146" data-title="Crawley"/>
+      <rect x="364" y="546" width="25" height="25" name="2024147" data-title="Crewe and Nantwich"/>
+      <rect x="676" y="910" width="25" height="25" name="2024148" data-title="Croydon East"/>
+      <rect x="650" y="884" width="25" height="25" name="2024149" data-title="Croydon West"/>
+      <rect x="676" y="884" width="25" height="25" name="2024151" data-title="Streatham and Croydon North"/>
+      <rect x="650" y="910" width="25" height="25" name="2024150" data-title="Croydon South"/>
+      <rect x="364" y="104" width="25" height="25" name="2024575" data-title="Cumbernauld and Kirkintilloch"/>
+      <rect x="780" y="780" width="25" height="25" name="2024152" data-title="Dagenham and Rainham"/>
+      <rect x="494" y="312" width="25" height="25" name="2024153" data-title="Darlington"/>
+      <rect x="806" y="806" width="25" height="25" name="2024154" data-title="Dartford"/>
+      <rect x="468" y="702" width="25" height="25" name="2024155" data-title="Daventry"/>
+      <rect x="234" y="598" width="25" height="25" name="2024620" data-title="Clwyd East"/>
+      <rect x="390" y="494" width="25" height="25" name="2024156" data-title="Gorton and Denton"/>
+      <rect x="468" y="546" width="25" height="25" name="2024158" data-title="Derby North"/>
+      <rect x="468" y="572" width="25" height="25" name="2024159" data-title="Derby South"/>
+      <rect x="442" y="572" width="25" height="25" name="2024160" data-title="Derbyshire Dales"/>
+      <rect x="468" y="520" width="25" height="25" name="2024323" data-title="Mid Derbyshire"/>
+      <rect x="520" y="468" width="25" height="25" name="2024351" data-title="North East Derbyshire"/>
+      <rect x="468" y="598" width="25" height="25" name="2024437" data-title="South Derbyshire"/>
+      <rect x="416" y="884" width="25" height="25" name="2024161" data-title="East Wiltshire"/>
+      <rect x="208" y="936" width="25" height="25" name="2024114" data-title="Central Devon"/>
+      <rect x="260" y="962" width="25" height="25" name="2024176" data-title="Honiton and Sidmouth"/>
+      <rect x="234" y="910" width="25" height="25" name="2024346" data-title="North Devon"/>
+      <rect x="182" y="962" width="25" height="25" name="2024451" data-title="South West Devon"/>
+      <rect x="182" y="936" width="25" height="25" name="2024495" data-title="Torridge and Tavistock"/>
+      <rect x="494" y="390" width="25" height="25" name="2024020" data-title="Dewsbury and Batley"/>
+      <rect x="572" y="416" width="25" height="25" name="2024081" data-title="Doncaster East and the Isle of Axholme"/>
+      <rect x="546" y="442" width="25" height="25" name="2024165" data-title="Doncaster Central"/>
+      <rect x="546" y="416" width="25" height="25" name="2024166" data-title="Doncaster North"/>
+      <rect x="338" y="936" width="25" height="25" name="2024324" data-title="Mid Dorset and North Poole"/>
+      <rect x="364" y="936" width="25" height="25" name="2024347" data-title="North Dorset"/>
+      <rect x="312" y="962" width="25" height="25" name="2024438" data-title="South Dorset"/>
+      <rect x="286" y="962" width="25" height="25" name="2024518" data-title="West Dorset"/>
+      <rect x="858" y="884" width="25" height="25" name="2024167" data-title="Dover and Deal"/>
+      <rect x="130" y="208" width="25" height="25" name="2024556" data-title="North Down"/>
+      <rect x="104" y="260" width="25" height="25" name="2024558" data-title="South Down"/>
+      <rect x="286" y="676" width="25" height="25" name="2024168" data-title="Dudley"/>
+      <rect x="650" y="858" width="25" height="25" name="2024106" data-title="Dulwich and West Norwood"/>
+      <rect x="364" y="234" width="25" height="25" name="2024576" data-title="Dumfries and Galloway"/>
+      <rect x="390" y="234" width="25" height="25" name="2024577" data-title="Dumfriesshire, Clydesdale and Tweeddale"/>
+      <rect x="338" y="130" width="25" height="25" name="2024580" data-title="Mid Dunbartonshire"/>
+      <rect x="312" y="130" width="25" height="25" name="2024597" data-title="West Dunbartonshire"/>
+      <rect x="494" y="78" width="25" height="25" name="2024566" data-title="Arbroath and Broughty Ferry"/>
+      <rect x="468" y="78" width="25" height="25" name="2024578" data-title="Dundee Central"/>
+      <rect x="416" y="104" width="25" height="25" name="2024579" data-title="Dunfermline and Dollar"/>
+      <rect x="468" y="286" width="25" height="25" name="2024348" data-title="North Durham"/>
+      <rect x="208" y="650" width="25" height="25" name="2024636" data-title="Dwyfor Meirionnydd"/>
+      <rect x="546" y="806" width="25" height="25" name="2024171" data-title="Ealing Central and Acton"/>
+      <rect x="546" y="780" width="25" height="25" name="2024172" data-title="Ealing North"/>
+      <rect x="520" y="806" width="25" height="25" name="2024173" data-title="Ealing Southall"/>
+      <rect x="546" y="286" width="25" height="25" name="2024174" data-title="Easington"/>
+      <rect x="728" y="780" width="25" height="25" name="2024178" data-title="East Ham"/>
+      <rect x="390" y="208" width="25" height="25" name="2024582" data-title="East Kilbride and Strathaven"/>
+      <rect x="468" y="182" width="25" height="25" name="2024583" data-title="Lothian East"/>
+      <rect x="780" y="936" width="25" height="25" name="2024183" data-title="Eastbourne"/>
+      <rect x="520" y="988" width="25" height="25" name="2024184" data-title="Eastleigh"/>
+      <rect x="286" y="572" width="25" height="25" name="2024133" data-title="Chester South and Eddisbury"/>
+      <rect x="494" y="130" width="25" height="25" name="2024585" data-title="Edinburgh East and Musselburgh"/>
+      <rect x="468" y="130" width="25" height="25" name="2024586" data-title="Edinburgh North and Leith"/>
+      <rect x="494" y="156" width="25" height="25" name="2024587" data-title="Edinburgh South"/>
+      <rect x="468" y="156" width="25" height="25" name="2024588" data-title="Edinburgh South West"/>
+      <rect x="442" y="130" width="25" height="25" name="2024589" data-title="Edinburgh West"/>
+      <rect x="676" y="728" width="25" height="25" name="2024186" data-title="Edmonton and Winchmore Hill"/>
+      <rect x="234" y="572" width="25" height="25" name="2024132" data-title="Chester North and Neston"/>
+      <rect x="572" y="390" width="25" height="25" name="2024244" data-title="Normanton and Hemsworth"/>
+      <rect x="728" y="832" width="25" height="25" name="2024091" data-title="Eltham and Chislehurst"/>
+      <rect x="676" y="702" width="25" height="25" name="2024195" data-title="Enfield North"/>
+      <rect x="650" y="702" width="25" height="25" name="2024188" data-title="Southgate and Wood Green"/>
+      <rect x="702" y="702" width="25" height="25" name="2024196" data-title="Epping Forest"/>
+      <rect x="598" y="936" width="25" height="25" name="2024197" data-title="Epsom and Ewell"/>
+      <rect x="494" y="546" width="25" height="25" name="2024198" data-title="Erewash"/>
+      <rect x="754" y="806" width="25" height="25" name="2024194" data-title="Erith and Thamesmead"/>
+      <rect x="572" y="936" width="25" height="25" name="2024199" data-title="Esher and Walton"/>
+      <rect x="234" y="962" width="25" height="25" name="2024177" data-title="Exeter"/>
+      <rect x="390" y="130" width="25" height="25" name="2024591" data-title="Falkirk"/>
+      <rect x="546" y="988" width="25" height="25" name="2024200" data-title="Fareham and Waterlooville"/>
+      <rect x="806" y="858" width="25" height="25" name="2024202" data-title="Faversham and Mid Kent"/>
+      <rect x="806" y="884" width="25" height="25" name="2024314" data-title="Weald of Kent"/>
+      <rect x="520" y="858" width="25" height="25" name="2024203" data-title="Feltham and Heston"/>
+      <rect x="26" y="234" width="25" height="25" name="2024550" data-title="Fermanagh and South Tyrone"/>
+      <rect x="494" y="104" width="25" height="25" name="2024599" data-title="North East Fife"/>
+      <rect x="338" y="832" width="25" height="25" name="2024204" data-title="Filton and Bradley Stoke"/>
+      <rect x="598" y="728" width="25" height="25" name="2024205" data-title="Finchley and Golders Green"/>
+      <rect x="832" y="910" width="25" height="25" name="2024206" data-title="Folkestone and Hythe"/>
+      <rect x="390" y="780" width="25" height="25" name="2024207" data-title="Forest of Dean"/>
+      <rect x="26" y="182" width="25" height="25" name="2024551" data-title="Foyle"/>
+      <rect x="338" y="364" width="25" height="25" name="2024208" data-title="Fylde"/>
+      <rect x="624" y="468" width="25" height="25" name="2024209" data-title="Gainsborough"/>
+      <rect x="234" y="546" width="25" height="25" name="2024210" data-title="Liverpool Garston"/>
+      <rect x="572" y="520" width="25" height="25" name="2024213" data-title="Gedling"/>
+      <rect x="780" y="858" width="25" height="25" name="2024214" data-title="Gillingham and Rainham"/>
+      <rect x="390" y="156" width="25" height="25" name="2024592" data-title="Glasgow East"/>
+      <rect x="338" y="156" width="25" height="25" name="2024593" data-title="Glasgow North"/>
+      <rect x="364" y="156" width="25" height="25" name="2024581" data-title="Glasgow North East"/>
+      <rect x="312" y="156" width="25" height="25" name="2024596" data-title="Glasgow West"/>
+      <rect x="338" y="182" width="25" height="25" name="2024595" data-title="Glasgow South"/>
+      <rect x="312" y="182" width="25" height="25" name="2024594" data-title="Glasgow South West"/>
+      <rect x="468" y="104" width="25" height="25" name="2024598" data-title="Glenrothes and Mid Fife"/>
+      <rect x="416" y="780" width="25" height="25" name="2024215" data-title="Gloucester"/>
+      <rect x="494" y="52" width="25" height="25" name="2024570" data-title="Gordon and Buchan"/>
+      <rect x="468" y="1014" width="25" height="25" name="2024216" data-title="Gosport"/>
+      <rect x="156" y="780" width="25" height="25" name="2024624" data-title="Gower"/>
+      <rect x="598" y="520" width="25" height="25" name="2024217" data-title="Grantham and Bourne"/>
+      <rect x="780" y="832" width="25" height="25" name="2024219" data-title="Gravesham"/>
+      <rect x="598" y="442" width="25" height="25" name="2024137" data-title="Great Grimsby and Cleethorpes"/>
+      <rect x="702" y="572" width="25" height="25" name="2024220" data-title="Great Yarmouth"/>
+      <rect x="702" y="832" width="25" height="25" name="2024221" data-title="Greenwich and Woolwich"/>
+      <rect x="598" y="962" width="25" height="25" name="2024222" data-title="Guildford"/>
+      <rect x="650" y="754" width="25" height="25" name="2024223" data-title="Hackney North and Stoke Newington"/>
+      <rect x="676" y="780" width="25" height="25" name="2024224" data-title="Hackney South and Shoreditch"/>
+      <rect x="312" y="702" width="25" height="25" name="2024225" data-title="Halesowen"/>
+      <rect x="442" y="390" width="25" height="25" name="2024228" data-title="Halifax"/>
+      <rect x="624" y="364" width="25" height="25" name="2024080" data-title="Goole and Pocklington"/>
+      <rect x="260" y="546" width="25" height="25" name="2024211" data-title="Widnes and Halewood"/>
+      <rect x="572" y="806" width="25" height="25" name="2024231" data-title="Hammersmith and Chiswick"/>
+      <rect x="520" y="962" width="25" height="25" name="2024179" data-title="East Hampshire"/>
+      <rect x="468" y="936" width="25" height="25" name="2024352" data-title="North East Hampshire"/>
+      <rect x="416" y="910" width="25" height="25" name="2024364" data-title="North West Hampshire"/>
+      <rect x="598" y="754" width="25" height="25" name="2024232" data-title="Hampstead and Highgate"/>
+      <rect x="520" y="598" width="25" height="25" name="2024234" data-title="Harborough, Oadby and Wigston"/>
+      <rect x="702" y="676" width="25" height="25" name="2024235" data-title="Harlow"/>
+      <rect x="468" y="312" width="25" height="25" name="2024236" data-title="Harrogate and Knaresborough"/>
+      <rect x="546" y="728" width="25" height="25" name="2024074" data-title="Harrow East"/>
+      <rect x="546" y="754" width="25" height="25" name="2024541" data-title="Harrow West"/>
+      <rect x="572" y="286" width="25" height="25" name="2024237" data-title="Hartlepool"/>
+      <rect x="806" y="676" width="25" height="25" name="2024238" data-title="Harwich and North Essex"/>
+      <rect x="806" y="910" width="25" height="25" name="2024239" data-title="Hastings and Rye"/>
+      <rect x="546" y="1014" width="25" height="25" name="2024240" data-title="Havant"/>
+      <rect x="494" y="806" width="25" height="25" name="2024241" data-title="Hayes and Harlington"/>
+      <rect x="416" y="520" width="25" height="25" name="2024242" data-title="Hazel Grove"/>
+      <rect x="572" y="702" width="25" height="25" name="2024243" data-title="Hemel Hempstead"/>
+      <rect x="520" y="364" width="25" height="25" name="2024193" data-title="Wakefield and Rothwell"/>
+      <rect x="572" y="728" width="25" height="25" name="2024245" data-title="Hendon"/>
+      <rect x="468" y="806" width="25" height="25" name="2024246" data-title="Henley and Thame"/>
+      <rect x="338" y="754" width="25" height="25" name="2024247" data-title="Hereford and South Herefordshire"/>
+      <rect x="286" y="728" width="25" height="25" name="2024355" data-title="North Herefordshire"/>
+      <rect x="650" y="650" width="25" height="25" name="2024248" data-title="Hertford and Stortford"/>
+      <rect x="676" y="650" width="25" height="25" name="2024353" data-title="North East Hertfordshire"/>
+      <rect x="546" y="702" width="25" height="25" name="2024452" data-title="South West Hertfordshire"/>
+      <rect x="650" y="676" width="25" height="25" name="2024249" data-title="Hertsmere"/>
+      <rect x="442" y="234" width="25" height="25" name="2024250" data-title="Hexham"/>
+      <rect x="416" y="416" width="25" height="25" name="2024251" data-title="Heywood and Middleton North"/>
+      <rect x="442" y="546" width="25" height="25" name="2024252" data-title="High Peak"/>
+      <rect x="598" y="624" width="25" height="25" name="2024253" data-title="Hitchin"/>
+      <rect x="624" y="780" width="25" height="25" name="2024233" data-title="Holborn and St Pancras"/>
+      <rect x="780" y="754" width="25" height="25" name="2024255" data-title="Hornchurch and Upminster"/>
+      <rect x="624" y="728" width="25" height="25" name="2024256" data-title="Hornsey and Friern Barnet"/>
+      <rect x="650" y="962" width="25" height="25" name="2024258" data-title="Horsham"/>
+      <rect x="546" y="260" width="25" height="25" name="2024259" data-title="Houghton and Sunderland South"/>
+      <rect x="702" y="962" width="25" height="25" name="2024260" data-title="Hove and Portslade"/>
+      <rect x="468" y="416" width="25" height="25" name="2024261" data-title="Huddersfield"/>
+      <rect x="650" y="390" width="25" height="25" name="2024277" data-title="Kingston upon Hull East"/>
+      <rect x="650" y="364" width="25" height="25" name="2024230" data-title="Kingston upon Hull North and Cottingham"/>
+      <rect x="624" y="390" width="25" height="25" name="2024229" data-title="Kingston upon Hull West and Haltemprice"/>
+      <rect x="598" y="598" width="25" height="25" name="2024262" data-title="Huntingdon"/>
+      <rect x="390" y="390" width="25" height="25" name="2024263" data-title="Hyndburn"/>
+      <rect x="728" y="728" width="25" height="25" name="2024264" data-title="Ilford North"/>
+      <rect x="728" y="754" width="25" height="25" name="2024265" data-title="Ilford South"/>
+      <rect x="286" y="130" width="25" height="25" name="2024601" data-title="Inverclyde and Renfrewshire West"/>
+      <rect x="390" y="78" width="25" height="25" name="2024602" data-title="Inverness, Skye and West Ross-shire"/>
+      <rect x="806" y="650" width="25" height="25" name="2024266" data-title="Ipswich"/>
+      <rect x="364" y="1014" width="25" height="25" name="2024267" data-title="Isle of Wight West"/>
+      <rect x="390" y="1014" width="25" height="25" name="2024268" data-title="Isle of Wight East"/>
+      <rect x="624" y="754" width="25" height="25" name="2024269" data-title="Islington North"/>
+      <rect x="650" y="780" width="25" height="25" name="2024270" data-title="Islington South and Finsbury"/>
+      <rect x="546" y="234" width="25" height="25" name="2024212" data-title="Jarrow and Gateshead East"/>
+      <rect x="442" y="338" width="25" height="25" name="2024272" data-title="Keighley and Ilkley"/>
+      <rect x="442" y="754" width="25" height="25" name="2024273" data-title="Kenilworth and Southam"/>
+      <rect x="598" y="806" width="25" height="25" name="2024274" data-title="Kensington and Bayswater"/>
+      <rect x="520" y="624" width="25" height="25" name="2024275" data-title="Kettering"/>
+      <rect x="364" y="208" width="25" height="25" name="2024604" data-title="Kilmarnock and Loudoun"/>
+      <rect x="572" y="884" width="25" height="25" name="2024276" data-title="Kingston and Surbiton"/>
+      <rect x="442" y="104" width="25" height="25" name="2024600" data-title="Cowdenbeath and Kirkcaldy"/>
+      <rect x="260" y="494" width="25" height="25" name="2024281" data-title="Knowsley"/>
+      <rect x="78" y="260" width="25" height="25" name="2024552" data-title="Lagan Valley"/>
+      <rect x="416" y="182" width="25" height="25" name="2024606" data-title="Motherwell, Wishaw and Carluke"/>
+      <rect x="260" y="416" width="25" height="25" name="2024520" data-title="West Lancashire"/>
+      <rect x="390" y="338" width="25" height="25" name="2024282" data-title="Lancaster and Wyre"/>
+      <rect x="572" y="364" width="25" height="25" name="2024284" data-title="Leeds South"/>
+      <rect x="598" y="338" width="25" height="25" name="2024192" data-title="Leeds East"/>
+      <rect x="572" y="338" width="25" height="25" name="2024287" data-title="Leeds North East"/>
+      <rect x="494" y="338" width="25" height="25" name="2024288" data-title="Leeds North West"/>
+      <rect x="546" y="338" width="25" height="25" name="2024285" data-title="Leeds Central and Headingley"/>
+      <rect x="546" y="598" width="25" height="25" name="2024290" data-title="Leicester East"/>
+      <rect x="520" y="572" width="25" height="25" name="2024291" data-title="Leicester South"/>
+      <rect x="546" y="572" width="25" height="25" name="2024116" data-title="Mid Leicestershire"/>
+      <rect x="494" y="598" width="25" height="25" name="2024292" data-title="Leicester West"/>
+      <rect x="468" y="624" width="25" height="25" name="2024365" data-title="North West Leicestershire"/>
+      <rect x="494" y="624" width="25" height="25" name="2024443" data-title="South Leicestershire"/>
+      <rect x="312" y="468" width="25" height="25" name="2024293" data-title="Leigh and Atherton"/>
+      <rect x="754" y="936" width="25" height="25" name="2024296" data-title="Lewes"/>
+      <rect x="676" y="832" width="25" height="25" name="2024298" data-title="Lewisham North"/>
+      <rect x="702" y="858" width="25" height="25" name="2024297" data-title="Lewisham East"/>
+      <rect x="676" y="858" width="25" height="25" name="2024104" data-title="Lewisham West and East Dulwich"/>
+      <rect x="702" y="754" width="25" height="25" name="2024299" data-title="Leyton and Wanstead"/>
+      <rect x="416" y="598" width="25" height="25" name="2024300" data-title="Lichfield"/>
+      <rect x="624" y="494" width="25" height="25" name="2024301" data-title="Lincoln"/>
+      <rect x="416" y="130" width="25" height="25" name="2024608" data-title="Bathgate and Linlithgow"/>
+      <rect x="208" y="520" width="25" height="25" name="2024302" data-title="Liverpool Riverside"/>
+      <rect x="208" y="494" width="25" height="25" name="2024303" data-title="Liverpool Walton"/>
+      <rect x="234" y="520" width="25" height="25" name="2024304" data-title="Liverpool Wavertree"/>
+      <rect x="234" y="494" width="25" height="25" name="2024305" data-title="Liverpool West Derby"/>
+      <rect x="442" y="156" width="25" height="25" name="2024610" data-title="Livingston"/>
+      <rect x="156" y="754" width="25" height="25" name="2024623" data-title="Llanelli"/>
+      <rect x="52" y="182" width="25" height="25" name="2024549" data-title="East Londonderry"/>
+      <rect x="494" y="572" width="25" height="25" name="2024306" data-title="Loughborough"/>
+      <rect x="650" y="494" width="25" height="25" name="2024307" data-title="Louth and Horncastle"/>
+      <rect x="260" y="650" width="25" height="25" name="2024308" data-title="South Shropshire"/>
+      <rect x="598" y="650" width="25" height="25" name="2024309" data-title="Luton North"/>
+      <rect x="598" y="676" width="25" height="25" name="2024310" data-title="Luton South and South Bedfordshire"/>
+      <rect x="416" y="546" width="25" height="25" name="2024311" data-title="Macclesfield"/>
+      <rect x="494" y="884" width="25" height="25" name="2024312" data-title="Maidenhead"/>
+      <rect x="780" y="910" width="25" height="25" name="2024313" data-title="Maidstone and Malling"/>
+      <rect x="286" y="442" width="25" height="25" name="2024295" data-title="Makerfield"/>
+      <rect x="780" y="702" width="25" height="25" name="2024315" data-title="Maldon"/>
+      <rect x="364" y="468" width="25" height="25" name="2024046" data-title="Manchester Central"/>
+      <rect x="364" y="494" width="25" height="25" name="2024316" data-title="Manchester Rusholme"/>
+      <rect x="338" y="494" width="25" height="25" name="2024317" data-title="Manchester Withington"/>
+      <rect x="572" y="468" width="25" height="25" name="2024318" data-title="Mansfield"/>
+      <rect x="494" y="988" width="25" height="25" name="2024201" data-title="Hamble Valley"/>
+      <rect x="416" y="676" width="25" height="25" name="2024320" data-title="Meriden and Solihull East"/>
+      <rect x="208" y="728" width="25" height="25" name="2024646" data-title="Merthyr Tydfil and Aberdare"/>
+      <rect x="572" y="312" width="25" height="25" name="2024328" data-title="Middlesbrough and Thornaby East"/>
+      <rect x="598" y="312" width="25" height="25" name="2024329" data-title="Middlesbrough South and East Cleveland"/>
+      <rect x="442" y="182" width="25" height="25" name="2024611" data-title="Midlothian"/>
+      <rect x="520" y="676" width="25" height="25" name="2024330" data-title="Milton Keynes North"/>
+      <rect x="520" y="702" width="25" height="25" name="2024331" data-title="Milton Keynes Central"/>
+      <rect x="624" y="884" width="25" height="25" name="2024332" data-title="Mitcham and Morden"/>
+      <rect x="624" y="962" width="25" height="25" name="2024333" data-title="Dorking and Horley"/>
+      <rect x="312" y="754" width="25" height="25" name="2024633" data-title="Monmouthshire"/>
+      <rect x="442" y="52" width="25" height="25" name="2024603" data-title="Moray West, Nairn and Strathspey"/>
+      <rect x="416" y="312" width="25" height="25" name="2024283" data-title="Morecambe and Lunesdale"/>
+      <rect x="546" y="364" width="25" height="25" name="2024286" data-title="Leeds South West and Morley"/>
+      <rect x="390" y="182" width="25" height="25" name="2024605" data-title="Hamilton and Clyde Valley"/>
+      <rect x="338" y="52" width="25" height="25" name="2024590" data-title="Na h-Eileanan an Iar"/>
+      <rect x="208" y="702" width="25" height="25" name="2024644" data-title="Caerfyrddin"/>
+      <rect x="442" y="988" width="25" height="25" name="2024335" data-title="New Forest East"/>
+      <rect x="416" y="962" width="25" height="25" name="2024336" data-title="New Forest West"/>
+      <rect x="598" y="494" width="25" height="25" name="2024337" data-title="Newark"/>
+      <rect x="442" y="884" width="25" height="25" name="2024338" data-title="Newbury"/>
+      <rect x="468" y="234" width="25" height="25" name="2024339" data-title="Newcastle upon Tyne Central and West"/>
+      <rect x="520" y="234" width="25" height="25" name="2024341" data-title="Newcastle upon Tyne East and Wallsend"/>
+      <rect x="494" y="234" width="25" height="25" name="2024052" data-title="Gateshead Central and Whickham"/>
+      <rect x="494" y="208" width="25" height="25" name="2024340" data-title="Newcastle upon Tyne North"/>
+      <rect x="312" y="572" width="25" height="25" name="2024342" data-title="Newcastle-under-Lyme"/>
+      <rect x="286" y="754" width="25" height="25" name="2024634" data-title="Newport East"/>
+      <rect x="260" y="754" width="25" height="25" name="2024635" data-title="Newport West and Islwyn"/>
+      <rect x="26" y="260" width="25" height="25" name="2024554" data-title="Newry and Armagh"/>
+      <rect x="208" y="962" width="25" height="25" name="2024343" data-title="Newton Abbot"/>
+      <rect x="624" y="572" width="25" height="25" name="2024325" data-title="Mid Norfolk"/>
+      <rect x="650" y="546" width="25" height="25" name="2024356" data-title="North Norfolk"/>
+      <rect x="624" y="546" width="25" height="25" name="2024366" data-title="North West Norfolk"/>
+      <rect x="676" y="598" width="25" height="25" name="2024444" data-title="South Norfolk"/>
+      <rect x="624" y="598" width="25" height="25" name="2024453" data-title="South West Norfolk"/>
+      <rect x="598" y="390" width="25" height="25" name="2024344" data-title="Pontefract, Castleford and Knottingley"/>
+      <rect x="494" y="650" width="25" height="25" name="2024368" data-title="Northampton North"/>
+      <rect x="494" y="676" width="25" height="25" name="2024369" data-title="Northampton South"/>
+      <rect x="494" y="702" width="25" height="25" name="2024445" data-title="South Northamptonshire"/>
+      <rect x="676" y="572" width="25" height="25" name="2024370" data-title="Norwich North"/>
+      <rect x="650" y="598" width="25" height="25" name="2024371" data-title="Norwich South"/>
+      <rect x="546" y="520" width="25" height="25" name="2024372" data-title="Nottingham East"/>
+      <rect x="520" y="494" width="25" height="25" name="2024373" data-title="Nottingham North and Kimberley"/>
+      <rect x="520" y="520" width="25" height="25" name="2024374" data-title="Nottingham South"/>
+      <rect x="442" y="676" width="25" height="25" name="2024375" data-title="Nuneaton"/>
+      <rect x="390" y="104" width="25" height="25" name="2024609" data-title="Alloa and Grangemouth"/>
+      <rect x="234" y="754" width="25" height="25" name="2024631" data-title="Rhondda and Ogmore"/>
+      <rect x="754" y="832" width="25" height="25" name="2024376" data-title="Old Bexley and Sidcup"/>
+      <rect x="416" y="468" width="25" height="25" name="2024377" data-title="Oldham East and Saddleworth"/>
+      <rect x="390" y="442" width="25" height="25" name="2024378" data-title="Oldham West, Chadderton and Royton"/>
+      <rect x="572" y="0" width="25" height="25" name="2024615" data-title="Orkney and Shetland"/>
+      <rect x="728" y="884" width="25" height="25" name="2024092" data-title="Orpington"/>
+      <rect x="468" y="884" width="25" height="25" name="2024379" data-title="Oxford East"/>
+      <rect x="468" y="858" width="25" height="25" name="2024380" data-title="Oxford West and Abingdon"/>
+      <rect x="286" y="156" width="25" height="25" name="2024616" data-title="Paisley and Renfrewshire North"/>
+      <rect x="286" y="182" width="25" height="25" name="2024617" data-title="Paisley and Renfrewshire South"/>
+      <rect x="416" y="364" width="25" height="25" name="2024381" data-title="Pendle and Clitheroe"/>
+      <rect x="442" y="468" width="25" height="25" name="2024382" data-title="Penistone and Stocksbridge"/>
+      <rect x="442" y="260" width="25" height="25" name="2024141" data-title="Penrith and Solway"/>
+      <rect x="442" y="78" width="25" height="25" name="2024613" data-title="Perth and Kinross-shire"/>
+      <rect x="572" y="572" width="25" height="25" name="2024384" data-title="Peterborough"/>
+      <rect x="156" y="962" width="25" height="25" name="2024385" data-title="Plymouth Moor View"/>
+      <rect x="156" y="988" width="25" height="25" name="2024386" data-title="Plymouth Sutton and Devonport"/>
+      <rect x="208" y="780" width="25" height="25" name="2024647" data-title="Pontypridd"/>
+      <rect x="338" y="962" width="25" height="25" name="2024387" data-title="Poole"/>
+      <rect x="702" y="806" width="25" height="25" name="2024388" data-title="Poplar and Limehouse"/>
+      <rect x="494" y="1014" width="25" height="25" name="2024389" data-title="Portsmouth North"/>
+      <rect x="520" y="1014" width="25" height="25" name="2024390" data-title="Portsmouth South"/>
+      <rect x="156" y="728" width="25" height="25" name="2024643" data-title="Mid and South Pembrokeshire"/>
+      <rect x="364" y="364" width="25" height="25" name="2024391" data-title="Preston"/>
+      <rect x="520" y="338" width="25" height="25" name="2024289" data-title="Leeds West and Pudsey"/>
+      <rect x="546" y="832" width="25" height="25" name="2024392" data-title="Putney"/>
+      <rect x="780" y="728" width="25" height="25" name="2024393" data-title="Rayleigh and Wickford"/>
+      <rect x="442" y="910" width="25" height="25" name="2024396" data-title="Reading West and Mid Berkshire"/>
+      <rect x="442" y="936" width="25" height="25" name="2024395" data-title="Earley and Woodley"/>
+      <rect x="468" y="910" width="25" height="25" name="2024394" data-title="Reading Central"/>
+      <rect x="598" y="286" width="25" height="25" name="2024397" data-title="Redcar"/>
+      <rect x="416" y="754" width="25" height="25" name="2024398" data-title="Redditch"/>
+      <rect x="624" y="936" width="25" height="25" name="2024399" data-title="Reigate"/>
+      <rect x="338" y="208" width="25" height="25" name="2024584" data-title="East Renfrewshire"/>
+      <rect x="338" y="390" width="25" height="25" name="2024446" data-title="South Ribble"/>
+      <rect x="416" y="338" width="25" height="25" name="2024400" data-title="Ribble Valley"/>
+      <rect x="442" y="286" width="25" height="25" name="2024401" data-title="Richmond and Northallerton"/>
+      <rect x="572" y="858" width="25" height="25" name="2024402" data-title="Richmond Park"/>
+      <rect x="416" y="442" width="25" height="25" name="2024403" data-title="Rochdale"/>
+      <rect x="806" y="832" width="25" height="25" name="2024543" data-title="Rochester and Strood"/>
+      <rect x="832" y="728" width="25" height="25" name="2024404" data-title="Southend East and Rochford"/>
+      <rect x="754" y="754" width="25" height="25" name="2024405" data-title="Romford"/>
+      <rect x="416" y="936" width="25" height="25" name="2024406" data-title="Romsey and Southampton North"/>
+      <rect x="390" y="416" width="25" height="25" name="2024407" data-title="Rossendale and Darwen"/>
+      <rect x="520" y="442" width="25" height="25" name="2024408" data-title="Rother Valley"/>
+      <rect x="494" y="442" width="25" height="25" name="2024409" data-title="Rotherham"/>
+      <rect x="494" y="416" width="25" height="25" name="2024164" data-title="Rawmarsh and Conisbrough"/>
+      <rect x="468" y="676" width="25" height="25" name="2024410" data-title="Rugby"/>
+      <rect x="520" y="754" width="25" height="25" name="2024411" data-title="Ruislip, Northwood and Pinner"/>
+      <rect x="546" y="884" width="25" height="25" name="2024412" data-title="Runnymede and Weybridge"/>
+      <rect x="520" y="546" width="25" height="25" name="2024413" data-title="Rushcliffe"/>
+      <rect x="364" y="182" width="25" height="25" name="2024607" data-title="Rutherglen"/>
+      <rect x="546" y="546" width="25" height="25" name="2024117" data-title="Melton and Syston"/>
+      <rect x="572" y="546" width="25" height="25" name="2024218" data-title="Rutland and Stamford"/>
+      <rect x="728" y="650" width="25" height="25" name="2024414" data-title="North West Essex"/>
+      <rect x="338" y="468" width="25" height="25" name="2024047" data-title="Salford"/>
+      <rect x="390" y="910" width="25" height="25" name="2024415" data-title="Salisbury"/>
+      <rect x="624" y="286" width="25" height="25" name="2024416" data-title="Scarborough and Whitby"/>
+      <rect x="572" y="442" width="25" height="25" name="2024083" data-title="Scunthorpe"/>
+      <rect x="260" y="442" width="25" height="25" name="2024419" data-title="Sefton Central"/>
+      <rect x="598" y="364" width="25" height="25" name="2024191" data-title="Selby"/>
+      <rect x="754" y="858" width="25" height="25" name="2024421" data-title="Sevenoaks"/>
+      <rect x="468" y="442" width="25" height="25" name="2024424" data-title="Sheffield Brightside and Hillsborough"/>
+      <rect x="442" y="494" width="25" height="25" name="2024422" data-title="Sheffield Central"/>
+      <rect x="442" y="520" width="25" height="25" name="2024425" data-title="Sheffield Hallam"/>
+      <rect x="468" y="468" width="25" height="25" name="2024426" data-title="Sheffield Heeley"/>
+      <rect x="494" y="468" width="25" height="25" name="2024423" data-title="Sheffield South East"/>
+      <rect x="572" y="494" width="25" height="25" name="2024427" data-title="Sherwood Forest"/>
+      <rect x="468" y="338" width="25" height="25" name="2024428" data-title="Shipley"/>
+      <rect x="260" y="624" width="25" height="25" name="2024429" data-title="Shrewsbury"/>
+      <rect x="286" y="598" width="25" height="25" name="2024357" data-title="North Shropshire"/>
+      <rect x="832" y="832" width="25" height="25" name="2024430" data-title="Sittingbourne and Sheppey"/>
+      <rect x="442" y="312" width="25" height="25" name="2024420" data-title="Skipton and Ripon"/>
+      <rect x="624" y="520" width="25" height="25" name="2024431" data-title="Sleaford and North Hykeham"/>
+      <rect x="494" y="858" width="25" height="25" name="2024432" data-title="Slough"/>
+      <rect x="390" y="676" width="25" height="25" name="2024321" data-title="Solihull West and Shirley"/>
+      <rect x="260" y="884" width="25" height="25" name="2024542" data-title="North Somerset"/>
+      <rect x="286" y="884" width="25" height="25" name="2024278" data-title="North East Somerset and Hanham"/>
+      <rect x="312" y="936" width="25" height="25" name="2024433" data-title="Glastonbury and Somerton"/>
+      <rect x="598" y="546" width="25" height="25" name="2024442" data-title="South Holland and The Deepings"/>
+      <rect x="572" y="234" width="25" height="25" name="2024271" data-title="South Shields"/>
+      <rect x="468" y="988" width="25" height="25" name="2024456" data-title="Southampton Itchen"/>
+      <rect x="468" y="962" width="25" height="25" name="2024457" data-title="Southampton Test"/>
+      <rect x="806" y="728" width="25" height="25" name="2024458" data-title="Southend West and Leigh"/>
+      <rect x="312" y="390" width="25" height="25" name="2024459" data-title="Southport"/>
+      <rect x="572" y="910" width="25" height="25" name="2024460" data-title="Spelthorne"/>
+      <rect x="624" y="676" width="25" height="25" name="2024461" data-title="St Albans"/>
+      <rect x="130" y="936" width="25" height="25" name="2024462" data-title="St Austell and Newquay"/>
+      <rect x="286" y="468" width="25" height="25" name="2024463" data-title="St Helens North"/>
+      <rect x="260" y="520" width="25" height="25" name="2024464" data-title="St Helens South and Whiston"/>
+      <rect x="78" y="988" width="25" height="25" name="2024465" data-title="St Ives"/>
+      <rect x="338" y="598" width="25" height="25" name="2024466" data-title="Stafford"/>
+      <rect x="416" y="572" width="25" height="25" name="2024467" data-title="Staffordshire Moorlands"/>
+      <rect x="260" y="676" width="25" height="25" name="2024169" data-title="Kingswinford and South Staffordshire"/>
+      <rect x="416" y="494" width="25" height="25" name="2024468" data-title="Stalybridge and Hyde"/>
+      <rect x="624" y="624" width="25" height="25" name="2024469" data-title="Stevenage"/>
+      <rect x="338" y="104" width="25" height="25" name="2024614" data-title="Stirling and Strathallan"/>
+      <rect x="364" y="520" width="25" height="25" name="2024157" data-title="Stockport"/>
+      <rect x="546" y="312" width="25" height="25" name="2024470" data-title="Stockton North"/>
+      <rect x="520" y="312" width="25" height="25" name="2024418" data-title="Stockton West"/>
+      <rect x="364" y="572" width="25" height="25" name="2024471" data-title="Stoke-on-Trent Central"/>
+      <rect x="338" y="572" width="25" height="25" name="2024472" data-title="Stoke-on-Trent North"/>
+      <rect x="390" y="572" width="25" height="25" name="2024473" data-title="Stoke-on-Trent South"/>
+      <rect x="364" y="598" width="25" height="25" name="2024447" data-title="Stone, Great Wyrley and Penkridge"/>
+      <rect x="286" y="702" width="25" height="25" name="2024170" data-title="Stourbridge"/>
+      <rect x="156" y="234" width="25" height="25" name="2024559" data-title="Strangford"/>
+      <rect x="390" y="728" width="25" height="25" name="2024474" data-title="Stratford-on-Avon"/>
+      <rect x="624" y="858" width="25" height="25" name="2024475" data-title="Clapham and Brixton Hill"/>
+      <rect x="312" y="494" width="25" height="25" name="2024476" data-title="Stretford and Urmston"/>
+      <rect x="416" y="806" width="25" height="25" name="2024477" data-title="Stroud"/>
+      <rect x="416" y="832" width="25" height="25" name="2024367" data-title="South Cotswolds"/>
+      <rect x="780" y="624" width="25" height="25" name="2024115" data-title="Central Suffolk and North Ipswich"/>
+      <rect x="754" y="624" width="25" height="25" name="2024540" data-title="Waveney Valley"/>
+      <rect x="806" y="624" width="25" height="25" name="2024478" data-title="Suffolk Coastal"/>
+      <rect x="780" y="650" width="25" height="25" name="2024448" data-title="South Suffolk"/>
+      <rect x="728" y="624" width="25" height="25" name="2024521" data-title="West Suffolk"/>
+      <rect x="572" y="260" width="25" height="25" name="2024479" data-title="Sunderland Central"/>
+      <rect x="702" y="910" width="25" height="25" name="2024180" data-title="East Surrey"/>
+      <rect x="520" y="936" width="25" height="25" name="2024480" data-title="Surrey Heath"/>
+      <rect x="546" y="936" width="25" height="25" name="2024334" data-title="Godalming and Ash"/>
+      <rect x="546" y="962" width="25" height="25" name="2024454" data-title="Farnham and Bordon"/>
+      <rect x="650" y="936" width="25" height="25" name="2024326" data-title="Mid Sussex"/>
+      <rect x="598" y="910" width="25" height="25" name="2024481" data-title="Sutton and Cheam"/>
+      <rect x="416" y="624" width="25" height="25" name="2024482" data-title="Sutton Coldfield"/>
+      <rect x="182" y="754" width="25" height="25" name="2024626" data-title="Neath and Swansea East"/>
+      <rect x="182" y="728" width="25" height="25" name="2024625" data-title="Swansea West"/>
+      <rect x="442" y="858" width="25" height="25" name="2024358" data-title="Swindon North"/>
+      <rect x="416" y="858" width="25" height="25" name="2024449" data-title="Swindon South"/>
+      <rect x="442" y="624" width="25" height="25" name="2024483" data-title="Tamworth"/>
+      <rect x="390" y="520" width="25" height="25" name="2024484" data-title="Tatton"/>
+      <rect x="260" y="936" width="25" height="25" name="2024485" data-title="Taunton and Wellington"/>
+      <rect x="286" y="624" width="25" height="25" name="2024486" data-title="Telford"/>
+      <rect x="442" y="780" width="25" height="25" name="2024487" data-title="Tewkesbury"/>
+      <rect x="858" y="832" width="25" height="25" name="2024360" data-title="East Thanet"/>
+      <rect x="858" y="858" width="25" height="25" name="2024359" data-title="Herne Bay and Sandwich"/>
+      <rect x="442" y="806" width="25" height="25" name="2024488" data-title="North Cotswolds"/>
+      <rect x="312" y="598" width="25" height="25" name="2024489" data-title="The Wrekin"/>
+      <rect x="624" y="312" width="25" height="25" name="2024490" data-title="Thirsk and Malton"/>
+      <rect x="650" y="312" width="25" height="25" name="2024190" data-title="Wetherby and Easingwold"/>
+      <rect x="364" y="832" width="25" height="25" name="2024280" data-title="Thornbury and Yate"/>
+      <rect x="806" y="780" width="25" height="25" name="2024491" data-title="Thurrock"/>
+      <rect x="234" y="936" width="25" height="25" name="2024078" data-title="Tiverton and Minehead"/>
+      <rect x="728" y="910" width="25" height="25" name="2024492" data-title="Tonbridge"/>
+      <rect x="598" y="858" width="25" height="25" name="2024493" data-title="Tooting"/>
+      <rect x="208" y="988" width="25" height="25" name="2024494" data-title="Torbay"/>
+      <rect x="234" y="988" width="25" height="25" name="2024175" data-title="Exmouth and Exeter East"/>
+      <rect x="260" y="728" width="25" height="25" name="2024632" data-title="Torfaen"/>
+      <rect x="182" y="988" width="25" height="25" name="2024496" data-title="South Devon"/>
+      <rect x="650" y="728" width="25" height="25" name="2024257" data-title="Tottenham"/>
+      <rect x="104" y="962" width="25" height="25" name="2024497" data-title="Truro and Falmouth"/>
+      <rect x="754" y="884" width="25" height="25" name="2024498" data-title="Tunbridge Wells"/>
+      <rect x="546" y="858" width="25" height="25" name="2024499" data-title="Twickenham"/>
+      <rect x="546" y="208" width="25" height="25" name="2024361" data-title="Tynemouth"/>
+      <rect x="0" y="208" width="25" height="25" name="2024561" data-title="West Tyrone"/>
+      <rect x="26" y="208" width="25" height="25" name="2024553" data-title="Mid Ulster"/>
+      <rect x="52" y="260" width="25" height="25" name="2024560" data-title="Upper Bann"/>
+      <rect x="520" y="780" width="25" height="25" name="2024500" data-title="Uxbridge and South Ruislip"/>
+      <rect x="182" y="806" width="25" height="25" name="2024641" data-title="Vale of Glamorgan"/>
+      <rect x="624" y="832" width="25" height="25" name="2024105" data-title="Vauxhall and Camberwell Green"/>
+      <rect x="520" y="390" width="25" height="25" name="2024163" data-title="Ossett and Denby Dale"/>
+      <rect x="156" y="520" width="25" height="25" name="2024501" data-title="Wallasey"/>
+      <rect x="338" y="624" width="25" height="25" name="2024502" data-title="Walsall and Bloxwich"/>
+      <rect x="676" y="754" width="25" height="25" name="2024505" data-title="Walthamstow"/>
+      <rect x="520" y="208" width="25" height="25" name="2024054" data-title="Cramlington and Killingworth"/>
+      <rect x="442" y="832" width="25" height="25" name="2024506" data-title="Didcot and Wantage"/>
+      <rect x="338" y="676" width="25" height="25" name="2024227" data-title="Smethwick"/>
+      <rect x="286" y="520" width="25" height="25" name="2024508" data-title="Warrington North"/>
+      <rect x="312" y="546" width="25" height="25" name="2024509" data-title="Warrington South"/>
+      <rect x="442" y="728" width="25" height="25" name="2024510" data-title="Warwick and Leamington"/>
+      <rect x="442" y="650" width="25" height="25" name="2024362" data-title="North Warwickshire and Bedworth"/>
+      <rect x="520" y="260" width="25" height="25" name="2024053" data-title="Washington and Gateshead South"/>
+      <rect x="598" y="702" width="25" height="25" name="2024511" data-title="Watford"/>
+      <rect x="702" y="598" width="25" height="25" name="2024512" data-title="Lowestoft"/>
+      <rect x="702" y="936" width="25" height="25" name="2024514" data-title="East Grinstead and Uckfield"/>
+      <rect x="728" y="936" width="25" height="25" name="2024513" data-title="Sussex Weald"/>
+      <rect x="286" y="546" width="25" height="25" name="2024185" data-title="Mid Cheshire"/>
+      <rect x="520" y="650" width="25" height="25" name="2024515" data-title="Wellingborough and Rushden"/>
+      <rect x="312" y="910" width="25" height="25" name="2024079" data-title="Wells and Mendip Hills"/>
+      <rect x="338" y="910" width="25" height="25" name="2024354" data-title="Frome and East Somerset"/>
+      <rect x="624" y="650" width="25" height="25" name="2024516" data-title="Welwyn Hatfield"/>
+      <rect x="338" y="650" width="25" height="25" name="2024517" data-title="Tipton and Wednesbury"/>
+      <rect x="312" y="676" width="25" height="25" name="2024226" data-title="West Bromwich"/>
+      <rect x="702" y="780" width="25" height="25" name="2024029" data-title="Stratford and Bow"/>
+      <rect x="728" y="806" width="25" height="25" name="2024519" data-title="West Ham and Beckton"/>
+      <rect x="598" y="780" width="25" height="25" name="2024073" data-title="Queen's Park and Maida Vale"/>
+      <rect x="416" y="286" width="25" height="25" name="2024383" data-title="Westmorland and Lonsdale"/>
+      <rect x="286" y="910" width="25" height="25" name="2024523" data-title="Weston-super-Mare"/>
+      <rect x="286" y="416" width="25" height="25" name="2024524" data-title="Wigan"/>
+      <rect x="364" y="910" width="25" height="25" name="2024455" data-title="South West Wiltshire"/>
+      <rect x="598" y="884" width="25" height="25" name="2024525" data-title="Wimbledon"/>
+      <rect x="494" y="962" width="25" height="25" name="2024319" data-title="Winchester"/>
+      <rect x="520" y="884" width="25" height="25" name="2024538" data-title="Windsor"/>
+      <rect x="208" y="546" width="25" height="25" name="2024189" data-title="Ellesmere Port and Bromborough"/>
+      <rect x="182" y="546" width="25" height="25" name="2024526" data-title="Wirral West"/>
+      <rect x="754" y="702" width="25" height="25" name="2024527" data-title="Witham"/>
+      <rect x="468" y="780" width="25" height="25" name="2024507" data-title="Witney"/>
+      <rect x="546" y="910" width="25" height="25" name="2024528" data-title="Woking"/>
+      <rect x="494" y="910" width="25" height="25" name="2024529" data-title="Wokingham"/>
+      <rect x="312" y="624" width="25" height="25" name="2024503" data-title="Wolverhampton North East"/>
+      <rect x="312" y="650" width="25" height="25" name="2024504" data-title="Wolverhampton South East"/>
+      <rect x="286" y="650" width="25" height="25" name="2024530" data-title="Wolverhampton West"/>
+      <rect x="364" y="754" width="25" height="25" name="2024531" data-title="Worcester"/>
+      <rect x="390" y="754" width="25" height="25" name="2024327" data-title="Droitwich and Evesham"/>
+      <rect x="312" y="728" width="25" height="25" name="2024522" data-title="West Worcestershire"/>
+      <rect x="416" y="260" width="25" height="25" name="2024140" data-title="Whitehaven and Workington"/>
+      <rect x="286" y="494" width="25" height="25" name="2024294" data-title="Worsley and Eccles"/>
+      <rect x="624" y="988" width="25" height="25" name="2024181" data-title="East Worthing and Shoreham"/>
+      <rect x="598" y="988" width="25" height="25" name="2024532" data-title="Worthing West"/>
+      <rect x="234" y="624" width="25" height="25" name="2024622" data-title="Wrexham"/>
+      <rect x="468" y="832" width="25" height="25" name="2024533" data-title="Wycombe"/>
+      <rect x="260" y="702" width="25" height="25" name="2024534" data-title="Wyre Forest"/>
+      <rect x="338" y="520" width="25" height="25" name="2024535" data-title="Wythenshawe and Sale East"/>
+      <rect x="286" y="936" width="25" height="25" name="2024434" data-title="Yeovil"/>
+      <rect x="156" y="598" width="25" height="25" name="2024619" data-title="Ynys Môn"/>
+      <rect x="624" y="338" width="25" height="25" name="2024536" data-title="York Central"/>
+      <rect x="650" y="338" width="25" height="25" name="2024537" data-title="York Outer"/>
+      <rect x="676" y="338" width="25" height="25" name="2024182" data-title="Bridlington and The Wolds"/>
    </g>
 </svg>
