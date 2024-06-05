@@ -1,4 +1,5 @@
 import { SvgLoader, SvgProxy } from 'react-svgmt';
+import styles from './styles.module.css';
 
 export default function UKGeneral2010GeographicMap( 
     { fills = [], hoverFun = () => {}, clickFun = () => {} } : 
@@ -8,7 +9,7 @@ export default function UKGeneral2010GeographicMap(
         clickFun? : (id?: string) => void
     }
 ){
-    return (
+    return ( <>
         <SvgLoader path="/maps/UK-2010-geographic.svg">
             {
                 fills.map( (fill, index) => {
@@ -26,5 +27,6 @@ export default function UKGeneral2010GeographicMap(
                 })
             }
         </SvgLoader>
-    )
+        <p className={styles["attribution"]}>Adapted from <a target="_blank" href="https://commons.wikimedia.org/wiki/File:2017UKElectionMap.svg">File:2017UKElectionMap.svg</a>. Licensed under the <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.en">Creative Commons Attribution-Share Alike 4.0 International</a> license.</p>
+    </> )
 }

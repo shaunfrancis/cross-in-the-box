@@ -22,7 +22,7 @@
 
 #results-container{
     display:grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 19em), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 18em), 1fr));
     gap:2em;
 }
 

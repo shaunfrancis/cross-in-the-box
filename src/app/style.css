@@ -3,6 +3,7 @@
 :root{
     --default-color: #AAA;
     --box-shadow-color: rgba(200,200,200,0.1);
+    --left-gap:100px;
 }
 
 *{
@@ -40,6 +41,7 @@ section{
 }
 
 section.shaded{
+    scroll-margin-top:30px;
     background:rgb(220,220,220);
     border-radius:2px;
     box-shadow:1px 1px 0 1px var(--box-shadow-color);
@@ -57,20 +59,32 @@ section.shaded.red *{ --box-shadow-color: rgb(200, 190, 190) }
 section.shaded.green { background:rgb(220, 250, 225); color:rgb(12, 82, 23) }
 section.shaded.green *{ --box-shadow-color: rgb(190, 200, 180) }
 
+#hero{
+    text-align:center;
+    padding:0 var(--left-gap) 30px var(--left-gap);
+    background:rgb(220,220,245);
+    margin-bottom:70px;
+}
+
+#hero h1{
+    font-size:3.5em;
+    margin:50px 0;
+}
+
 main > section.shaded{
-    margin:0 50px 50px 50px;
+    margin:0 var(--left-gap) 50px var(--left-gap);
     padding:20px 50px 50px 50px;
 }
 
 main > section > h1{
-    margin:50px;
+    margin:50px var(--left-gap);
     display:inline-block;
     vertical-align:middle;
 }
 section.shaded > h1{ margin-left: 0 }
 
 main > section > .section-heading{
-    margin:50px;
+    margin:50px var(--left-gap);
     display:flex;
     flex-wrap:wrap;
     align-items:center;
@@ -103,6 +117,10 @@ button:active{
 }
 
 @media screen and (max-width: 750px){
+    :root{
+        --left-gap:20px;
+    }
+
     html{ font-size: 12px }
     main > section{
         text-align:center;

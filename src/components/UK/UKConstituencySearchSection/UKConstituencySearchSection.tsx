@@ -3,7 +3,7 @@
 import { Endpoint } from 'src/Constants';
 import styles from './UKConstituencySearchSection.module.css';
 import { SearchHandler } from 'src/lib/shared';
-import { useState } from 'react';
+import { RefObject, useState } from 'react';
 import { constituencyToSlug, partyIdToDisplayId } from 'src/lib/UK';
 import { Party } from 'src/Types';
 import Link from 'next/link';
@@ -19,7 +19,7 @@ interface SearchResults{
     }[]
 }
 
-export default function UKConstituencySearchSection(){
+export default function UKConstituencySearchSection( {searchInputRef} : {searchInputRef? : RefObject<HTMLInputElement>} ){
     const [results, setResults] = useState<SearchResults | null>();
     const [displayCount, setDisplayCount] = useState<number>(16);
     const [currentQuery, setCurrentQuery] = useState<string>("");
@@ -63,6 +63,7 @@ export default function UKConstituencySearchSection(){
         <div id={styles["container"]}>
             <div id={styles["search-container"]}>
                 <input 
+                    ref={searchInputRef}
                     type="text" id={styles["search-bar"]} spellCheck={false} 
                     onChange={(event) => { search(event.target.value) }}
                     onMouseUp={(event) => { (event.target as HTMLInputElement).setSelectionRange(0, (event.target as HTMLInputElement).value.length) }}

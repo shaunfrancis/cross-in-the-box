@@ -12,7 +12,7 @@ export default function UKElectionResultsSection({ regions, parties, geographic 
     
     return ( <>
         <div id={styles["container"]}>
-            <UKElectionResultContainer election="2024" messageGroup="2024"
+            <UKElectionResultContainer election="2024" messageGroup="2019" messagesOpenOnLoad={true}
                 summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]} 
                 regions={regions}
                 parties={parties}

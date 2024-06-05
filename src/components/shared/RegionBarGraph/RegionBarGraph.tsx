@@ -38,24 +38,27 @@ export default function RegionBarGraph(
                             >
                                 {result.candidate}
                             </div>
-                            <div 
-                                className={styles["bar-graph-votes"] + " " + styles["bar-graph-bloc"]}
-                                style={{background: bgColor, color: party.textColor}}
-                            >
-                                {addThousandsSpacing(result.votes)}
-                            </div>
-                            <div 
-                                className={styles["bar-graph-percentage"] + " " + styles["bar-graph-bloc"]}
-                                style={{background: bgColor, color: party.textColor}}
-                            >
-                                {percentage}%
-                            </div>
-                            <div className={styles["bar-graph-bar-container"]}>
+
+                            { totalVotes > 0 && <>
                                 <div 
-                                    className={styles["bar-graph-bar"] + " " + styles["bar-graph-bloc"]}
-                                    style={{background: bgColor, width: percentage + "%"}}
-                                ></div>
-                            </div>
+                                    className={styles["bar-graph-votes"] + " " + styles["bar-graph-bloc"]}
+                                    style={{background: bgColor, color: party.textColor}}
+                                >
+                                    {addThousandsSpacing(result.votes)}
+                                </div>
+                                <div 
+                                    className={styles["bar-graph-percentage"] + " " + styles["bar-graph-bloc"]}
+                                    style={{background: bgColor, color: party.textColor}}
+                                >
+                                    {percentage}%
+                                </div>
+                                <div className={styles["bar-graph-bar-container"]}>
+                                    <div 
+                                        className={styles["bar-graph-bar"] + " " + styles["bar-graph-bloc"]}
+                                        style={{background: bgColor, width: percentage + "%"}}
+                                    ></div>
+                                </div>
+                            </> }
                         </div>
                     )
                 })

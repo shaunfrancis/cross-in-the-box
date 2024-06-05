@@ -155,8 +155,8 @@ export default function UKElectionResultContainer(
     const map = () => {
         switch(election){
             case "2024":
-                if(geographic) return <UKGeneral2024GeographicMap hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
-                else return <UKGeneral2024Map hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
+                if(geographic) return <UKGeneral2024GeographicMap hoverFun={mapHoverFun} clickFun={mapClickFun} regions={regions} fills={fills} />;
+                else return <UKGeneral2024Map hoverFun={mapHoverFun} clickFun={mapClickFun} regions={regions} fills={fills} />;
             case "2019": case "2017": case "2015": case "2010":
                 if(geographic) return <UKGeneral2010GeographicMap hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
                 else return <UKGeneral2010Map hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
@@ -168,7 +168,7 @@ export default function UKElectionResultContainer(
         if(!region) return <h3>Missing data</h3>;
         
         const regionResults = results.filter( result => result.id == id ).sort( (a,b) => b.votes - a.votes );
-        const winner = winFormula(regionResults)[0]?.candidate || "Missing data";
+        const winner = winFormula(regionResults)[0]?.candidate;
 
         const regionUpdates = updates.filter( u => u.id == region.id );
         const partyProgression : Party[] = [parties.find(p => p.id == winFormula(regionResults)[0]?.party) || DefaultParty];
@@ -178,7 +178,7 @@ export default function UKElectionResultContainer(
         
         return ( <>
             <h3>{region.title}</h3>
-            <h4>{winner}</h4>
+            {winner && <h4>{winner}</h4>}
             { partyProgression.length > 1 && <PartyProgressionBlocs parties={partyProgression} /> }
             <PopupBarGraph results={regionResults} parties={parties} />
         </> )

@@ -1,0 +1,36 @@
+#hero-nav{
+    position:absolute;
+    left:0;
+    bottom:-20px;
+    width:100vw;
+    padding:0 30px;
+}
+
+#hero-nav ul{
+    margin:0;
+    padding:0;
+    display:flex;
+    gap:30px;
+    justify-content:center;
+}
+
+#hero-nav li{
+    cursor:pointer;
+    list-style-type:none;
+    padding:10px 20px;
+    border-radius:2px;
+    display:flex;
+    align-items:center;
+    gap:20px;
+    box-shadow:1px 1px 0 1px var(--box-shadow-color);
+    background:#fff;
+    transition:background 200ms;
+}
+
+#hero-nav li img{
+    height:30px;
+}
+
+#hero-nav li.selected, #hero-nav li:hover{
+    background:rgb(240,241,243);
+}

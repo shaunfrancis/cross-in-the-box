@@ -38,11 +38,11 @@
             $words
         );
         
-        //remove abolished regions with identical names to current regions
+        //remove abolished regions with identical names (up to commas) to current regions
         $regions = array_filter( $regions, function($region) use ($regions){
             if($region['current'] == 1) return TRUE;
             foreach($regions as $r){
-                if($r['current'] == 1 && $r['title'] == $region['title']) return FALSE;
+                if($r['current'] == 1 && str_replace(",","",$r['title']) == str_replace(",","",$region['title'])) return FALSE;
             }
             return TRUE;
         });

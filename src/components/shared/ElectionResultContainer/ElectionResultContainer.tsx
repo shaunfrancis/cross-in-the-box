@@ -18,9 +18,14 @@ export default forwardRef(function ElectionResultContainer(
 
     return (
         <div ref={ref} className={styles["election-container"]} style={{height:dimensions.h, minHeight:dimensions.minH}}>
-            { messages && messages.length > 0 &&
+            { (messagesOpenOnLoad || (messages && messages.length > 0) ) &&
                 <div className={styles["election-messages-container"] + (messagesVisibility ? " " + styles["visible"] : "")}>
                     <div className={styles["election-messages-inner-container"]}>
+                        {messagesOpenOnLoad && (messages && messages.length == 0) && 
+                            (
+                                <p>put placeholder messages here</p>
+                            )
+                        }
                         {messages}
                     </div>
                 </div>
