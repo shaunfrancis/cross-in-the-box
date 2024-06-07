@@ -1,6 +1,5 @@
 .election-container{
     display:flex;
-    scroll-snap-align: center;
 }
 
 .election-messages-container{
@@ -10,6 +9,7 @@
     width:0;
 }
     .election-messages-container.visible{
+        scroll-snap-align: center;
         width:310px;
     }
 
@@ -19,6 +19,7 @@
 }
 
 .election-results-container{
+    scroll-snap-align: center;
     padding:20px;
     background:#fff;
     box-shadow:1px 1px 0 1px var(--box-shadow-color);
@@ -74,3 +75,19 @@
 }
     
     .election-messages-button:hover{ opacity: 0.6 }
+
+
+@media screen and (max-width: 750px){
+    .election-messages-inner-container{
+        display:flex;
+        flex-direction:column;
+        height:100%;
+        overflow:hidden;
+    }
+
+    .election-messages-inner-container > div{
+        overflow:hidden;
+        flex-grow:1;
+        text-align:left;
+    }
+}

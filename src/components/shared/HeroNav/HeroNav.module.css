@@ -14,23 +14,12 @@
     justify-content:center;
 }
 
-#hero-nav li{
-    cursor:pointer;
-    list-style-type:none;
-    padding:10px 20px;
-    border-radius:2px;
-    display:flex;
-    align-items:center;
-    gap:20px;
-    box-shadow:1px 1px 0 1px var(--box-shadow-color);
-    background:#fff;
-    transition:background 200ms;
-}
+@media screen and (max-width: 750px){
+    #hero-nav{
+        padding:0 15px;
+    }
 
-#hero-nav li img{
-    height:30px;
-}
-
-#hero-nav li.selected, #hero-nav li:hover{
-    background:rgb(240,241,243);
+    #hero-nav ul{
+        gap:15px;
+    }
 }

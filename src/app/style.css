@@ -61,14 +61,15 @@ section.shaded.green *{ --box-shadow-color: rgb(190, 200, 180) }
 
 #hero{
     text-align:center;
-    padding:0 var(--left-gap) 30px var(--left-gap);
+    padding:50px var(--left-gap) 50px var(--left-gap);
     background:rgb(220,220,245);
     margin-bottom:70px;
 }
 
 #hero h1{
     font-size:3.5em;
-    margin:50px 0;
+    padding-bottom:30px;
+    margin:0;
 }
 
 main > section.shaded{

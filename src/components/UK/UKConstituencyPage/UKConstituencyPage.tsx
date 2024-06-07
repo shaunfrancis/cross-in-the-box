@@ -1,6 +1,6 @@
 'use client';
 import styles from './UKConstituencyPage.module.css';
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { DefaultParty, Endpoint } from "src/Constants";
 import { AnonymousResult, Party, Region } from "src/Types";
 import RegionBarGraph from "src/components/shared/RegionBarGraph/RegionBarGraph";
@@ -9,7 +9,9 @@ import { constituencyToSlug, partyIdToDisplayId, slugToLookupSlug } from "src/li
 import { dateToLongDate, parseJSONWithDates } from "src/lib/shared";
 import UKConstituencySidebar from "./UKConstituencySidebar/UKConstituencySidebar";
 import UKTernaryPlot from '../UKAnalysisSection/UKTernaryPlot/UKTernaryPlot';
+import UKConstituencyMap from './UKConstituencyMap/UKConstituencyMap';
 import Link from 'next/link';
+import HeroNav from 'src/components/shared/HeroNav/HeroNav';
 
 interface FullRegionData{
     events : Event[],
@@ -147,8 +149,18 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
         }
     });
 
+    const heroNavItems = [
+        { title: "Overview", src:"/images/uk-nav-analysis.svg", ref:useRef<HTMLElement>(null) },
+        { title: "Results and Changes", src:"/images/uk-nav-constituency.svg", ref:useRef<HTMLElement>(null) },
+    ]
 
     return ( <>
+
+        <section id="hero">
+            <h3>&lt; UK General Elections</h3>
+            <h1>{region.title}</h1>
+            <HeroNav items={heroNavItems} />
+        </section>
         <RegionPage sidebar={<UKConstituencySidebar region={region} />}>
 
             {succeededByNodes.length > 0 &&
@@ -160,10 +172,13 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
                 </section>
             }
 
-            <h1>{region.title}</h1>
+            <section ref={heroNavItems[0].ref} id={styles["heading-section"]}>
+                <article className={styles["widget-container"] + " " + styles["map-container"]}>
+                    
+                     <UKConstituencyMap region={region} />
 
-            <section id={styles["heading-section"]} style={{display:"none"}}>
-                <article className={styles["graph-container"]}>
+                </article>
+                <article className={styles["widget-container"]}>
                     <UKTernaryPlot highlightChanges={false} parties={data.parties} resultSets={
                         ( () => { 
                             const sets : AnonymousResult[][] = [];
@@ -174,12 +189,12 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
                         } )()
                     } />
                 </article>
-                <article className={styles["graph-container"]}>
-                    data
-                </article>
             </section>
 
-            {eventNodes}
+            <section ref={heroNavItems[1].ref}>
+                {eventNodes}
+            </section>
+
             
         </RegionPage>
     </> )

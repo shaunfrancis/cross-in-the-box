@@ -1,5 +1,4 @@
 #container{
-    height:calc(100svh - 80px);
     display:flex;
 }
 
@@ -11,7 +10,7 @@
 
 #container main{
     flex:1;
-    padding:50px;
+    padding:0 50px;
     overflow:auto;
 }
 

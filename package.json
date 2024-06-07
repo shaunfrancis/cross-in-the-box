@@ -13,7 +13,12 @@
   "license": "ISC",
   "dependencies": {
     "@next/third-parties": "^14.2.3",
+    "@types/openlayers": "^4.6.23",
+    "@types/proj4": "^2.5.5",
     "next": "^14.2.3",
+    "ol": "^9.2.4",
+    "ol-mapbox-style": "^12.3.3",
+    "proj4": "^2.11.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-svgmt": "^2.0.2"

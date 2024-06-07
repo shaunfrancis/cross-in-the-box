@@ -66,7 +66,7 @@
 }
 #heading-section > article:before{ width:0 !important }
 
-.graph-container{
+.widget-container{
     margin:0;
     padding:20px;
     background:#fff;

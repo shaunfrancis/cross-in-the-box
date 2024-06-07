@@ -26,7 +26,7 @@ export default forwardRef(function ElectionResultContainer(
                                 <p>put placeholder messages here</p>
                             )
                         }
-                        {messages}
+                        {messages?.slice(0,10)}
                     </div>
                 </div>
             }
