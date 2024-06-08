@@ -1,4 +1,6 @@
 <?php
+    header("Access-Control-Allow-Origin: https://tennessine.co.uk");
+
     $request = array_filter( explode( '/', str_replace(['/elections/api/','/api/'], '', $_SERVER['REQUEST_URI']) ) );
     $resource = array_shift($request);
 

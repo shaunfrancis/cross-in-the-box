@@ -39,26 +39,26 @@ export default function RegionBarGraph(
                                 {result.candidate}
                             </div>
 
-                            { totalVotes > 0 && <>
+
                                 <div 
                                     className={styles["bar-graph-votes"] + " " + styles["bar-graph-bloc"]}
                                     style={{background: bgColor, color: party.textColor}}
                                 >
-                                    {addThousandsSpacing(result.votes)}
+                                    {totalVotes > 0 && addThousandsSpacing(result.votes)}
                                 </div>
                                 <div 
                                     className={styles["bar-graph-percentage"] + " " + styles["bar-graph-bloc"]}
                                     style={{background: bgColor, color: party.textColor}}
                                 >
-                                    {percentage}%
+                                    {totalVotes > 0 && percentage + "%"}
                                 </div>
                                 <div className={styles["bar-graph-bar-container"]}>
                                     <div 
                                         className={styles["bar-graph-bar"] + " " + styles["bar-graph-bloc"]}
-                                        style={{background: bgColor, width: percentage + "%"}}
+                                        style={{background: bgColor, width: totalVotes > 0 ? percentage + "%" : "0%"}}
                                     ></div>
                                 </div>
-                            </> }
+                                
                         </div>
                     )
                 })

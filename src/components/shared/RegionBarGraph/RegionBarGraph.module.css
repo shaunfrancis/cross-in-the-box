@@ -19,7 +19,7 @@
 
 .bar-graph-bloc{
     border-radius:2px;
-    padding:4px 8px;
+    padding:4px 10px;
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
@@ -55,8 +55,8 @@
     }
 
 .bar-graph-candidate{
-    width:150px;
-    text-align:center;
+    width:170px;
+    padding:4px 15px;
 }
 
 .bar-graph-votes, .bar-graph-percentage{

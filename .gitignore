@@ -4,3 +4,4 @@ node_modules
 out
 
 api/credentials.php
+dashboard

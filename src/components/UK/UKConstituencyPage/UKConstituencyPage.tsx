@@ -150,8 +150,8 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
     });
 
     const heroNavItems = [
-        { title: "Overview", src:"/images/uk-nav-analysis.svg", ref:useRef<HTMLElement>(null) },
         { title: "Results and Changes", src:"/images/uk-nav-constituency.svg", ref:useRef<HTMLElement>(null) },
+        { title: "heading", src:"/images/uk-nav-constituency.svg", ref:useRef<HTMLElement>(null) },
     ]
 
     return ( <>
@@ -172,7 +172,11 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
                 </section>
             }
 
-            <section ref={heroNavItems[0].ref} id={styles["heading-section"]}>
+            <section ref={heroNavItems[0].ref} style={{paddingTop:"0"}}>
+                {eventNodes}
+            </section>
+
+            <section ref={heroNavItems[1].ref} id={styles["heading-section"]}>
                 <article className={styles["widget-container"] + " " + styles["map-container"]}>
                     
                      <UKConstituencyMap region={region} />
@@ -183,6 +187,13 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
                         ( () => { 
                             const sets : AnonymousResult[][] = [];
                             data.events.filter(e => e.type == "election").forEach( event => {
+
+                                let votes = 0;
+                                (event as ElectionEvent).data.results.forEach( result => {
+                                    votes += result.votes;
+                                });
+                                if(votes == 0) return;
+
                                 sets.push((event as ElectionEvent).data.results);
                             }) 
                             return sets.reverse();
@@ -190,11 +201,6 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
                     } />
                 </article>
             </section>
-
-            <section ref={heroNavItems[1].ref}>
-                {eventNodes}
-            </section>
-
             
         </RegionPage>
     </> )
