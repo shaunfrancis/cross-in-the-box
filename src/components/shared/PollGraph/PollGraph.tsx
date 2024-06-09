@@ -2,14 +2,15 @@ import { Party, Poll } from 'src/Types';
 import styles from './PollGraph.module.css';
 import { Fragment } from 'react';
 import ElectionSummaryBlocs from '../ElectionSummaryBlocs/ElectionSummaryBlocs';
+import { UKTicks } from 'src/Constants';
 
 export default function PollGraph({ polls, parties } : { polls : Poll[], parties : Party[] }){
     if(polls.length == 0) return;
 
     const w = 1000;
-    const h = 500;
+    const h = 580;
 
-    const xAxisOffset = 2;
+    const xAxisOffset = 80;
     const yAxisOffset = 40;
 
     let yLimit = 0;
@@ -27,13 +28,49 @@ export default function PollGraph({ polls, parties } : { polls : Poll[], parties
     });
     yLimit = Math.ceil( yLimit / 5 ) * 5;
 
+    const xLabels = () => {
+        const labels : React.ReactNode[] = [];
+
+        const firstYear = new Date(firstPoll).getFullYear() + 1, lastYear = new Date(lastPoll).getFullYear();
+        let currentYear = firstYear;
+        while(currentYear <= lastYear){
+            const x = ((new Date(currentYear + "-01-01")).valueOf() - firstPoll) / (lastPoll - firstPoll) * (w - yAxisOffset) + yAxisOffset;
+            labels.push(
+                <Fragment key={"x-" + currentYear}>
+                    <path d={"m" + x + " 0l0 " + (h - xAxisOffset)} stroke="#EEE" strokeWidth="2" />
+                    <text x={x} y={h - xAxisOffset + 8} fontSize={25} textAnchor="middle" alignmentBaseline="hanging">{currentYear}</text>
+                </Fragment>
+            );
+            currentYear++;
+        }
+        
+        UKTicks.forEach( (tick,index) => {
+            const tickDate = (new Date(tick.date)).valueOf();
+            if(tickDate < firstPoll) return;
+            const x = (tickDate - firstPoll) / (lastPoll - firstPoll) * (w - yAxisOffset) + yAxisOffset;
+            labels.push(
+                <Fragment key={"x-" + index}>
+                    <path d={"m" + x + " 0l0 " + (h - xAxisOffset + 5 + tick.stack*32)} stroke="#EEE" strokeWidth="2" />
+                    { tick.title[0] != "" &&
+                        <text x={x} y={h - xAxisOffset + 8 + tick.stack*32} fontSize={10} textAnchor="middle" alignmentBaseline="hanging">{tick.title[0]}</text>
+                    }
+                    { tick.title[1] != "" &&
+                        <text x={x} y={h - xAxisOffset + 8 + 10 + tick.stack*32} fontSize={10} textAnchor="middle" alignmentBaseline="hanging">{tick.title[1]}</text>
+                    }
+                </Fragment>
+            );
+        });
+
+        return labels;
+    }
+
     const yTicks = () => {
         const ticks : React.ReactNode[] = [];
         for(let i = 0; i < yLimit/5; i ++){
             const yPos = (h - xAxisOffset)/(yLimit/5) * i;
             ticks.push(
-                <Fragment key={i}>
-                    <path d={"m" + yAxisOffset + " " + yPos + "l" + w + " 0"} stroke="#EEE" strokeWidth="2" />
+                <Fragment key={"y-" + i}>
+                    <path d={"m" + yAxisOffset + " " + yPos + "l" + (w - yAxisOffset + 5) + " 0"} stroke="#EEE" strokeWidth="2" />
                     <text x={yAxisOffset - 8} y={yPos} 
                         alignmentBaseline="middle" textAnchor="end" fontSize={15} style={{fontWeight:"500"}}
                     >
@@ -115,7 +152,7 @@ export default function PollGraph({ polls, parties } : { polls : Poll[], parties
             }
 
             averageLines.push( {
-                path: <path key={index} d={d} fill="none" stroke={color} strokeWidth="3" strokeLinejoin="round" strokeLinecap="round" />,
+                path: <path key={index} d={d} fill="none" stroke={color} strokeWidth="3" strokeLinejoin="round" />,
                 party: party,
                 todaysAverage: average
             })
@@ -141,10 +178,11 @@ export default function PollGraph({ polls, parties } : { polls : Poll[], parties
         <ElectionSummaryBlocs data={summaryBlocData} />
         <svg className={styles["graph"]} viewBox={"0 -10 " + (w+5) + " " + (h+10)}>
             {yTicks()}
+            {xLabels()}
             {points}
             {lines.map(l => l.path)}
             <path d={"m" + yAxisOffset + " 0l0 " + (h - xAxisOffset)} stroke="#000" strokeWidth="3" strokeLinecap="square" />
-            <path d={"m" + yAxisOffset + " " + (h - xAxisOffset) + "l" + w + " 0"} stroke="#000" strokeWidth="3" strokeLinecap="square" />
+            <path d={"m" + yAxisOffset + " " + (h - xAxisOffset) + "l" + (w - yAxisOffset + 5) + " 0"} stroke="#000" strokeWidth="3" strokeLinecap="square" />
         </svg>
     </> )
 }

@@ -11,7 +11,10 @@ export default function PollTable(
 
     const averages = getPollAverages(polls).slice(0, maxParties);
 
-    polls.sort((a,b) => b.start.valueOf() - a.start.valueOf());
+    polls.sort((a,b) => {
+        const endComparison = b.end.valueOf() - a.end.valueOf();
+        return endComparison == 0 ? b.start.valueOf() - a.start.valueOf() : endComparison;
+    });
     polls = polls.slice(0, maxPolls);
 
     return (

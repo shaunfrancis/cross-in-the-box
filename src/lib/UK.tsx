@@ -1,3 +1,27 @@
+import { Endpoint } from "src/Constants";
+import { Poll, PollFigure, PollSkeleton } from "src/Types";
+import { parseJSONWithDates } from "./shared";
+
+const parsePollData = async () => {
+    const data : {polls: PollSkeleton[], figures: PollFigure[]} = await fetch(Endpoint + "/polls/uk")
+        .then( res => res.text() )
+        .then( res => parseJSONWithDates(res, ["start","end"]));
+
+    const downloadedPolls : Poll[] = [];
+
+    data.polls.forEach( skeleton => {
+        const figures : PollFigure[] = data.figures.filter( f => f.poll_id == skeleton.id );
+
+        const centre = (skeleton.end.valueOf() - skeleton.start.valueOf()) / 2 + skeleton.start.valueOf();
+
+        downloadedPolls.push({...skeleton, centre: centre, figures: figures});
+    });
+    
+    downloadedPolls.sort((a,b) => b.start.valueOf() - a.start.valueOf());
+
+    return downloadedPolls;
+};
+
 const partyIdToDisplayId = (partyId : string) => {
     let displayId = partyId.toUpperCase();
 
@@ -16,4 +40,4 @@ const slugToLookupSlug = (slug : string) => {
     return slug;
 };
 
-export { partyIdToDisplayId, constituencyToSlug, slugToLookupSlug }
+export { parsePollData, partyIdToDisplayId, constituencyToSlug, slugToLookupSlug }
