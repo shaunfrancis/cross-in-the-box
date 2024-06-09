@@ -11,7 +11,7 @@ export default function PopupBarGraph( { results, parties } : { results : Anonym
         <div className={styles["bar-graph-container"]}>
             {
                 results.map( (result, index) => {
-                    const percentage = (100 * result.votes / totalVotes).toFixed(2);
+                    const percentage = totalVotes == 0 ? 0 : (100 * result.votes / totalVotes).toFixed(2);
                     const party = parties.find( party => party.id == result.party ) || DefaultParty;
                     const bgColor = party.color || "var(--default-color)";
 
@@ -23,7 +23,7 @@ export default function PopupBarGraph( { results, parties } : { results : Anonym
                             </div>
 
                             <div className={styles["bar-graph-percentage"] + " " + styles["bar-graph-bloc"]} style={{background: bgColor, color: party.textColor}}>
-                                {percentage}%
+                                {totalVotes > 0 && percentage + "%"}
                             </div>
 
                             <div className={styles["bar-graph-bar-container"]}>

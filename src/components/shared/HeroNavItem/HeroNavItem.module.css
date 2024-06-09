@@ -5,7 +5,6 @@
     border-radius:2px;
     display:flex;
     align-items:center;
-    text-align:left;
     gap:20px;
     box-shadow:1px 1px 0 1px var(--box-shadow-color);
     background:#fff;
@@ -32,6 +31,5 @@
 }
 
 @media screen and (max-width:500px){
-    .hero-item{ text-align:center }
     .hero-item img{ display: none }
 }

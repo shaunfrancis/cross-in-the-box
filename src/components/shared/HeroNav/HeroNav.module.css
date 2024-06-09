@@ -15,11 +15,11 @@
 }
 
 @media screen and (max-width: 750px){
-    #hero-nav{
-        padding:0 15px;
-    }
+    #hero-nav{ padding:0 15px }
+    #hero-nav ul{ gap:15px }
+}
 
-    #hero-nav ul{
-        gap:15px;
-    }
+@media screen and (max-width:500px){
+    #hero-nav{ padding:0 5px }
+    #hero-nav ul{ gap:5px }
 }

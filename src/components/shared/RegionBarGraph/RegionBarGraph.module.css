@@ -61,6 +61,7 @@
 
 .bar-graph-votes, .bar-graph-percentage{
     width:80px;
+    min-width:50px; /*minimum for 88 888 and 88.88% display on mobile*/
     text-align:right;
 }
 
@@ -74,4 +75,14 @@
 .bar-graph-bar{
     height:100%;
     padding:0;
+}
+
+@media screen and (max-width: 750px){
+    .container{
+        padding:30px 15px;
+    }
+
+    .bar-graph-candidate, .bar-graph-votes, .bar-graph-percentage{
+        padding:4px 5px;
+    }
 }

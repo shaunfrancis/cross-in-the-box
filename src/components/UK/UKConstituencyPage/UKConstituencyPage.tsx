@@ -157,7 +157,7 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
     return ( <>
 
         <section id="hero">
-            <h3>&lt; UK General Elections</h3>
+            <a href="/uk/general-elections/" style={{textDecoration:"none"}}>&lt;-- UK General Elections</a>
             <h1>{region.title}</h1>
             <HeroNav items={heroNavItems} />
         </section>
