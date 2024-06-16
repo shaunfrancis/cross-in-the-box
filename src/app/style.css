@@ -69,8 +69,9 @@ section.shaded.green *{ --box-shadow-color: rgb(190, 200, 180) }
 #hero h1{
     display:block;
     font-size:3.5em;
+    line-height:1.2em;
     padding-bottom:30px;
-    margin:0;
+    margin:10px 0;
 }
 
 .breadcrumb{ 
@@ -168,5 +169,9 @@ button:active{
 
     section.shaded > h1{
         margin-left:var(--left-gap);
+    }
+
+    .heading-link svg{
+        width:25px;
     }
 }

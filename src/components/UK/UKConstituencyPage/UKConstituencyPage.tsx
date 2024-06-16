@@ -9,7 +9,6 @@ import { constituencyToSlug, partyIdToDisplayId, slugToLookupSlug } from "src/li
 import { dateToLongDate, parseJSONWithDates } from "src/lib/shared";
 import UKConstituencySidebar from "./UKConstituencySidebar/UKConstituencySidebar";
 import UKTernaryPlot from '../UKAnalysisSection/UKTernaryPlot/UKTernaryPlot';
-import UKConstituencyMap from './UKConstituencyMap/UKConstituencyMap';
 import Link from 'next/link';
 import HeroNav from 'src/components/shared/HeroNav/HeroNav';
 
@@ -150,8 +149,8 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
     });
 
     const heroNavItems = [
-        { title: "Results and Changes", src:"/images/uk-nav-constituency.svg", ref:useRef<HTMLElement>(null) },
-        { title: "heading", src:"/images/uk-nav-constituency.svg", ref:useRef<HTMLElement>(null) },
+        { title: "Results and Changes", src:"/images/uk-nav-constituency.svg", ref:useRef<HTMLElement>(null) }/*,
+        { title: "heading", src:"/images/uk-nav-constituency.svg", ref:useRef<HTMLElement>(null) },*/
     ]
 
     return ( <>
@@ -180,12 +179,8 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
                 {eventNodes}
             </section>
 
+            {/* 
             <section ref={heroNavItems[1].ref} id={styles["heading-section"]}>
-                <article className={styles["widget-container"] + " " + styles["map-container"]}>
-                    
-                     <UKConstituencyMap region={region} />
-
-                </article>
                 <article className={styles["widget-container"]}>
                     <UKTernaryPlot highlightChanges={false} parties={data.parties} resultSets={
                         ( () => { 
@@ -205,6 +200,7 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
                     } />
                 </article>
             </section>
+            */}
             
         </RegionPage>
     </> )

@@ -2,13 +2,14 @@ import { RefObject, forwardRef, useRef, useState } from 'react';
 import styles from './ElectionResultContainer.module.css';
 
 export default forwardRef(function ElectionResultContainer( 
-    { dimensions, messages, messagesOpenOnLoad, map, title, summary, children } : { 
+    { dimensions, messages, messagesOpenOnLoad, map, title, summary, dedicatedPage, children } : { 
         dimensions: {w:string,h:string,minW:string,minH:string}, 
         messages?: React.ReactNode[],
         messagesOpenOnLoad?: boolean,
         map: React.ReactNode, 
         title : string[]
         summary? : React.ReactNode,
+        dedicatedPage? : string,
         children : React.ReactNode 
     }, 
     ref : RefObject<HTMLDivElement>
@@ -18,6 +19,15 @@ export default forwardRef(function ElectionResultContainer(
 
     const messagesInnerContainer = useRef<HTMLDivElement>(null);
     let [scrollPosition, setScrollPosition] = useState<number>(0);
+
+
+    const titleNodes = (<>
+        <div className={styles["election-title-text"]}>{title[0]}</div>
+        <div className={styles["election-subtitle-text"]}>
+            <span>{title[1]}</span><br/>
+            <span>{title[2]}</span>
+        </div>
+    </>);
 
     return (
         <div ref={ref} className={styles["election-container"]} style={{height:dimensions.h, minHeight:dimensions.minH}}>
@@ -71,11 +81,15 @@ export default forwardRef(function ElectionResultContainer(
                             <img src="/images/messages.svg" className={styles["election-messages-button"]} onClick={() => {setMessagesVisiblity(!messagesVisibility)}} />
                         }
                         <h2>
-                            <div className={styles["election-title-text"]}>{title[0]}</div>
-                            <div className={styles["election-subtitle-text"]}>
-                                <span>{title[1]}</span><br/>
-                                <span>{title[2]}</span>
-                            </div>
+                            { dedicatedPage ? 
+                                (
+                                    <a href={dedicatedPage} className="heading-link">
+                                        {titleNodes}
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8.122 24l-4.122-4 8-8-8-8 4.122-4 11.878 12z"/></svg>
+                                    </a>
+                                ) 
+                                : titleNodes
+                            }
                         </h2>
                     </div>
                     {summary}

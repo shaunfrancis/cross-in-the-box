@@ -25,7 +25,7 @@ export default function UKElectionResultsSection({ regions, parties, geographic 
                 parties={parties}
                 geographic={geographic} />*/}
             
-            <UKElectionResultContainer election="2019" messageGroup="2019"
+            <UKElectionResultContainer election="2019" messageGroup="2019" dedicatedPage="2019"
                 summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]} 
                 regions={regions}
                 parties={parties}

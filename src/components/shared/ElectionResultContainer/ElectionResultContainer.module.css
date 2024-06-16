@@ -79,7 +79,7 @@
     gap:10px;
 }
 
-.election-title h2{
+.election-title h2, .election-title h2 a{
     display:flex;
     align-items:center;
     gap:5px;

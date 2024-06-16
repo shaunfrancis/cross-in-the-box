@@ -43,8 +43,7 @@ export default function UKGeneralElections(){
         { title: "Find A Constituency", src:"/images/uk-nav-constituency.svg", ref:useRef<HTMLElement>(null), 
             fun: () => { setTimeout( () => { if(searchInputRef.current) searchInputRef.current.focus() }, 100 ) }
         },
-        { title: "Opinion Polling", src:"/images/uk-nav-polling.svg", ref:useRef<HTMLElement>(null) },
-        { title: "Analysis", src:"/images/uk-nav-analysis.svg", ref:useRef<HTMLElement>(null) },
+        { title: "Opinion Polling", src:"/images/uk-nav-polling.svg", ref:useRef<HTMLElement>(null) }
     ]
     
     return ( 
@@ -79,7 +78,7 @@ export default function UKGeneralElections(){
                 </h1>
                 <UKPollingSection parties={parties} />
             </section>
-            <section ref={heroNavItems[3].ref}>
+            {/*<section ref={heroNavItems[3].ref}>
                 <div className="section-heading">
                     <h1>Analysis</h1>
                     <Toggle 
@@ -90,7 +89,7 @@ export default function UKGeneralElections(){
                     />
                 </div>
                 <UKAnalysisSection regions={regions} parties={parties} geographic={geographic} />
-            </section>
+            </section>*/}
             <UKMapDefs />
         </main>
     )

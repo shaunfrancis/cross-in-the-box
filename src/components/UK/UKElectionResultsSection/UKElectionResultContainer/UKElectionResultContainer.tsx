@@ -24,7 +24,7 @@ interface Update{
 }
 
 export default function UKElectionResultContainer( 
-    { election, title = [election, "General", "Election"], preloadedResults, regions, parties, summaryBlocHoverState, messageGroup, messagesOpenOnLoad, geographic, changes, winFormula = (results : Result[]) => results.filter(r => r.elected) } : 
+    { election, title = [election, "General", "Election"], preloadedResults, regions, parties, summaryBlocHoverState, messageGroup, messagesOpenOnLoad, geographic, changes, dedicatedPage, winFormula = (results : Result[]) => results.filter(r => r.elected) } : 
     { 
         election : string, 
         title? : string[],
@@ -36,7 +36,8 @@ export default function UKElectionResultContainer(
         messageGroup? : string,
         messagesOpenOnLoad?: boolean,
         geographic? : boolean,
-        changes? : boolean
+        changes? : boolean,
+        dedicatedPage? : string
     }
 ){
 
@@ -217,6 +218,7 @@ export default function UKElectionResultContainer(
             map={map()} 
             title={title} 
             summary={electionSummaryBlocs()}
+            dedicatedPage={dedicatedPage}
         >
             <HoverPopup visible={popupState.visible} coordinates={popupState.coordinates}>
                 {popupContent(popupState.id)}

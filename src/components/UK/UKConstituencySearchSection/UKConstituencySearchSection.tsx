@@ -3,7 +3,7 @@
 import { Endpoint } from 'src/Constants';
 import styles from './UKConstituencySearchSection.module.css';
 import { SearchHandler } from 'src/lib/shared';
-import { RefObject, useState } from 'react';
+import { RefObject, useRef, useState } from 'react';
 import { constituencyToSlug, partyIdToDisplayId } from 'src/lib/UK';
 import { Party } from 'src/Types';
 import Link from 'next/link';
@@ -21,20 +21,21 @@ interface SearchResults{
 
 export default function UKConstituencySearchSection( {searchInputRef} : {searchInputRef? : RefObject<HTMLInputElement>} ){
     const [results, setResults] = useState<SearchResults | null>();
-    const [displayCount, setDisplayCount] = useState<number>(16);
+    const [displayCount, setDisplayCount] = useState<number>(15);
     const [currentQuery, setCurrentQuery] = useState<string>("");
     const [status, setStatus] = useState<string>("");
 
-    const handler = new SearchHandler(Endpoint + "/search/uk/");
+    const handler = useRef(new SearchHandler(Endpoint + "/search/uk/"));
     const search = async (query : string) => {
-        setStatus("Searching...");
+        if(query.length >= 3) setStatus("Searching..."); 
+        else setStatus("");
 
-        const searchResults : SearchResults | null = await handler.search(query);
+        const searchResults : SearchResults | null = await handler.current.search(query);
         
         if(searchResults && searchResults.regions.length + searchResults.candidates.length == 0) setStatus("No results found.");
         else if(searchResults) setStatus("");
 
-        setDisplayCount(16);
+        setDisplayCount(15);
         setResults(searchResults ? searchResults : null);
         setCurrentQuery(searchResults ? query : "");
     }
@@ -108,7 +109,7 @@ export default function UKConstituencySearchSection( {searchInputRef} : {searchI
             </div>
 
             { results && displayCount < results.regions.length + results.candidates.length &&
-                <button className={"button " + styles["load-button"]} onClick={() => { setDisplayCount(displayCount + 20) }}>
+                <button className={"button " + styles["load-button"]} onClick={() => { setDisplayCount(displayCount + 18) }}>
                     Show More
                 </button>
             }

@@ -29,7 +29,3 @@
         height:20px;
     }
 }
-
-@media screen and (max-width:500px){
-    .hero-item img{ display: none }
-}
