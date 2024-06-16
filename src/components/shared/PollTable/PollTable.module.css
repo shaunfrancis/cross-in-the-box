@@ -1,7 +1,7 @@
 .poll-table{
     margin-top:30px;
     display:grid;
-    grid-template-columns: [pollster] minmax(100px, max-content) [fieldwork] max-content [figures] minmax(250px, max-content);
+    grid-template-columns: [pollster] minmax(100px, max-content) [fieldwork] max-content [figures] minmax(250px, 1fr);
     column-gap:30px;
     row-gap:2px;
     text-align:left;

@@ -7,7 +7,7 @@
         $polls = fetch(
             "SELECT polls.id, pollsters.title as pollster, polls.client, polls.source, polls.start, polls.end, polls.sample 
             FROM $polls_table as polls
-            JOIN $pollsters_table as pollsters
+            LEFT JOIN $pollsters_table as pollsters
             ON pollsters.id = polls.pollster
             WHERE polls.start > '2019-12-12'
         ");

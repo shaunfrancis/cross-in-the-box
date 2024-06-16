@@ -39,13 +39,17 @@ export default function PollTable(
             polls.map( (poll, pollIndex) => {
 
                 let fieldwork = poll.start.getDate().toString();
-                if(poll.start.getMonth() != poll.end.getMonth()) fieldwork += " " + monthAbbrev(poll.start.getMonth());
-                fieldwork += " – " + poll.end.getDate().toString() + " " + monthAbbrev(poll.end.getMonth());
+                
+                if(poll.start.getMonth() != poll.end.getMonth() || poll.start.valueOf() == poll.end.valueOf()) fieldwork += " " + monthAbbrev(poll.start.getMonth());
+                
+                if(poll.start.valueOf() != poll.end.valueOf()) fieldwork += " – " + poll.end.getDate().toString() + " " + monthAbbrev(poll.end.getMonth());
+
+                if(poll.end.getFullYear() != (new Date()).getFullYear()) fieldwork += " " + poll.end.getFullYear();
 
                 return ( <Fragment key={pollIndex}>
                     
                         <div className={styles["pollster"]}>
-                            <span>{poll.pollster}</span>
+                            <span>{poll.pollster || "Missing data"}</span>
                             { poll.client && <span className={styles["client-span"]}>, {poll.client}</span> }
                         </div>
                         <div className={styles["fieldwork"]}>

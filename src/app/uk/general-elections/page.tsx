@@ -71,7 +71,12 @@ export default function UKGeneralElections(){
                 <UKConstituencySearchSection searchInputRef={searchInputRef} />
             </section>
             <section ref={heroNavItems[2].ref}>
-                <h1>Opinion Polls</h1>
+                <h1>
+                    <a href="polling" className="heading-link">
+                        <span>Opinion Polls</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8.122 24l-4.122-4 8-8-8-8 4.122-4 11.878 12z"/></svg>
+                    </a>
+                </h1>
                 <UKPollingSection parties={parties} />
             </section>
             <section ref={heroNavItems[3].ref}>

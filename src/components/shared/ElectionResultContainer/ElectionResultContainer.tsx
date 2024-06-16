@@ -1,4 +1,4 @@
-import { RefObject, forwardRef, useState } from 'react';
+import { RefObject, forwardRef, useRef, useState } from 'react';
 import styles from './ElectionResultContainer.module.css';
 
 export default forwardRef(function ElectionResultContainer( 
@@ -16,18 +16,52 @@ export default forwardRef(function ElectionResultContainer(
     while(title.length < 3) title.push("");
     let [messagesVisibility, setMessagesVisiblity] = useState<boolean>(messagesOpenOnLoad || false);
 
+    const messagesInnerContainer = useRef<HTMLDivElement>(null);
+    let [scrollPosition, setScrollPosition] = useState<number>(0);
+
     return (
         <div ref={ref} className={styles["election-container"]} style={{height:dimensions.h, minHeight:dimensions.minH}}>
             { (messagesOpenOnLoad || (messages && messages.length > 0) ) &&
                 <div className={styles["election-messages-container"] + (messagesVisibility ? " " + styles["visible"] : "")}>
-                    <div className={styles["election-messages-inner-container"]}>
+
+                    <div 
+                        className={
+                            styles["election-messages-scroll-button"] + " " + styles["top"]
+                            + (scrollPosition == 0 ? " " + styles["hidden"] : "")
+                        }
+                        onClick={() => {
+                            const container = messagesInnerContainer.current;
+                            if(container){
+                                const newScrollPosition = Math.max(0, scrollPosition - (container.clientHeight - 300));
+                                container.scrollTo({top: newScrollPosition, behavior: "smooth"});
+                                setScrollPosition(newScrollPosition);
+                            }
+                        }}
+                    >up</div>
+
+                    <div ref={messagesInnerContainer} className={styles["election-messages-inner-container"]}>
                         {messagesOpenOnLoad && (messages && messages.length == 0) && 
                             (
                                 <p>put placeholder messages here</p>
                             )
                         }
-                        {messages?.slice(0,10)}
+                        {messages}
                     </div>
+
+                    <div 
+                        className={
+                            styles["election-messages-scroll-button"] + " " + styles["bottom"]
+                            + ((messagesInnerContainer.current && scrollPosition == messagesInnerContainer.current.scrollHeight - messagesInnerContainer.current.clientHeight) ? " " + styles["hidden"] : "")
+                        }
+                        onClick={() => {
+                            const container = messagesInnerContainer.current;
+                            if(container){
+                                const newScrollPosition = Math.min(container.scrollHeight - container.clientHeight, scrollPosition + (container.clientHeight - 300));
+                                container.scrollTo({top: newScrollPosition, behavior: "smooth"});
+                                setScrollPosition(newScrollPosition);
+                            }
+                        }}
+                    >down</div>
                 </div>
             }
             <div className={styles["election-results-container"]} style={{width:dimensions.w, minWidth:"min( calc(100vw - 30px), " + dimensions.minW + ")"}}>

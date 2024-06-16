@@ -67,9 +67,25 @@ section.shaded.green *{ --box-shadow-color: rgb(190, 200, 180) }
 }
 
 #hero h1{
+    display:block;
     font-size:3.5em;
     padding-bottom:30px;
     margin:0;
+}
+
+.breadcrumb{ 
+    text-decoration:none;
+    color:#000;
+}
+.breadcrumb:hover{
+    color:rgb(35, 35, 123);
+}
+
+.breadcrumb > *{ vertical-align:middle }
+
+.breadcrumb svg{
+    width:15px;
+    margin-right:5px;
 }
 
 main > section.shaded{
@@ -83,6 +99,21 @@ main > section > h1{
     vertical-align:middle;
 }
 section.shaded > h1{ margin-left: 0 }
+
+.heading-link{
+    text-decoration:none;
+    color:#000;
+}
+.heading-link:hover{
+    color:rgb(35, 35, 123);
+}
+
+.heading-link > *{ vertical-align:baseline }
+
+.heading-link svg{
+    width:30px;
+    margin-left:10px;
+}
 
 main > section > .section-heading{
     margin:50px var(--left-gap);
