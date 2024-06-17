@@ -31,8 +31,16 @@
     text-align:center;
     font-weight:450;
     position:relative;
-    overflow:visible;
     cursor:pointer;
+    overflow:visible;
+}
+
+.bar-graph-party span{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    display: block;
 }
 
 .bar-detail-hover{

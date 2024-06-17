@@ -20,10 +20,8 @@ const UKTicks = [
     {date: "2021-05-06", stack:0, title: ["Local Elections",""]},
     {date: "2022-05-05", stack:0.5, title: ["Local Elections",""]},
     {date: "2022-07-07", stack:0, title: ["Johnson Resigns",""]},
-    {date: "2022-09-06", stack:0.7, title: ["Truss Becomes PM",""]},
-    {date: "2022-09-08", stack:1.5, title: ["Death of","HM Queen Elizabeth II"]},
-    {date: "2022-10-20", stack:1.1, title: ["Truss Resigns",""]},
-    {date: "2022-10-25", stack:-0.1, title: ["Sunak","Becomes PM"]},
+    {date: "2022-09-06", stack:0.5, title: ["Truss Becomes PM",""]},
+    {date: "2022-10-25", stack:1, title: ["Sunak","Becomes PM"]},
     {date: "2023-05-04", stack:0, title: ["Local Elections",""]},
     {date: "2024-05-02", stack:0, title: ["Local Elections",""]},
 ];

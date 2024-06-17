@@ -1,40 +1,82 @@
 .poll-table{
     margin-top:30px;
     display:grid;
-    grid-template-columns: [pollster] minmax(100px, max-content) [fieldwork] max-content [figures] minmax(250px, 1fr);
-    column-gap:30px;
+    position:relative;
+    z-index:1;
+    grid-template-columns: [pollster] minmax(25px, max-content) [fieldwork] minmax(25px, max-content) [sample] minmax(25px, max-content) [figures] minmax(250px, 1fr);
     row-gap:2px;
     text-align:left;
 }
+.poll-table.compact{
+    grid-template-columns: [pollster] minmax(25px, max-content) [fieldwork] minmax(25px, max-content) [figures] minmax(250px, 1fr);
+}
+
+.row{ 
+    display:contents;
+    cursor:default;
+ }
+.row:nth-child(2n + 1) > *{
+    background:rgba(245,245,245);
+}
+.row:not(.header):hover > *{
+    background:#ddd;
+}
+
+.row > *{
+    display:flex;
+    align-items:center;
+    padding:0 15px;
+}
+
+.row > *:first-child{
+    border-top-left-radius:2px;
+    border-bottom-left-radius:2px;
+}
+.row > *:last-child{
+    border-top-right-radius:2px;
+    border-bottom-right-radius:2px;
+}
 
 .pollster{
-    grid-column: pollster;
+    grid-column:pollster;
 }
 
-.fieldwork{
-    grid-column: fieldwork;
+.fieldwork, .sample{
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
+.fieldwork{ grid-column:fieldwork }
+.sample{ 
+    grid-column:sample;
+    justify-content:center;
+ }
 
 .figures{
-    grid-column: figures;
-    display: flex;
-    text-align: center;
+    grid-column:figures;
+    display:flex;
+    text-align:center;
     gap:2px;
     font-size:1.2em;
 }
 
-.header{
+.header > *{
     font-size:1.2em;
+    position:sticky;
+    top:0;
+    background:#fff;
+    border-bottom:2px solid #fff;
+    padding-block:15px;
 }
 
-.figures.header{
+.header > .figures{
     color:#fff;
 }
 
 .figures > div{
     flex:1 1 0px;
     width:0;
-    padding:5px 10px;
+    padding:5px 0;
     border-radius:2px;
 }
 
@@ -44,6 +86,6 @@
     text-overflow:ellipsis;
 }
 
-.client-span, .fieldwork:not(.header){
+.client-span, :not(.header) > .fieldwork{
     color:rgb(102, 102, 102);
 }

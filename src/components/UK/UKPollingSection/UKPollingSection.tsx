@@ -19,12 +19,12 @@ export default function UKPollingSection({ parties } : { parties : Party[] }){
     return (
         <div id={styles["tracker-container"]}>
             <div id={styles["graph-container"]}>
-                <h2>Voting Intention</h2>
-                <PollGraph polls={pollData} parties={parties} />
+                <h2>Polling Averages</h2>
+                <PollGraph polls={pollData} parties={parties} maxParties={5} compact={true} />
             </div>
             <div id={styles["table-container"]}>
                 <h2>Latest Polls</h2>
-                <PollTable polls={pollData} parties={parties} maxPolls={9} maxParties={5} />
+                <PollTable polls={pollData} parties={parties} maxPolls={7} maxParties={5} compact={true} />
             </div>
         </div>
     )

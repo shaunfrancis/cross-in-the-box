@@ -5,8 +5,8 @@ import { getPollAverages, monthAbbrev } from 'src/lib/shared';
 import { Fragment } from 'react';
 
 export default function PollTable(
-    { polls, parties, maxPolls = Infinity, maxParties = Infinity } : 
-    { polls : Poll[], parties : Party[], maxPolls? : number, maxParties? : number }
+    { polls, parties, maxPolls = Infinity, maxParties = Infinity, compact = false } : 
+    { polls : Poll[], parties : Party[], maxPolls? : number, maxParties? : number, compact? : boolean }
 ){
 
     const averages = getPollAverages(polls).slice(0, maxParties);
@@ -18,21 +18,26 @@ export default function PollTable(
     polls = polls.slice(0, maxPolls);
 
     return (
-        <div className={styles["poll-table"]}>
-            
-                <div className={styles["pollster"] + " " + styles["header"]}>Pollster</div>
-                <div className={styles["fieldwork"] + " " + styles["header"]}>Fieldwork</div>
-                <div className={styles["figures"] + " " + styles["header"]}>
-                    {
-                        averages.map( (average, averageIndex) => {
-                            const party = parties.find(p => p.id == average.id) || DefaultParty;
-                            return (
-                                <div key={averageIndex} style={{background:party.color, color:party.textColor}}>
-                                    {party.displayId || party.id}
-                                </div>
-                            )
-                        })
-                    }
+        <div className={styles["poll-table"] + (compact ? " " + styles["compact"] : "")}>
+                <div className={styles["row"] + " " + styles["header"]}>
+                    <div className={styles["pollster"]}>Pollster</div>
+                    <div className={styles["fieldwork"]}>Fieldwork</div>
+                    {!compact && <div className={styles["sample"]}>Sample</div>}
+                    <div className={styles["figures"]}>
+                        {
+                            averages.map( (average, averageIndex) => {
+                                const party = average.id == "other" ? 
+                                    {...DefaultParty, displayId:"Other"} : 
+                                    parties.find(p => p.id == average.id) || DefaultParty;
+
+                                return (
+                                    <div key={averageIndex} style={{background:party.color, color:party.textColor}}>
+                                        {party.displayId || party.id}
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
                 </div>
                 
         {
@@ -46,7 +51,8 @@ export default function PollTable(
 
                 if(poll.end.getFullYear() != (new Date()).getFullYear()) fieldwork += " " + poll.end.getFullYear();
 
-                return ( <Fragment key={pollIndex}>
+                return ( 
+                    <div key={pollIndex} className={styles["row"]}>
                     
                         <div className={styles["pollster"]}>
                             <span>{poll.pollster || "Missing data"}</span>
@@ -55,6 +61,11 @@ export default function PollTable(
                         <div className={styles["fieldwork"]}>
                             {fieldwork}
                         </div>
+                        {!compact &&
+                            <div className={styles["sample"]}>
+                                {poll.sample || "–"}
+                            </div>
+                        }
                         <div className={styles["figures"]}>
                             {
                                 averages.map( (average, averageIndex) => {
@@ -69,14 +80,14 @@ export default function PollTable(
                                             key={averageIndex} 
                                             style={isLargest ? {background:party.color, color:party.textColor || "#fff"} : {}}
                                         >
-                                                {figure?.figure || "–"}
+                                                {figure?.figure !== undefined ? figure?.figure : <span style={{color:"rgb(102,102,102)"}}>–</span>}
                                         </div>
                                     )
                                 })
                             }
-                        </div>
-                        
-                </Fragment> )
+                        </div>    
+                    </div> 
+                )
             })
         }
         </div>
