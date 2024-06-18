@@ -126,13 +126,22 @@ export default function UKElectionResultContainer(
                     if(changes) date = dateToLongDate(message.date);
                     else date = message.date.getHours().toString().padStart(2,'0') + ":" + message.date.getMinutes().toString().padStart(2,'0');
 
+                    const square = message.square ? (parties.find(p => p.id == message.square) || DefaultParty) : undefined;
+                    const oldSquare = message.old_square ? (parties.find(p => p.id == message.old_square) || DefaultParty) : undefined;
+
+                    let messageResults : React.ReactNode;
+                    if(message.results) switch(message.result_type){
+                        case 1: //exit poll                            
+                            messageResults = <PopupBarGraph raw={true} goal={326/650} parties={parties} results={message.results.sort( (a,b) => b.votes - a.votes )} />
+                            break;
+                        default:
+                            messageResults = <PopupBarGraph parties={parties} results={message.results.sort( (a,b) => b.votes - a.votes )} />
+                    }
+
                     newMessages.push( (
-                        <Message key={index} date={date}>
+                        <Message key={index} noHeader={message.no_header} date={date} square={square} oldSquare={oldSquare}>
                             {addConstituencyLinks(message.text)}
-                            {
-                                message.results && 
-                                <PopupBarGraph parties={parties} results={message.results.sort( (a,b) => b.votes - a.votes )} />
-                            }
+                            {messageResults}
                         </Message>
                     ) );
                 });

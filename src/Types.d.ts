@@ -26,8 +26,12 @@ export interface Party {
 
 export interface MessageData {
     date : Date,
+    square? : string,
+    old_square? : string,
+    no_header? : boolean,
     text : string,
-    results? : AnonymousResult[]
+    results? : AnonymousResult[],
+    result_type?: number
 }
 
 export interface PollSkeleton {

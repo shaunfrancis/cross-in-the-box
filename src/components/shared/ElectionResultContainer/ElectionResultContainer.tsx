@@ -1,5 +1,6 @@
 import { RefObject, forwardRef, useRef, useState } from 'react';
 import styles from './ElectionResultContainer.module.css';
+import PlaceholderMessage from '../PlaceholderMessage/PlaceholderMessage';
 
 export default forwardRef(function ElectionResultContainer( 
     { dimensions, messages, messagesOpenOnLoad, map, title, summary, dedicatedPage, children } : { 
@@ -52,7 +53,7 @@ export default forwardRef(function ElectionResultContainer(
                     <div ref={messagesInnerContainer} className={styles["election-messages-inner-container"]}>
                         {messagesOpenOnLoad && (messages && messages.length == 0) && 
                             (
-                                <p>put placeholder messages here</p>
+                                <PlaceholderMessage />
                             )
                         }
                         {messages}

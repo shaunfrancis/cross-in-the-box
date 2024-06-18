@@ -26,11 +26,24 @@
 }
 
 .bar-graph-bar-container{
+    position:relative;
     width:120px;
     background:rgb(227,227,227);
+    border-radius:2px;
 }
 
 .bar-graph-bar{
     height:100%;
     padding:0;
+    position:relative;
+    z-index:1;
+}
+
+.bar-graph-goal{
+    width:2px;
+    top:-10px;
+    height:calc(20px + 100%);
+    position:absolute;
+    background:#000;
+    border-radius:2px;
 }

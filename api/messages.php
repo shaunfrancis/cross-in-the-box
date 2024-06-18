@@ -3,10 +3,15 @@
 
     require_once './functions/fetch.php';
     $group = $request[1];
+
+    /* result_types
+        0: percentage table
+        1: raw table
+    */
     
     try{
         $messages = fetch(
-            "SELECT messages.id, messages.date, messages.text, links.id as link, results.party, results.votes 
+            "SELECT messages.id, messages.date, messages.square, messages.old_square, messages.header, messages.text, links.id as link, links.type, results.party, results.votes 
             FROM $messages_table as messages
             LEFT JOIN $message_links_table as links
             ON links.message_id = messages.id
@@ -19,7 +24,10 @@
         $parsed_messages = array();
         foreach($messages as $message){
             if(!isset($message['link'])){
-                $parsed_messages[] = array("date" => $message['date'], "text" => $message['text']);
+                $message_array = array("date" => $message['date'], "square" => $message['square'], "old_square" => $message['old_square'], "text" => $message['text']);
+                if($message['header'] == '0') $message_array['no_header'] = true;
+                if(isset($message['type']) && $message['type'] != '0') $message_array['result_type'] = $message['type'];
+                $parsed_messages[] = $message_array;
                 continue;
             }
 
@@ -33,14 +41,19 @@
             }
 
             if(!$match){
-                $parsed_messages[] = array(
+                $message_array = array(
                     "id" => $message['id'],
                     "date" => $message['date'],
+                    "square" => $message['square'],
+                    "old_square" => $message['old_square'],
                     "text" => $message['text'],
                     "results" => array(
                         array("party" => $message['party'], "votes" => $message['votes'])
                     )
                 );
+                if($message['header'] == '0') $message_array['no_header'] = true;
+                if(isset($message['type']) && $message['type'] != '0') $message_array['result_type'] = $message['type'];
+                $parsed_messages[] = $message_array;
             }
         }
 
