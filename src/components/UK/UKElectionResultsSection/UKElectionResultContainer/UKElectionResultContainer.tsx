@@ -10,7 +10,7 @@ import HoverPopup from "../../../shared/HoverPopup/HoverPopup";
 import PopupBarGraph from "../../../shared/PopupBarGraph/PopupBarGraph";
 import ElectionSummaryBlocs from "../../../shared/ElectionSummaryBlocs/ElectionSummaryBlocs";
 import { MessageData, Party, Region, Result } from "src/Types";
-import { DefaultParty, Endpoint } from "src/Constants";
+import { DefaultParty, Endpoint, UKSeatsToWatch } from "src/Constants";
 import { useRouter } from "next/navigation";
 import { constituencyToSlug } from "src/lib/UK";
 import PartyProgressionBlocs from "src/components/shared/PartyProgressionBlocs/PartyProgressionBlocs";
@@ -185,10 +185,14 @@ export default function UKElectionResultContainer(
         regionUpdates.forEach( update => {
             partyProgression.push( parties.find(p => p.id == update.party) || DefaultParty );
         });
+
+
+        const watchNote = election == "2024" && UKSeatsToWatch.find(s => s.id == id)?.note;
         
         return ( <>
             <h3>{region.title}</h3>
             {winner && <h4>{winner}</h4>}
+            {!winner && <div style={{maxWidth: "350px"}}>{watchNote}</div>}
             { partyProgression.length > 1 && <PartyProgressionBlocs parties={partyProgression} /> }
             <PopupBarGraph results={regionResults} parties={parties} />
         </> )

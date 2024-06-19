@@ -57,5 +57,6 @@
 @media screen and (max-width: 750px){
     .summary-bloc{
         min-width:60px;
+        padding:0 5px;
     }
 }

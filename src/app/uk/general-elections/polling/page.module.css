@@ -1,7 +1,7 @@
 .large-graph-section{
     display:flex;
     flex-direction:column;
-    padding:30px 50px;
+    padding:30px calc(var(--left-gap) / 2);
     margin:30px var(--left-gap);
     text-align:center;
     max-height:calc(100vh - 60px);
@@ -10,9 +10,10 @@
 }
 
 .large-table-section{
-    padding:30px 50px;
+    padding:30px calc(var(--left-gap) / 2);
     margin:30px var(--left-gap);
     scroll-margin-top:30px;
     text-align:center;
     background:#fff;
+    overflow-x:auto;
 }

@@ -35,7 +35,7 @@ export default forwardRef(function ElectionResultContainer(
             { (messagesOpenOnLoad || (messages && messages.length > 0) ) &&
                 <div className={styles["election-messages-container"] + (messagesVisibility ? " " + styles["visible"] : "")}>
 
-                    <div 
+                    {/*<div 
                         className={
                             styles["election-messages-scroll-button"] + " " + styles["top"]
                             + (scrollPosition == 0 ? " " + styles["hidden"] : "")
@@ -48,18 +48,18 @@ export default forwardRef(function ElectionResultContainer(
                                 setScrollPosition(newScrollPosition);
                             }
                         }}
-                    >up</div>
+                    >up</div>*/}
 
                     <div ref={messagesInnerContainer} className={styles["election-messages-inner-container"]}>
                         {messagesOpenOnLoad && (messages && messages.length == 0) && 
-                            (
+                            ( <>
                                 <PlaceholderMessage />
-                            )
+                            </> )
                         }
-                        {messages}
+                        {messagesVisibility && messages}
                     </div>
 
-                    <div 
+                    {/*<div 
                         className={
                             styles["election-messages-scroll-button"] + " " + styles["bottom"]
                             + ((messagesInnerContainer.current && scrollPosition == messagesInnerContainer.current.scrollHeight - messagesInnerContainer.current.clientHeight) ? " " + styles["hidden"] : "")
@@ -72,7 +72,7 @@ export default forwardRef(function ElectionResultContainer(
                                 setScrollPosition(newScrollPosition);
                             }
                         }}
-                    >down</div>
+                    >down</div>*/}
                 </div>
             }
             <div className={styles["election-results-container"]} style={{width:dimensions.w, minWidth:"min( calc(100vw - 30px), " + dimensions.minW + ")"}}>

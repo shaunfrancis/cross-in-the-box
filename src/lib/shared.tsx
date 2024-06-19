@@ -42,6 +42,7 @@ const useOnScreen = (ref : RefObject<Element>) : boolean => {
         if(ref.current){
             const observer = new IntersectionObserver( ([entry]) => {
                 setOnScreen(entry.isIntersecting);
+                if(entry.isIntersecting) observer.disconnect();
             });
 
             observer.observe(ref.current);

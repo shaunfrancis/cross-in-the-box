@@ -26,4 +26,12 @@ const UKTicks = [
     {date: "2024-05-02", stack:0, title: ["Local Elections",""]},
 ];
 
-export { Endpoint, DefaultParty, UKTicks }
+const UKSeatsToWatch = [
+    {id: "2024085", note: "The Green Party's only seat is potentially at risk following the decision by incumbent Caroline Lucas to step down."}, //Brighton Pavilion
+    {id: "2024089", note: "Co-leader of the Green Party, Carla Denyer, is hoping to secure the Greens' second ever Commons seat."}, //Bristol Central
+    {id: "2024136", note: "Reform UK leader Nigel Farage is running here - his eighth attempt at being elected MP - and polling suggests he has a chance of taking it."}, //Clacton
+    {id: "2024334", note: "Chancellor Jeremy Hunt is fighting to keep his seat in the newly created Godalming and Ash constituency against an expected strong challenge from the Liberal Democrats."}, //Godalming and Ash
+    {id: "2024269", note: "Former Labour leader Jeremy Corbyn is attempting to hold his seat as an independent after being expelled from the Labour party."}, //Islington North
+]
+
+export { Endpoint, DefaultParty, UKTicks, UKSeatsToWatch }

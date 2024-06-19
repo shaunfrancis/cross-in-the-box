@@ -19,12 +19,13 @@
 .election-messages-inner-container{
     -webkit-user-select:auto;
     user-select:auto;
-    width:300px;
+    width:calc(100% - 10px);
     overflow:auto;
 }
 
 .election-messages-scroll-button{
     position:absolute;
+    z-index:2;
     left:0;
     width:calc(100% - 10px);
     line-height:50px;
@@ -103,14 +104,14 @@
 
 
 @media screen and (max-width: 750px){
-    .election-messages-inner-container{
-        height:100%;
-        overflow:hidden;
-    }
-
     .election-messages-inner-container > div{
         overflow:hidden;
         flex-grow:1;
         text-align:left;
+    }
+
+    .election-messages-container.visible{
+        scroll-snap-align: center;
+        width:260px;
     }
 }
