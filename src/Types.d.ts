@@ -31,7 +31,8 @@ export interface MessageData {
     no_header? : boolean,
     text : string,
     results? : AnonymousResult[],
-    result_type?: number
+    result_type?: number,
+    link_title?: string
 }
 
 export interface PollSkeleton {

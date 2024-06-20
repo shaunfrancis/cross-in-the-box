@@ -1,6 +1,7 @@
 import { SvgLoader, SvgProxy } from 'react-svgmt';
 import { Region } from 'src/Types';
 import styles from './styles.module.css';
+import { UKSeatsToWatch } from 'src/Constants';
 
 export default function UKGeneral2024GeographicMap( 
     { regions, fills = [], hoverFun = () => {}, clickFun = () => {} } : 
@@ -15,8 +16,12 @@ export default function UKGeneral2024GeographicMap(
         <SvgLoader path="/maps/UK-2024-geographic.svg">
             {
                 regions.map( (region, index) => {
-                    const fill = fills.find( f => f.id == region.id ) || {id: region.id, color: "url(#no_result)"};
-
+                    let fill = fills.find(f => f.id == region.id);
+                    if(!fill){
+                        if(UKSeatsToWatch.find( s => s.id == region.id)) fill = {id: region.id, color: "url(#highlight_no_result)"};
+                        else fill = {id: region.id, color: "url(#no_result)"};
+                    }
+                    
                     return (
                         <SvgProxy 
                             key={index} 

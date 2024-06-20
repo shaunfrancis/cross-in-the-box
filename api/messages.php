@@ -11,7 +11,7 @@
     
     try{
         $messages = fetch(
-            "SELECT messages.id, messages.date, messages.square, messages.old_square, messages.header, messages.text, links.id as link, links.type, results.party, results.votes 
+            "SELECT messages.id, messages.date, messages.square, messages.old_square, messages.header, messages.text, links.id as link, links.type, links.title as link_title, results.party, results.votes 
             FROM $messages_table as messages
             LEFT JOIN $message_links_table as links
             ON links.message_id = messages.id
@@ -53,6 +53,7 @@
                 );
                 if($message['header'] == '0') $message_array['no_header'] = true;
                 if(isset($message['type']) && $message['type'] != '0') $message_array['result_type'] = $message['type'];
+                if(isset($message['link_title'])) $message_array["link_title"] = $message['link_title'];
                 $parsed_messages[] = $message_array;
             }
         }

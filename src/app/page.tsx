@@ -10,7 +10,6 @@ export default function Page(){
                     <li><a href="uk/general-elections">General Elections</a></li>
                 </ul>
             </li>
-            <li>More to follow</li>
         </ul>
         <p>This website is a development of the existing pages at <a href="https://politics.tennessine.co.uk">politics.tennessine.co.uk</a>, where you can find other elections yet to be added here.</p>
     </main> )

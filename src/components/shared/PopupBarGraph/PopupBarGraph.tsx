@@ -2,14 +2,17 @@ import { DefaultParty } from '../../../Constants';
 import { AnonymousResult, Party } from '../../../Types';
 import styles from './PopupBarGraph.module.css';
 
-export default function PopupBarGraph( { results, parties, raw = false, goal } : 
-    { results : AnonymousResult[], parties : Party[], raw?: boolean, goal?: number }
+export default function PopupBarGraph( { results, parties, raw = false, goal, title } : 
+    { results : AnonymousResult[], parties : Party[], raw?: boolean, goal?: number, title?: string }
 ){
 
     let totalVotes = 0;
     results.forEach( result => totalVotes += result.votes );
 
-    return ( 
+    return ( <>
+        { title &&
+            <div className={styles["title"]}>{title}</div>
+        }
         <div className={styles["bar-graph-container"]}>
             {
                 results.map( (result, index) => {
@@ -43,5 +46,5 @@ export default function PopupBarGraph( { results, parties, raw = false, goal } :
                 })
             }
         </div>
-    );
+    </> );
 }
