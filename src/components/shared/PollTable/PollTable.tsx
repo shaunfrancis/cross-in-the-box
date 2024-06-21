@@ -1,8 +1,7 @@
 import { DefaultParty } from 'src/Constants';
 import styles from './PollTable.module.css';
-import { Party, Poll, PollFigure } from 'src/Types';
+import { Party, Poll } from 'src/Types';
 import { getPollAverages, monthAbbrev } from 'src/lib/shared';
-import { Fragment } from 'react';
 
 export default function PollTable(
     { polls, parties, maxPolls = Infinity, maxParties = Infinity, compact = false } : 
@@ -43,19 +42,19 @@ export default function PollTable(
         {
             polls.map( (poll, pollIndex) => {
 
+                const pollsterContent = <span>{poll.pollster || "Missing data"}</span>;
+
                 let fieldwork = poll.start.getDate().toString();
                 
                 if(poll.start.getMonth() != poll.end.getMonth() || poll.start.valueOf() == poll.end.valueOf()) fieldwork += " " + monthAbbrev(poll.start.getMonth());
-                
                 if(poll.start.valueOf() != poll.end.valueOf()) fieldwork += " – " + poll.end.getDate().toString() + " " + monthAbbrev(poll.end.getMonth());
-
                 if(poll.end.getFullYear() != (new Date()).getFullYear()) fieldwork += " " + poll.end.getFullYear();
 
                 return ( 
                     <div key={pollIndex} className={styles["row"]}>
                     
                         <div className={styles["pollster"]}>
-                            <span>{poll.pollster || "Missing data"}</span>
+                            { poll.source ? <a href={poll.source} target="_blank">{pollsterContent}</a> : <>{pollsterContent}</> }
                             { poll.client && <span className={styles["client-span"]}>, {poll.client}</span> }
                         </div>
                         <div className={styles["fieldwork"]}>

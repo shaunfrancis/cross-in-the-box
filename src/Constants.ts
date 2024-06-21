@@ -36,6 +36,7 @@ const UKSeatsToWatch = [
     {id: "2024269", note: "Former Labour leader Jeremy Corbyn is attempting to hold his seat as an independent after being expelled from the Labour party."}, //Islington North
     {id: "2024552", note: "Sorcha Eastwood has a chance to secure the Alliance Party's second seat here in the seat vacated by former DUP leader Jeffrey Donaldson."}, //Lagan Valley
     {id: "2024556", note: "The Alliance Party's Stephen Farry is hoping to hold this seat against the independent former DUP candidate Alex Easton."}, //North Down
+    {id: "2024403", note: "Workers Party leader George Galloway won this seat in a landslide in February's by-election after Labour were forced to withdraw support for their candidate. He's hoping to retain this seat at the general election."}, //Rochdale
     {id: "2024401", note: "Could Rishi Sunak become the first Prime Minister to lose his seat? Probably not, but recent polls have suggested it's possible this very safe seat is a lot tighter than usual."} //Richmond and Northallerton
 ]
 

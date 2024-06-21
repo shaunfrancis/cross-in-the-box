@@ -12,8 +12,8 @@ export const metadata: Metadata = {
 export default function UKLayout( { children } : { children : React.ReactNode } ){
     const links = [
         {title: "General Elections", path: "/uk/general-elections"},
-        {title: "Scottish Parliament", path: "https://politics.tennessine.co.uk/uk/scottish-parliament-elections/overview/" },
-        {title: "Senedd Cymru", path: "https://politics.tennessine.co.uk/uk/senedd-cymru-elections/overview/" }
+        {title: "Scottish Parliament", path: "https://politics.tennessine.co.uk/uk/scottish-parliament-elections/overview/citb" },
+        {title: "Senedd Cymru", path: "https://politics.tennessine.co.uk/uk/senedd-cymru-elections/overview/citb" }
     ];
 
     return ( <>

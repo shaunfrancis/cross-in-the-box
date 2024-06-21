@@ -19,7 +19,7 @@ export default forwardRef(function ElectionResultContainer(
     let [messagesVisibility, setMessagesVisiblity] = useState<boolean>(messagesOpenOnLoad || false);
 
     const messagesInnerContainer = useRef<HTMLDivElement>(null);
-    let [scrollPosition, setScrollPosition] = useState<number>(0);
+    //let [scrollPosition, setScrollPosition] = useState<number>(0);
 
 
     const titleNodes = (<>
