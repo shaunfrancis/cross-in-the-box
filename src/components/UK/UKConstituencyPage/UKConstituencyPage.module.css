@@ -13,6 +13,7 @@
     background:#fff;
     box-shadow:1px 1px 0 1px var(--box-shadow-color);
     display:flex;
+    flex-wrap:wrap;
     align-items:center;
     gap:20px;
 }
@@ -79,4 +80,10 @@
     display:flex;
     flex-direction:column;
     flex:1;
+}
+
+@media screen and (max-width: 750px){
+    .update-note{ 
+        justify-content: center;
+     }
 }

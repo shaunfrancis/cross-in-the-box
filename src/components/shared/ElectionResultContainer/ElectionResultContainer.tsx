@@ -54,6 +54,14 @@ export default forwardRef(function ElectionResultContainer(
                         {messagesOpenOnLoad && (messages && messages.length == 0) && 
                             ( <>
                                 <PlaceholderMessage />
+                                <PlaceholderMessage />
+                                <PlaceholderMessage />
+                                <PlaceholderMessage />
+                                <PlaceholderMessage />
+                                <PlaceholderMessage />
+                                <PlaceholderMessage />
+                                <PlaceholderMessage />
+                                <PlaceholderMessage />
                             </> )
                         }
                         {messagesVisibility && messages}

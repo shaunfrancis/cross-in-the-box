@@ -34,10 +34,11 @@ const UKSeatsToWatch = [
     {id: "2024136", note: "Reform UK leader Nigel Farage is running here - his eighth attempt at being elected MP - and polling suggests he has a chance of taking it."}, //Clacton
     {id: "2024334", note: "Chancellor Jeremy Hunt is fighting to keep his seat in the newly created Godalming and Ash constituency against an expected strong challenge from the Liberal Democrats."}, //Godalming and Ash
     {id: "2024269", note: "Former Labour leader Jeremy Corbyn is attempting to hold his seat as an independent after being expelled from the Labour party."}, //Islington North
-    {id: "2024552", note: "Sorcha Eastwood has a chance to secure the Alliance Party's second seat here in the seat vacated by former DUP leader Jeffrey Donaldson."}, //Lagan Valley
+    {id: "2024552", note: "Sorcha Eastwood has a chance to secure the Alliance Party's second seat here in the constituency vacated by former DUP leader Jeffrey Donaldson."}, //Lagan Valley
     {id: "2024556", note: "The Alliance Party's Stephen Farry is hoping to hold this seat against the independent former DUP candidate Alex Easton."}, //North Down
     {id: "2024403", note: "Workers Party leader George Galloway won this seat in a landslide in February's by-election after Labour were forced to withdraw support for their candidate. He's hoping to retain this seat at the general election."}, //Rochdale
-    {id: "2024401", note: "Could Rishi Sunak become the first Prime Minister to lose his seat? Probably not, but recent polls have suggested it's possible this very safe seat is a lot tighter than usual."} //Richmond and Northallerton
+    {id: "2024401", note: "Could Rishi Sunak become the first Prime Minister to lose his seat? Probably not, but recent polls have suggested it's possible this very safe seat is a lot tighter than usual."}, //Richmond and Northallerton
+    {id: "2024619", note: "This constituency, also known as Anglesey, was won by Conservative Virginia Crosbie with one of the smallest winning percentages of 2019 in a tight three-way contest. This time, both Labour and Plaid Cymru will be trying to oust her."} //Ynys Mon
 ]
 
 export { Endpoint, DefaultParty, UKTicks, UKSeatsToWatch }

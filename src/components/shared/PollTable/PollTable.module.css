@@ -1,13 +1,13 @@
 .poll-table{
-    margin-top:30px;
     display:grid;
     position:relative;
     z-index:1;
-    grid-template-columns: [pollster] minmax(120px, max-content) [fieldwork] minmax(80px, max-content) [sample] minmax(80px, max-content) [figures] minmax(320px, 1fr);
+    grid-template-columns: [pollster] minmax(150px, max-content) [fieldwork] minmax(80px, max-content) [sample] minmax(80px, max-content) [figures] minmax(320px, 1fr);
     row-gap:2px;
     text-align:left;
 }
 .poll-table.compact{
+    margin-top:30px;
     grid-template-columns: [pollster] minmax(25px, max-content) [fieldwork] minmax(25px, max-content) [figures] minmax(175px, 1fr);
 }
 

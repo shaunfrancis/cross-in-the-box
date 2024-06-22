@@ -12,3 +12,9 @@
 .placeholder:nth-child(2){
     width:50%;
 }
+
+@media screen and (max-width: 750px){
+    .placeholder{
+        height:10px;
+    }
+}

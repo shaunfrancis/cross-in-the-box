@@ -55,7 +55,11 @@ export default function ElectionSummaryBlocs(
         }
 
         rows.push(
-            <div key={i} className={styles["summary-bloc-row"] + (i != 0 ? " " + styles["hidden-row"] : "")}>
+            <div key={i} 
+                className={styles["summary-bloc-row"] 
+                    + (i != 0 ? " " + styles["hidden-row"] : "") 
+                    + (rowLength == 99 ? " " + styles["single-row"] : "")
+                }>
                 {blocs}
             </div>
         );

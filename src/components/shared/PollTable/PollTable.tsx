@@ -42,8 +42,6 @@ export default function PollTable(
         {
             polls.map( (poll, pollIndex) => {
 
-                const pollsterContent = <span>{poll.pollster || "Missing data"}</span>;
-
                 let fieldwork = poll.start.getDate().toString();
                 
                 if(poll.start.getMonth() != poll.end.getMonth() || poll.start.valueOf() == poll.end.valueOf()) fieldwork += " " + monthAbbrev(poll.start.getMonth());
@@ -54,7 +52,12 @@ export default function PollTable(
                     <div key={pollIndex} className={styles["row"]}>
                     
                         <div className={styles["pollster"]}>
-                            { poll.source ? <a href={poll.source} target="_blank">{pollsterContent}</a> : <>{pollsterContent}</> }
+                            <span>
+                                {poll.source ? 
+                                    <a href={poll.source} target="_blank">{poll.pollster || "Missing data"}</a> : 
+                                    poll.pollster || "Missing data"
+                                }
+                            </span>
                             { poll.client && <span className={styles["client-span"]}>, {poll.client}</span> }
                         </div>
                         <div className={styles["fieldwork"]}>

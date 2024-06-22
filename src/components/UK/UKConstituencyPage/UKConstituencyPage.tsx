@@ -139,7 +139,7 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
                             {party.displayId}
                         </div>
                         <h2>{dateToLongDate(castEvent.date)}</h2>
-                        <p>{castEvent.data.note}</p>
+                        <span>{castEvent.data.note}</span>
 
                     </article>
                 );

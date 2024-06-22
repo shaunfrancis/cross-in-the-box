@@ -1,6 +1,7 @@
 .hero-item{
     cursor:pointer;
     list-style-type:none;
+    line-height:1.2em;
     padding:10px 20px;
     border-radius:2px;
     display:flex;

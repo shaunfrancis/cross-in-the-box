@@ -23,6 +23,16 @@
         height:25px;
     }
 
+.single-row{
+    height:unset;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+.single-row > .summary-bloc{
+    max-width:120px;
+}
+
 .summary-bloc{
     cursor:default;
     color:#fff;
