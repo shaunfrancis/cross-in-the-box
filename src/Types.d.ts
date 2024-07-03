@@ -25,6 +25,7 @@ export interface Party {
 }
 
 export interface MessageData {
+    id: number,
     date : Date,
     square? : string,
     old_square? : string,

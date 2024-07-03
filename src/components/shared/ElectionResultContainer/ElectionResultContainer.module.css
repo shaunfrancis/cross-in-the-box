@@ -93,7 +93,37 @@
     .election-subtitle-text{
         font-size:1.3rem;
         line-height:1.4rem;
+        text-align:left;
     }
+
+.election-live-title{
+    margin-left:30px;
+    display:flex;
+    align-items:center;
+    gap:5px;
+}
+
+.election-live-title-text{
+    width:105px;
+    text-align:right;
+}
+
+.election-live-indicator{
+    width:25px;
+    height:25px;
+    margin-right:10px;
+    vertical-align:5px;
+    animation:phase infinite forwards 6s;
+}
+
+@keyframes phase{
+    0%{ opacity:0 }
+    30%{ opacity:0 }
+    35%{ opacity:1 }
+    75%{ opacity:1 }
+    80%{ opacity:0 }
+    100%{ opacity:0 }
+}
 
 .election-messages-button{
     cursor:pointer;
@@ -115,8 +145,21 @@
         width:260px;
     }
 
-
     .election-messages-button{
         width:25px;
+    }
+
+    .election-live-title{
+        margin-left:15px;
+    }
+
+    .election-live-title-text{
+        width:80px;
+    }
+    
+    .election-live-indicator{
+        width:15px;
+        height:15px;
+        vertical-align:5px;
     }
 }

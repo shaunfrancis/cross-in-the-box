@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1.2 1.2" stroke-width="0.2" fill="none">
+    <style>
+        #box{
+            stroke-dasharray: 0.8 1.2;
+            animation: load 2s cubic-bezier(0.6, 0.2, 0.4, 0.8) forwards infinite;
+        }
+
+        @keyframes load{
+            0%{
+                stroke-dashoffset:0.25;
+                stroke-dasharray: 0.7 1.3;
+            }
+            50%{
+                stroke-dasharray: 1.2 0.8;
+            }
+            100%{
+                stroke-dashoffset:-3.75;
+                stroke-dasharray: 0.7 1.3;
+            }
+        }
+    </style>
+    <rect id="box" x="0.1" y="0.1" width="1" height="1" stroke-linejoin="round" stroke-linecap="round" stroke="#000" />
+</svg>

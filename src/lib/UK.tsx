@@ -1,5 +1,5 @@
 import { Endpoint } from "src/Constants";
-import { Poll, PollFigure, PollSkeleton } from "src/Types";
+import { MessageData, Poll, PollFigure, PollSkeleton } from "src/Types";
 import { parseJSONWithDates } from "./shared";
 
 const parsePollData = async () => {

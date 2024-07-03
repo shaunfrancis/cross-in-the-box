@@ -1,7 +1,7 @@
 <?php
     header("Access-Control-Allow-Origin: *");
 
-    $request = array_filter( explode( '/', str_replace(['/elections/api/','/api/'], '', $_SERVER['REQUEST_URI']) ) );
+    $request = array_filter( preg_split( '/(\/|\?)/', str_replace(['/elections/api/','/api/'], '', $_SERVER['REQUEST_URI']) ) );
     $resource = array_shift($request);
 
     if(count($request) == 0) fail(404, "Not found");

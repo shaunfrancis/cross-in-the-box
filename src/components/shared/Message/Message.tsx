@@ -1,11 +1,11 @@
 import { Party } from 'src/Types';
 import styles from './Message.module.css';
 
-export default function Message( { noHeader, customHeaderChildren, date, square, oldSquare, children } : 
-    { noHeader? : boolean, customHeaderChildren?: React.ReactNode, date? : string, square? : Party, oldSquare? : Party, children : React.ReactNode }
+export default function Message( { animate, noHeader, customHeaderChildren, date, square, oldSquare, children } : 
+    { animate? : boolean, noHeader? : boolean, customHeaderChildren?: React.ReactNode, date? : string, square? : Party, oldSquare? : Party, children : React.ReactNode }
 ){
     return (
-        <div className={styles["container"]}>
+        <div className={styles["container"] + (animate ? " " + styles["animate-in"] : "")}>
             {!noHeader &&
                 <div className={styles["header"]}>
                     {customHeaderChildren ? customHeaderChildren : (<>
