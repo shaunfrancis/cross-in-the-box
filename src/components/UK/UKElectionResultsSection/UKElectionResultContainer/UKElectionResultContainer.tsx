@@ -86,6 +86,12 @@ export default function UKElectionResultContainer(
         let date : string;
         if(changes) date = dateToLongDate(message.date);
         else date = message.date.getHours().toString().padStart(2,'0') + ":" + message.date.getMinutes().toString().padStart(2,'0');
+
+        //for live messages, if event extends beyond Friday following election day then show day of week
+        if(! [4,5].includes(message.date.getDay())){
+            const day = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][message.date.getDay()];
+            date = day + ", " + date;
+        }
     
         const square = message.square ? (parties.find(p => p.id == message.square) || DefaultParty) : undefined;
         const oldSquare = message.old_square ? (parties.find(p => p.id == message.old_square) || DefaultParty) : undefined;
@@ -127,8 +133,10 @@ export default function UKElectionResultContainer(
             else resultData = preloadedResults;
             setResults(resultData);
 
+            let updatedLiveCount = 0;
             const newFills : {id: string, color: string, opacity?: number}[] = [];
             winFormula(resultData).forEach( result => {
+                updatedLiveCount++;
                 const regionUpdates = updateData.filter( u => u.id == result.id );
                 if(regionUpdates.length > 0){
                     const latestUpdate = regionUpdates[regionUpdates.length - 1];
@@ -144,6 +152,7 @@ export default function UKElectionResultContainer(
                     });
                 }
             });
+            setLiveCounter(updatedLiveCount);
             setFills(newFills);
 
             if(messageGroup){

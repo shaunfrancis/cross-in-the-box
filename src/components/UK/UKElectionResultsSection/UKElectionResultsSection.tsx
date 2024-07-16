@@ -12,12 +12,19 @@ export default function UKElectionResultsSection({ regions, parties, geographic 
     
     return ( <>
         <div id={styles["container"]}>
-            <UKElectionResultContainer live={true} election="2024" messageGroup="2024" messagesOpenOnLoad={true}
+            <UKElectionResultContainer election="2024" messageGroup="2024" messagesOpenOnLoad={true}
                 summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]} 
                 regions={regions}
                 parties={parties}
                 geographic={geographic}
             />
+
+            {/*<UKElectionResultContainer live={true} election="2024" messageGroup="2024" messagesOpenOnLoad={true}
+                summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]} 
+                regions={regions}
+                parties={parties}
+                geographic={geographic}
+            />*/}
 
             {/*<UKElectionResultContainer election="2019" title={["Today"]} changes={true} messageGroup="2019U" messagesOpenOnLoad={true}
                 summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]}
