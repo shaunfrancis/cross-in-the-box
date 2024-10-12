@@ -7,7 +7,7 @@
     if(count($request) == 0) fail(404, "Not found");
 
     $country = $request[0];
-    $accepted_countries = array("uk");
+    $accepted_countries = array("uk", "usa");
     if(!in_array($country, $accepted_countries)) fail(404, "Not Found");
 
     $boundary_changes_table = $country . "_boundary_changes";
@@ -36,7 +36,7 @@
         case "region": // region/{country}/{region} - get results for a region by country and region ID
             require 'region.php';
             break;
-        case "regions": // regions/{country} - get list of regions by country ID
+        case "regions": // regions/{country}/{type?} - get list of regions by country ID (matching a given type)?
             require 'regions.php';
             break;
         case "results": // results/{country}/{election} - get results for a country by election ID

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1000 600" stroke-width="2" stroke="white" fill="black">
+    <style>#usa-presidential-2012-svg path{ cursor:pointer; transition: fill 1000ms, opacity 500ms }</style>
+    <g id="usa-presidential-2012-svg">
+        <path d="M500 350l75 0l0 75l-75 0l0 -75" name="2012AL" />
+        <path d="M25 550l25 0l0 50l-50 0l0 -25l25 0l0 -25" name="2012AK"></path>
+        <path d="M125 225l25 0l0 25l25 0l0 50l75 0l0 25l-25 0l0 25l-25 0l0 -25l-50 0l0 -25l-25 0l0 -25l-25 0l0 -25l25 0l0 -25" name="2012AZ" />
+        <path d="M300 325l75 0l0 50l-75 0l0 -50" name="2012AR" />
+        <path d="M0 125l50 0l0 25l25 0l0 75l25 0l0 50l25 0l0 25l25 0l0 25l50 0l0 100l-150 0l0 -75l-25 0l0 -25l-25 0l0 -200" name="2012CA" />
+        <path d="M150 125l50 0l0 100l-25 0l0 25l-25 0l0 -125" name="2012CO"></path>
+        <path d="M800 125l50 0l0 -25l75 0l0 25l-25 0l0 25l-100 0l0 -25" name="2012CT"></path>
+        <path d="M725 250l50 0l0 50l-25 0l0 -25l-25 0l0 -25" name="2012DC"></path>
+        <path d="M850 225l25 0l0 75l-25 0l0 -75" name="2012DE"></path>
+        <path d="M500 425l225 0l0 50l25 0l0 125l-25 0l0 -25l-25 0l0 -25l-25 0l0 -50l-75 0l0 -50l-100 0l0 -25" name="2012FL"></path>
+        <path d="M575 350l125 0l0 50l25 0l0 25l-150 0l0 -75" name="2012GA"></path>
+        <g name="2012HI"><path d="M125 500l25 0l0 25l-25 0l0 -25"></path><path d="M175 525l25 0l0 25l-25 0l0 -25"></path><path d="M200 550l25 0l0 50l-25 0l0 -50"></path></g>
+        <path d="M100 50l25 0l0 50l25 0l0 25l-50 0l0 -75" name="2012ID"></path>
+        <path d="M300 125l75 0l0 200l-25 0l0 -50l-50 0l0 -150" name="2012IL"></path>
+        <path d="M375 225l75 0l0 75l-25 0l0 25l-50 0l0 -100" name="2012IN"></path>
+        <path d="M250 125l50 0l0 75l-50 0l0 -75" name="2012IA"></path>
+        <path d="M175 225l50 0l0 75l-50 0l0 -75" name="2012KS"></path>
+        <path d="M450 250l100 0l0 50l-100 0l0 -50" name="2012KY"></path>
+        <path d="M375 350l75 0l0 100l25 0l0 25l-50 0l0 -100l-50 0l0 -25" name="2012LA"></path>
+        <path d="M950 0l25 0l0 25l-25 0l0 -25" name="2012ME1"></path>
+        <path d="M975 0l25 0l0 25l-25 0l0 -25" name="2012ME2"></path>
+        <path d="M950 25l50 0l0 25l-50 0l0 -25" name="2012MEA"></path>
+        <path d="M750 200l100 0l0 125l-25 0l0 -75l-50 0l0 -25l-25 0l0 -25" name="2012MD"></path>
+        <path d="M850 50l125 0l0 75l-50 0l0 -25l-50 0l0 -25l-25 0l0 -25" name="2012MA"></path>
+        <g name="2012MI"><path d="M400 50l25 0l0 25l-25 0l0 -25"></path><path d="M425 100l50 0l0 25l25 0l0 25l-25 0l0 75l-100 0l0 -50l50 0l0 -75"></path></g>
+        <path d="M275 25l25 0l0 100l-50 0l0 25l-25 0l0 -75l25 0l0 -25l25 0l0 -25" name="2012MN"></path>
+        <path d="M450 375l50 0l0 75l-50 0l0 -75" name="2012MS"></path>
+        <path d="M200 200l100 0l0 75l-75 0l0 -50l-25 0l0 -25" name="2012MO"></path>
+        <path d="M125 50l50 0l0 25l-25 0l0 25l-25 0l0 -50" name="2012MT"></path>
+        <path d="M200 125l25 0l0 25l-25 0l0 -25" name="2012NE1"></path>
+        <path d="M200 150l25 0l0 25l-25 0l0 -25" name="2012NE2"></path>
+        <path d="M225 150l25 0l0 25l-25 0l0 -25" name="2012NE3"></path>
+        <path d="M200 175l50 0l0 25l-50 0l0 -25" name="2012NEA"></path>
+        <path d="M75 150l25 0l0 25l25 0l0 75l-25 0l0 -25l-25 0l0 -75" name="2012NV"></path>
+        <path d="M825 50l25 0l0 25l25 0l0 25l-25 0l0 25l-25 0l0 -75" name="2012NH"></path>
+        <path d="M825 150l100 0l 0 50l25 0l0 50l-75 0l0 -50l-50 0l0 -50" name="2012NJ"></path>
+        <path d="M200 350l25 0l0 25l25 0l0 50l-50 0l0 -75" name="2012NM"></path>
+        <path d="M750 50l50 0l0 100l25 0l0 50l-50 0l0 -25l-175 0l0 -25l25 0l0 -25l25 0l0 -25l75 0l0 -25l25 0l0 -25" name="2012NY"></path>
+        <path d="M575 300l225 0l0 50l-50 0l0 -25l-75 0l0 25l-100 0l0 -50" name="2012NC"></path>
+        <path d="M175 50l75 0l0 25l-75 0l0 -25" name="2012ND"></path>
+        <path d="M475 175l125 0l0 75l-25 0l0 50l-25 0l0 -50l-100 0l0 -25l25 0l0 -50" name="2012OH"></path>
+        <path d="M225 275l125 0l0 50l-50 0l0 -25l-75 0l0 -25" name="2012OK"></path>
+        <path d="M0 75l25 0l0 25l75 0l0 50l-50 0l0 -25l-50 0l0 -50" name="2012OR"></path>
+        <path d="M600 175l175 0l0 25l-25 0l0 25l25 0l0 25l-175 0l0 -75" name="2012PA"></path>
+        <path d="M900 125l50 0l0 25l25 0l0 25l-50 0l0 -25l-25 0l0 -25" name="2012RI"></path>
+        <path d="M675 325l75 0l0 25l25 0 l0 50l-75 0l0 -50l-25 0l0 -25" name="2012SC"></path>
+        <path d="M200 75l25 0l0 50l-50 0l0 -25l25 0l0 -25" name="2012SD"></path>
+        <path d="M375 325l50 0l0 -25l100 0l0 25l-25 0l0 50l-50 0l0 -25l-75 0l0 -25" name="2012TN"></path>
+        <path d="M250 300l50 0l0 75l125 0l0 100l-25 0l0 50l-25 0l0 -25l-25 0l0 -25l-25 0l0 -25l-50 0l0 25l-25 0l0 -25l-25 0l0 -25l25 0l0 -50l-25 0l0 -50l25 0l0 -25" name="2012TX"></path>
+        <path d="M100 125l50 0l0 100l-25 0l0 -50l-25 0l0 -50" name="2012UT"></path>
+        <path d="M800 50l25 0l0 75l-25 0l0 -75" name="2012VT"></path>
+        <path d="M575 250l150 0l0 25l25 0l0 25l-175 0l0 -50" name="2012VA"></path>
+        <path d="M0 25l25 0l0 25l25 0l0 -50l50 0l0 100l-75 0l0 -25l-25 0l0 -50" name="2012WA"></path>
+        <path d="M525 300l50 0l0 50l-75 0l0 -25l25 0l0 -25" name="2012WV"></path>
+        <path d="M300 50l100 0l0 25l-25 0l0 50l-75 0l0 -75" name="2012WI"></path>
+        <path d="M150 75l50 0l0 25l-25 0l0 25l-25 0l0 -50" name="2012WY"></path>
+    </g>
+</svg>
