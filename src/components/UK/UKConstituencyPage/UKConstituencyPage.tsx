@@ -1,8 +1,8 @@
 'use client';
 import styles from './UKConstituencyPage.module.css';
 import { useEffect, useRef, useState } from "react";
-import { DefaultParty, Endpoint } from "src/Constants";
-import { AnonymousResult, Party, Region } from "src/Types";
+import { DefaultParty, Endpoint } from "src/constants/shared";
+import { FullRegionData, ElectionEvent, UpdateEvent, Region } from "src/Types";
 import RegionBarGraph from "src/components/shared/RegionBarGraph/RegionBarGraph";
 import RegionPage from "src/components/shared/RegionPage/RegionPage";
 import { constituencyToSlug, partyIdToDisplayId, slugToLookupSlug } from "src/lib/UK";
@@ -11,39 +11,6 @@ import UKConstituencySidebar from "./UKConstituencySidebar/UKConstituencySidebar
 import UKTernaryPlot from '../UKAnalysisSection/UKTernaryPlot/UKTernaryPlot';
 import Link from 'next/link';
 import HeroNav from 'src/components/shared/HeroNav/HeroNav';
-
-interface FullRegionData{
-    events : Event[],
-    parties : Party[],
-    tree : {
-        region_id: string,
-        successor_id: string,
-        direct_successor: boolean,
-        title: string,
-        note?: string
-    }[]
-}
-
-interface Event{
-    type : string,
-    date : Date,
-    region : Region
-}
-
-interface ElectionEvent extends Event{
-    data : { 
-        id : string,
-        title : string[],
-        results : AnonymousResult[] 
-    }
-}
-
-interface UpdateEvent extends Event{
-    data: {
-        party: string,
-        note: string
-    }
-}
 
 export default function UKConstituencyPage( { slug } : { slug : string } ){
 

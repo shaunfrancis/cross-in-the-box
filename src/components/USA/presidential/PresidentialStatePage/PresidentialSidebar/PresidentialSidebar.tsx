@@ -1,4 +1,4 @@
-// import UKConstituencySearchSection from '../../UKConstituencySearchSection/UKConstituencySearchSection';
+import PresidentialSearchSection from '../../PresidentialSearchSection/PresidentialSearchSection';
 import styles from './PresidentialSidebar.module.css';
 
 export default function PresidentialSidebar({ region } : { region : {id? : string, title : string} }){
@@ -6,7 +6,7 @@ export default function PresidentialSidebar({ region } : { region : {id? : strin
         <div id={styles["container"]}>
         <section className="shaded purple">
             <h1>Find A State</h1>
-            {/* <UKConstituencySearchSection /> */}
+            <PresidentialSearchSection />
         </section>
         {/* <UKConstituencyMap region={region} /> */}
         <section>

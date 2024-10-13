@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Party, Region } from "src/Types";
-import { Endpoint } from "src/Constants";
+import { Endpoint } from "src/constants/shared";
 import Toggle from "src/components/shared/Toggle/Toggle";
 import HeroNav from "src/components/shared/HeroNav/HeroNav";
 
@@ -11,6 +11,7 @@ import PresidentialResultsSection from "src/components/USA/presidential/Presiden
 // import USAPollingSection from "src/components/USA/USAPollingSection/USAPollingSection";
 // import USAMapDefs from "src/components/maps/USAMapDefs";
 import { partyIdToDisplayId } from "src/lib/USA";
+import PresidentialSearchSection from "src/components/USA/presidential/PresidentialSearchSection/PresidentialSearchSection";
 
 export default function USAGeneralElections(){
     const [regions, setRegions] = useState<Region[]>([]);
@@ -66,7 +67,7 @@ export default function USAGeneralElections(){
             </section>
             <section ref={heroNavItems[1].ref} className="shaded purple">
                 <h1>Find A State</h1>
-                {/* <USAConstituencySearchSection searchInputRef={searchInputRef} /> */}
+                <PresidentialSearchSection searchInputRef={searchInputRef} />
             </section>
             {/* <USAMapDefs /> */}
         </main>

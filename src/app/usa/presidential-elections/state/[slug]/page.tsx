@@ -1,4 +1,4 @@
-import { Endpoint } from "src/Constants"
+import { Endpoint } from "src/constants/shared"
 import { Metadata } from 'next';
 
 import { stateToSlug, slugToLookupSlug } from "src/lib/USA";

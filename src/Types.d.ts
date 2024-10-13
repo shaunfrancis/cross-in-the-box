@@ -56,3 +56,47 @@ export interface Poll extends PollSkeleton {
     centre: number,
     figures: PollFigure[]
 }
+
+export interface SearchResults{
+    regions : {id : string, title : string, current : boolean}[], 
+    candidates : {
+        id : string,
+        title : string,
+        candidate : string,
+        election : string[],
+        party : Party
+    }[]
+}
+
+export interface FullRegionData{
+    events : Event[],
+    parties : Party[],
+    tree : {
+        region_id: string,
+        successor_id: string,
+        direct_successor: boolean,
+        title: string,
+        note?: string
+    }[]
+}
+
+interface Event{
+    type : string,
+    date : Date,
+    region : Region
+}
+
+export interface ElectionEvent extends Event{
+    data : { 
+        id : string,
+        title : string[],
+        results : AnonymousResult[] 
+    }
+}
+
+export interface UpdateEvent extends Event{
+    data: {
+        party: string,
+        note: string
+    }
+}

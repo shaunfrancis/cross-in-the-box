@@ -1,6 +1,6 @@
 import { AnonymousResult, Party } from 'src/Types';
 import styles from './UKTernaryPlot.module.css';
-import { DefaultParty } from 'src/Constants';
+import { DefaultParty } from 'src/constants/shared';
 
 export default function UKTernaryPlot( { resultSets, parties, highlightChanges = true } : 
     { resultSets : AnonymousResult[][], parties : Party[], highlightChanges? : boolean }

@@ -2,7 +2,7 @@ import { Party, Poll } from 'src/Types';
 import styles from './PollGraph.module.css';
 import { Fragment } from 'react';
 import ElectionSummaryBlocs from '../ElectionSummaryBlocs/ElectionSummaryBlocs';
-import { UKTicks } from 'src/Constants';
+import { UKTicks } from 'src/constants/UK';
 
 export default function PollGraph({ polls, parties, maxParties = Infinity, compact = false} : 
     { polls : Poll[], parties : Party[], maxParties? : number, compact? : boolean }

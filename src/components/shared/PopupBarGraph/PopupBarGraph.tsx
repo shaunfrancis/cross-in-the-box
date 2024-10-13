@@ -1,4 +1,4 @@
-import { DefaultParty } from '../../../Constants';
+import { DefaultParty } from '../../../constants/shared';
 import { AnonymousResult, Party } from '../../../Types';
 import styles from './PopupBarGraph.module.css';
 

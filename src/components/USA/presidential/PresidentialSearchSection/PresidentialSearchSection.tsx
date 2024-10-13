@@ -1,20 +1,21 @@
 'use client';
 
 import { Endpoint } from 'src/constants/shared';
-import styles from './UKConstituencySearchSection.module.css';
 import { SearchHandler } from 'src/lib/shared';
 import { RefObject, useRef, useState } from 'react';
-import { constituencyToSlug, partyIdToDisplayId } from 'src/lib/UK';
-import { SearchResults, Party } from 'src/Types';
+import { SearchResults } from 'src/Types';
 import Link from 'next/link';
 
-export default function UKConstituencySearchSection( {searchInputRef} : {searchInputRef? : RefObject<HTMLInputElement>} ){
+import styles from './PresidentialSearchSection.module.css';
+import { stateToSlug, partyIdToDisplayId } from 'src/lib/USA';
+
+export default function PresidentialSearchSection( {searchInputRef} : {searchInputRef? : RefObject<HTMLInputElement>} ){
     const [results, setResults] = useState<SearchResults | null>();
     const [displayCount, setDisplayCount] = useState<number>(15);
     const [currentQuery, setCurrentQuery] = useState<string>("");
     const [status, setStatus] = useState<string>("");
 
-    const handler = useRef(new SearchHandler(Endpoint + "/search/uk/"));
+    const handler = useRef(new SearchHandler(Endpoint + "/search/usa/"));
     const search = async (query : string) => {
         if(query.length >= 3) setStatus("Searching..."); 
         else setStatus("");
@@ -67,7 +68,7 @@ export default function UKConstituencySearchSection( {searchInputRef} : {searchI
                     results.regions.map( (region, index) => {
                         if(index >= displayCount) return;
                         return (
-                            <Link key={index} href={'/uk/general-elections/constituency/' + constituencyToSlug(region.title)} className={styles["result"] + " unstyled"}>
+                            <Link key={index} href={'/usa/presidential-elections/state/' + stateToSlug(region.title)} className={styles["result"] + " unstyled"}>
                                 <h2 className={styles["result-title"]}>
                                     {highlightRelevance(region.title)}
                                 </h2>
@@ -80,7 +81,7 @@ export default function UKConstituencySearchSection( {searchInputRef} : {searchI
                 results.candidates.map( (region, index) => {
                     if(results.regions.length + index >= displayCount) return;
                     return (
-                        <Link key={index} href={'/uk/general-elections/constituency/' + constituencyToSlug(region.title)} className={styles["result"] + " unstyled"}>
+                        <Link key={index} href={'/usa/presidential-elections/state/' + stateToSlug(region.title)} className={styles["result"] + " unstyled"}>
                             <h2 className={styles["result-title"]}>
                                 <div 
                                     className={styles["title-bloc"]}

@@ -1,6 +1,6 @@
 import { AnonymousResult, Party } from 'src/Types';
 import styles from './RegionBarGraph.module.css';
-import { DefaultParty } from 'src/Constants';
+import { DefaultParty } from 'src/constants/shared';
 import { addThousandsSpacing } from 'src/lib/shared';
 
 export default function RegionBarGraph( 

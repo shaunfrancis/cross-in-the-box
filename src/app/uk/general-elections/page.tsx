@@ -5,7 +5,7 @@ import UKElectionResultsSection from "../../../components/UK/UKElectionResultsSe
 import UKPollingSection from "src/components/UK/UKPollingSection/UKPollingSection";
 import { useEffect, useRef, useState } from "react";
 import { Party, Region } from "src/Types";
-import { Endpoint } from "src/Constants";
+import { Endpoint } from "src/constants/shared";
 import { partyIdToDisplayId } from "src/lib/UK";
 import UKAnalysisSection from "src/components/UK/UKAnalysisSection/UKAnalysisSection";
 import Toggle from "src/components/shared/Toggle/Toggle";

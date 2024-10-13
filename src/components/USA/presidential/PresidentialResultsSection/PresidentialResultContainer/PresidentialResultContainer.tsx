@@ -3,9 +3,9 @@ import { useEffect, useRef, useState } from "react";
 import ElectionResultContainer from "../../../../shared/ElectionResultContainer/ElectionResultContainer";
 import HoverPopup from "../../../../shared/HoverPopup/HoverPopup";
 import PopupBarGraph from "../../../../shared/PopupBarGraph/PopupBarGraph";
-import ElectionSummaryBlocs from "../../../../shared/ElectionSummaryBlocs/ElectionSummaryBlocs";
 import { MessageData, Party, Region, Result } from "src/Types";
-import { DefaultParty, Endpoint, UKSeatsToWatch } from "src/Constants";
+import { DefaultParty, Endpoint } from "src/constants/shared";
+import { UKSeatsToWatch } from "src/constants/UK";
 import { useRouter } from "next/navigation";
 import { constituencyToSlug } from "src/lib/UK";
 import PartyProgressionBlocs from "src/components/shared/PartyProgressionBlocs/PartyProgressionBlocs";
@@ -13,6 +13,8 @@ import { dateToLongDate, parseJSONWithDates, useOnScreen } from "src/lib/shared"
 import Message from "src/components/shared/Message/Message";
 import USAPresidential2012Map from "src/components/maps/USAPresidential2012Map";
 import USAPresidential2012GeographicMap from "src/components/maps/USAPresidential2012GeographicMap";
+import ElectionSummaryBar from "src/components/shared/ElectionSummaryBar/ElectionSummaryBar";
+import { stateWeights } from "src/constants/USA";
 
 interface Update{
     id : string,
@@ -21,7 +23,7 @@ interface Update{
 }
 
 export default function PresidentialResultContainer( 
-    { election, live = false, title = [election.replace(/[^0-9.]/g, ''), "Presidential", "Election"], preloadedResults, regions, parties, summaryBlocHoverState, messageGroup, messagesOpenOnLoad, geographic, changes, dedicatedPage, winFormula = (results : Result[]) => results.filter(r => r.elected) } : 
+    { election, live = false, title = [election.replace(/[^0-9.]/g, ''), "Presidential", "Election"], preloadedResults, regions, parties, messageGroup, messagesOpenOnLoad, geographic, changes, dedicatedPage, winFormula = (results : Result[]) => results.filter(r => r.elected) } : 
     { 
         election : string, 
         live? : boolean,
@@ -30,7 +32,6 @@ export default function PresidentialResultContainer(
         regions : Region[],
         parties : Party[],
         winFormula? : (results : Result[]) => Result[],
-        summaryBlocHoverState? : [boolean, React.Dispatch<React.SetStateAction<boolean>>],
         messageGroup? : string,
         messagesOpenOnLoad?: boolean,
         geographic? : boolean,
@@ -270,29 +271,26 @@ export default function PresidentialResultContainer(
         </> )
     }
 
-    const electionSummaryBlocs = () => {
-        const summaries : {party : Party, count : number}[] = [];
+    const electionSummaryBar = () => {
+        const summaries : {candidate: string, party : Party, count : number}[] = [];
         winFormula(results).forEach( result => {
             
             const regionUpdates = updates.filter( u => u.id == result.id );
             const winner = regionUpdates.length > 0 ? regionUpdates[regionUpdates.length - 1].party : result.party;
 
-            if(!summaries.find( s => s.party.id == winner)){
+            if(!summaries.find( s => s.candidate == result.candidate)){
                 const party : Party = parties.find( p => p.id == winner ) || DefaultParty;
-                summaries.push({ party: party, count: 1 });
+                summaries.push({ candidate: result.candidate, party: party, count: stateWeights[result.id] || 0 });
             }
-            else summaries.find( s => s.party.id == winner )!.count++;
+            else summaries.find( s => s.party.id == winner )!.count += stateWeights[result.id] || 0;
 
         });
         summaries.sort( (a,b) => {
-            const getCount = (x:{party: Party, count: number}) => {
-                return (["vacant","speaker","ind"].includes(x.party.id)) ? -Infinity : x.count;
-            }
-            return getCount(b) - getCount(a) || a.party.id.localeCompare(b.party.id);
-         } );
+            return b.count - a.count || a.party.id.localeCompare(b.party.id);
+        } );
 
         return (
-            <ElectionSummaryBlocs data={summaries} rowLength={5} hoverState={summaryBlocHoverState} />
+            <ElectionSummaryBar data={summaries} />
         );
     }
 
@@ -303,7 +301,7 @@ export default function PresidentialResultContainer(
             map={map()} 
             title={title} 
             liveTitle={live ? [liveCounter.toString(),"of 50","States"] : undefined}
-            summary={electionSummaryBlocs()}
+            summary={electionSummaryBar()}
             dedicatedPage={dedicatedPage}
         >
             <HoverPopup visible={popupState.visible} coordinates={popupState.coordinates}>

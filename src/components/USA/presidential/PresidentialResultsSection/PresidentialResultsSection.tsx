@@ -15,21 +15,18 @@ export default function PresidentialResultsSection({ regions, parties, geographi
         <ElectionResultsSection>
 
             <PresidentialResultContainer election="P2020" messageGroup="P2020" messagesOpenOnLoad={true}
-                summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]} 
                 regions={regions}
                 parties={parties}
                 geographic={geographic}
             />
 
             <PresidentialResultContainer election="P2016" messageGroup="P2016"
-                summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]} 
                 regions={regions}
                 parties={parties}
                 geographic={geographic}
             />
 
             <PresidentialResultContainer election="P2012"
-                summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]} 
                 regions={regions}
                 parties={parties}
                 geographic={geographic}

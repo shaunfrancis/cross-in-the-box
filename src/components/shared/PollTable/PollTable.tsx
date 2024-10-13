@@ -1,4 +1,4 @@
-import { DefaultParty } from 'src/Constants';
+import { DefaultParty } from 'src/constants/shared';
 import styles from './PollTable.module.css';
 import { Party, Poll } from 'src/Types';
 import { getPollAverages, monthAbbrev } from 'src/lib/shared';
