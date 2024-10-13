@@ -1,16 +1,16 @@
 'use client';
-import styles from './UKConstituencyPage.module.css';
 import { useEffect, useRef, useState } from "react";
 import { DefaultParty, Endpoint } from "src/Constants";
 import { AnonymousResult, Party, Region } from "src/Types";
 import RegionBarGraph from "src/components/shared/RegionBarGraph/RegionBarGraph";
 import RegionPage from "src/components/shared/RegionPage/RegionPage";
-import { constituencyToSlug, partyIdToDisplayId, slugToLookupSlug } from "src/lib/UK";
 import { dateToLongDate, parseJSONWithDates } from "src/lib/shared";
-import UKConstituencySidebar from "./UKConstituencySidebar/UKConstituencySidebar";
-import UKTernaryPlot from '../UKAnalysisSection/UKTernaryPlot/UKTernaryPlot';
 import Link from 'next/link';
 import HeroNav from 'src/components/shared/HeroNav/HeroNav';
+
+import styles from './PresidentialStatePage.module.css';
+import { constituencyToSlug, partyIdToDisplayId, slugToLookupSlug } from "src/lib/UK";
+import PresidentialSidebar from "./PresidentialSidebar/PresidentialSidebar";
 
 interface FullRegionData{
     events : Event[],
@@ -45,24 +45,23 @@ interface UpdateEvent extends Event{
     }
 }
 
-export default function UKConstituencyPage( { slug } : { slug : string } ){
+export default function PresidentialStatePage( { slug } : { slug : string } ){
 
     let prettySlug = "";
     slug.replace(/-/g, " ").split(" ").forEach( slugPiece => {
-        if(["and","upon","on","under","h","an"].includes(slugPiece)) prettySlug += slugPiece + " ";
-        else prettySlug += slugPiece.charAt(0).toUpperCase() + slugPiece.slice(1) + " ";
+        prettySlug += slugPiece.charAt(0).toUpperCase() + slugPiece.slice(1) + " ";
     });
     let [region, setRegion] = useState<{id? : string, title : string}>({ title: prettySlug });
     let [data, setData] = useState<FullRegionData>({ events: [], parties: [], tree: [] });
 
     useEffect( () => {
         const useAsyncEffect = async () => {
-            const regionData = await fetch(Endpoint + "/slug-lookup/uk/" + slugToLookupSlug(slug)).then( res => res.json() );
+            const regionData = await fetch(Endpoint + "/slug-lookup/usa/" + slugToLookupSlug(slug)).then( res => res.json() );
             if(regionData.error){
                 //error handling
             }
 
-            const resultData : FullRegionData = await fetch(Endpoint + "/region/uk/" + regionData.id)
+            const resultData : FullRegionData = await fetch(Endpoint + "/region/usa/" + regionData.id)
                 .then( res => res.text() )
                 .then( text => parseJSONWithDates(text, "date") );
                 
@@ -87,7 +86,7 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
             if(data.tree.find(t => t.region_id == event.region.id && !t.direct_successor)){
                 data.tree.filter(t => t.region_id == event.region.id && !t.direct_successor).forEach( treeBranch => {
                     succeededByNodes.push(
-                        <Link href={'/uk/general-elections/constituency/' + constituencyToSlug(treeBranch.title)} className={styles["abolished-link"] + " unstyled"}>
+                        <Link href={'/usa/presidential-elections/state/' + constituencyToSlug(treeBranch.title)} className={styles["abolished-link"] + " unstyled"}>
                             <h3>{treeBranch.title}</h3>
                         </Link>
                     )
@@ -149,22 +148,21 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
     });
 
     const heroNavItems = [
-        { title: "Results and Changes", src:"/images/nav-region.svg", ref:useRef<HTMLElement>(null) }/*,
-        { title: "heading", src:"/images/nav-region.svg", ref:useRef<HTMLElement>(null) },*/
+        { title: "Results", src:"/images/nav-region.svg", ref:useRef<HTMLElement>(null) }
     ]
 
     return ( <>
 
         <section id="hero">
-            <a href="/uk/general-elections/" className="breadcrumb">
+            <a href="/usa/presidential-elections/" className="breadcrumb">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z"/></svg>
-                <span>UK General Elections</span>
+                <span>US Presidential Elections</span>
             </a>
 
             <h1>{region.title}</h1>
             <HeroNav items={heroNavItems} />
         </section>
-        <RegionPage sidebar={<UKConstituencySidebar region={region} />}>
+        <RegionPage sidebar={<PresidentialSidebar region={region} />}>
 
             {succeededByNodes.length > 0 &&
                 <section id={styles["abolished-container"]} className="shaded yellow">
@@ -178,29 +176,6 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
             <section ref={heroNavItems[0].ref} style={{paddingTop:"0"}}>
                 {eventNodes}
             </section>
-
-            {/* 
-            <section ref={heroNavItems[1].ref} id={styles["heading-section"]}>
-                <article className={styles["widget-container"]}>
-                    <UKTernaryPlot highlightChanges={false} parties={data.parties} resultSets={
-                        ( () => { 
-                            const sets : AnonymousResult[][] = [];
-                            data.events.filter(e => e.type == "election").forEach( event => {
-
-                                let votes = 0;
-                                (event as ElectionEvent).data.results.forEach( result => {
-                                    votes += result.votes;
-                                });
-                                if(votes == 0) return;
-
-                                sets.push((event as ElectionEvent).data.results);
-                            }) 
-                            return sets.reverse();
-                        } )()
-                    } />
-                </article>
-            </section>
-            */}
             
         </RegionPage>
     </> )

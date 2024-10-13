@@ -27,8 +27,8 @@ export default function UKPolling(){
     }, []);
     
     const heroNavItems = [
-        { title: "Graph", src:"/images/uk-nav-polling.svg", ref:useRef<HTMLElement>(null) },
-        { title: "Data", src:"/images/uk-nav-constituency.svg", ref:useRef<HTMLElement>(null) }
+        { title: "Graph", src:"/images/nav-polling.svg", ref:useRef<HTMLElement>(null) },
+        { title: "Data", src:"/images/nav-region.svg", ref:useRef<HTMLElement>(null) }
     ]
     
     return ( 

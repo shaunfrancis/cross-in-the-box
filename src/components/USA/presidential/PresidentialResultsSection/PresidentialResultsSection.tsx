@@ -28,6 +28,13 @@ export default function PresidentialResultsSection({ regions, parties, geographi
                 geographic={geographic}
             />
 
+            <PresidentialResultContainer election="P2012"
+                summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]} 
+                regions={regions}
+                parties={parties}
+                geographic={geographic}
+            />
+
         </ElectionResultsSection>
     </> )
 }

@@ -7,4 +7,10 @@ const partyIdToDisplayId = (partyId : string) => {
     return displayId;
 }
 
-export { partyIdToDisplayId }
+const stateToSlug = (constituency : string) => {
+    return constituency.toLowerCase().replace(/ /g, "-").replace(/,|\)|\(/g, "");
+};
+
+const slugToLookupSlug = (slug : string) => { return slug };
+
+export { partyIdToDisplayId, stateToSlug, slugToLookupSlug }

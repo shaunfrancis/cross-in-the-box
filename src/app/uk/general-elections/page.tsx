@@ -40,10 +40,10 @@ export default function UKGeneralElections(){
     const searchInputRef = useRef<HTMLInputElement>(null);
     const heroNavItems = [
         { title: "Election Results", src:"/images/uk-nav-results.svg", ref:useRef<HTMLElement>(null) },
-        { title: "Find A Constituency", src:"/images/uk-nav-constituency.svg", ref:useRef<HTMLElement>(null), 
+        { title: "Find A Constituency", src:"/images/nav-region.svg", ref:useRef<HTMLElement>(null), 
             fun: () => { setTimeout( () => { if(searchInputRef.current) searchInputRef.current.focus() }, 100 ) }
         },
-        { title: "Opinion Polling", src:"/images/uk-nav-polling.svg", ref:useRef<HTMLElement>(null) }
+        { title: "Opinion Polling", src:"/images/nav-polling.svg", ref:useRef<HTMLElement>(null) }
     ]
     
     return ( 

@@ -12,6 +12,7 @@ import PartyProgressionBlocs from "src/components/shared/PartyProgressionBlocs/P
 import { dateToLongDate, parseJSONWithDates, useOnScreen } from "src/lib/shared";
 import Message from "src/components/shared/Message/Message";
 import USAPresidential2012Map from "src/components/maps/USAPresidential2012Map";
+import USAPresidential2012GeographicMap from "src/components/maps/USAPresidential2012GeographicMap";
 
 interface Update{
     id : string,
@@ -234,13 +235,13 @@ export default function PresidentialResultContainer(
 
     const mapClickFun = (id: string) => {
         let region = regions.find( r => r.id == id );
-        if(region) router.push('constituency/' + constituencyToSlug(region.title));
+        if(region) router.push('state/' + constituencyToSlug(region.title));
     };
     const map = () => {
         switch(election){
             case "P2020": case "P2016": case "P2012":
-                /*if(geographic) return <UKGeneral2010GeographicMap hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
-                else */return <USAPresidential2012Map hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
+                if(geographic) return <USAPresidential2012GeographicMap hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
+                else return <USAPresidential2012Map hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
         }
     };
 

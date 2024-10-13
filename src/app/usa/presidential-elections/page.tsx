@@ -40,7 +40,7 @@ export default function USAGeneralElections(){
     const searchInputRef = useRef<HTMLInputElement>(null);
     const heroNavItems = [
         { title: "Election Results", src:"/images/usa-nav-results.svg", ref:useRef<HTMLElement>(null) },
-        { title: "Find A State", src:"/images/uk-nav-constituency.svg", ref:useRef<HTMLElement>(null), 
+        { title: "Find A State", src:"/images/nav-region.svg", ref:useRef<HTMLElement>(null), 
             fun: () => { setTimeout( () => { if(searchInputRef.current) searchInputRef.current.focus() }, 100 ) }
         }
     ]
