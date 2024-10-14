@@ -11,7 +11,8 @@ export interface AnonymousResult{
 }
 
 export interface Result extends AnonymousResult {
-    id: string
+    id: string,
+    subid?: string,
     candidate: string,
     elected: boolean
 }
@@ -90,7 +91,7 @@ export interface ElectionEvent extends Event{
     data : { 
         id : string,
         title : string[],
-        results : AnonymousResult[] 
+        results : Result[] 
     }
 }
 

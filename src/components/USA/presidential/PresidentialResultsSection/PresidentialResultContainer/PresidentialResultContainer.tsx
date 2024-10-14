@@ -15,6 +15,8 @@ import USAPresidential2012Map from "src/components/maps/USAPresidential2012Map";
 import USAPresidential2012GeographicMap from "src/components/maps/USAPresidential2012GeographicMap";
 import ElectionSummaryBar from "src/components/shared/ElectionSummaryBar/ElectionSummaryBar";
 import { stateWeights } from "src/constants/USA";
+import USAPresidential2024GeographicMap from "src/components/maps/USAPresidential2024GeographicMap";
+import USAPresidential2024Map from "src/components/maps/USAPresidential2024Map";
 
 interface Update{
     id : string,
@@ -59,7 +61,7 @@ export default function PresidentialResultContainer(
 
     const addConstituencyLinks = (text : string) : React.ReactNode[] => {
         const spans : React.ReactNode[] = [];
-        text.split("#").forEach( (fragment, index) => {
+        text.split("@").forEach( (fragment, index) => {
             if(fragment == "") return;
 
             const linkedRegion = regions.find( r => r.title.toLowerCase() == fragment.toLowerCase() );
@@ -69,7 +71,7 @@ export default function PresidentialResultContainer(
                     <span 
                         key={index}
                         className="interactive"
-                        onClick={ () => { router.push('constituency/' + constituencyToSlug(linkedRegion.title)) } }
+                        onClick={ () => { router.push('state/' + constituencyToSlug(linkedRegion.title)) } }
                     >
                         {fragment}
                     </span> 
@@ -86,10 +88,10 @@ export default function PresidentialResultContainer(
         else date = message.date.getHours().toString().padStart(2,'0') + ":" + message.date.getMinutes().toString().padStart(2,'0');
 
         //for live messages, if event extends beyond Friday following election day then show day of week
-        if(! [4,5].includes(message.date.getDay())){
+        // if(! [2,3].includes(message.date.getDay())){
             const day = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][message.date.getDay()];
             date = day + ", " + date;
-        }
+        // }
     
         const square = message.square ? (parties.find(p => p.id == message.square) || DefaultParty) : undefined;
         const oldSquare = message.old_square ? (parties.find(p => p.id == message.old_square) || DefaultParty) : undefined;
@@ -240,6 +242,9 @@ export default function PresidentialResultContainer(
     };
     const map = () => {
         switch(election){
+            case "P2024":
+                if(geographic) return <USAPresidential2024GeographicMap hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
+                else return <USAPresidential2024Map hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
             case "P2020": case "P2016": case "P2012":
                 if(geographic) return <USAPresidential2012GeographicMap hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
                 else return <USAPresidential2012Map hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;

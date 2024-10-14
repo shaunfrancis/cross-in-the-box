@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1000 600" stroke-width="2" stroke="white" fill="#eee">
+    <style>#usa-presidential-2024-svg path{ cursor:pointer; transition: fill 1000ms, opacity 500ms }</style>
+    <g id="usa-presidential-2024-svg">
+        <path d="M500 325l25 0l0 25l25 0l0 50l25 0l0 25l-50 0l0 25l-25 0l0 -100z" name="2024AL"/>
+        <path d="M25 550l25 0l0 50l-50 0l0 -25l25 0l0 -25" name="2024AK"></path>
+        <path d="M125 225l25 0l0 25l25 0l0 50l75 0l0 25l-25 0l0 25l-25 0l0 -25l-50 0l0 -25l-25 0l0 -25l-25 0l0 -25l25 0l0 -25" name="2024AZ" />
+        <path d="M300 325l50 0l0 -25l25 0l0 50l-25 0l0 25l-50 0l0 -50" name="2024AR" />
+        <path d="M0 125l25 0l0 25l50 0l0 75l25 0l0 50l25 0l0 25l25 0l0 25l50 0l0 100l-150 0l0 -75l-25 0l0 -25l-25 0l0 -200" name="2024CA" />
+        <path d="M150 100l25 0l0 25l25 0l0 100l-25 0l0 25l-25 0l0 -100" name="2024CO"></path>
+        <path d="M800 125l50 0l0 -25l75 0l0 25l-25 0l0 25l-100 0l0 -25" name="2024CT"></path>
+        <path d="M725 250l50 0l0 50l-25 0l0 -25l-25 0l0 -25" name="2024DC"></path>
+        <path d="M850 225l25 0l0 75l-25 0l0 -75" name="2024DE"></path>
+        <path d="M525 425l200 0l0 25l25 0l0 150l-50 0l0 -50l-25 0l0 -25l-25 0l0 -25l-25 0l0 -25l-25 0l0 -25l-75 0l0 -25" name="2024FL"></path>
+        <path d="M550 350l125 0l0 25l25 0l0 50l-125 0l0 -25l-25 0l0 -50" name="2024GA"></path>
+        <g name="2024HI"><path d="M125 500l25 0l0 25l-25 0l0 -25"></path><path d="M175 525l25 0l0 25l-25 0l0 -25"></path><path d="M200 550l25 0l0 50l-25 0l0 -50"></path></g>
+        <path d="M100 50l25 0l0 50l25 0l0 25l-50 0l0 -75" name="2024ID"></path>
+        <path d="M300 125l75 0l0 175l-25 0l0 -25l-50 0l0 -150" name="2024IL"></path>
+        <path d="M375 225l75 0l0 75l-25 0l0 25l-50 0l0 -100" name="2024IN"></path>
+        <path d="M250 125l50 0l0 75l-50 0l0 -75" name="2024IA"></path>
+        <path d="M175 225l50 0l0 75l-50 0l0 -75" name="2024KS"></path>
+        <path d="M450 250l100 0l0 50l-100 0l0 -50" name="2024KY"></path>
+        <path d="M375 350l75 0l0 100l25 0l0 25l-50 0l0 -100l-50 0l0 -25" name="2024LA"></path>
+        <path d="M950 0l25 0l0 25l-25 0l0 -25" name="2024ME1"></path>
+        <path d="M975 0l25 0l0 25l-25 0l0 -25" name="2024ME2"></path>
+        <path d="M950 25l50 0l0 25l-50 0l0 -25" name="2024MEA"></path>
+        <path d="M750 200l100 0l0 100l-25 0l0 -50l-75 0l0 -50" name="2024MD"></path>
+        <path d="M850 50l125 0l0 75l-50 0l0 -25l-50 0l0 -25l-25 0l0 -25" name="2024MA"></path>
+        <g name="2024MI"><path d="M400 50l25 0l0 25l-25 0l0 -25"></path><path d="M425 100l50 0l0 125l-100 0l0 -50l50 0l0 -75"></path></g>
+        <path d="M275 25l25 0l0 100l-50 0l0 25l-25 0l0 -75l25 0l0 -25l25 0l0 -25" name="2024MN"></path>
+        <path d="M450 375l50 0l0 75l-50 0l0 -75" name="2024MS"></path>
+        <path d="M200 200l100 0l0 75l-75 0l0 -50l-25 0l0 -25" name="2024MO"></path>
+        <path d="M125 50l50 0l0 50l-50 0l0 -50" name="2024MT"></path>
+        <path d="M200 125l25 0l0 25l-25 0l0 -25" name="2024NE1"></path>
+        <path d="M200 150l25 0l0 25l-25 0l0 -25" name="2024NE2"></path>
+        <path d="M225 150l25 0l0 25l-25 0l0 -25" name="2024NE3"></path>
+        <path d="M200 175l50 0l0 25l-50 0l0 -25" name="2024NEA"></path>
+        <path d="M75 150l25 0l0 25l25 0l0 75l-25 0l0 -25l-25 0l0 -75" name="2024NV"></path>
+        <path d="M825 50l25 0l0 25l25 0l0 25l-25 0l0 25l-25 0l0 -75" name="2024NH"></path>
+        <path d="M825 150l100 0l 0 50l25 0l0 50l-75 0l0 -50l-50 0l0 -50" name="2024NJ"></path>
+        <path d="M200 350l25 0l0 25l25 0l0 50l-50 0l0 -75" name="2024NM"></path>
+        <path d="M750 50l50 0l0 100l25 0l0 50l-50 0l0 -25l-150 0l0 -50l25 0l0 -25l75 0l0 -25l25 0l0 -25" name="2024NY"></path>
+        <path d="M575 300l225 0l0 50l-50 0l0 -25l-75 0l0 25l-125 0l0 -25l25 0l0 -25" name="2024NC"></path>
+        <path d="M225 25l50 0l0 25l-25 0l0 25l-25 0l0 -50" name="2024ND"></path>
+        <path d="M475 175l125 0l0 75l-25 0l0 25l-25 0l0 -25l-100 0l0 -25l25 0l0 -50" name="2024OH"></path>
+        <path d="M225 275l125 0l0 50l-50 0l0 -25l-75 0l0 -25" name="2024OK"></path>
+        <path d="M0 75l25 0l0 25l75 0l0 50l-75 0l0 -25l-25 0l0 -50" name="2024OR"></path>
+        <path d="M600 175l175 0l0 25l-25 0l0 50l-150 0l0 -75" name="2024PA"></path>
+        <path d="M900 125l50 0l0 25l25 0l0 25l-50 0l0 -25l-25 0l0 -25" name="2024RI"></path>
+        <path d="M675 325l75 0l0 25l25 0l0 25l-25 0l0 25l-50 0l0 -25l-25 0l0 -50" name="2024SC"></path>
+        <path d="M175 50l50 0l0 25l-25 0l0 25l-25 0l0 -50" name="2024SD"></path>
+        <path d="M375 325l50 0l0 -25l100 0l0 25l-25 0l0 50l-50 0l0 -25l-75 0l0 -25" name="2024TN"></path>
+        <path d="M250 300l50 0l0 75l50 0l0 -25l25 0l0 25l50 0l0 100l-25 0l0 50l-25 0l0 -25l-25 0l0 -25l-25 0l0 -25l-25 0l0 25l-50 0l0 -25l-25 0l0 -25l25 0l0 -50l-25 0l0 -50l25 0l0 -25" name="2024TX"></path>
+        <path d="M100 125l50 0l0 100l-25 0l0 -50l-25 0l0 -50" name="2024UT"></path>
+        <path d="M800 50l25 0l0 75l-25 0l0 -75" name="2024VT"></path>
+        <path d="M575 250l150 0l0 25l25 0l0 25l-175 0l0 -50" name="2024VA"></path>
+        <path d="M0 25l25 0l0 25l25 0l0 -50l50 0l0 100l-75 0l0 -25l-25 0l0 -50" name="2024WA"></path>
+        <path d="M550 275l25 0l0 50l-25 0l0 25l-25 0l0 -50l25 0l0 -25" name="2024WV"></path>
+        <path d="M300 50l100 0l0 25l-25 0l0 50l-75 0l0 -75" name="2024WI"></path>
+        <path d="M200 75l25 0l0 50l-50 0l0 -25l25 0l0 -25" name="2024WY"></path>
+    </g>
+</svg>

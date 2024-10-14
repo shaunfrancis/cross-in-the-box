@@ -1,6 +1,6 @@
 import { SvgLoader, SvgProxy } from 'react-svgmt';
 
-export default function USAPresidential2012GeographicMap( 
+export default function USAPresidential2024GeographicMap( 
     { fills = [], hoverFun = () => {}, clickFun = () => {} } : 
     { 
         fills? : {id : string, color : string, opacity? : number}[],
@@ -9,7 +9,7 @@ export default function USAPresidential2012GeographicMap(
     }
 ){
     return ( <>
-        <SvgLoader path="/maps/USA-presidential-2012-geographic.svg">
+        <SvgLoader path="/maps/USA-presidential-2024-geographic.svg">
             {
                 fills.map( (fill, index) => {
                     return (
