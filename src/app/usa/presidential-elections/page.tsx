@@ -41,7 +41,7 @@ export default function USAGeneralElections(){
     const searchInputRef = useRef<HTMLInputElement>(null);
     const heroNavItems = [
         { title: "Election Results", src:"/images/usa-nav-results.svg", ref:useRef<HTMLElement>(null) },
-        { title: "Find A State", src:"/images/nav-region.svg", ref:useRef<HTMLElement>(null), 
+        { title: "Find a State", src:"/images/nav-region.svg", ref:useRef<HTMLElement>(null), 
             fun: () => { setTimeout( () => { if(searchInputRef.current) searchInputRef.current.focus() }, 100 ) }
         }
     ]
@@ -66,7 +66,7 @@ export default function USAGeneralElections(){
                 <PresidentialResultsSection regions={regions} parties={parties} geographic={geographic} />
             </section>
             <section ref={heroNavItems[1].ref} className="shaded purple">
-                <h1>Find A State</h1>
+                <h1>Find a State</h1>
                 <PresidentialSearchSection searchInputRef={searchInputRef} />
             </section>
             {/* <USAMapDefs /> */}

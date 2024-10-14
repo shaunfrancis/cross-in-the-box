@@ -4,7 +4,8 @@
     align-items:center;
     height:25px;
     gap:2px;
-    width:650px;
+    width:100%;
+    max-width:750px;
 }
 
 .summary-segment-row{

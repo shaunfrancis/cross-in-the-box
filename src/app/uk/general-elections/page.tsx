@@ -40,7 +40,7 @@ export default function UKGeneralElections(){
     const searchInputRef = useRef<HTMLInputElement>(null);
     const heroNavItems = [
         { title: "Election Results", src:"/images/uk-nav-results.svg", ref:useRef<HTMLElement>(null) },
-        { title: "Find A Constituency", src:"/images/nav-region.svg", ref:useRef<HTMLElement>(null), 
+        { title: "Find a Constituency", src:"/images/nav-region.svg", ref:useRef<HTMLElement>(null), 
             fun: () => { setTimeout( () => { if(searchInputRef.current) searchInputRef.current.focus() }, 100 ) }
         },
         { title: "Opinion Polling", src:"/images/nav-polling.svg", ref:useRef<HTMLElement>(null) }
@@ -66,7 +66,7 @@ export default function UKGeneralElections(){
                 <UKElectionResultsSection regions={regions} parties={parties} geographic={geographic} />
             </section>
             <section ref={heroNavItems[1].ref} className="shaded purple">
-                <h1>Find A Constituency</h1>
+                <h1>Find a Constituency</h1>
                 <UKConstituencySearchSection searchInputRef={searchInputRef} />
             </section>
             <section ref={heroNavItems[2].ref}>

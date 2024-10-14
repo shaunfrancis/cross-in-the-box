@@ -1,25 +1,48 @@
+/*  Parent section should have a grid display;
+*   RegionBarGraph will then inherit subgrid.
+*   This ensures that all RegionBarGraphs have the same column widths on the page.
+*   RegionBarGraphs could otherwise differ because of different content widths.
+*/
+    section:has(> .container){
+        display:grid;
+        row-gap:30px;
+        grid-template-columns:30px 80px repeat(3, minmax(20px, min-content)) 1fr 30px;
+    }
+
+    section:has(> .container) > *{
+        grid-column: 1 / span 7;
+    }
+
+
 .container{
-    margin:30px 0;
     padding:30px;
     background:#fff;
     box-shadow:1px 1px 0 1px var(--box-shadow-color);
 }
 
+.container, .bar-graph-container{
+    display:grid;
+    grid-template-columns:subgrid;
+}
+.container > *, .bar-graph-container > *{ grid-column: 1 / -1 }
+
 .bar-graph-container{
     margin-top:20px;
+    gap:5px;
 }
 
 .bar-graph-row{
     display:flex;
     color:#fff;
-    gap:5px;
-    margin:5px 0;
     font-weight:350;
+    grid-column-start:2;
+    display:grid;
+    grid-template-columns:subgrid;
 }
 
 .bar-graph-bloc{
     border-radius:2px;
-    padding:4px 10px;
+    padding:4px 15px;
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
@@ -27,7 +50,6 @@
 }
 
 .bar-graph-party{
-    width:80px;
     text-align:center;
     font-weight:450;
     position:relative;
@@ -63,18 +85,16 @@
     }
 
 .bar-graph-candidate{
-    width:170px;
     padding:4px 15px;
+    max-width:200px;
 }
 
 .bar-graph-votes, .bar-graph-percentage{
-    width:80px;
-    min-width:50px; /*minimum for 88 888 and 88.88% display on mobile*/
     text-align:right;
+    padding:4px 10px 4px 25px;
 }
 
 .bar-graph-bar-container{
-    flex:1;
     background:rgb(227,227,227);
     border-radius:2px;
     overflow:hidden;
@@ -86,11 +106,16 @@
 }
 
 @media screen and (max-width: 750px){
+
+    section:has(> .container){
+        grid-template-columns:15px minmax(20px, 80px) repeat(3, minmax(20px, min-content)) 1fr 15px;
+    }
+
     .container{
         padding:30px 15px;
     }
 
     .bar-graph-candidate, .bar-graph-votes, .bar-graph-percentage{
-        padding:4px 5px;
+        padding:4px 10px;
     }
 }

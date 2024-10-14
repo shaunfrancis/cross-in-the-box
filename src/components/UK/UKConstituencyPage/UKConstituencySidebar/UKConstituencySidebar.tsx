@@ -7,7 +7,7 @@ export default function UKConstituencySidebar({ region } : { region : {id? : str
     return (
         <div id={styles["container"]}>
         <section className="shaded purple">
-            <h1>Find A Constituency</h1>
+            <h1>Find a Constituency</h1>
             <UKConstituencySearchSection />
         </section>
         <UKConstituencyPortrait region={region} />

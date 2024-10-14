@@ -5,7 +5,7 @@ export default function PresidentialSidebar({ region } : { region : {id? : strin
     return (
         <div id={styles["container"]}>
         <section className="shaded purple">
-            <h1>Find A State</h1>
+            <h1>Find a State</h1>
             <PresidentialSearchSection />
         </section>
         {/* <UKConstituencyMap region={region} /> */}

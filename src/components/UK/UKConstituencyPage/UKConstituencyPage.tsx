@@ -142,7 +142,7 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
                 </section>
             }
 
-            <section ref={heroNavItems[0].ref} style={{paddingTop:"0"}}>
+            <section ref={heroNavItems[0].ref}>
                 {eventNodes}
             </section>
 

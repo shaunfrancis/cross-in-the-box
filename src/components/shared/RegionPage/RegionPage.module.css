@@ -10,9 +10,14 @@
 
 #container main{
     flex:1;
-    padding:0 50px;
+    padding:30px 50px 0 50px;
     overflow:auto;
+    display:flex;
+    flex-direction:column;
+    gap:30px;
 }
+#container main > section{ margin: 0 }
+#container main > section:has(article){ padding: 0 }
 
 #container main section h1{ margin: 30px 0 0 0 }
 
