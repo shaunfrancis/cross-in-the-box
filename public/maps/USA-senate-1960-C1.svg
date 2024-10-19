@@ -1,0 +1,243 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 850 550">
+    <style>
+        #usa-senate-1960-svg rect:not(.border){ cursor:pointer; transition: fill 1000ms, opacity 500ms }
+        #usa-senate-1960-svg .border{ stroke-width:2; stroke: white; pointer-events:none; fill:none } 
+        #usa-senate-1960-svg text{ fill: #FFF; alignment-baseline: central; text-anchor: middle; font-family: 'Oswald', Helvetica, sans-serif; font-weight: bold; pointer-events: none }
+        svg:has(#usa-senate-1960-svg) path{ fill:#FFF; pointer-events: none }
+    </style>
+   
+    <g id="usa-senate-1960-svg" fill="#eee">
+        <rect width="50" height="50" x="350" y="350" name="SAL2"></rect>
+        <rect width="50" height="50" x="350" y="400" name="SAL3"></rect>
+        <rect width="50" height="100" x="350" y="350" name="SAL" class="border"></rect>
+        
+        <rect width="50" height="50" x="0" y="500" name="SAK2"></rect>
+        <rect width="50" height="50" x="50" y="500" name="SAK3"></rect>
+        <rect width="100" height="50" x="0" y="500" name="SAK" class="border"></rect>
+        
+        <rect width="50" height="50" x="50" y="250" name="SAZ1"></rect>
+        <rect width="50" height="50" x="100" y="250" name="SAZ3"></rect>
+        <rect width="100" height="50" x="50" y="250" name="SAZ" class="border"></rect>
+        <text x="75" y="275" font-size="25">AZ</text>
+        
+        <rect width="50" height="50" x="300" y="250" name="SAR2"></rect>
+        <rect width="50" height="50" x="300" y="300" name="SAR3"></rect>
+        <rect width="50" height="100" x="300" y="250" name="SAR" class="border"></rect>
+        
+        <rect width="50" height="50" x="0" y="200" name="SCA1"></rect>
+        <rect width="50" height="50" x="0" y="250" name="SCA3"></rect>
+        <rect width="50" height="100" x="0" y="200" name="SCA" class="border"></rect>
+        <text x="25" y="225" font-size="25">CA</text>
+        
+        <rect width="50" height="50" x="200" y="200" name="SCO2"></rect>
+        <rect width="50" height="50" x="200" y="250" name="SCO3"></rect>
+        <rect width="50" height="100" x="200" y="200" name="SCO" class="border"></rect>
+        
+        <rect width="50" height="50" x="700" y="200" name="SCT1"></rect>
+        <rect width="50" height="50" x="700" y="250" name="SCT3"></rect>
+        <rect width="50" height="100" x="700" y="200" name="SCT" class="border"></rect>
+        <text x="725" y="225" font-size="25">CT</text>
+        
+        <rect width="50" height="50" x="600" y="250" name="SDE1"></rect>
+        <rect width="50" height="50" x="600" y="300" name="SDE2"></rect>
+        <rect width="50" height="100" x="600" y="250" name="SDE" class="border"></rect>
+        <text x="625" y="275" font-size="25">DE</text>
+        
+        <rect width="50" height="50" x="450" y="400" name="SFL1"></rect>
+        <rect width="50" height="50" x="450" y="450" name="SFL3"></rect>
+        <rect width="50" height="100" x="450" y="400" name="SFL" class="border"></rect>
+        <text x="475" y="425" font-size="25">FL</text>
+        
+        <rect width="50" height="50" x="400" y="350" name="SGA2"></rect>
+        <rect width="50" height="50" x="400" y="400" name="SGA3"></rect>
+        <rect width="50" height="100" x="400" y="350" name="SGA" class="border"></rect>
+        
+        <rect width="50" height="50" x="150" y="500" name="SHI1"></rect>
+        <rect width="50" height="50" x="200" y="500" name="SHI3"></rect>
+        <rect width="100" height="50" x="150" y="500" name="SHI" class="border"></rect>
+        <text x="175" y="525" font-size="25">HI</text>
+        
+        <rect width="50" height="50" x="100" y="100" name="SID2"></rect>
+        <rect width="50" height="50" x="100" y="150" name="SID3"></rect>
+        <rect width="50" height="100" x="100" y="100" name="SID" class="border"></rect>
+        
+        <rect width="50" height="50" x="350" y="150" name="SIL2"></rect>
+        <rect width="50" height="50" x="350" y="200" name="SIL3"></rect>
+        <rect width="50" height="100" x="350" y="150" name="SIL" class="border"></rect>
+        
+        <rect width="50" height="50" x="400" y="150" name="SIN1"></rect>
+        <rect width="50" height="50" x="400" y="200" name="SIN3"></rect>
+        <rect width="50" height="100" x="400" y="150" name="SIN" class="border"></rect>
+        <text x="425" y="175" font-size="25">IN</text>
+        
+        <rect width="50" height="50" x="300" y="150" name="SIA2"></rect>
+        <rect width="50" height="50" x="300" y="200" name="SIA3"></rect>
+        <rect width="50" height="100" x="300" y="150" name="SIA" class="border"></rect>
+        
+        <rect width="50" height="50" x="200" y="350" name="SKS2"></rect>
+        <rect width="50" height="50" x="250" y="350" name="SKS3"></rect>
+        <rect width="100" height="50" x="200" y="350" name="SKS" class="border"></rect>
+        
+        <rect width="50" height="50" x="400" y="250" name="SKY2"></rect>
+        <rect width="50" height="50" x="450" y="250" name="SKY3"></rect>
+        <rect width="100" height="50" x="400" y="250" name="SKY" class="border"></rect>
+        
+        <rect width="50" height="50" x="200" y="400" name="SLA2"></rect>
+        <rect width="50" height="50" x="250" y="400" name="SLA3"></rect>
+        <rect width="100" height="50" x="200" y="400" name="SLA" class="border"></rect>
+        
+        <rect width="50" height="50" x="800" y="0" name="SME1"></rect>
+        <rect width="50" height="50" x="800" y="50" name="SME2"></rect>
+        <rect width="50" height="100" x="800" y="0" name="SME" class="border"></rect>
+        <text x="825" y="25" font-size="25">ME</text>
+        
+        <rect width="50" height="50" x="550" y="200" name="SMD1"></rect>
+        <rect width="50" height="50" x="600" y="200" name="SMD3"></rect>
+        <rect width="100" height="50" x="550" y="200" name="SMD" class="border"></rect>
+        <text x="575" y="225" font-size="25">MD</text>
+        
+        <rect width="50" height="50" x="700" y="150" name="SMA1"></rect>
+        <rect width="50" height="50" x="750" y="150" name="SMA2"></rect>
+        <rect width="100" height="50" x="700" y="150" name="SMA" class="border"></rect>
+        <text x="725" y="175" font-size="25">MA</text>
+        
+        <rect width="50" height="50" x="450" y="50" name="SMI1"></rect>
+        <rect width="50" height="50" x="450" y="100" name="SMI2"></rect>
+        <rect width="50" height="100" x="450" y="50" name="SMI" class="border"></rect>
+        <text x="475" y="75" font-size="25">MI</text>
+        
+        <rect width="50" height="50" x="300" y="50" name="SMN1"></rect>
+        <rect width="50" height="50" x="300" y="100" name="SMN2"></rect>
+        <rect width="50" height="100" x="300" y="50" name="SMN" class="border"></rect>
+        <text x="325" y="75" font-size="25">MN</text>
+        
+        <rect width="50" height="50" x="300" y="350" name="SMS1"></rect>
+        <rect width="50" height="50" x="300" y="400" name="SMS2"></rect>
+        <rect width="50" height="100" x="300" y="350" name="SMS" class="border"></rect>
+        <text x="325" y="375" font-size="25">MS</text>
+        
+        <rect width="50" height="50" x="350" y="250" name="SMO1"></rect>
+        <rect width="50" height="50" x="350" y="300" name="SMO3"></rect>
+        <rect width="50" height="100" x="350" y="250" name="SMO" class="border"></rect>
+        <text x="375" y="275" font-size="25">MO</text>
+        
+        <rect width="50" height="50" x="150" y="100" name="SMT1"></rect>
+        <rect width="50" height="50" x="200" y="100" name="SMT2"></rect>
+        <rect width="100" height="50" x="150" y="100" name="SMT" class="border"></rect>
+        <text x="175" y="125" font-size="25">MT</text>
+        
+        <rect width="50" height="50" x="250" y="250" name="SNE1"></rect>
+        <rect width="50" height="50" x="250" y="300" name="SNE2"></rect>
+        <rect width="50" height="100" x="250" y="250" name="SNE" class="border"></rect>
+        <text x="275" y="275" font-size="25">NE</text>
+        
+        <rect width="50" height="50" x="50" y="200" name="SNV1"></rect>
+        <rect width="50" height="50" x="100" y="200" name="SNV3"></rect>
+        <rect width="100" height="50" x="50" y="200" name="SNV" class="border"></rect>
+        <text x="75" y="225" font-size="25">NV</text>
+        
+        <rect width="50" height="50" x="750" y="50" name="SNH2"></rect>
+        <rect width="50" height="50" x="750" y="100" name="SNH3"></rect>
+        <rect width="50" height="100" x="750" y="50" name="SNH" class="border"></rect>
+        
+        <rect width="50" height="50" x="650" y="200" name="SNJ1"></rect>
+        <rect width="50" height="50" x="650" y="250" name="SNJ2"></rect>
+        <rect width="50" height="100" x="650" y="200" name="SNJ" class="border"></rect>
+        <text x="675" y="225" font-size="25">NJ</text>
+        
+        <rect width="50" height="50" x="100" y="300" name="SNM1"></rect>
+        <rect width="50" height="50" x="100" y="350" name="SNM2"></rect>
+        <rect width="50" height="100" x="100" y="300" name="SNM" class="border"></rect>
+        <text x="125" y="325" font-size="25">NM</text>
+        
+        <rect width="50" height="50" x="650" y="100" name="SNY1"></rect>
+        <rect width="50" height="50" x="650" y="150" name="SNY3"></rect>
+        <rect width="50" height="100" x="650" y="100" name="SNY" class="border"></rect>
+        <text x="675" y="125" font-size="25">NY</text>
+        
+        <rect width="50" height="50" x="500" y="300" name="SNC2"></rect>
+        <rect width="50" height="50" x="550" y="300" name="SNC3"></rect>
+        <rect width="100" height="50" x="500" y="300" name="SNC" class="border"></rect>
+        
+        <rect width="50" height="50" x="250" y="50" name="SND1"></rect>
+        <rect width="50" height="50" x="250" y="100" name="SND3"></rect>
+        <rect width="50" height="100" x="250" y="50" name="SND" class="border"></rect>
+        <text x="275" y="75" font-size="25">ND</text>
+        
+        <rect width="50" height="50" x="450" y="150" name="SOH1"></rect>
+        <rect width="50" height="50" x="500" y="150" name="SOH3"></rect>
+        <rect width="100" height="50" x="450" y="150" name="SOH" class="border"></rect>
+        <text x="475" y="175" font-size="25">OH</text>
+        
+        <rect width="50" height="50" x="150" y="300" name="SOK2"></rect>
+        <rect width="50" height="50" x="200" y="300" name="SOK3"></rect>
+        <rect width="100" height="50" x="150" y="300" name="SOK" class="border"></rect>
+        
+        <rect width="50" height="50" x="0" y="150" name="SOR2"></rect>
+        <rect width="50" height="50" x="50" y="150" name="SOR3"></rect>
+        <rect width="100" height="50" x="0" y="150" name="SOR" class="border"></rect>
+        
+        <rect width="50" height="50" x="550" y="150" name="SPA1"></rect>
+        <rect width="50" height="50" x="600" y="150" name="SPA3"></rect>
+        <rect width="100" height="50" x="550" y="150" name="SPA" class="border"></rect>
+        <text x="575" y="175" font-size="25">PA</text>
+        
+        <rect width="50" height="50" x="750" y="200" name="SRI1"></rect>
+        <rect width="50" height="50" x="750" y="250" name="SRI2"></rect>
+        <rect width="50" height="100" x="750" y="200" name="SRI" class="border"></rect>
+        <text x="775" y="225" font-size="25">RI</text>
+        
+        <rect width="50" height="50" x="450" y="350" name="SSC2"></rect>
+        <rect width="50" height="50" x="500" y="350" name="SSC3"></rect>
+        <rect width="100" height="50" x="450" y="350" name="SSC" class="border"></rect>
+        
+        <rect width="50" height="50" x="250" y="150" name="SSD2"></rect>
+        <rect width="50" height="50" x="250" y="200" name="SSD3"></rect>
+        <rect width="50" height="100" x="250" y="150" name="SSD" class="border"></rect>
+        
+        <rect width="50" height="50" x="400" y="300" name="STN1"></rect>
+        <rect width="50" height="50" x="450" y="300" name="STN2"></rect>
+        <rect width="100" height="50" x="400" y="300" name="STN" class="border"></rect>
+        <text x="425" y="325" font-size="25">TN</text>
+        
+        <rect width="50" height="50" x="150" y="350" name="STX1"></rect>
+        <rect width="50" height="50" x="150" y="400" name="STX2"></rect>
+        <rect width="50" height="100" x="150" y="350" name="STX" class="border"></rect>
+        <text x="175" y="375" font-size="25">TX</text>
+        
+        <rect width="50" height="50" x="150" y="200" name="SUT1"></rect>
+        <rect width="50" height="50" x="150" y="250" name="SUT3"></rect>
+        <rect width="50" height="100" x="150" y="200" name="SUT" class="border"></rect>
+        <text x="175" y="225" font-size="25">UT</text>
+        
+        <rect width="50" height="50" x="700" y="50" name="SVT1"></rect>
+        <rect width="50" height="50" x="700" y="100" name="SVT3"></rect>
+        <rect width="50" height="100" x="700" y="50" name="SVT" class="border"></rect>
+        <text x="725" y="75" font-size="25">VT</text>
+        
+        <rect width="50" height="50" x="500" y="250" name="SVA1"></rect>
+        <rect width="50" height="50" x="550" y="250" name="SVA2"></rect>
+        <rect width="100" height="50" x="500" y="250" name="SVA" class="border"></rect>
+        <text x="525" y="275" font-size="25">VA</text>
+        
+        <rect width="50" height="50" x="0" y="100" name="SWA1"></rect>
+        <rect width="50" height="50" x="50" y="100" name="SWA3"></rect>
+        <rect width="100" height="50" x="0" y="100" name="SWA" class="border"></rect>
+        <text x="25" y="125" font-size="25">WA</text>
+        
+        <rect width="50" height="50" x="450" y="200" name="SWV1"></rect>
+        <rect width="50" height="50" x="500" y="200" name="SWV2"></rect>
+        <rect width="100" height="50" x="450" y="200" name="SWV" class="border"></rect>
+        <text x="475" y="225" font-size="25">WV</text>
+        
+        <rect width="50" height="50" x="350" y="50" name="SWI1"></rect>
+        <rect width="50" height="50" x="350" y="100" name="SWI3"></rect>
+        <rect width="50" height="100" x="350" y="50" name="SWI" class="border"></rect>
+        <text x="375" y="75" font-size="25">WI</text>
+        
+        <rect width="50" height="50" x="150" y="150" name="SWY1"></rect>
+        <rect width="50" height="50" x="200" y="150" name="SWY2"></rect>
+        <rect width="100" height="50" x="150" y="150" name="SWY" class="border"></rect>
+        <text x="175" y="175" font-size="25">WY</text>
+    </g>
+</svg>

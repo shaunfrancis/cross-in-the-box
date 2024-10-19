@@ -1,5 +1,5 @@
+import { Party } from 'src/Types';
 import styles from './ElectionSummaryBar.module.css';
-import { Party } from '../../../Types';
 
 export default function ElectionSummaryBar( 
     { data } : { data : {candidate? : string, party : Party, count : number, displayCount?: string}[] }

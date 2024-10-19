@@ -13,10 +13,10 @@ import { dateToLongDate, parseJSONWithDates, useOnScreen } from "src/lib/shared"
 import Message from "src/components/shared/Message/Message";
 import USAPresidential2012Map from "src/components/maps/USAPresidential2012Map";
 import USAPresidential2012GeographicMap from "src/components/maps/USAPresidential2012GeographicMap";
-import ElectionSummaryBar from "src/components/shared/ElectionSummaryBar/ElectionSummaryBar";
 import { stateWeights } from "src/constants/USA";
 import USAPresidential2024GeographicMap from "src/components/maps/USAPresidential2024GeographicMap";
 import USAPresidential2024Map from "src/components/maps/USAPresidential2024Map";
+import ElectionSummaryBar from "src/components/shared/ElectionSummaries/ElectionSummaryBar/ElectionSummaryBar";
 
 interface Update{
     id : string,

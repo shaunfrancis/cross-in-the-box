@@ -8,32 +8,6 @@
     max-width:750px;
 }
 
-.summary-segment-row{
-    display:flex;
-    gap:5px;
-    height:25px;
-    flex-shrink:0;
-    overflow:hidden;
-}
-    .hidden-row{
-        height:0;
-        transition:height 100ms;
-    }
-
-    .summary-bar-container.hidden-rows-visible .hidden-row{
-        height:25px;
-    }
-
-.single-row{
-    height:unset;
-    flex-wrap:wrap;
-    justify-content:center;
-}
-
-.single-row > .summary-segment{
-    max-width:120px;
-}
-
 .summary-segment{
     cursor:default;
     color:#fff;

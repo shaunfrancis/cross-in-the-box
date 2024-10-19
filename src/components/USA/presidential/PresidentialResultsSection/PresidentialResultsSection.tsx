@@ -1,15 +1,12 @@
 'use client';
 
-import { useState } from "react";
-import { Party, Region, Result } from "src/Types";
-
+import { Party, Region } from "src/Types";
 import ElectionResultsSection from "src/components/shared/ElectionResultsSection/ElectionResultsSection";
 import PresidentialResultContainer from "./PresidentialResultContainer/PresidentialResultContainer";
 
 export default function PresidentialResultsSection({ regions, parties, geographic } : 
     { regions : Region[], parties : Party[], geographic: boolean }
 ){
-    const [summaryBlocHover, setSummaryBlocHover] = useState<boolean>(false);
 
     return ( <>
         <ElectionResultsSection>

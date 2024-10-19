@@ -1,6 +1,6 @@
 import { SvgLoader, SvgProxy } from 'react-svgmt';
 
-export default function USAGeneral2012Map( 
+export default function USAPresidential2012Map( 
     { fills = [], hoverFun = () => {}, clickFun = () => {} } : 
     { 
         fills? : {id : string, color : string, opacity? : number}[],

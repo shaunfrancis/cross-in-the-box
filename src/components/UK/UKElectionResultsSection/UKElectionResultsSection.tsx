@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import UKElectionResultContainer from "./UKElectionResultContainer/UKElectionResultContainer";
-import { Party, Region, Result } from "src/Types";
+import { Party, Region } from "src/Types";
 import ElectionResultsSection from "src/components/shared/ElectionResultsSection/ElectionResultsSection";
 
 export default function UKElectionResultsSection({ regions, parties, geographic } : 

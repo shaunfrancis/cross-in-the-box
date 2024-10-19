@@ -1,13 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { Context, useContext, useEffect, useRef, useState } from "react";
 
-import UKGeneral2010Map from "../../../maps/UKGeneral2010Map";
-import UKGeneral2010GeographicMap from "src/components/maps/UKGeneral2010GeographicMap";
-import UKGeneral2024Map from "src/components/maps/UKGeneral2024Map";
-import UKGeneral2024GeographicMap from "src/components/maps/UKGeneral2024GeographicMap";
-
-import ElectionResultContainer from "../../../shared/ElectionResultContainer/ElectionResultContainer";
-import HoverPopup from "../../../shared/HoverPopup/HoverPopup";
-import PopupBarGraph from "../../../shared/PopupBarGraph/PopupBarGraph";
+import styles from './SenateResultContainer.module.css';
+import ElectionResultContainer from "../../../../shared/ElectionResultContainer/ElectionResultContainer";
+import HoverPopup from "../../../../shared/HoverPopup/HoverPopup";
+import PopupBarGraph from "../../../../shared/PopupBarGraph/PopupBarGraph";
 import { MessageData, Party, Region, Result } from "src/Types";
 import { DefaultParty, Endpoint } from "src/constants/shared";
 import { UKSeatsToWatch } from "src/constants/UK";
@@ -16,7 +12,9 @@ import { constituencyToSlug } from "src/lib/UK";
 import PartyProgressionBlocs from "src/components/shared/PartyProgressionBlocs/PartyProgressionBlocs";
 import { dateToLongDate, parseJSONWithDates, useOnScreen } from "src/lib/shared";
 import Message from "src/components/shared/Message/Message";
-import ElectionSummaryBlocs from "src/components/shared/ElectionSummaries/ElectionSummaryBlocs/ElectionSummaryBlocs";
+import USASenate1960Map from "src/components/maps/USASenate1960Map";
+import USASenate1960GeographicMap from "src/components/maps/USASenate1960GeographicMap";
+import ElectionSummaryBars from "src/components/shared/ElectionSummaries/ElectionSummaryBars/ElectionSummaryBars";
 
 interface Update{
     id : string,
@@ -24,17 +22,41 @@ interface Update{
     party : string
 }
 
-export default function UKElectionResultContainer( 
-    { election, live = false, title = [election, "General", "Election"], preloadedResults, regions, parties, summaryBlocHoverState, messageGroup, messagesOpenOnLoad, geographic, changes, dedicatedPage, winFormula = (results : Result[]) => results.filter(r => r.elected) } : 
+export default function SenateResultContainer( 
     { 
+        context,
+        election,
+        classNo, 
+        live = false,
+        title = [election.replace(/[^0-9.]/g, ''), "Senate", "Elections"],
+        regions,
+        parties,
+        messageGroup,
+        messagesOpenOnLoad,
+        geographic,
+        changes,
+        dedicatedPage,
+        winFormula = (results : Result[]) => results.filter(r => r.elected)
+    } : 
+    { 
+        context : Context<{
+            bank : {
+                election : string;
+                date : Date;
+                results : Result[];
+            }[],
+            promises : {
+                election : string,
+                promise : Promise<Result[]>
+            }[]
+        }>,
         election : string, 
+        classNo : 1 | 2 | 3,
         live? : boolean,
         title? : string[],
-        preloadedResults? : Result[],
         regions : Region[],
         parties : Party[],
         winFormula? : (results : Result[]) => Result[],
-        summaryBlocHoverState? : [boolean, React.Dispatch<React.SetStateAction<boolean>>],
         messageGroup? : string,
         messagesOpenOnLoad?: boolean,
         geographic? : boolean,
@@ -43,16 +65,19 @@ export default function UKElectionResultContainer(
     }
 ){
 
-    const dimensions = {w:"calc( 0.85 * (100vh - 100px) )", h:"calc(100vh - 100px)", minW:live ? "525px" : "425px", minH:"500px"};
+    const dimensions = {w:"calc( 1.3 * (100vh - 100px) )", h:"calc(100vh - 100px)", minW:live ? "525px" : "425px", minH:"500px"};
     const router = useRouter();
     const container = useRef<HTMLDivElement>(null);
     const onScreen = useOnScreen(container);
     const loadingComplete = useRef<boolean>(false);
     
+    const { bank: resultsBank, promises: resultsPromises } = useContext(context)!;
     let [fills, setFills] = useState<{id: string, color: string, opacity?: number}[]>([]);
     let [popupState, setPopupState] = useState<{visible: boolean, coordinates:[number,number], id?: string}>( { visible: false, coordinates:[0,0] } );
+
     let [results, setResults] = useState<Result[]>([]);
     let [updates, setUpdates] = useState<Update[]>([]);
+    let [otherClassResults, setOtherClassResults] = useState<Result[]>([]);
 
     let [messages, setMessages] = useState<{id: number, date: Date, node: React.ReactNode}[]>([]);
     let latestMessageDate = useRef<Date>(new Date(0));
@@ -60,9 +85,16 @@ export default function UKElectionResultContainer(
     let [livePolling, setLivePolling] = useState<boolean>(false);
     let [liveCounter, setLiveCounter] = useState<number>(0);
 
+    const getSpecials = (results : Result[]) : any => {
+        return results
+            .filter( result => !result.id.includes( classNo.toString() ) )
+            .map( result => result.id )
+            .filter( (id, index, ids) => ids.indexOf(id) === index );
+        };
+
     const addConstituencyLinks = (text : string) : React.ReactNode[] => {
         const spans : React.ReactNode[] = [];
-        text.split("#").forEach( (fragment, index) => {
+        text.split("@").forEach( (fragment, index) => {
             if(fragment == "") return;
 
             const linkedRegion = regions.find( r => r.title.toLowerCase() == fragment.toLowerCase() );
@@ -72,7 +104,7 @@ export default function UKElectionResultContainer(
                     <span 
                         key={index}
                         className="interactive"
-                        onClick={ () => { router.push('constituency/' + constituencyToSlug(linkedRegion.title)) } }
+                        onClick={ () => { router.push('state/' + constituencyToSlug(linkedRegion.title)) } }
                     >
                         {fragment}
                     </span> 
@@ -89,10 +121,10 @@ export default function UKElectionResultContainer(
         else date = message.date.getHours().toString().padStart(2,'0') + ":" + message.date.getMinutes().toString().padStart(2,'0');
 
         //for live messages, if event extends beyond Friday following election day then show day of week
-        if(! [4,5].includes(message.date.getDay())){
+        // if(! [2,3].includes(message.date.getDay())){
             const day = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][message.date.getDay()];
             date = day + ", " + date;
-        }
+        // }
     
         const square = message.square ? (parties.find(p => p.id == message.square) || DefaultParty) : undefined;
         const oldSquare = message.old_square ? (parties.find(p => p.id == message.old_square) || DefaultParty) : undefined;
@@ -115,13 +147,45 @@ export default function UKElectionResultContainer(
     }
 
     useEffect( () => {
-        if( loadingComplete.current || !onScreen || parties.length == 0 || regions.length == 0 || (preloadedResults && preloadedResults.length == 0)) return;
+        if( loadingComplete.current || !onScreen || parties.length == 0 || regions.length == 0) return;
         loadingComplete.current = true;
+
+        const getResultsFromElection = async (election : string) => {
+            const contextResults = () => resultsBank.find( r => r.election === election );
+            if(contextResults()) return contextResults()!.results;
+            else{
+                let resultData : Result[];
+
+                if(resultsPromises.find( p => p.election === election )){
+                    resultData = await resultsPromises.find( p => p.election === election)!.promise;
+                }
+                else{
+                    const promise = fetch(Endpoint + '/results/usa/' + election).then( res => res.json() );
+                    resultsPromises.push({
+                        election: election,
+                        promise: promise
+                    });
+                    resultData = await promise;
+
+                    let electionData = await fetch(Endpoint + '/elections/usa/' + election)
+                        .then( res => res.text() )
+                        .then( text => parseJSONWithDates(text, "date") );
+                    
+                    resultsBank.push({
+                        election: election,
+                        date: electionData!.date,
+                        results: resultData,
+                    });
+                }
+
+                return resultData;
+            }
+        };
         
         const getResults = async () => {
             let updateData : Update[] = [];
             if(changes){
-                updateData = await fetch(Endpoint + "/updates/uk/" + election)
+                updateData = await fetch(Endpoint + "/updates/usa/" + election)
                     .then( res => res.text() )
                     .then( res => parseJSONWithDates(res, "date") );
                     
@@ -129,13 +193,32 @@ export default function UKElectionResultContainer(
                 setUpdates(updateData);
             }
 
-            let resultData : Result[];
-            if(!preloadedResults) resultData = await fetch(Endpoint + '/results/uk/' + election).then( res => res.json() );
-            else resultData = preloadedResults;
+            //get results from current election
+            const resultData = await getResultsFromElection(election);
             setResults(resultData);
 
-            let updatedLiveCount = 0;
             const newFills : {id: string, color: string, opacity?: number}[] = [];
+
+            //get results from the most recent election for the other two class numbers
+            //for ghost fills
+            const electionYear = parseInt(election.slice(1));
+            if(electionYear){
+                const newOtherClassResults = [
+                    ...await getResultsFromElection("S" + (electionYear-2)), 
+                    ...await getResultsFromElection("S" + (electionYear-4))
+                ];
+                winFormula(newOtherClassResults).forEach( result => {
+                    const party : Party = parties.find( p => p.id == result.party ) || DefaultParty;
+                    if(party) newFills.push({ 
+                        id: result.id, 
+                        color: party.color || "var(--default-color)", 
+                        opacity: 1 / 3
+                    });
+                });
+                setOtherClassResults(newOtherClassResults);
+            }
+
+            let updatedLiveCount = 0;
             winFormula(resultData).forEach( result => {
                 updatedLiveCount++;
                 const regionUpdates = updateData.filter( u => u.id == result.id );
@@ -157,7 +240,7 @@ export default function UKElectionResultContainer(
             setFills(newFills);
 
             if(messageGroup){
-                const messagesData : MessageData[] = await fetch(Endpoint + '/messages/uk/' + messageGroup)
+                const messagesData : MessageData[] = await fetch(Endpoint + '/messages/usa/' + messageGroup)
                     .then( res => res.text() )
                     .then( res => parseJSONWithDates(res, "date") );
                 //hardcode live message stick to top
@@ -172,7 +255,7 @@ export default function UKElectionResultContainer(
             }
         };
         getResults();
-    }, [onScreen, preloadedResults, parties, regions]);
+    }, [onScreen, parties, regions]);
 
     if(live) setTimeout( () => {
         setLivePolling(!livePolling); //alternate value to trigger useEffect
@@ -180,7 +263,7 @@ export default function UKElectionResultContainer(
     useEffect( () => {
         if(!(loadingComplete.current && live)) return;
         const getLiveUpdates = async () => {
-            let updatedResultData = await fetch(Endpoint + '/results/uk/' + election + '?compact=true').then( res => res.json() );
+            let updatedResultData = await fetch(Endpoint + '/results/usa/' + election + '?compact=true').then( res => res.json() );
 
             let newResultData : Result[] = [];
 
@@ -208,7 +291,7 @@ export default function UKElectionResultContainer(
             if(messageGroup){
                 const since = new Date(latestMessageDate.current.valueOf());
                 since.setHours(since.getHours() - (new Date()).getTimezoneOffset()/60);
-                const messagesData : MessageData[] = await fetch(Endpoint + '/messages/uk/' + messageGroup + '?since=' + since.toISOString())
+                const messagesData : MessageData[] = await fetch(Endpoint + '/messages/usa/' + messageGroup + '?since=' + since.toISOString())
                     .then( res => res.text() )
                     .then( res => parseJSONWithDates(res, "date") );
 
@@ -239,17 +322,11 @@ export default function UKElectionResultContainer(
 
     const mapClickFun = (id: string) => {
         let region = regions.find( r => r.id == id );
-        if(region) router.push('constituency/' + constituencyToSlug(region.title));
+        if(region) router.push('state/' + constituencyToSlug(region.title));
     };
     const map = () => {
-        switch(election){
-            case "2024":
-                if(geographic) return <UKGeneral2024GeographicMap hoverFun={mapHoverFun} clickFun={mapClickFun} regions={regions} fills={fills} />;
-                else return <UKGeneral2024Map hoverFun={mapHoverFun} clickFun={mapClickFun} regions={regions} fills={fills} />;
-            case "2019": case "2017": case "2015": case "2010":
-                if(geographic) return <UKGeneral2010GeographicMap hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
-                else return <UKGeneral2010Map hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
-        }
+        if(geographic) return <USASenate1960GeographicMap hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
+        else return <USASenate1960Map classNo={classNo} specialNames={getSpecials(results)} hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
     };
 
     const popupContent = (id? : string) => {
@@ -257,49 +334,72 @@ export default function UKElectionResultContainer(
         if(!region) return <h3>Missing data</h3>;
         
         const regionResults = results.filter( result => result.id == id ).sort( (a,b) => b.votes - a.votes );
-        const winner = winFormula(regionResults)[0]?.candidate;
-
-        const regionUpdates = updates.filter( u => u.id == region.id );
-        const partyProgression : Party[] = [parties.find(p => p.id == winFormula(regionResults)[0]?.party) || DefaultParty];
-        regionUpdates.forEach( update => {
-            partyProgression.push( parties.find(p => p.id == update.party) || DefaultParty );
-        });
-
-
-        const watchNote = election == "2024" && UKSeatsToWatch.find(s => s.id == id)?.note;
+        if(regionResults.length > 0){ //current year election
         
-        return ( <>
-            <h3>{region.title}</h3>
-            {winner && <h4>{winner}</h4>}
-            {!winner && <div style={{maxWidth: "350px"}}>{watchNote}</div>}
-            { partyProgression.length > 1 && <PartyProgressionBlocs parties={partyProgression} /> }
-            <PopupBarGraph results={regionResults} parties={parties} />
-        </> )
+            const winner = winFormula(regionResults)[0]?.candidate;
+
+            const regionUpdates = updates.filter( u => u.id == region.id );
+            const partyProgression : Party[] = [parties.find(p => p.id == winFormula(regionResults)[0]?.party) || DefaultParty];
+            regionUpdates.forEach( update => {
+                partyProgression.push( parties.find(p => p.id == update.party) || DefaultParty );
+            });
+
+            const watchNote = election == "2024" && UKSeatsToWatch.find(s => s.id == id)?.note;
+            
+            return ( <>
+                <h3>{region.title}</h3>
+                {winner && <h4>{winner}</h4>}
+                {!winner && <div style={{maxWidth: "350px"}}>{watchNote}</div>}
+                { partyProgression.length > 1 && <PartyProgressionBlocs parties={partyProgression} /> }
+                <PopupBarGraph results={regionResults} parties={parties} />
+            </> )
+
+        }
+        else{ //test if previous year election with different class
+            const winner = winFormula( otherClassResults.filter( result => result.id == id ) )[0];
+            const party = parties.find(p => p.id == winner?.party) || DefaultParty;
+            const year = resultsBank.find( r => r.results.includes(winner) )?.date;
+
+            if(winner) return ( <>
+                <h3>{region.title}</h3>
+                <h4>{winner.candidate}</h4>
+                <div className={styles["flex-row"]}>
+                    <div className={styles["bloc"]} style={{background:party.color, color:party.textColor}}>{party.displayId}</div>
+                    <span>elected in {year?.getFullYear()}</span>
+                </div>
+            </> );
+            else return (<h3>Missing data</h3>);
+        }
     }
 
-    const electionSummaryBlocs = () => {
-        const summaries : {party : Party, count : number}[] = [];
-        winFormula(results).forEach( result => {
-            
+    const electionSummaryBars = () => {
+        const summaries : {party : Party, count : number, ghostCount : number}[] = [];
+        const countedResults : string[] = [];
+        winFormula([...results, ...otherClassResults]).forEach( (result, index) => {
+            if(countedResults.includes(result.id)) return;
+            countedResults.push(result.id);
+
+            const shouldIncrementCount = +(index < winFormula(results).length);
+            const shouldIncrementGhostCount = 1 - shouldIncrementCount;
+
             const regionUpdates = updates.filter( u => u.id == result.id );
             const winner = regionUpdates.length > 0 ? regionUpdates[regionUpdates.length - 1].party : result.party;
 
-            if(!summaries.find( s => s.party.id == winner)){
+            if(!summaries.find( s => s.party.id == result.party)){
                 const party : Party = parties.find( p => p.id == winner ) || DefaultParty;
-                summaries.push({ party: party, count: 1 });
+                summaries.push({ party: party, count: shouldIncrementCount, ghostCount: shouldIncrementGhostCount });
             }
-            else summaries.find( s => s.party.id == winner )!.count++;
-
+            else{
+                summaries.find( s => s.party.id == winner )!.count += shouldIncrementCount;
+                summaries.find( s => s.party.id == winner )!.ghostCount += shouldIncrementGhostCount;
+            }
         });
         summaries.sort( (a,b) => {
-            const getCount = (x:{party: Party, count: number}) => {
-                return (["vacant","speaker","ind"].includes(x.party.id)) ? -Infinity : x.count;
-            }
-            return getCount(b) - getCount(a) || a.party.id.localeCompare(b.party.id);
-         } );
+            return b.count - a.count || a.party.id.localeCompare(b.party.id);
+        } );
 
         return (
-            <ElectionSummaryBlocs data={summaries} rowLength={5} hoverState={summaryBlocHoverState} />
+            <ElectionSummaryBars data={summaries} />
         );
     }
 
@@ -309,8 +409,8 @@ export default function UKElectionResultContainer(
             messages={messageGroup ? messages.map(m => m.node) : undefined} messagesOpenOnLoad={messagesOpenOnLoad} 
             map={map()} 
             title={title} 
-            liveTitle={live ? [liveCounter.toString(),"of 650","Seats"] : undefined}
-            summary={electionSummaryBlocs()}
+            liveTitle={live ? [liveCounter.toString(),"of 50","States"] : undefined}
+            summary={electionSummaryBars()}
             dedicatedPage={dedicatedPage}
         >
             <HoverPopup visible={popupState.visible} coordinates={popupState.coordinates}>

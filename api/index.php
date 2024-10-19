@@ -24,6 +24,9 @@
 
     
     switch($resource){
+        case "elections": // elections/{country}/{election} - get election information for a country by election ID
+            require 'elections.php';
+            break;
         case "messages": // messages/{country}/{election} - get messages for a country by election ID
             require 'messages.php';
             break;
