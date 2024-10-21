@@ -2,11 +2,17 @@ import { Party } from 'src/Types';
 import styles from './ElectionSummaryBar.module.css';
 
 export default function ElectionSummaryBar( 
-    { data } : { data : {candidate? : string, party : Party, count : number, displayCount?: string}[] }
+    { 
+        data,
+        total = data.reduce( (accumulator, row) => accumulator + row.count, 0 ) || 1
+    } : 
+    { 
+        data : {candidate? : string, party : Party, count : number, displayCount?: string}[],
+        total? : number
+    }
 ){
 
     const segments : React.ReactNode[] = [];
-    const total = data.reduce( (accumulator, row) => accumulator + row.count, 0 ) || 1;
 
     data.forEach( (row,index) => {
 

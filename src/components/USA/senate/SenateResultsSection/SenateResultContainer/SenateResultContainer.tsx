@@ -1,4 +1,4 @@
-import { Context, useContext, useEffect, useRef, useState } from "react";
+import { Context, Fragment, useContext, useEffect, useRef, useState } from "react";
 
 import styles from './SenateResultContainer.module.css';
 import ElectionResultContainer from "../../../../shared/ElectionResultContainer/ElectionResultContainer";
@@ -15,6 +15,7 @@ import Message from "src/components/shared/Message/Message";
 import USASenate1960Map from "src/components/maps/USASenate1960Map";
 import USASenate1960GeographicMap from "src/components/maps/USASenate1960GeographicMap";
 import ElectionSummaryBars from "src/components/shared/ElectionSummaries/ElectionSummaryBars/ElectionSummaryBars";
+import { senateCaucusMap } from "src/constants/USA";
 
 interface Update{
     id : string,
@@ -257,7 +258,7 @@ export default function SenateResultContainer(
         getResults();
     }, [onScreen, parties, regions]);
 
-    if(live) setTimeout( () => {
+    /*if(live) setTimeout( () => {
         setLivePolling(!livePolling); //alternate value to trigger useEffect
     }, 6000);
     useEffect( () => {
@@ -311,7 +312,7 @@ export default function SenateResultContainer(
             }
         };
         getLiveUpdates();
-    }, [livePolling]);
+    }, [livePolling]);*/
 
     const mapHoverFun = (active : boolean = false, event?: React.MouseEvent, id?: string) => {
         const newPopupState = {...popupState, visible: active};
@@ -321,18 +322,25 @@ export default function SenateResultContainer(
     };
 
     const mapClickFun = (id: string) => {
-        let region = regions.find( r => r.id == id );
+        const region = regions.find( r => r.id == id );
         if(region) router.push('state/' + constituencyToSlug(region.title));
     };
+    const geographicMapClickFun = (classlessId: string) => {
+        const region = regions.find( r => r.id == classlessId + classNo );
+        if(region) router.push('state/' + constituencyToSlug(region.title));
+    };
+
     const map = () => {
-        if(geographic) return <USASenate1960GeographicMap hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
+        if(geographic) return <USASenate1960GeographicMap regions={regions} hoverFun={mapHoverFun} clickFun={geographicMapClickFun} fills={fills.filter(f => !f.opacity)} />;
         else return <USASenate1960Map classNo={classNo} specialNames={getSpecials(results)} hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
     };
 
-    const popupContent = (id? : string) => {
+    const popupContent = (id? : string) => geographic ? geographicPopupContent(id) : cartographicPopupContent(id);
+
+    const cartographicPopupContent = (id? : string) => {
         const region = regions.find( region => region.id == id );
         if(!region) return <h3>Missing data</h3>;
-        
+
         const regionResults = results.filter( result => result.id == id ).sort( (a,b) => b.votes - a.votes );
         if(regionResults.length > 0){ //current year election
         
@@ -370,36 +378,100 @@ export default function SenateResultContainer(
             </> );
             else return (<h3>Missing data</h3>);
         }
+    };
+
+    const geographicPopupContent = (id? : string) => {
+        if(!id) return (<h3>Missing data</h3>);
+
+        const nodes : React.ReactNode[] = [];
+        new Set([classNo, 1, 2, 3]).forEach( specificClass => {
+            const region = regions.find( region => region.id == id + specificClass);
+            if(!region) return;
+
+            const regionResults = results.filter( result => result.id == id + specificClass ).sort( (a,b) => b.votes - a.votes );
+            if(regionResults.length == 0) return;
+
+            nodes.push(<Fragment key={specificClass}>{cartographicPopupContent(id + specificClass)}</Fragment>);
+
+        });
+
+        if(nodes.length == 0){
+            const region = regions.find( region => [id + "1", id + "2", id + "3"].includes(region.id));
+            if(!region) return (<h3>Missing data</h3>);
+            return (<>
+                <h3>{region.title.split(" (Class")[0]}</h3>
+                <h4>No election this year</h4>
+            </>);
+        }
+
+        return nodes;
     }
 
     const electionSummaryBars = () => {
         const summaries : {party : Party, count : number, ghostCount : number}[] = [];
         const countedResults : string[] = [];
+
+        const caucusedIndCounts = new Map<string, {party : Party, count : number, ghostCount : number}>();
+
         winFormula([...results, ...otherClassResults]).forEach( (result, index) => {
             if(countedResults.includes(result.id)) return;
             countedResults.push(result.id);
 
-            const shouldIncrementCount = +(index < winFormula(results).length);
-            const shouldIncrementGhostCount = 1 - shouldIncrementCount;
-
             const regionUpdates = updates.filter( u => u.id == result.id );
             const winner = regionUpdates.length > 0 ? regionUpdates[regionUpdates.length - 1].party : result.party;
+            const shouldIncrementCount = +(index < winFormula(results).length);
+
+
+            const election = resultsBank.find( r => r.results.includes(result) )?.election;
+            const caucusesWithParty = senateCaucusMap.find(c => c.election === election && c.region === result.id)?.caucusesWith;
+            if(caucusesWithParty){
+
+                const mapData = caucusedIndCounts.get(caucusesWithParty) || {
+                    party: parties.find( p => p.id == winner ) || DefaultParty,
+                    count: 0,
+                    ghostCount: 0
+                };
+                caucusedIndCounts.set(caucusesWithParty, {
+                    party: mapData.party,
+                    count: mapData.count + shouldIncrementCount,
+                    ghostCount: mapData.ghostCount + 1 - shouldIncrementCount
+                });
+                return;
+
+            }
 
             if(!summaries.find( s => s.party.id == result.party)){
                 const party : Party = parties.find( p => p.id == winner ) || DefaultParty;
-                summaries.push({ party: party, count: shouldIncrementCount, ghostCount: shouldIncrementGhostCount });
+                summaries.push({ party: party, count: shouldIncrementCount, ghostCount: 1 - shouldIncrementCount });
             }
             else{
                 summaries.find( s => s.party.id == winner )!.count += shouldIncrementCount;
-                summaries.find( s => s.party.id == winner )!.ghostCount += shouldIncrementGhostCount;
+                summaries.find( s => s.party.id == winner )!.ghostCount += 1 - shouldIncrementCount;
             }
         });
         summaries.sort( (a,b) => {
             return b.count - a.count || a.party.id.localeCompare(b.party.id);
         } );
 
+        const comboFunction = (data : {party : Party, count : number, ghostCount : number}[]) => {
+            const comboBars : {party : Party, count : number, ghostCount : number}[][] = [];
+
+            data.forEach( row => {
+                const rows : {party : Party, count : number, ghostCount : number}[] = [row];
+                const mapData = caucusedIndCounts.get(row.party.id);
+                if(mapData) rows.push(mapData);
+                comboBars.push(rows);
+            } );
+
+            comboBars.sort( (x,y) => {
+                return y.reduce((a,r) => a + r.count + (r.ghostCount || 0), 0) - x.reduce((a,r) => a + r.count + (r.ghostCount || 0), 0);
+            });
+
+            return comboBars;
+        };
+
         return (
-            <ElectionSummaryBars data={summaries} />
+            <ElectionSummaryBars data={summaries} comboFunction={comboFunction} />
         );
     }
 
@@ -409,7 +481,7 @@ export default function SenateResultContainer(
             messages={messageGroup ? messages.map(m => m.node) : undefined} messagesOpenOnLoad={messagesOpenOnLoad} 
             map={map()} 
             title={title} 
-            liveTitle={live ? [liveCounter.toString(),"of 50","States"] : undefined}
+            liveTitle={live ? [liveCounter.toString(),"of 35","Seats"] : undefined}
             summary={electionSummaryBars()}
             dedicatedPage={dedicatedPage}
         >

@@ -1,63 +1,86 @@
 import { Party } from 'src/Types';
 import styles from './ElectionSummaryBars.module.css';
 
+interface BarData{
+    candidate? : string, 
+    party : Party, 
+    count : number, 
+    ghostCount? : number, 
+    displayCount?: string
+}
+
 export default function ElectionSummaryBars( 
-    { data } : { data : {candidate? : string, party : Party, count : number, ghostCount? : number, displayCount?: string}[] }
+    { 
+        data, 
+        total = data.reduce( (accumulator, row) => accumulator + row.count + (row.ghostCount || 0), 0 ) || 1,
+        comboFunction = (d) => { const comboBars : BarData[][] = []; d.forEach( row => comboBars.push([row]) ); return comboBars }
+    } : 
+    { 
+        data : BarData[],
+        total? : number,
+        comboFunction? : (d : BarData[]) => BarData[][]
+    }
 ){
 
-    const bars : React.ReactNode[] = [];
+    const barNodes : React.ReactNode[] = [];
 
-    const total = data.reduce( (accumulator, row) => accumulator + row.count + (row.ghostCount || 0), 0 ) || 1;
-    const maxCount = data.reduce( (accumulator, row) => {
-        return Math.max(accumulator, (row.count + (row.ghostCount || 0)));
+    const comboBars = comboFunction(data);
+
+    const maxCount = comboBars.reduce( (accumulator, rows) => {
+        return Math.max( accumulator, rows.reduce((a,r) => a + r.count + (r.ghostCount || 0) , 0) );
     }, 0);
 
+    comboBars.forEach( (rows,index) => {
 
-    /*
+        const segments : React.ReactNode[] = [];
 
-    m = 100 * (count + ghost) / total
+        rows.forEach( (row, rowIndex) => {
+            const barWidth = (100 * row.count / maxCount);
+            const count = rows.reduce((a,r) => a + r.count + (r.ghostCount || 0), 0);
 
-    (100 * count / m) + (100 * ghost / m)
-    = 100 * (count + ghost) / m
+            const bar = barWidth > 0 && (
+                <div 
+                    key={"segment-" + rowIndex}
+                    className={styles["summary-segment"]}
+                    style={{
+                        width: barWidth + "%",
+                        background: row.party.color || "var(--default-color)", 
+                        color: row.party.textColor
+                    }}
+                >
+                    {rowIndex == 0 && <>
+                        <span className={styles["summary-bar-party"]}>{row.candidate || row.party.displayId || row.party.id}</span>
+                        <span className={styles["summary-bar-count"]}>{count}</span>
+                    </> }
+                </div>
+            );
+            segments.push(bar);
+        } );
+        rows.forEach( (row, rowIndex) => {
 
-    */
-
-    data.forEach( (row,index) => {
-
-        const bar = (
-            <div 
-                className={styles["summary-bar"]}
-                style={{
-                    width: (100 * row.count / maxCount) + "%",
-                    background: row.party.color || "var(--default-color)", 
-                    color: row.party.textColor
-                }}
-            >
-                <span className={styles["summary-bar-party"]}>{row.candidate || row.party.displayId || row.party.id}</span>
-                <span className={styles["summary-bar-count"]}>{row.displayCount || (row.count + (row.ghostCount || 0))}</span>
-            </div>
-        );
-
-        const ghostBar = (
-            <div 
-                className={styles["summary-ghost-bar"]}
-                style={{
-                    width: (100 * (row.ghostCount || 0) / maxCount) + "%",
-                    background: row.party.color || "var(--default-color)", 
-                    color: row.party.textColor
-                }}
-            >
-            </div>
-        );
+            const ghostBarWidth = (100 * (row.ghostCount || 0) / maxCount);
+            const ghostBar = ghostBarWidth > 0 && (
+                <div 
+                    key={"ghost-" + rowIndex}
+                    className={styles["summary-ghost-segment"]}
+                    style={{
+                        width: ghostBarWidth + "%",
+                        background: row.party.color || "var(--default-color)", 
+                        color: row.party.textColor
+                    }}
+                >
+                </div>
+            );
+            segments.push(ghostBar);
+        } );
 
             
-        bars.push(
+        barNodes.push(
             <div
                 key={index} 
                 className={styles["summary-bar-container"]}
             >
-                {bar}
-                {row.ghostCount != 0 && ghostBar}
+                {segments}
             </div>
         );
     } );
@@ -65,7 +88,7 @@ export default function ElectionSummaryBars(
 
     return ( 
         <div className={styles["summary-bars-container"]} style={{width: 100 * maxCount / total + "%"}}>
-            {bars}
+            {barNodes}
         </div>
     );
 }

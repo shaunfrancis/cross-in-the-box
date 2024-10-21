@@ -11,10 +11,10 @@ export const metadata: Metadata = {
 
 export default function USALayout( { children } : { children : React.ReactNode } ){
     const links = [
-        {title: "Presidential Elections", path: "/usa/presidential-elections"},
-        {title: "Senate Elections", path: "/usa/senate-elections" },
-        {title: "House Elections", path: "/usa/house-elections" },
-        {title: "Gubernatorial Elections", path: "/usa/gubernatorial-elections" }
+        {title: "President", path: "/usa/presidential-elections"},
+        {title: "Senate", path: "/usa/senate-elections" },
+        {title: "House", path: "/usa/house-elections" },
+        {title: "Governor", path: "/usa/gubernatorial-elections" }
     ];
 
     return ( <>

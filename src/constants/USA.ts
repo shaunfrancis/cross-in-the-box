@@ -114,4 +114,95 @@ const stateWeights = {
     "2012WY":	 3,
 };
 
-export { stateWeights }
+const senateCaucusMap = [
+    {election: "S2018", region: "SVT1", caucusesWith: "dem"}, //Bernie Sanders
+    {election: "S2018", region: "SME1", caucusesWith: "dem"}, //Angus King
+    {election: "S2018", region: "SMS2", caucusesWith: "rep"}, //MS nonpartisan special
+    {election: "S2012", region: "SVT1", caucusesWith: "dem"}, //Bernie Sanders
+    {election: "S2012", region: "SME1", caucusesWith: "dem"}, //Angus King
+];
+
+const senateGhostResults = [
+    {
+        election: "S2012",
+        date: new Date("2012-11-06"),
+        results: [
+            { id:"SAZ1", party:"rep" },
+            { id:"SCA1", party:"dem" },
+            { id:"SCT1", party:"dem" },
+            { id:"SDE1", party:"dem" },
+            { id:"SFL1", party:"dem" },
+            { id:"SHI1", party:"dem" },
+            { id:"SHI1", party:"dem" },
+            { id:"SIN1", party:"dem" },
+            { id:"SME1", party:"ind" },
+            { id:"SMD1", party:"dem" },
+            { id:"SMA1", party:"dem" },
+            { id:"SMI1", party:"dem" },
+            { id:"SMN1", party:"dem" },
+            { id:"SMS1", party:"rep" },
+            { id:"SMO1", party:"dem" },
+            { id:"SMT1", party:"dem" },
+            { id:"SNE1", party:"rep" },
+            { id:"SNV1", party:"rep" },
+            { id:"SNJ1", party:"dem" },
+            { id:"SNM1", party:"dem" },
+            { id:"SNY1", party:"dem" },
+            { id:"SND1", party:"dem" },
+            { id:"SOH1", party:"dem" },
+            { id:"SPA1", party:"dem" },
+            { id:"SRI1", party:"dem" },
+            { id:"STN1", party:"rep" },
+            { id:"STX1", party:"rep" },
+            { id:"SUT1", party:"rep" },
+            { id:"SVT1", party:"ind" },
+            { id:"SVA1", party:"dem" },
+            { id:"SWA1", party:"dem" },
+            { id:"SWV1", party:"dem" },
+            { id:"SWI1", party:"dem" },
+            { id:"SWY1", party:"rep" },
+        ].map( result => { return { ...result, votes:0, candidate:"", elected:true } } )
+    },
+    {
+        election: "S2010",
+        date: new Date("2010-11-02"),
+        results: [
+            { id:"SAL3", party:"rep" },
+            { id:"SAK3", party:"rep" },
+            { id:"SAZ3", party:"rep" },
+            { id:"SAR3", party:"rep" },
+            { id:"SCA3", party:"dem" },
+            { id:"SCO3", party:"dem" },
+            { id:"SCT3", party:"dem" },
+            { id:"SFL3", party:"rep" },
+            { id:"SGA3", party:"rep" },
+            { id:"SHI3", party:"dem" },
+            { id:"SID3", party:"rep" },
+            { id:"SIL3", party:"rep" },
+            { id:"SIN3", party:"rep" },
+            { id:"SIA3", party:"rep" },
+            { id:"SKS3", party:"rep" },
+            { id:"SKY3", party:"rep" },
+            { id:"SLA3", party:"rep" },
+            { id:"SMD3", party:"dem" },
+            { id:"SMO3", party:"rep" },
+            { id:"SNV3", party:"dem" },
+            { id:"SNH3", party:"rep" },
+            { id:"SNY3", party:"dem" },
+            { id:"SNC3", party:"rep" },
+            { id:"SND3", party:"rep" },
+            { id:"SOH3", party:"rep" },
+            { id:"SOK3", party:"rep" },
+            { id:"SOR3", party:"dem" },
+            { id:"SPA3", party:"rep" },
+            { id:"SSC3", party:"rep" },
+            { id:"SSD3", party:"rep" },
+            { id:"SUT3", party:"rep" },
+            { id:"SVT3", party:"dem" },
+            { id:"SWA3", party:"dem" },
+            { id:"SWI3", party:"rep" },
+        ].map( result => { return { ...result, votes:0, candidate:"", elected:true } } )
+    },
+];
+
+export { stateWeights, senateCaucusMap, senateGhostResults }

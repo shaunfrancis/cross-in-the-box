@@ -295,7 +295,7 @@ export default function PresidentialResultContainer(
         } );
 
         return (
-            <ElectionSummaryBar data={summaries} />
+            <ElectionSummaryBar data={summaries} total={538} />
         );
     }
 

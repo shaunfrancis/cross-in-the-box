@@ -37,7 +37,7 @@ export default function USASenateElections(){
 
     const searchInputRef = useRef<HTMLInputElement>(null);
     const heroNavItems = [
-        { title: "Election Results", src:"/images/usa-nav-results.svg", ref:useRef<HTMLElement>(null) },
+        { title: "Election Results", src:"/images/usa-nav-senate-results.svg", ref:useRef<HTMLElement>(null) },
         { title: "Find a State", src:"/images/nav-region.svg", ref:useRef<HTMLElement>(null), 
             fun: () => { setTimeout( () => { if(searchInputRef.current) searchInputRef.current.focus() }, 100 ) }
         }
@@ -54,7 +54,7 @@ export default function USASenateElections(){
                 <div className="section-heading">
                     <h1>Election Results</h1>
                     <Toggle 
-                        from={"/images/usa-cartographic-icon.svg"} 
+                        from={"/images/usa-cartographic-senate-icon.svg"} 
                         to={"/images/usa-geographic-icon.svg"} 
                         fun={(state) => { updateGeographicState(state) }}
                         value={geographic}
