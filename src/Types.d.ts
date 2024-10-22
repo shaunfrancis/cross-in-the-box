@@ -101,3 +101,9 @@ export interface UpdateEvent extends Event{
         note: string
     }
 }
+
+export interface Update{
+    id : string,
+    date : Date,
+    party : string
+}

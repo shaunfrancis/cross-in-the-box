@@ -8,7 +8,7 @@ import UKGeneral2024GeographicMap from "src/components/maps/UKGeneral2024Geograp
 import ElectionResultContainer from "../../../shared/ElectionResultContainer/ElectionResultContainer";
 import HoverPopup from "../../../shared/HoverPopup/HoverPopup";
 import PopupBarGraph from "../../../shared/PopupBarGraph/PopupBarGraph";
-import { MessageData, Party, Region, Result } from "src/Types";
+import { MessageData, Party, Region, Result, Update } from "src/Types";
 import { DefaultParty, Endpoint } from "src/constants/shared";
 import { UKSeatsToWatch } from "src/constants/UK";
 import { useRouter } from "next/navigation";
@@ -17,12 +17,6 @@ import PartyProgressionBlocs from "src/components/shared/PartyProgressionBlocs/P
 import { dateToLongDate, parseJSONWithDates, useOnScreen } from "src/lib/shared";
 import Message from "src/components/shared/Message/Message";
 import ElectionSummaryBlocs from "src/components/shared/ElectionSummaries/ElectionSummaryBlocs/ElectionSummaryBlocs";
-
-interface Update{
-    id : string,
-    date : Date,
-    party : string
-}
 
 export default function UKElectionResultContainer( 
     { election, live = false, title = [election, "General", "Election"], preloadedResults, regions, parties, summaryBlocHoverState, messageGroup, messagesOpenOnLoad, geographic, changes, dedicatedPage, winFormula = (results : Result[]) => results.filter(r => r.elected) } : 

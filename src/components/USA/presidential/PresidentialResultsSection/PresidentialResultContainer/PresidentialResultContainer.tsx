@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import ElectionResultContainer from "../../../../shared/ElectionResultContainer/ElectionResultContainer";
 import HoverPopup from "../../../../shared/HoverPopup/HoverPopup";
 import PopupBarGraph from "../../../../shared/PopupBarGraph/PopupBarGraph";
-import { MessageData, Party, Region, Result } from "src/Types";
+import { MessageData, Party, Region, Result, Update } from "src/Types";
 import { DefaultParty, Endpoint } from "src/constants/shared";
 import { UKSeatsToWatch } from "src/constants/UK";
 import { useRouter } from "next/navigation";
@@ -17,12 +17,6 @@ import { stateWeights } from "src/constants/USA";
 import USAPresidential2024GeographicMap from "src/components/maps/USAPresidential2024GeographicMap";
 import USAPresidential2024Map from "src/components/maps/USAPresidential2024Map";
 import ElectionSummaryBar from "src/components/shared/ElectionSummaries/ElectionSummaryBar/ElectionSummaryBar";
-
-interface Update{
-    id : string,
-    date : Date,
-    party : string
-}
 
 export default function PresidentialResultContainer( 
     { election, live = false, title = [election.replace(/[^0-9.]/g, ''), "Presidential", "Election"], preloadedResults, regions, parties, messageGroup, messagesOpenOnLoad, geographic, changes, dedicatedPage, winFormula = (results : Result[]) => results.filter(r => r.elected) } : 
