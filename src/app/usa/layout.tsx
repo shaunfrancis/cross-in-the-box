@@ -7,6 +7,13 @@ export const metadata: Metadata = {
       default: 'United States'
     },
     description: '',
+    icons: {
+        icon: [
+            { url: '/favicons/usa/favicon-48x48.png', sizes: '48x48', type: 'image/png' }
+        ],
+        apple: [ { url: '/favicons/usa/apple-touch-icon.png', sizes: '192x192' } ]
+    },
+    manifest: '/favicons/usa/site.webmanifest'
   }
 
 export default function USALayout( { children } : { children : React.ReactNode } ){
@@ -18,7 +25,7 @@ export default function USALayout( { children } : { children : React.ReactNode }
     ];
 
     return ( <>
-        <Header country="United States" links={links} />
+        <Header countryName="United States" countryAbbrev="usa" links={links} />
         {children}
     </> )
 }
