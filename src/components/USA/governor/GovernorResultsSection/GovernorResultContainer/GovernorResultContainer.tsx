@@ -1,4 +1,4 @@
-import { Context, Fragment, useContext, useEffect, useRef, useState } from "react";
+import { Context, useContext, useEffect, useRef, useState } from "react";
 
 import styles from 'src/components/shared/ElectionResultContainer/ElectionResultContainer.module.css';
 import ElectionResultContainer from "../../../../shared/ElectionResultContainer/ElectionResultContainer";
@@ -12,27 +12,13 @@ import { constituencyToSlug } from "src/lib/UK";
 import PartyProgressionBlocs from "src/components/shared/PartyProgressionBlocs/PartyProgressionBlocs";
 import { dateToLongDate, parseJSONWithDates, useOnScreen } from "src/lib/shared";
 import Message from "src/components/shared/Message/Message";
-import USASenate1960Map from "src/components/maps/USASenate1960Map";
-import USASenate1960GeographicMap from "src/components/maps/USASenate1960GeographicMap";
+import USAGovernor1960Map from "src/components/maps/USAGovernor1960Map";
 import ElectionSummaryBars from "src/components/shared/ElectionSummaries/ElectionSummaryBars/ElectionSummaryBars";
-import { senateCaucusMap } from "src/constants/USA";
+import { governorCaucusMap } from "src/constants/USA";
+import USAGovernor1960GeographicMap from "src/components/maps/USAGovernor1960GeographicMap";
 
-export default function SenateResultContainer( 
-    { 
-        context,
-        election,
-        classNo, 
-        live = false,
-        title = [election.replace(/[^0-9.]/g, ''), "Senate", "Elections"],
-        regions,
-        parties,
-        messageGroup,
-        messagesOpenOnLoad,
-        geographic,
-        changes,
-        dedicatedPage,
-        winFormula = (results : Result[]) => results.filter(r => r.elected)
-    } : 
+export default function GovernorResultContainer( 
+    { context, election, live = false, title = [election.replace(/[^0-9.]/g, ''), "Gubernatorial", "Elections"], preloadedResults, regions, parties, messageGroup, messagesOpenOnLoad, geographic, changes, dedicatedPage, winFormula = (results : Result[]) => results.filter(r => r.elected) } : 
     { 
         context : Context<{
             bank : {
@@ -46,9 +32,9 @@ export default function SenateResultContainer(
             }[]
         }>,
         election : string, 
-        classNo : 1 | 2 | 3,
         live? : boolean,
         title? : string[],
+        preloadedResults? : Result[],
         regions : Region[],
         parties : Party[],
         winFormula? : (results : Result[]) => Result[],
@@ -65,7 +51,7 @@ export default function SenateResultContainer(
     const container = useRef<HTMLDivElement>(null);
     const onScreen = useOnScreen(container);
     const loadingComplete = useRef<boolean>(false);
-    
+
     const { bank: resultsBank, promises: resultsPromises } = useContext(context)!;
     let [fills, setFills] = useState<{id: string, color: string, opacity?: number}[]>([]);
     let [popupState, setPopupState] = useState<{visible: boolean, coordinates:[number,number], id?: string}>( { visible: false, coordinates:[0,0] } );
@@ -79,13 +65,6 @@ export default function SenateResultContainer(
 
     let [livePolling, setLivePolling] = useState<boolean>(false);
     let [liveCounter, setLiveCounter] = useState<number>(0);
-
-    const getSpecials = (results : Result[]) : any => {
-        return results
-            .filter( result => !result.id.includes( classNo.toString() ) )
-            .map( result => result.id )
-            .filter( (id, index, ids) => ids.indexOf(id) === index );
-        };
 
     const addConstituencyLinks = (text : string) : React.ReactNode[] => {
         const spans : React.ReactNode[] = [];
@@ -142,7 +121,7 @@ export default function SenateResultContainer(
     }
 
     useEffect( () => {
-        if( loadingComplete.current || !onScreen || parties.length == 0 || regions.length == 0) return;
+        if( loadingComplete.current || !onScreen || parties.length == 0 || regions.length == 0 || (preloadedResults && preloadedResults.length == 0)) return;
         loadingComplete.current = true;
 
         const getResultsFromElection = async (election : string) => {
@@ -199,8 +178,9 @@ export default function SenateResultContainer(
             const electionYear = parseInt(election.slice(1));
             if(electionYear){
                 const newOtherClassResults = [
-                    ...await getResultsFromElection("S" + (electionYear-2)), 
-                    ...await getResultsFromElection("S" + (electionYear-4))
+                    ...await getResultsFromElection("G" + (electionYear-1)), 
+                    ...await getResultsFromElection("G" + (electionYear-2)),
+                    ...await getResultsFromElection("G" + (electionYear-3))
                 ];
                 winFormula(newOtherClassResults).forEach( result => {
                     const party : Party = parties.find( p => p.id == result.party ) || DefaultParty;
@@ -250,9 +230,9 @@ export default function SenateResultContainer(
             }
         };
         getResults();
-    }, [onScreen, parties, regions]);
+    }, [onScreen, preloadedResults, parties, regions]);
 
-    /*if(live) setTimeout( () => {
+    if(live) setTimeout( () => {
         setLivePolling(!livePolling); //alternate value to trigger useEffect
     }, 6000);
     useEffect( () => {
@@ -306,7 +286,7 @@ export default function SenateResultContainer(
             }
         };
         getLiveUpdates();
-    }, [livePolling]);*/
+    }, [livePolling]);
 
     const mapHoverFun = (active : boolean = false, event?: React.MouseEvent, id?: string) => {
         const newPopupState = {...popupState, visible: active};
@@ -316,22 +296,15 @@ export default function SenateResultContainer(
     };
 
     const mapClickFun = (id: string) => {
-        const region = regions.find( r => r.id == id );
+        let region = regions.find( r => r.id == id );
         if(region) router.push('state/' + constituencyToSlug(region.title));
     };
-    const geographicMapClickFun = (classlessId: string) => {
-        const region = regions.find( r => r.id == classlessId + classNo );
-        if(region) router.push('state/' + constituencyToSlug(region.title));
-    };
-
     const map = () => {
-        if(geographic) return <USASenate1960GeographicMap regions={regions} hoverFun={mapHoverFun} clickFun={geographicMapClickFun} fills={fills.filter(f => !f.opacity)} />;
-        else return <USASenate1960Map classNo={classNo} specialNames={getSpecials(results)} hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
+            if(geographic) return <USAGovernor1960GeographicMap hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
+            else return <USAGovernor1960Map hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
     };
 
-    const popupContent = (id? : string) => geographic ? geographicPopupContent(id) : cartographicPopupContent(id);
-
-    const cartographicPopupContent = (id? : string) => {
+    const popupContent = (id? : string) => {
         const region = regions.find( region => region.id == id );
         if(!region) return <h3>Missing data</h3>;
 
@@ -372,33 +345,6 @@ export default function SenateResultContainer(
             </> );
             else return (<h3>Missing data</h3>);
         }
-    };
-
-    const geographicPopupContent = (id? : string) => {
-        if(!id) return (<h3>Missing data</h3>);
-
-        const nodes : React.ReactNode[] = [];
-        new Set([classNo, 1, 2, 3]).forEach( specificClass => {
-            const region = regions.find( region => region.id == id + specificClass);
-            if(!region) return;
-
-            const regionResults = results.filter( result => result.id == id + specificClass ).sort( (a,b) => b.votes - a.votes );
-            if(regionResults.length == 0) return;
-
-            nodes.push(<Fragment key={specificClass}>{cartographicPopupContent(id + specificClass)}</Fragment>);
-
-        });
-
-        if(nodes.length == 0){
-            const region = regions.find( region => [id + "1", id + "2", id + "3"].includes(region.id));
-            if(!region) return (<h3>Missing data</h3>);
-            return (<>
-                <h3>{region.title.split(" (Class")[0]}</h3>
-                <h4>No election this year</h4>
-            </>);
-        }
-
-        return nodes;
     }
 
     const electionSummaryBars = () => {
@@ -417,7 +363,7 @@ export default function SenateResultContainer(
 
 
             const election = resultsBank.find( r => r.results.includes(result) )?.election;
-            const caucusesWithParty = senateCaucusMap.find(c => c.election === election && c.region === result.id)?.caucusesWith;
+            const caucusesWithParty = governorCaucusMap.find(c => c.election === election && c.region === result.id)?.caucusesWith;
             if(caucusesWithParty){
 
                 const mapData = caucusedIndCounts.get(caucusesWithParty) || {
@@ -475,7 +421,7 @@ export default function SenateResultContainer(
             messages={messageGroup ? messages.map(m => m.node) : undefined} messagesOpenOnLoad={messagesOpenOnLoad} 
             map={map()} 
             title={title} 
-            liveTitle={live ? [liveCounter.toString(),"of 35","Seats"] : undefined}
+            liveTitle={live ? [liveCounter.toString(),"of 435","Seats"] : undefined}
             summary={electionSummaryBars()}
             dedicatedPage={dedicatedPage}
         >

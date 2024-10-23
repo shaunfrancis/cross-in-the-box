@@ -8,11 +8,11 @@ import { dateToLongDate, parseJSONWithDates } from "src/lib/shared";
 import Link from 'next/link';
 import HeroNav from 'src/components/shared/HeroNav/HeroNav';
 
-import styles from './PresidentialStatePage.module.css';
+import styles from './GovernorStatePage.module.css';
 import { constituencyToSlug, partyIdToDisplayId, slugToLookupSlug } from "src/lib/UK";
-import PresidentialSidebar from "./PresidentialSidebar/PresidentialSidebar";
+import GovernorSidebar from "./GovernorSidebar/GovernorSidebar";
 
-export default function PresidentialStatePage( { slug } : { slug : string } ){
+export default function GovernorStatePage( { slug } : { slug : string } ){
 
     let prettySlug = "";
     slug.replace(/-/g, " ").split(" ").forEach( slugPiece => {
@@ -23,7 +23,7 @@ export default function PresidentialStatePage( { slug } : { slug : string } ){
 
     useEffect( () => {
         const useAsyncEffect = async () => {
-            const regionData = await fetch(Endpoint + "/slug-lookup/usa/" + slugToLookupSlug(slug) + "/presidential").then( res => res.json() );
+            const regionData = await fetch(Endpoint + "/slug-lookup/usa/" + slugToLookupSlug(slug) + "/governor").then( res => res.json() );
             if(regionData.error){
                 //error handling
             }
@@ -53,7 +53,7 @@ export default function PresidentialStatePage( { slug } : { slug : string } ){
             if(data.tree.find(t => t.region_id == event.region.id && !t.direct_successor)){
                 data.tree.filter(t => t.region_id == event.region.id && !t.direct_successor).forEach( treeBranch => {
                     succeededByNodes.push(
-                        <Link href={'/usa/presidential-elections/state/' + constituencyToSlug(treeBranch.title)} className={styles["abolished-link"] + " unstyled"}>
+                        <Link href={'/usa/gubernatorial-elections/state/' + constituencyToSlug(treeBranch.title)} className={styles["abolished-link"] + " unstyled"}>
                             <h3>{treeBranch.title}</h3>
                         </Link>
                     )
@@ -121,15 +121,15 @@ export default function PresidentialStatePage( { slug } : { slug : string } ){
     return ( <>
 
         <section id="hero">
-            <a href="/usa/presidential-elections/" className="breadcrumb">
+            <a href="/usa/gubernatorial-elections/" className="breadcrumb">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z"/></svg>
-                <span>US Presidential Elections</span>
+                <span>US Gubernatorial Elections</span>
             </a>
 
             <h1>{region.title}</h1>
             <HeroNav items={heroNavItems} />
         </section>
-        <RegionPage sidebar={<PresidentialSidebar region={region} />}>
+        <RegionPage sidebar={<GovernorSidebar region={region} />}>
 
             {succeededByNodes.length > 0 &&
                 <section id={styles["abolished-container"]} className="shaded yellow">

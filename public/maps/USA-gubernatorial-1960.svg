@@ -1,0 +1,157 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 550 450" width="100%" height="100%" stroke-width="2" stroke="#fff">
+    <style>
+        #usa-gubernatorial-1960-svg text{ stroke:none; fill: white; alignment-baseline: central; text-anchor: middle; font-family: 'Oswald', Helvetica, sans-serif; font-weight: bold; pointer-events: none }
+        #usa-gubernatorial-1960-svg rect{ cursor:pointer; transition: fill 1000ms, opacity 500ms }
+    </style>
+    <g id="usa-gubernatorial-1960-svg" fill="#eee" font-size="18">
+        <rect width="50" height="50" x="500" y="0" name="GME"></rect>
+        <text x="525" y="25">ME</text>
+        
+        <rect width="50" height="50" x="0" y="50" name="GWA"></rect>
+        <text x="25" y="75">WA</text>
+        
+        <rect width="50" height="50" x="50" y="50" name="GMT"></rect>
+        <text x="75" y="75">MT</text>
+        
+        <rect width="50" height="50" x="100" y="50" name="GND"></rect>
+        <text x="125" y="75">ND</text>
+        
+        <rect width="50" height="50" x="150" y="50" name="GMN"></rect>
+        <text x="175" y="75">MN</text>
+        
+        <rect width="50" height="50" x="400" y="50" name="GVT"></rect>
+        <text x="425" y="75">VT</text>
+        
+        <rect width="50" height="50" x="450" y="50" name="GNH"></rect>
+        <text x="475" y="75">NH</text>
+        
+        <rect width="50" height="50" x="500" y="50" name="GMA"></rect>
+        <text x="525" y="75">MA</text>
+        
+        <rect width="50" height="50" x="0" y="100" name="GOR"></rect>
+        <text x="25" y="125">OR</text>
+        
+        <rect width="50" height="50" x="50" y="100" name="GID"></rect>
+        <text x="75" y="125">ID</text>
+        
+        <rect width="50" height="50" x="100" y="100" name="GWY"></rect>
+        <text x="125" y="125">WY</text>
+        
+        <rect width="50" height="50" x="150" y="100" name="GSD"></rect>
+        <text x="175" y="125">SD</text>
+        
+        <rect width="50" height="50" x="200" y="100" name="GWI"></rect>
+        <text x="225" y="125">WI</text>
+        
+        <rect width="50" height="50" x="250" y="100" name="GMI"></rect>
+        <text x="275" y="125">MI</text>
+        
+        <rect width="50" height="50" x="350" y="100" name="GPA"></rect>
+        <text x="375" y="125">PA</text>
+        
+        <rect width="50" height="50" x="400" y="100" name="GNY"></rect>
+        <text x="425" y="125">NY</text>
+        
+        <rect width="50" height="50" x="450" y="100" name="GCT"></rect>
+        <text x="475" y="125">CT</text>
+        
+        <rect width="50" height="50" x="500" y="100" name="GRI"></rect>
+        <text x="525" y="125">RI</text>
+        
+        <rect width="50" height="50" x="0" y="150" name="GCA"></rect>
+        <text x="25" y="175">CA</text>
+        
+        <rect width="50" height="50" x="50" y="150" name="GNV"></rect>
+        <text x="75" y="175">NV</text>
+        
+        <rect width="50" height="50" x="100" y="150" name="GNE"></rect>
+        <text x="125" y="175">NE</text>
+        
+        <rect width="50" height="50" x="150" y="150" name="GIA"></rect>
+        <text x="175" y="175">IA</text>
+        
+        <rect width="50" height="50" x="200" y="150" name="GIL"></rect>
+        <text x="225" y="175">IL</text>
+        
+        <rect width="50" height="50" x="250" y="150" name="GIN"></rect>
+        <text x="275" y="175">IN</text>
+        
+        <rect width="50" height="50" x="300" y="150" name="GOH"></rect>
+        <text x="325" y="175">OH</text>
+        
+        <rect width="50" height="50" x="350" y="150" name="GMD"></rect>
+        <text x="375" y="175">MD</text>
+        
+        <rect width="50" height="50" x="400" y="150" name="GNJ"></rect>
+        <text x="425" y="175">NJ</text>
+        
+        <rect width="50" height="50" x="50" y="200" name="GUT"></rect>
+        <text x="75" y="225">UT</text>
+        
+        <rect width="50" height="50" x="100" y="200" name="GCO"></rect>
+        <text x="125" y="225">CO</text>
+        
+        <rect width="50" height="50" x="150" y="200" name="GKS"></rect>
+        <text x="175" y="225">KS</text>
+        
+        <rect width="50" height="50" x="200" y="200" name="GMO"></rect>
+        <text x="225" y="225">MO</text>
+        
+        <rect width="50" height="50" x="250" y="200" name="GKY"></rect>
+        <text x="275" y="225">KY</text>
+        
+        <rect width="50" height="50" x="300" y="200" name="GWV"></rect>
+        <text x="325" y="225">WV</text>
+        
+        <rect width="50" height="50" x="350" y="200" name="GVA"></rect>
+        <text x="375" y="225">VA</text>
+        
+        <rect width="50" height="50" x="400" y="200" name="GDE"></rect>
+        <text x="425" y="225">DE</text>
+        
+        <rect width="50" height="50" x="50" y="250" name="GAZ"></rect>
+        <text x="75" y="275">AZ</text>
+        
+        <rect width="50" height="50" x="100" y="250" name="GNM"></rect>
+        <text x="125" y="275">NM</text>
+        
+        <rect width="50" height="50" x="150" y="250" name="GOK"></rect>
+        <text x="175" y="275">OK</text>
+        
+        <rect width="50" height="50" x="200" y="250" name="GAR"></rect>
+        <text x="225" y="275">AR</text>
+        
+        <rect width="50" height="50" x="250" y="250" name="GMS"></rect>
+        <text x="275" y="275">MS</text>
+        
+        <rect width="50" height="50" x="300" y="250" name="GTN"></rect>
+        <text x="325" y="275">TN</text>
+        
+        <rect width="50" height="50" x="350" y="250" name="GSC"></rect>
+        <text x="375" y="275">SC</text>
+        
+        <rect width="50" height="50" x="400" y="250" name="GNC"></rect>
+        <text x="425" y="275">NC</text>
+        
+        <rect width="50" height="50" x="150" y="300" name="GTX"></rect>
+        <text x="175" y="325">TX</text>
+        
+        <rect width="50" height="50" x="250" y="300" name="GLA"></rect>
+        <text x="275" y="325">LA</text>
+        
+        <rect width="50" height="50" x="300" y="300" name="GAL"></rect>
+        <text x="325" y="325">AL</text>
+        
+        <rect width="50" height="50" x="350" y="300" name="GGA"></rect>
+        <text x="375" y="325">GA</text>
+        
+        <rect width="50" height="50" x="400" y="350" name="GFL"></rect>
+        <text x="425" y="375">FL</text>
+        
+        <rect width="50" height="50" x="0" y="400" name="GAK"></rect>
+        <text x="25" y="425">AK</text>
+        
+        <rect width="50" height="50" x="100" y="400" name="GHI"></rect>
+        <text x="125" y="425">HI</text>
+    </g>
+</svg>

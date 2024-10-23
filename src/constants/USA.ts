@@ -1,4 +1,4 @@
-const stateWeights = {
+export const stateWeights = {
     "2024AK":	 3,
     "2024AL":	 9,
     "2024AR":	 6,
@@ -114,7 +114,7 @@ const stateWeights = {
     "2012WY":	 3,
 };
 
-const senateCaucusMap = [
+export const senateCaucusMap = [
     {election: "S2018", region: "SVT1", caucusesWith: "dem"}, //Bernie Sanders
     {election: "S2018", region: "SME1", caucusesWith: "dem"}, //Angus King
     {election: "S2018", region: "SMS2", caucusesWith: "rep"}, //MS nonpartisan special
@@ -122,7 +122,7 @@ const senateCaucusMap = [
     {election: "S2012", region: "SME1", caucusesWith: "dem"}, //Angus King
 ];
 
-const senateGhostResults = [
+export const senateGhostResults = [
     {
         election: "S2012",
         date: new Date("2012-11-06"),
@@ -205,4 +205,67 @@ const senateGhostResults = [
     },
 ];
 
-export { stateWeights, senateCaucusMap, senateGhostResults }
+export const governorCaucusMap : {election : string, region : string, caucusesWith : string}[] = [
+];
+
+export const governorGhostResults = [
+    {
+        election: "G2015",
+        date: new Date("2015-11-03"),
+        results: [
+            { id:"GKY", party:"rep" },
+            { id:"GLA", party:"dem" },
+            { id:"GMS", party:"rep" },
+        ].map( result => { return { ...result, votes:0, candidate:"", elected:true } } )
+    },
+    {
+        election: "G2014",
+        date: new Date("2014-11-04"),
+        results: [
+            { id:"GAL", party:"rep" },
+            { id:"GAK", party:"ind" },
+            { id:"GAZ", party:"rep" },
+            { id:"GAR", party:"rep" },
+            { id:"GCA", party:"dem" },
+            { id:"GCO", party:"dem" },
+            { id:"GCT", party:"dem" },
+            { id:"GFL", party:"rep" },
+            { id:"GGA", party:"rep" },
+            { id:"GHI", party:"dem" },
+            { id:"GID", party:"rep" },
+            { id:"GIL", party:"rep" },
+            { id:"GIA", party:"rep" },
+            { id:"GKS", party:"rep" },
+            { id:"GME", party:"rep" },
+            { id:"GMD", party:"rep" },
+            { id:"GMA", party:"rep" },
+            { id:"GMI", party:"rep" },
+            { id:"GMN", party:"dem" },
+            { id:"GNE", party:"rep" },
+            { id:"GNV", party:"rep" },
+            { id:"GNH", party:"dem" },
+            { id:"GNM", party:"rep" },
+            { id:"GNY", party:"dem" },
+            { id:"GOH", party:"rep" },
+            { id:"GOK", party:"rep" },
+            { id:"GOR", party:"dem" },
+            { id:"GPA", party:"dem" },
+            { id:"GRI", party:"dem" },
+            { id:"GSC", party:"rep" },
+            { id:"GSD", party:"rep" },
+            { id:"GTN", party:"rep" },
+            { id:"GTX", party:"rep" },
+            { id:"GVT", party:"dem" },
+            { id:"GWI", party:"rep" },
+            { id:"GWY", party:"rep" },
+        ].map( result => { return { ...result, votes:0, candidate:"", elected:true } } )
+    },
+    {
+        election: "G2013",
+        date: new Date("2013-11-05"),
+        results: [
+            { id:"GNJ", party:"rep" },
+            { id:"GVA", party:"dem" },
+        ].map( result => { return { ...result, votes:0, candidate:"", elected:true } } )
+    },
+];

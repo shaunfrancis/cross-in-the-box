@@ -48,7 +48,7 @@
         case "search": // search/{country}/{query} - get list of regions by country with title or candidate name similarity to query
             require 'search.php';
             break;
-        case "slug-lookup": // slug-lookup/{country}/{region-slug} - get country region ID from region slug
+        case "slug-lookup": // slug-lookup/{country}/{region-slug}/{type?} - get country region ID from region slug (matching a given type)?
             require 'slug-lookup.php';
             break;
         case "updates": // updates/{country}/{election} - get list of changes/updates to regions by country since election

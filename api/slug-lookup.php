@@ -1,14 +1,20 @@
 <?php
-    if(count($request) != 2) fail(404, "Not found");
+    if(count($request) != 2 && count($request) != 3) fail(404, "Not found");
 
     require_once './functions/fetch.php';
     $slug = urldecode($request[1]);
+    if(count($request) == 3) $type = $request[2];
+
+    $sql = "SELECT id, title FROM $regions_table WHERE REPLACE(REGEXP_REPLACE(LOWER(title), '[,()]', ''),' ','-') = :slug";
+    $params = [':slug' => $slug];
+
+    if(isset($type)){
+        $sql .= " AND type = :type";
+        $params[':type'] = $type;
+    }
     
     try{
-        $regions = fetch(
-            "SELECT id, title FROM $regions_table WHERE REPLACE(REGEXP_REPLACE(LOWER(title), '[,()]', ''),' ','-') = :slug",
-            [':slug' => $slug]
-        );
+        $regions = fetch( $sql, $params );
 
         if(count($regions) == 0) fail(404, "Not found");
         else echo json_encode($regions[0], JSON_NUMERIC_CHECK);
