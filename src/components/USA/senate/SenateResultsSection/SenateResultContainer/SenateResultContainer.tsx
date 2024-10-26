@@ -6,16 +6,14 @@ import HoverPopup from "../../../../shared/HoverPopup/HoverPopup";
 import PopupBarGraph from "../../../../shared/PopupBarGraph/PopupBarGraph";
 import { MessageData, Party, Region, Result, Update } from "src/Types";
 import { DefaultParty, Endpoint } from "src/constants/shared";
-import { UKSeatsToWatch } from "src/constants/UK";
 import { useRouter } from "next/navigation";
 import { constituencyToSlug } from "src/lib/UK";
-import PartyProgressionBlocs from "src/components/shared/PartyProgressionBlocs/PartyProgressionBlocs";
-import { dateToLongDate, parseJSONWithDates, useOnScreen } from "src/lib/shared";
+import { dateToLongDate, getResultsBySubElection, parseJSONWithDates, useOnScreen } from "src/lib/shared";
 import Message from "src/components/shared/Message/Message";
 import USASenate1960Map from "src/components/maps/USASenate1960Map";
 import USASenate1960GeographicMap from "src/components/maps/USASenate1960GeographicMap";
 import ElectionSummaryBars from "src/components/shared/ElectionSummaries/ElectionSummaryBars/ElectionSummaryBars";
-import { senateCaucusMap } from "src/constants/USA";
+import { electionType, senateCaucusMap, subidLabels } from "src/constants/USA";
 
 export default function SenateResultContainer( 
     { 
@@ -333,27 +331,40 @@ export default function SenateResultContainer(
 
     const cartographicPopupContent = (id? : string) => {
         const region = regions.find( region => region.id == id );
-        if(!region) return <h3>Missing data</h3>;
+        if(!region || !id) return <h3>Missing data</h3>;
 
         const regionResults = results.filter( result => result.id == id ).sort( (a,b) => b.votes - a.votes );
         if(regionResults.length > 0){ //current year election
         
             const winner = winFormula(regionResults)[0]?.candidate;
 
-            const regionUpdates = updates.filter( u => u.id == region.id );
-            const partyProgression : Party[] = [parties.find(p => p.id == winFormula(regionResults)[0]?.party) || DefaultParty];
-            regionUpdates.forEach( update => {
-                partyProgression.push( parties.find(p => p.id == update.party) || DefaultParty );
-            });
+            const subElections = getResultsBySubElection(regionResults);
+            const resultNodes : React.ReactNode[] = [];
 
-            const watchNote = election == "2024" && UKSeatsToWatch.find(s => s.id == id)?.note;
-            
+            if(electionType(id) == "rounds") resultNodes.push(
+                <PopupBarGraph 
+                    key={subElections[0].subid}
+                    results={subElections[0].results}
+                    parties={parties}
+                />
+            );
+            else{
+                subElections.forEach( subElection => {
+                    resultNodes.push(
+                        <PopupBarGraph 
+                            key={subElection.subid} 
+                            title={subElections.length > 1 ? subidLabels(id, subElection.subid) : undefined} 
+                            results={subElection.results}
+                            parties={parties}
+                        />
+                    );
+                });
+            }
+
             return ( <>
                 <h3>{region.title}</h3>
                 {winner && <h4>{winner}</h4>}
-                {!winner && <div style={{maxWidth: "350px"}}>{watchNote}</div>}
-                { partyProgression.length > 1 && <PartyProgressionBlocs parties={partyProgression} /> }
-                <PopupBarGraph results={regionResults} parties={parties} />
+                {resultNodes}
             </> )
 
         }

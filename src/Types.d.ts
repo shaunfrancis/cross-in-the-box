@@ -12,7 +12,7 @@ export interface AnonymousResult{
 
 export interface Result extends AnonymousResult {
     id: string,
-    subid?: string,
+    subid?: number,
     candidate: string,
     elected: boolean
 }

@@ -11,6 +11,7 @@ import HeroNav from 'src/components/shared/HeroNav/HeroNav';
 import styles from './HouseStatePage.module.css';
 import { constituencyToSlug, partyIdToDisplayId, slugToLookupSlug } from "src/lib/UK";
 import HouseSidebar from "./HouseSidebar/HouseSidebar";
+import { electionType } from "src/constants/USA";
 
 export default function HouseStatePage( { slug } : { slug : string } ){
 
@@ -90,8 +91,9 @@ export default function HouseStatePage( { slug } : { slug : string } ){
             case "election": {
                 let castEvent = event as ElectionEvent;
                 castEvent.data.results.sort( (a,b) => b.votes - a.votes );
+                const subElectionType = electionType(castEvent.region.id);
                 eventNodes.push(
-                    <RegionBarGraph key={index} title={castEvent.data.title} results={castEvent.data.results} parties={data.parties} />
+                    <RegionBarGraph key={index} title={castEvent.data.title} results={castEvent.data.results} parties={data.parties} subElectionType={subElectionType} />
                 );
                 break;
             }

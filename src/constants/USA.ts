@@ -269,3 +269,25 @@ export const governorGhostResults = [
         ].map( result => { return { ...result, votes:0, candidate:"", elected:true } } )
     },
 ];
+
+export const subidLabels = (id : string, subid : number) => {
+
+    if(id.includes("LA")){ //Louisiana
+        if(subid == 1) return "Jungle primary";
+        if(subid == 2) return "Runoff";
+    }
+
+    else{
+        if(subid == 1) return "First round";
+        if(subid == 2) return "Runoff";
+    }
+    
+};
+
+export const electionType = (id : string) => {
+    if(
+        (id.includes("ME") && id != "GME") ||       //Maine governor is not RCV
+        id.includes("AK")
+    ) return "rounds";
+    else return "separate";
+}

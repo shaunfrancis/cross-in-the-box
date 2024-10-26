@@ -1,8 +1,8 @@
 'use client';
 import { RefObject, useEffect, useState } from "react";
-import { Poll } from "src/Types";
+import { AnonymousResult, Poll } from "src/Types";
 
-class SearchHandler{
+export class SearchHandler{
     url : string;
     previousQuery : string;
 
@@ -35,7 +35,7 @@ class SearchHandler{
     }
 }
 
-const useOnScreen = (ref : RefObject<Element>) : boolean => {
+export const useOnScreen = (ref : RefObject<Element>) : boolean => {
     const [onScreen, setOnScreen] = useState<boolean>(false);
 
     useEffect( () => {
@@ -54,7 +54,7 @@ const useOnScreen = (ref : RefObject<Element>) : boolean => {
     return onScreen;
 }
 
-const parseJSONWithDates = (text : string, keys : string | string[]) => {
+export const parseJSONWithDates = (text : string, keys : string | string[]) => {
     if(typeof keys === "string") keys = [keys];
     return JSON.parse(text, (key, value) => {
         if(keys.includes(key)) return new Date(value);
@@ -62,7 +62,7 @@ const parseJSONWithDates = (text : string, keys : string | string[]) => {
     });
 }
 
-const getPollAverages = (polls : Poll[], nDays : number = 30) => {
+export const getPollAverages = (polls : Poll[], nDays : number = 30) => {
     if(polls.length == 0) return [];
 
     const dayValue = 1000 * 60 * 60 * 24;
@@ -102,7 +102,7 @@ const getPollAverages = (polls : Poll[], nDays : number = 30) => {
      } );
 }
 
-const dateToLongDate = ( date : Date ) : string => {
+export const dateToLongDate = ( date : Date ) : string => {
     let ordinalIndicator = "th";
     if(![11,12,13].includes(date.getDate())) switch(date.getDate() % 10){
         case 1: ordinalIndicator = "st"; break;
@@ -116,12 +116,51 @@ const dateToLongDate = ( date : Date ) : string => {
 
 }
 
-const addThousandsSpacing = ( votes : number | string ) => {
+export const addThousandsSpacing = ( votes : number | string ) => {
     return votes.toString().split('').reverse().join('').replace(/([0-9]{3})/g, "$1 ").split('').reverse().join('');
 }
 
-const monthAbbrev = (month : number) => {
+export const monthAbbrev = (month : number) => {
     return ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][month] || "?";
 }
 
-export { SearchHandler, useOnScreen, parseJSONWithDates, getPollAverages, dateToLongDate, addThousandsSpacing, monthAbbrev }
+export const getResultsBySubElection = (results : AnonymousResult[]) => {
+    const subElections : {subid : number, results : AnonymousResult[]}[] = [];
+
+    const subids = new Set( results.map( result => ("subid" in result && (result.subid as number || 0)) || 0 ) );
+    subids.forEach( subid => {
+        subElections.push({
+            subid: subid,
+            results: results.filter( result => ("subid" in result && (result.subid == subid)) || (!subid && !("subid" in result)) )
+        });
+    });
+
+    return subElections;
+}
+
+export const getResultsByCandidate = (results : AnonymousResult[]) => {
+    const candidates : {name : string, party : string, total : number, results : AnonymousResult[]}[] = [];
+
+    results.forEach( result => {
+        const existingCandidate = candidates.find(candidate => candidate.name == result.candidate && candidate.party == result.party);
+        if(existingCandidate){
+            existingCandidate.total += result.votes;
+            existingCandidate.results.push( result );
+        }
+        else{
+            candidates.push({
+                name: result.candidate || "",
+                party: result.party,
+                total: result.votes,
+                results: [result]
+            })
+        }
+    });
+
+    candidates.forEach( candidate => {
+        candidate.results.sort( (a,b) => ("subid" in a ? a.subid as number : 0) - ("subid" in b ? b.subid as number : 0) )
+    });
+    candidates.sort( (a,b) => b.total - a.total );
+
+    return candidates;
+}

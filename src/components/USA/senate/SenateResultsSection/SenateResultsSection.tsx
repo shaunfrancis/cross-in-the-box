@@ -38,7 +38,14 @@ export default function SenateResultsSection({ regions, parties, geographic } :
             /> */}
 
             <SenateResultContainer context={resultsContext.current} 
-                election="S2020" classNo={2} messageGroup="P2020" messagesOpenOnLoad={true}
+                election="S2022" classNo={3}
+                regions={regions}
+                parties={parties}
+                geographic={geographic}
+            />
+
+            <SenateResultContainer context={resultsContext.current} 
+                election="S2020" classNo={2} messageGroup="P2020"
                 regions={regions}
                 parties={parties}
                 geographic={geographic}

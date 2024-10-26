@@ -27,7 +27,7 @@ export default function StateElectionLinks( { region } : { region : Region } ){
         })();
     }, [region]);
 
-    const button = (link : Link) => {
+    const button = (link : Link, index : number) => {
         let href = "/usa/";
         switch(link.type){
             case "presidential": href += "presidential-elections/state/"; break;
@@ -39,6 +39,7 @@ export default function StateElectionLinks( { region } : { region : Region } ){
 
         return (
             <a 
+                key={index}
                 className={styles["link-button"]} 
                 href={href}
                 style={{
@@ -56,22 +57,22 @@ export default function StateElectionLinks( { region } : { region : Region } ){
         <section>
             <h2>President</h2>
             <div className={styles["link-buttongroup"]}>
-                { links.filter(l => l.type == "presidential").map( link => button(link) ) }
+                { links.filter(l => l.type == "presidential").map( (link, index) => button(link, index) ) }
             </div>
 
             <h2>Senate</h2>
             <div className={styles["link-buttongroup"]}>
-                { links.filter(l => l.type == "senate").map( link => button(link) ) }
+                { links.filter(l => l.type == "senate").map( (link, index) => button(link, index) ) }
             </div>
 
             <h2>House</h2>
             <div className={styles["link-buttongroup"]}>
-                { links.filter(l => l.type == "house").map( link => button(link) ) }
+                { links.filter(l => l.type == "house").map( (link, index) => button(link, index) ) }
             </div>
 
             <h2>Governor</h2>
             <div className={styles["link-buttongroup"]}>
-                { links.filter(l => l.type == "governor").map( link => button(link) ) }
+                { links.filter(l => l.type == "governor").map( (link, index) => button(link, index) ) }
             </div>
         </section>
     )
