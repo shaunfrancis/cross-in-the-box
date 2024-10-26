@@ -1,0 +1,18 @@
+.link-buttongroup{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin:10px 0 20px 0;
+}
+
+.link-button{
+    all:unset;
+    display:inline-block;
+    cursor:pointer;
+    border-radius:2px;
+    padding:5px 10px;
+    border:1px solid rgba(200,200,200,1);
+    min-width:75px;
+    position:relative;
+    font-size:16px;
+}
