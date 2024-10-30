@@ -83,7 +83,7 @@ export default function SenateResultContainer(
             .filter( result => !result.id.includes( classNo.toString() ) )
             .map( result => result.id )
             .filter( (id, index, ids) => ids.indexOf(id) === index );
-        };
+    };
 
     const addConstituencyLinks = (text : string) : React.ReactNode[] => {
         const spans : React.ReactNode[] = [];
@@ -153,22 +153,27 @@ export default function SenateResultContainer(
                     resultData = await resultsPromises.find( p => p.election === election)!.promise;
                 }
                 else{
-                    const promise = fetch(Endpoint + '/results/usa/' + election).then( res => res.json() );
+                    const promise : Promise<Result[]> = new Promise( async resolve => {
+                        const data = await fetch(Endpoint + '/results/usa/' + election).then( res => res.json() );
+
+                        let electionData = await fetch(Endpoint + '/elections/usa/' + election)
+                            .then( res => res.text() )
+                            .then( text => parseJSONWithDates(text, "date") );
+
+                        resultsBank.push({
+                            election: election,
+                            date: electionData!.date,
+                            results: data,
+                        });
+
+                        resolve(data);
+                    });
+
                     resultsPromises.push({
                         election: election,
                         promise: promise
                     });
                     resultData = await promise;
-
-                    let electionData = await fetch(Endpoint + '/elections/usa/' + election)
-                        .then( res => res.text() )
-                        .then( text => parseJSONWithDates(text, "date") );
-                    
-                    resultsBank.push({
-                        election: election,
-                        date: electionData!.date,
-                        results: resultData,
-                    });
                 }
 
                 return resultData;
@@ -426,9 +431,9 @@ export default function SenateResultContainer(
             const winner = regionUpdates.length > 0 ? regionUpdates[regionUpdates.length - 1].party : result.party;
             const shouldIncrementCount = +(index < winFormula(results).length);
 
+            const resultElection = resultsBank.find( r => r.results.includes(result) )?.election;
+            const caucusesWithParty = senateCaucusMap.find(c => c.election === resultElection && c.region === result.id)?.caucusesWith;
 
-            const election = resultsBank.find( r => r.results.includes(result) )?.election;
-            const caucusesWithParty = senateCaucusMap.find(c => c.election === election && c.region === result.id)?.caucusesWith;
             if(caucusesWithParty){
 
                 const mapData = caucusedIndCounts.get(caucusesWithParty) || {

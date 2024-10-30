@@ -12,6 +12,7 @@ import Message from "src/components/shared/Message/Message";
 import ElectionSummaryBar from "src/components/shared/ElectionSummaries/ElectionSummaryBar/ElectionSummaryBar";
 import USAHouse2012Map from "src/components/maps/USAHouse2012Map";
 import { electionType, subidLabels } from "src/constants/USA";
+import USAHouse2022Map from "src/components/maps/USAHouse2022Map";
 
 export default function HouseResultContainer( 
     { election, live = false, title = [election.replace(/[^0-9.]/g, ''), "House", "Elections"], preloadedResults, regions, parties, messageGroup, messagesOpenOnLoad, geographic, changes, dedicatedPage, winFormula = (results : Result[]) => results.filter(r => r.elected) } : 
@@ -231,6 +232,8 @@ export default function HouseResultContainer(
     };
     const map = () => {
         switch(election){
+            case "H2024": case "H2022":
+                return <USAHouse2022Map hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
             case "H2020": case "H2018": case "H2016": case "H2014": case "H2012":
                 /*if(geographic) return <USAHouse2012GeographicMap hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
                 else */return <USAHouse2012Map hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;

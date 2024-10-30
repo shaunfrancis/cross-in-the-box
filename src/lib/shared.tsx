@@ -4,10 +4,12 @@ import { AnonymousResult, Poll } from "src/Types";
 
 export class SearchHandler{
     url : string;
+    suffix : string;
     previousQuery : string;
 
-    constructor(url : string){
+    constructor(url : string, suffix : string = ""){
         this.url = url;
+        this.suffix = suffix;
         this.previousQuery = "";
     }
 
@@ -29,7 +31,7 @@ export class SearchHandler{
         const permissionToProceed = await this.permission(query);
         if(!permissionToProceed) return null;
 
-        const response : Type = await fetch(this.url + encodeURIComponent(query)).then( res => res.json() );
+        const response : Type = await fetch(this.url + encodeURIComponent(query) + this.suffix).then( res => res.json() );
         if(query != this.previousQuery) return null;
         return response;
     }
@@ -127,7 +129,7 @@ export const monthAbbrev = (month : number) => {
 export const getResultsBySubElection = (results : AnonymousResult[]) => {
     const subElections : {subid : number, results : AnonymousResult[]}[] = [];
 
-    const subids = new Set( results.map( result => ("subid" in result && (result.subid as number || 0)) || 0 ) );
+    let subids = new Set( results.map( result => ("subid" in result && (result.subid as number || 0)) || 0 ).sort().reverse() );
     subids.forEach( subid => {
         subElections.push({
             subid: subid,

@@ -15,7 +15,7 @@ export default function SenateSearchSection( {searchInputRef} : {searchInputRef?
     const [currentQuery, setCurrentQuery] = useState<string>("");
     const [status, setStatus] = useState<string>("");
 
-    const handler = useRef(new SearchHandler(Endpoint + "/search/usa/"));
+    const handler = useRef(new SearchHandler(Endpoint + "/search/usa/", "/senate"));
     const search = async (query : string) => {
         if(query.length >= 3) setStatus("Searching..."); 
         else setStatus("");
@@ -68,7 +68,7 @@ export default function SenateSearchSection( {searchInputRef} : {searchInputRef?
                     results.regions.map( (region, index) => {
                         if(index >= displayCount) return;
                         return (
-                            <Link key={index} href={'/usa/presidential-elections/state/' + stateToSlug(region.title)} className={styles["result"] + " unstyled"}>
+                            <Link key={index} href={'/usa/senate-elections/state/' + stateToSlug(region.title)} className={styles["result"] + " unstyled"}>
                                 <h2 className={styles["result-title"]}>
                                     {highlightRelevance(region.title)}
                                 </h2>
@@ -81,7 +81,7 @@ export default function SenateSearchSection( {searchInputRef} : {searchInputRef?
                 results.candidates.map( (region, index) => {
                     if(results.regions.length + index >= displayCount) return;
                     return (
-                        <Link key={index} href={'/usa/presidential-elections/state/' + stateToSlug(region.title)} className={styles["result"] + " unstyled"}>
+                        <Link key={index} href={'/usa/senate-elections/state/' + stateToSlug(region.title)} className={styles["result"] + " unstyled"}>
                             <h2 className={styles["result-title"]}>
                                 <div 
                                     className={styles["title-bloc"]}

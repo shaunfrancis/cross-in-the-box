@@ -51,6 +51,11 @@ export default function RegionBarGraph(
                     const party = parties.find( p => p.id == result.party ) || DefaultParty;
                     const bgColor = party.color || "var(--default-color)";
 
+                    let votesValue = "";
+                    if(totalVotes > 0) votesValue = addThousandsSpacing(result.votes);
+                    else if(result.elected && givenResults.length == 1) votesValue = "Unopposed";
+                    else if(result.elected) votesValue = "Elected";
+
                     return ( 
                         <div key={index} className={styles["bar-graph-row"]}>
 
@@ -73,7 +78,7 @@ export default function RegionBarGraph(
                                 className={styles["bar-graph-votes"] + " " + styles["bar-graph-bloc"]}
                                 style={{background: bgColor, color: party.textColor}}
                             >
-                                {totalVotes > 0 && addThousandsSpacing(result.votes)}
+                                {votesValue}
                             </div>
                             
                             <div 
@@ -85,7 +90,10 @@ export default function RegionBarGraph(
                             <div className={styles["bar-graph-bar-container"]}>
                                 <div 
                                     className={styles["bar-graph-bar"]}
-                                    style={{background: bgColor, width: totalVotes > 0 ? percentage + "%" : "0%"}}
+                                    style={{
+                                        background: bgColor, 
+                                        width: totalVotes > 0 ? percentage + "%" : (result.elected ? "100%" : "0%")
+                                    }}
                                 ></div>
                             </div>
                                 

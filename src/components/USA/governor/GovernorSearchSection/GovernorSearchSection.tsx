@@ -15,7 +15,7 @@ export default function GovernorSearchSection( {searchInputRef} : {searchInputRe
     const [currentQuery, setCurrentQuery] = useState<string>("");
     const [status, setStatus] = useState<string>("");
 
-    const handler = useRef(new SearchHandler(Endpoint + "/search/usa/"));
+    const handler = useRef(new SearchHandler(Endpoint + "/search/usa/", "/governor"));
     const search = async (query : string) => {
         if(query.length >= 3) setStatus("Searching..."); 
         else setStatus("");

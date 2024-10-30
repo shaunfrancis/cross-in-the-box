@@ -37,15 +37,17 @@ export default function StateElectionLinks( { region } : { region : Region } ){
         }
         href += constituencyToSlug(link.title);
 
+        const current = (link.region_id == region.id);
+
         return (
             <a 
                 key={index}
                 className={styles["link-button"]} 
                 href={href}
-                style={{
+                style={ !current ? {
                     background: link.color || DefaultParty.color,
                     color: link.textColor ? link.textColor : "#fff"
-                }}
+                } : undefined}
             >
                 { link.label || link.title }
             </a>

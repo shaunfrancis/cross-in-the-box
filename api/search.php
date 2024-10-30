@@ -1,8 +1,9 @@
 <?php
-    if(count($request) != 2) fail(404, "Not found");
+    if(count($request) != 2 && count($request) != 3) fail(404, "Not found");
 
     require_once './functions/fetch.php';
     $query = urldecode($request[1]);
+    if(count($request) == 3) $type = $request[2];
 
     function get_overlap($a, $b){
         $a_words = explode(" ", strtolower($a));
@@ -27,16 +28,16 @@
             return !in_array($word, ["and", "the"]);
         });
         if(count($filtered_words) > 0) $words = array_values($filtered_words);
-        
 
-        foreach($words as &$word){
-            $word = "%" . $word . "%";
-        }
+        foreach($words as &$word) $word = "%" . $word . "%";
 
-        $regions = fetch(
-            "SELECT id, title, current FROM $regions_table WHERE " . str_repeat("LOWER(title) LIKE ? OR ", count($words) - 1) . "LOWER(title) LIKE ?",
-            $words
-        );
+        $params = [...$words];
+        if(isset($type)) $params[] = $type;
+
+        $regions_sql = "SELECT id, title, current FROM $regions_table WHERE (" . str_repeat("LOWER(title) LIKE ? OR ", count($words) - 1) . "LOWER(title) LIKE ?)";
+        if(isset($type)) $regions_sql .= " AND type = ?";
+
+        $regions = fetch( $regions_sql, $params );
         
         //remove abolished regions with identical names (up to commas) to current regions
         $regions = array_filter( $regions, function($region) use ($regions){
@@ -69,23 +70,28 @@
             }
         }
 
+
+        $type_fragment = isset($type) ? " AND regions.type = ?" : "";
+        $candidates_sql = "SELECT * FROM (
+            SELECT regions.id, regions.title, results.candidate, results.party, results.votes, elections.title as election, elections.date, parties.title as party_title, parties.color, parties.textColor
+            FROM $results_table as results
+            JOIN $regions_table as regions
+            ON regions.id = results.region_id
+            JOIN $elections_table as elections
+            ON elections.id = results.election_id
+            JOIN $parties_table as parties
+            ON parties.id = results.party
+            WHERE (" . str_repeat("LOWER(results.candidate) LIKE ? OR ", count($words) - 1) . "LOWER(results.candidate) LIKE ?)" . $type_fragment . "
+            ORDER BY elections.date DESC
+            LIMIT 18446744073709551615
+        ) as res
+        GROUP BY res.candidate";
+        //LIMIT 2^64 - 1 forces MariaDB subquery to respect ORDER
+
         $candidates = fetch(
-            "SELECT * FROM (
-                SELECT regions.id, regions.title, results.candidate, results.party, results.votes, elections.title as election, elections.date, parties.title as party_title, parties.color, parties.textColor
-                FROM $results_table as results
-                JOIN $regions_table as regions
-                ON regions.id = results.region_id
-                JOIN $elections_table as elections
-                ON elections.id = results.election_id
-                JOIN $parties_table as parties
-                ON parties.id = results.party
-                WHERE " . str_repeat("LOWER(results.candidate) LIKE ? OR ", count($words) - 1) . "LOWER(results.candidate) LIKE ?
-                ORDER BY elections.date DESC
-                LIMIT 18446744073709551615
-            ) as res
-            GROUP BY res.candidate",
-            $words
-        ); //LIMIT 2^64 - 1 forces MariaDB subquery to respect ORDER
+            $candidates_sql,
+            $params
+        );
         usort($candidates, function($a, $b) use ($query){
             $overlap = get_overlap($b['candidate'], $query) <=> get_overlap($a['candidate'], $query);
             if($overlap != 0) return $overlap;

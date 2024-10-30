@@ -11,32 +11,34 @@ export default function USASenate1960Map(
         clickFun? : (id?: string) => void
     }
 ){
+    const map = useRef(null), cachedStars = useRef<SVGPathElement[]>([]);
 
-    const map = useRef(null), cachedSpecialNames = useRef<string[]>([]);
-
-    const addSpecials = (svg : any) => {
+    const addStars = (svg : any) => {
         specialNames.forEach( specialName => {
+            const exists = cachedStars.current.find( star => star.getAttributeNS(null,'data-name') === specialName);
+            if(exists){
+                svg.appendChild(exists);
+                return;
+            }
+
             const rect = svg.querySelector(`[name="${specialName}"]`);
             if(!rect) return;
 
             const star = document.createElementNS('http://www.w3.org/2000/svg', 'path');
             const x = rect.getAttributeNS(null, "x"), y = rect.getAttributeNS(null, "y");
+            star.setAttribute('data-name', specialName);
             star.setAttribute('d', `M${x} ${y}m25 32.5l 8.817 6.135l -3.111 -10.281l 8.56 -6.489l -10.739 -0.219l -3.527 -10.146l -3.527 10.146l -10.739 0.219l 8.56 6.489l -3.111 10.281l 8.817 -6.135`);
             svg.appendChild(star);
+            cachedStars.current.push(star);
         });
     };
-    const areEqual = ( a : string[], b : string[] ) => {
-        return a.length === b.length && a.every( name => b.includes(name) );
-    };
-    useEffect( () => {
-        if(map.current && !areEqual(specialNames, cachedSpecialNames.current)) addSpecials(map.current);
-        cachedSpecialNames.current = specialNames;
-    }, [specialNames]);
+
+    useEffect(() => { if(map.current) addStars(map.current) }, [specialNames]);
 
     return (
         <SvgLoader 
             path={`/maps/USA-senate-1960-C${classNo}.svg`}
-            onSVGReady={(svg) => map.current = svg}
+            onSVGReady={(svg) => { map.current = svg; addStars(svg) }}
         >
             {
                 fills.map( (fill, index) => {

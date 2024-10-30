@@ -20,6 +20,11 @@ export default function PopupBarGraph( { results, parties, raw = false, goal, ti
                     const party = parties.find( party => party.id == result.party ) || DefaultParty;
                     const bgColor = party.color || "var(--default-color)";
 
+                    let numberValue = "";
+                    if(totalVotes > 0) numberValue = raw ? result.votes.toString() : percentage + "%";
+                    else if(result.elected && results.length == 1) numberValue = "Unopposed";
+                    else if(result.elected) numberValue = "Elected";
+
                     return (
                         <div key={index} className={styles["bar-graph-row"]}>
 
@@ -28,13 +33,17 @@ export default function PopupBarGraph( { results, parties, raw = false, goal, ti
                             </div>
 
                             <div className={styles["bar-graph-percentage"] + " " + styles["bar-graph-bloc"]} style={{background: bgColor, color: party.textColor}}>
-                                {totalVotes > 0 && (raw ? result.votes : percentage + "%")}
+                                {numberValue}
                             </div>
 
                             <div className={styles["bar-graph-bar-container"]}>
                                 <div
                                     className={styles["bar-graph-bar"] + " " + styles["bar-graph-bloc"]}
-                                    style={{background: bgColor, width: percentage + "%"}}
+                                    style={{
+                                        background: bgColor, 
+                                        width: totalVotes > 0 ? percentage + "%" : (result.elected ? "100%" : "0%")
+
+                                    }}
                                 ></div>
                                 { goal &&
                                     <div className={styles["bar-graph-goal"]} style={{left: 100*goal + "%"}}></div>

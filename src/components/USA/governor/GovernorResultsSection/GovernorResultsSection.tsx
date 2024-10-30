@@ -30,11 +30,33 @@ export default function GovernorResultsSection({ regions, parties, geographic } 
     return ( <>
         <ElectionResultsSection>
 
-            {/* <GovernorResultContainer election="P2024" messageGroup="P2024"
+            <GovernorResultContainer context={resultsContext.current} 
+                election="G2023"
                 regions={regions}
                 parties={parties}
                 geographic={geographic}
-            /> */}
+            />
+
+            <GovernorResultContainer context={resultsContext.current} 
+                election="G2022"
+                regions={regions}
+                parties={parties}
+                geographic={geographic}
+            />
+
+            <GovernorResultContainer context={resultsContext.current} 
+                election="G2021"
+                regions={regions}
+                parties={parties}
+                geographic={geographic}
+            />
+
+            <GovernorResultContainer context={resultsContext.current} 
+                election="G2020"
+                regions={regions}
+                parties={parties}
+                geographic={geographic}
+            />
 
             <GovernorResultContainer context={resultsContext.current} 
                 election="G2019"
