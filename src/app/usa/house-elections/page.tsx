@@ -28,6 +28,7 @@ export default function USAHouseElections(){
 
             const regionData : Region[] = await fetch(Endpoint + "/regions/usa/house").then( res => res.json() );
             setRegions(regionData);
+            console.log(regionData);
         };
         getData();
 

@@ -10,9 +10,9 @@ import { constituencyToSlug } from "src/lib/UK";
 import { dateToLongDate, getResultsBySubElection, parseJSONWithDates, useOnScreen } from "src/lib/shared";
 import Message from "src/components/shared/Message/Message";
 import ElectionSummaryBar from "src/components/shared/ElectionSummaries/ElectionSummaryBar/ElectionSummaryBar";
-import USAHouse2012Map from "src/components/maps/USAHouse2012Map";
 import { electionType, subidLabels } from "src/constants/USA";
-import USAHouse2022Map from "src/components/maps/USAHouse2022Map";
+import USAHouseMap from "src/components/maps/USAHouseMap";
+import USAHouseMapGeographic from "src/components/maps/USAHouseMapGeographic";
 
 export default function HouseResultContainer( 
     { election, live = false, title = [election.replace(/[^0-9.]/g, ''), "House", "Elections"], preloadedResults, regions, parties, messageGroup, messagesOpenOnLoad, geographic, changes, dedicatedPage, winFormula = (results : Result[]) => results.filter(r => r.elected) } : 
@@ -232,11 +232,21 @@ export default function HouseResultContainer(
     };
     const map = () => {
         switch(election){
-            case "H2024": case "H2022":
-                return <USAHouse2022Map hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
-            case "H2020": case "H2018": case "H2016": case "H2014": case "H2012":
-                /*if(geographic) return <USAHouse2012GeographicMap hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
-                else */return <USAHouse2012Map hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
+            case "H2022":
+                if(geographic) return <USAHouseMapGeographic year="2022" regions={regions} hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
+                else return <USAHouseMap year="2022" regions={regions} hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
+            case "H2020":
+                if(geographic) return <USAHouseMapGeographic year="2020" regions={regions} hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
+                else return <USAHouseMap year="2020" regions={regions} hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
+            case "H2018":
+                if(geographic) return <USAHouseMapGeographic year="2018" regions={regions} hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
+                else return <USAHouseMap year="2018" regions={regions} hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
+            case "H2016":
+                if(geographic) return <USAHouseMapGeographic year="2016" regions={regions} hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
+                else return <USAHouseMap year="2016" regions={regions} hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
+            case "H2014": case "H2012":
+                if(geographic) return <USAHouseMapGeographic year="2012" regions={regions} hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
+                else return <USAHouseMap year="2012" regions={regions} hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
         }
     };
 
@@ -249,6 +259,11 @@ export default function HouseResultContainer(
 
         const subElections = getResultsBySubElection(regionResults);
         const resultNodes : React.ReactNode[] = [];
+
+        if(id == "2016NC09" && election == "H2018") return ( <>
+            <h3>{region.title}</h3>
+            <span>This election was annulled due to fraud.</span>
+        </> );
 
         if(electionType(id) == "rounds") resultNodes.push(
             <PopupBarGraph 

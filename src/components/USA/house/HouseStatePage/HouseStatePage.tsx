@@ -71,8 +71,8 @@ export default function HouseStatePage( { slug } : { slug : string } ){
             const treeLink = data.tree.find(t => t.region_id == event.region.id && t.successor_id == currentRegion.id);
             if(treeLink){
                 let note = "";
-                if(event.region.title != currentRegion.title) note += "The constituency was renamed to " + currentRegion.title + ".";
-                else note += "Boundary changes occurred.";
+                if(event.region.title != currentRegion.title) note += "Redistricting occurred. The state was split into multiple districts.";
+                else note += "Redistricting occurred.";
                 eventNodes.push(
                     <article key={"boundary-note-" + index} className={styles["boundary-change-note"]}>{note} {treeLink.note}</article>
                 );

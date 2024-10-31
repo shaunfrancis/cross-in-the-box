@@ -72,7 +72,7 @@ export default function HouseSearchSection( {searchInputRef} : {searchInputRef? 
                                 <h2 className={styles["result-title"]}>
                                     {highlightRelevance(region.title)}
                                 </h2>
-                                {!region.current && <span style={{color: "#666"}}>Abolished constituency</span>}
+                                {!region.current && <span style={{color: "#666"}}>Abolished district</span>}
                             </Link>
                         )
                     })
