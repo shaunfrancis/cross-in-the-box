@@ -52,7 +52,7 @@ export default function GovernorResultsSection({ regions, parties, geographic } 
             />
 
             <GovernorResultContainer context={resultsContext.current} 
-                election="G2020"
+                election="G2020" messageGroup="2020"
                 regions={regions}
                 parties={parties}
                 geographic={geographic}

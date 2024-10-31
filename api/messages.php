@@ -12,8 +12,6 @@
         1: raw table
     */
 
-    //2024-06-19T00:03:10
-
     $messages_sql = "SELECT messages.id, messages.date, messages.square, messages.old_square, messages.header, messages.text, links.id as link, links.type, links.title as link_title, results.party, results.votes 
     FROM $messages_table as messages
     LEFT JOIN $message_links_table as links

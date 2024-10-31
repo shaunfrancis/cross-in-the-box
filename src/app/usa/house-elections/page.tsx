@@ -27,8 +27,7 @@ export default function USAHouseElections(){
             setParties(partyData);
 
             const regionData : Region[] = await fetch(Endpoint + "/regions/usa/house").then( res => res.json() );
-            setRegions(regionData);
-            console.log(regionData);
+            setRegions(regionData);;
         };
         getData();
 
@@ -38,7 +37,7 @@ export default function USAHouseElections(){
 
     const searchInputRef = useRef<HTMLInputElement>(null);
     const heroNavItems = [
-        { title: "Election Results", src:"/images/usa-nav-results.svg", ref:useRef<HTMLElement>(null) },
+        { title: "Election Results", src:"/images/usa-nav-presidential-results.svg", ref:useRef<HTMLElement>(null) },
         { title: "Find a District", src:"/images/nav-region.svg", ref:useRef<HTMLElement>(null), 
             fun: () => { setTimeout( () => { if(searchInputRef.current) searchInputRef.current.focus() }, 100 ) }
         }
@@ -55,7 +54,7 @@ export default function USAHouseElections(){
                 <div className="section-heading">
                     <h1>Election Results</h1>
                     <Toggle 
-                        from={"/images/usa-cartographic-icon.svg"} 
+                        from={"/images/usa-cartographic-presidential-icon.svg"} 
                         to={"/images/usa-geographic-icon.svg"} 
                         fun={(state) => { updateGeographicState(state) }}
                         value={geographic}

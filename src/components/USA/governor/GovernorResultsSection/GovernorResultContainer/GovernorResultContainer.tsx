@@ -14,6 +14,7 @@ import USAGovernor1960Map from "src/components/maps/USAGovernor1960Map";
 import ElectionSummaryBars from "src/components/shared/ElectionSummaries/ElectionSummaryBars/ElectionSummaryBars";
 import { electionType, governorCaucusMap, subidLabels } from "src/constants/USA";
 import USAGovernor1960GeographicMap from "src/components/maps/USAGovernor1960GeographicMap";
+import ParsedMessage from "src/components/USA/shared/ParsedMessage/ParsedMessage";
 
 export default function GovernorResultContainer( 
     { context, election, live = false, title = [election.replace(/[^0-9.]/g, ''), "Gubernatorial", "Elections"], preloadedResults, regions, parties, messageGroup, messagesOpenOnLoad, geographic, changes, dedicatedPage, winFormula = (results : Result[]) => results.filter(r => r.elected) } : 
@@ -63,60 +64,6 @@ export default function GovernorResultContainer(
 
     let [livePolling, setLivePolling] = useState<boolean>(false);
     let [liveCounter, setLiveCounter] = useState<number>(0);
-
-    const addConstituencyLinks = (text : string) : React.ReactNode[] => {
-        const spans : React.ReactNode[] = [];
-        text.split("@").forEach( (fragment, index) => {
-            if(fragment == "") return;
-
-            const linkedRegion = regions.find( r => r.title.toLowerCase() == fragment.toLowerCase() );
-
-            if(index % 2 && linkedRegion){
-                spans.push(
-                    <span 
-                        key={index}
-                        className="interactive"
-                        onClick={ () => { router.push('state/' + constituencyToSlug(linkedRegion.title)) } }
-                    >
-                        {fragment}
-                    </span> 
-                );
-            }
-            else spans.push( <span key={index}>{fragment}</span> );
-        });
-        return spans;
-    }
-
-    const parseMessage = (message: MessageData, animate?: boolean) => {
-        let date : string;
-        if(changes) date = dateToLongDate(message.date);
-        else date = message.date.getHours().toString().padStart(2,'0') + ":" + message.date.getMinutes().toString().padStart(2,'0');
-
-        //for live messages, if event extends beyond Friday following election day then show day of week
-        // if(! [2,3].includes(message.date.getDay())){
-            const day = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][message.date.getDay()];
-            date = day + ", " + date;
-        // }
-    
-        const square = message.square ? (parties.find(p => p.id == message.square) || DefaultParty) : undefined;
-        const oldSquare = message.old_square ? (parties.find(p => p.id == message.old_square) || DefaultParty) : undefined;
-    
-        let messageResults : React.ReactNode[] = [];
-        if(message.results) switch(message.result_type){
-            case 1: //exit poll                            
-                messageResults.push( <PopupBarGraph key={"msg-result"} title={message.link_title} raw={true} goal={326/650} parties={parties} results={message.results.sort( (a,b) => b.votes - a.votes )} /> );
-                break;
-            default:
-                messageResults.push( <PopupBarGraph key={"msg-result"} title={message.link_title} parties={parties} results={message.results.sort( (a,b) => b.votes - a.votes )} />);
-        }
-    
-        return ( 
-            <Message key={message.id} animate={animate} noHeader={message.no_header} date={date} square={square} oldSquare={oldSquare}>
-                {addConstituencyLinks(message.text)}
-                {messageResults}
-            </Message>
-        )
-    }
 
     useEffect( () => {
         if( loadingComplete.current || !onScreen || parties.length == 0 || regions.length == 0 || (preloadedResults && preloadedResults.length == 0)) return;
@@ -222,7 +169,11 @@ export default function GovernorResultContainer(
                 const newMessages : {id : number, date : Date, node : React.ReactNode}[] = [];
                 messagesData.forEach( message => {
                     if(message.date > latestMessageDate.current) latestMessageDate.current = message.date;
-                    newMessages.push( {id: message.id, date: message.date, node: parseMessage(message)} );
+                    newMessages.push( {
+                        id: message.id,
+                        date: message.date,
+                        node: <ParsedMessage parties={parties} message={message} />
+                    } );
                 });
                 setMessages(newMessages);
             }
@@ -273,8 +224,12 @@ export default function GovernorResultContainer(
                     if(message.date > latestMessageDate.current) latestMessageDate.current = message.date;
 
                     const messageToBeUpdated = newMessages.find(m => m.id == message.id);
-                    if(messageToBeUpdated) messageToBeUpdated.node = parseMessage(message);
-                    else newMessages.push( {id: message.id, date: message.date, node: parseMessage(message, true)} );
+                    if(messageToBeUpdated) messageToBeUpdated.node = <ParsedMessage parties={parties} message={message} />
+                    else newMessages.push( {
+                        id: message.id,
+                        date: message.date,
+                        node: <ParsedMessage parties={parties} message={message} animate={true} />
+                    } );
                 });
                 newMessages.sort( (a,b) => b.date.valueOf() - a.date.valueOf() );
                 //hardcode live message stick to top
