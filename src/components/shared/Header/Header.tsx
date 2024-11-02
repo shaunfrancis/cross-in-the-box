@@ -18,7 +18,7 @@ export default function Header( { countryName, countryAbbrev, links = [] } : { c
                 <img src={"/images/" + (countryAbbrev ? countryAbbrev + "-" : "") + "logo.svg"} />
             </a>
 
-            <h1>{countryName}</h1>
+            <h1><a href="/" className="unstyled">{countryName}</a></h1>
 
             <nav>
                 <ul>

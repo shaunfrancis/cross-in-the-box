@@ -1,5 +1,6 @@
 import { Party } from 'src/Types';
 import styles from './ElectionSummaryBars.module.css';
+import { Fragment } from 'react';
 
 interface BarData{
     candidate? : string, 
@@ -38,39 +39,49 @@ export default function ElectionSummaryBars(
             const barWidth = (100 * row.count / maxCount);
             const count = rows.reduce((a,r) => a + r.count + (r.ghostCount || 0), 0);
 
-            const bar = barWidth > 0 && (
+            const bar = barWidth > 0 && ( <Fragment key={"segment-" + rowIndex}>
+
+                {rowIndex == 0 && <label className={styles["summary-label"]} style={{
+                        color: row.party.id == "ind" ? "#000" : row.party.textColor //hardcode color for now
+                }}>
+                    <span className={styles["summary-label-party"]}>{row.candidate || row.party.displayId || row.party.id}</span>
+                    <span className={styles["summary-label-count"]}>{count}</span>
+                </label> }
+
                 <div 
-                    key={"segment-" + rowIndex}
                     className={styles["summary-segment"]}
                     style={{
                         width: barWidth + "%",
-                        background: row.party.color || "var(--default-color)", 
-                        color: row.party.textColor
+                        background: row.party.color || "var(--default-color)",
                     }}
-                >
-                    {rowIndex == 0 && <>
-                        <span className={styles["summary-bar-party"]}>{row.candidate || row.party.displayId || row.party.id}</span>
-                        <span className={styles["summary-bar-count"]}>{count}</span>
-                    </> }
-                </div>
-            );
+                ></div>
+
+            </Fragment> );
             segments.push(bar);
         } );
         rows.forEach( (row, rowIndex) => {
 
             const ghostBarWidth = (100 * (row.ghostCount || 0) / maxCount);
-            const ghostBar = ghostBarWidth > 0 && (
+            const count = rows.reduce((a,r) => a + r.count + (r.ghostCount || 0), 0);
+            
+            const ghostBar = ghostBarWidth > 0 && ( <Fragment key={"ghost-" + rowIndex}>
+
+                {rowIndex == 0 && <label className={styles["summary-label"]} style={{
+                        color: row.party.id == "ind" ? "#000" : row.party.textColor //hardcode color for now
+                }}>
+                    <span className={styles["summary-label-party"]}>{row.candidate || row.party.displayId || row.party.id}</span>
+                    <span className={styles["summary-label-count"]}>{count}</span>
+                </label> }
                 <div 
                     key={"ghost-" + rowIndex}
                     className={styles["summary-ghost-segment"]}
                     style={{
                         width: ghostBarWidth + "%",
-                        background: row.party.color || "var(--default-color)", 
-                        color: row.party.textColor
+                        background: row.party.color || "var(--default-color)"
                     }}
                 >
                 </div>
-            );
+            </Fragment> );
             segments.push(ghostBar);
         } );
 

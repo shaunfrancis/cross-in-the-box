@@ -3,18 +3,17 @@ import { useEffect, useRef, useState } from "react";
 import ElectionResultContainer from "../../../../shared/ElectionResultContainer/ElectionResultContainer";
 import HoverPopup from "../../../../shared/HoverPopup/HoverPopup";
 import PopupBarGraph from "../../../../shared/PopupBarGraph/PopupBarGraph";
-import { MessageData, Party, Region, Result, Update } from "src/Types";
+import { Party, Region, Result, Update } from "src/Types";
 import { DefaultParty, Endpoint } from "src/constants/shared";
 import { useRouter } from "next/navigation";
 import { constituencyToSlug } from "src/lib/UK";
-import { getResultsBySubElection, parseJSONWithDates, useOnScreen } from "src/lib/shared";
+import { getMessages, getResultsBySubElection, parseJSONWithDates, useOnScreen } from "src/lib/shared";
 import USAPresidential2012Map from "src/components/maps/USAPresidential2012Map";
 import USAPresidential2012GeographicMap from "src/components/maps/USAPresidential2012GeographicMap";
 import { electionType, stateWeights, subidLabels } from "src/constants/USA";
 import USAPresidential2024GeographicMap from "src/components/maps/USAPresidential2024GeographicMap";
 import USAPresidential2024Map from "src/components/maps/USAPresidential2024Map";
 import ElectionSummaryBar from "src/components/shared/ElectionSummaries/ElectionSummaryBar/ElectionSummaryBar";
-import ParsedMessage from "src/components/USA/shared/ParsedMessage/ParsedMessage";
 
 export default function PresidentialResultContainer( 
     { election, live = false, title = [election.replace(/[^0-9.]/g, ''), "Presidential", "Election"], preloadedResults, regions, parties, messageGroup, messagesOpenOnLoad, geographic, changes, dedicatedPage, winFormula = (results : Result[]) => results.filter(r => r.elected) } : 
@@ -34,7 +33,7 @@ export default function PresidentialResultContainer(
     }
 ){
 
-    const dimensions = {w:"calc( 1.3 * (100vh - 100px) )", h:"calc(100vh - 100px)", minW:live ? "525px" : "425px", minH:"500px"};
+    const dimensions = {w:"calc( 1.4 * (100vh - 100px) )", h:"calc(100vh - 100px)", minW:live ? "525px" : "425px", minH:"500px"};
     const router = useRouter();
     const container = useRef<HTMLDivElement>(null);
     const onScreen = useOnScreen(container);
@@ -94,21 +93,7 @@ export default function PresidentialResultContainer(
             setFills(newFills);
 
             if(messageGroup){
-                const messagesData : MessageData[] = await fetch(Endpoint + '/messages/usa/' + messageGroup)
-                    .then( res => res.text() )
-                    .then( res => parseJSONWithDates(res, "date") );
-                //hardcode live message stick to top
-                messagesData.sort( (a,b) => { const aId = a.id == 1229 ? 1 : 0; const bId = b.id == 1229 ? 1 : 0; return bId - aId } );
-
-                const newMessages : {id : number, date : Date, node : React.ReactNode}[] = [];
-                messagesData.forEach( message => {
-                    if(message.date > latestMessageDate.current) latestMessageDate.current = message.date;
-                    newMessages.push( {
-                        id: message.id, 
-                        date: message.date, 
-                        node: <ParsedMessage parties={parties} message={message} />
-                    } );
-                });
+                const newMessages = await getMessages(parties, latestMessageDate, '/messages/usa/' + messageGroup);
                 setMessages(newMessages);
             }
         };
@@ -149,25 +134,13 @@ export default function PresidentialResultContainer(
             if(messageGroup){
                 const since = new Date(latestMessageDate.current.valueOf());
                 since.setHours(since.getHours() - (new Date()).getTimezoneOffset()/60);
-                const messagesData : MessageData[] = await fetch(Endpoint + '/messages/usa/' + messageGroup + '?since=' + since.toISOString())
-                    .then( res => res.text() )
-                    .then( res => parseJSONWithDates(res, "date") );
-
-                const newMessages : {id : number, date : Date, node : React.ReactNode}[] = [...messages];
-                messagesData.forEach( message => {
-                    if(message.date > latestMessageDate.current) latestMessageDate.current = message.date;
-
-                    const messageToBeUpdated = newMessages.find(m => m.id == message.id);
-                    if(messageToBeUpdated) messageToBeUpdated.node = <ParsedMessage parties={parties} message={message} />;
-                    else newMessages.push( {
-                        id: message.id,
-                        date: message.date,
-                        node: <ParsedMessage parties={parties} message={message} animate={true} />
-                    } );
-                });
-                newMessages.sort( (a,b) => b.date.valueOf() - a.date.valueOf() );
-                //hardcode live message stick to top
-                newMessages.sort( (a,b) => { const aId = a.id == 1229 ? 1 : 0; const bId = b.id == 1229 ? 1 : 0; return bId - aId } );
+                
+                const newMessages = await getMessages(
+                    parties,
+                    latestMessageDate,
+                    '/messages/usa/' + messageGroup + '?since=' + since.toISOString(),
+                    messages
+                );
 
                 setMessages(newMessages);
             }

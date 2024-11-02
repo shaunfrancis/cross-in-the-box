@@ -1,13 +1,22 @@
 export default function Page(){
     return ( <main style={{padding:"30px"}}>
         <img src="images/logo.svg" width="200" alt="Cross In The Box" />
-        <p>Welcome to Cross In The Box. This website contains interactive election results for various countries. It is currently under construction and will be updated throughout 2024.</p>
+        <p>Welcome to Cross In The Box! This website contains interactive election results for countries around the world. It is currently under construction, and more pages will be added in time.</p>
         <p>You can access the completed pages:</p>
         <ul>
             <li>
                 United Kingdom
                 <ul>
                     <li><a href="uk/general-elections">General Elections</a></li>
+                </ul>
+            </li>
+            <li>
+                United States
+                <ul>
+                    <li><a href="usa/presidential-elections">Presidential Elections</a></li>
+                    <li><a href="usa/senate-elections">Senate Elections</a></li>
+                    <li><a href="usa/house-elections">House Elections</a></li>
+                    <li><a href="usa/gubernatorial-elections">Gubernatorial Elections</a></li>
                 </ul>
             </li>
         </ul>

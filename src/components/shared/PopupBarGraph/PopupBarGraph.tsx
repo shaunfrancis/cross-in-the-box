@@ -22,7 +22,7 @@ export default function PopupBarGraph( { results, parties, raw = false, goal, ti
 
                     let numberValue = "";
                     if(totalVotes > 0) numberValue = raw ? result.votes.toString() : percentage + "%";
-                    else if(result.elected && results.length == 1) numberValue = "Unopposed";
+                    // else if(result.elected && results.length == 1) numberValue = "Unopposed";
                     else if(result.elected) numberValue = "Elected";
 
                     return (

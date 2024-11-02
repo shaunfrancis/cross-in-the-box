@@ -5,9 +5,9 @@
     $baseId = $request[2];
     
     try{
-        $president = "2012" . $baseId . "%";
+        $president = "2024" . $baseId . "%";
         $senate = "S" . $baseId . "%";
-        $house = "2012" . $baseId . "%";
+        $house = "2022" . $baseId . "%";
         $governor = "G" . $baseId;
 
         $sql = "WITH data AS (

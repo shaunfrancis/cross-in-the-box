@@ -30,12 +30,12 @@ export default function SenateResultsSection({ regions, parties, geographic } :
     return ( <>
         <ElectionResultsSection>
 
-            {/* <SenateResultContainer context={resultsContext} 
-                election="S2022" classNo={3}
+            <SenateResultContainer context={resultsContext.current} 
+                election="S2024" classNo={1} messageGroup="2024" messagesOpenOnLoad={true}
                 regions={regions}
                 parties={parties}
                 geographic={geographic}
-            /> */}
+            />
 
             <SenateResultContainer context={resultsContext.current} 
                 election="S2022" classNo={3}

@@ -8,12 +8,11 @@ import { MessageData, Party, Region, Result, Update } from "src/Types";
 import { DefaultParty, Endpoint } from "src/constants/shared";
 import { useRouter } from "next/navigation";
 import { constituencyToSlug } from "src/lib/UK";
-import { dateToLongDate, getResultsBySubElection, parseJSONWithDates, useOnScreen } from "src/lib/shared";
-import Message from "src/components/shared/Message/Message";
+import { getMessages, getResultsBySubElection, parseJSONWithDates, useOnScreen } from "src/lib/shared";
 import USASenate1960Map from "src/components/maps/USASenate1960Map";
 import USASenate1960GeographicMap from "src/components/maps/USASenate1960GeographicMap";
 import ElectionSummaryBars from "src/components/shared/ElectionSummaries/ElectionSummaryBars/ElectionSummaryBars";
-import { electionType, senateCaucusMap, subidLabels } from "src/constants/USA";
+import { electionType, getSenatePreviousSpecialOverrides, senateCaucusMap, subidLabels } from "src/constants/USA";
 import ParsedMessage from "src/components/USA/shared/ParsedMessage/ParsedMessage";
 
 export default function SenateResultContainer( 
@@ -149,10 +148,15 @@ export default function SenateResultContainer(
             const electionYear = parseInt(election.slice(1));
             if(electionYear){
                 const newOtherClassResults = [
+                    ...getSenatePreviousSpecialOverrides(electionYear-2),
                     ...await getResultsFromElection("S" + (electionYear-2)), 
+                    ...getSenatePreviousSpecialOverrides(electionYear-4),
                     ...await getResultsFromElection("S" + (electionYear-4))
                 ];
+                if(election == "S2018") console.log(newOtherClassResults);
+
                 winFormula(newOtherClassResults).forEach( result => {
+                    if(newFills.find( fill => fill.id === result.id )) return;
                     const party : Party = parties.find( p => p.id == result.party ) || DefaultParty;
                     if(party) newFills.push({ 
                         id: result.id, 
@@ -185,21 +189,7 @@ export default function SenateResultContainer(
             setFills(newFills);
 
             if(messageGroup){
-                const messagesData : MessageData[] = await fetch(Endpoint + '/messages/usa/' + messageGroup)
-                    .then( res => res.text() )
-                    .then( res => parseJSONWithDates(res, "date") );
-                //hardcode live message stick to top
-                messagesData.sort( (a,b) => { const aId = a.id == 1229 ? 1 : 0; const bId = b.id == 1229 ? 1 : 0; return bId - aId } );
-
-                const newMessages : {id : number, date : Date, node : React.ReactNode}[] = [];
-                messagesData.forEach( message => {
-                    if(message.date > latestMessageDate.current) latestMessageDate.current = message.date;
-                    newMessages.push( {
-                        id: message.id,
-                        date: message.date,
-                        node: <ParsedMessage parties={parties} message={message} />
-                    } );
-                });
+                const newMessages = await getMessages(parties, latestMessageDate, '/messages/usa/' + messageGroup);
                 setMessages(newMessages);
             }
         };
@@ -240,26 +230,12 @@ export default function SenateResultContainer(
             if(messageGroup){
                 const since = new Date(latestMessageDate.current.valueOf());
                 since.setHours(since.getHours() - (new Date()).getTimezoneOffset()/60);
-                const messagesData : MessageData[] = await fetch(Endpoint + '/messages/usa/' + messageGroup + '?since=' + since.toISOString())
-                    .then( res => res.text() )
-                    .then( res => parseJSONWithDates(res, "date") );
-
-                const newMessages : {id : number, date : Date, node : React.ReactNode}[] = [...messages];
-                messagesData.forEach( message => {
-                    if(message.date > latestMessageDate.current) latestMessageDate.current = message.date;
-
-                    const messageToBeUpdated = newMessages.find(m => m.id == message.id);
-                    if(messageToBeUpdated) messageToBeUpdated.node = <ParsedMessage parties={parties} message={message} />
-                    else newMessages.push( {
-                        id: message.id,
-                        date: message.date,
-                        node: <ParsedMessage parties={parties} message={message} animate={true} />
-                    } );
-                });
-                newMessages.sort( (a,b) => b.date.valueOf() - a.date.valueOf() );
-                //hardcode live message stick to top
-                newMessages.sort( (a,b) => { const aId = a.id == 1229 ? 1 : 0; const bId = b.id == 1229 ? 1 : 0; return bId - aId } );
-
+                const newMessages = await getMessages(
+                    parties,
+                    latestMessageDate,
+                    '/messages/usa/' + messageGroup + '?since=' + since.toISOString(),
+                    messages
+                );
                 setMessages(newMessages);
             }
         };
@@ -338,7 +314,7 @@ export default function SenateResultContainer(
                 <h4>{winner.candidate}</h4>
                 <div className={styles["flex-row"]}>
                     <div className={styles["bloc"]} style={{background:party.color, color:party.textColor}}>{party.displayId}</div>
-                    <span>elected in {year?.getFullYear()}</span>
+                    <span>elected {year ? "in " + year.getFullYear() : "previously"}</span>
                 </div>
             </> );
             else return (<h3>Missing data</h3>);

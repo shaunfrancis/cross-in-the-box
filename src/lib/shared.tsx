@@ -1,6 +1,8 @@
 'use client';
-import { RefObject, useEffect, useState } from "react";
-import { AnonymousResult, Poll } from "src/Types";
+import { MutableRefObject, RefObject, useEffect, useState } from "react";
+import ParsedMessage from "src/components/USA/shared/ParsedMessage/ParsedMessage";
+import { Endpoint } from "src/constants/shared";
+import { AnonymousResult, MessageData, Party, Poll } from "src/Types";
 
 export class SearchHandler{
     url : string;
@@ -165,4 +167,40 @@ export const getResultsByCandidate = (results : AnonymousResult[]) => {
     candidates.sort( (a,b) => b.total - a.total );
 
     return candidates;
+}
+
+export const getMessages = async (
+    parties : Party[], 
+    latestMessageDate : MutableRefObject<Date>, 
+    url : string,
+    existingMessages : {
+        id: number;
+        date: Date;
+        node: React.ReactNode;
+    }[] = []
+) => {
+
+    const messagesData : MessageData[] = await fetch(Endpoint + url)
+        .then( res => res.text() )
+        .then( res => parseJSONWithDates(res, "date") );
+
+    messagesData.sort( (a,b) => {
+        return (a.pinned != b.pinned) ? (a.pinned || Infinity) - (b.pinned || Infinity) : b.id - a.id;
+    });
+
+    const newMessages : {id : number, date : Date, node : React.ReactNode}[] = [...existingMessages];
+    messagesData.forEach( (message, index) => {
+        if(message.date > latestMessageDate.current) latestMessageDate.current = message.date;
+
+        const messageToBeUpdated = newMessages.find(m => m.id == message.id);
+        if(messageToBeUpdated) messageToBeUpdated.node = <ParsedMessage key={index} parties={parties} message={message} />;
+        else newMessages.push( {
+            id: message.id,
+            date: message.date,
+            node: <ParsedMessage key={index} parties={parties} message={message} animate={existingMessages.length > 0} />
+        } );
+    });
+
+    return newMessages;
+
 }

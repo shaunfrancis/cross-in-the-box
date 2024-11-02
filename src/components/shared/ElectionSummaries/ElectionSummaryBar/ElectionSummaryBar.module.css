@@ -31,7 +31,7 @@
     font-weight:400;
 }
 
-@media screen and (max-width: 750px){
+@media screen and (max-width:768px){
     .summary-segment{
         padding:0 5px;
     }

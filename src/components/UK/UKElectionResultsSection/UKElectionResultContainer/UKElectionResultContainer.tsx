@@ -14,7 +14,7 @@ import { UKSeatsToWatch } from "src/constants/UK";
 import { useRouter } from "next/navigation";
 import { constituencyToSlug } from "src/lib/UK";
 import PartyProgressionBlocs from "src/components/shared/PartyProgressionBlocs/PartyProgressionBlocs";
-import { dateToLongDate, parseJSONWithDates, useOnScreen } from "src/lib/shared";
+import { dateToLongDate, getMessages, parseJSONWithDates, useOnScreen } from "src/lib/shared";
 import Message from "src/components/shared/Message/Message";
 import ElectionSummaryBlocs from "src/components/shared/ElectionSummaries/ElectionSummaryBlocs/ElectionSummaryBlocs";
 
@@ -151,17 +151,7 @@ export default function UKElectionResultContainer(
             setFills(newFills);
 
             if(messageGroup){
-                const messagesData : MessageData[] = await fetch(Endpoint + '/messages/uk/' + messageGroup)
-                    .then( res => res.text() )
-                    .then( res => parseJSONWithDates(res, "date") );
-                //hardcode live message stick to top
-                messagesData.sort( (a,b) => { const aId = a.id == 1229 ? 1 : 0; const bId = b.id == 1229 ? 1 : 0; return bId - aId } );
-
-                const newMessages : {id : number, date : Date, node : React.ReactNode}[] = [];
-                messagesData.forEach( message => {
-                    if(message.date > latestMessageDate.current) latestMessageDate.current = message.date;
-                    newMessages.push( {id: message.id, date: message.date, node: parseMessage(message)} );
-                });
+                const newMessages = await getMessages(parties, latestMessageDate, '/messages/uk/' + messageGroup);
                 setMessages(newMessages);
             }
         };
@@ -202,21 +192,12 @@ export default function UKElectionResultContainer(
             if(messageGroup){
                 const since = new Date(latestMessageDate.current.valueOf());
                 since.setHours(since.getHours() - (new Date()).getTimezoneOffset()/60);
-                const messagesData : MessageData[] = await fetch(Endpoint + '/messages/uk/' + messageGroup + '?since=' + since.toISOString())
-                    .then( res => res.text() )
-                    .then( res => parseJSONWithDates(res, "date") );
-
-                const newMessages : {id : number, date : Date, node : React.ReactNode}[] = [...messages];
-                messagesData.forEach( message => {
-                    if(message.date > latestMessageDate.current) latestMessageDate.current = message.date;
-
-                    const messageToBeUpdated = newMessages.find(m => m.id == message.id);
-                    if(messageToBeUpdated) messageToBeUpdated.node = parseMessage(message);
-                    else newMessages.push( {id: message.id, date: message.date, node: parseMessage(message, true)} );
-                });
-                newMessages.sort( (a,b) => b.date.valueOf() - a.date.valueOf() );
-                //hardcode live message stick to top
-                newMessages.sort( (a,b) => { const aId = a.id == 1229 ? 1 : 0; const bId = b.id == 1229 ? 1 : 0; return bId - aId } );
+                const newMessages = await getMessages(
+                    parties,
+                    latestMessageDate,
+                    '/messages/uk/' + messageGroup + '?since=' + since.toISOString(),
+                    messages
+                );
 
                 setMessages(newMessages);
             }

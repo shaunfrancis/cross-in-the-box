@@ -122,6 +122,15 @@ export const senateCaucusMap = [
     {election: "S2012", region: "SME1", caucusesWith: "dem"}, //Angus King
 ];
 
+export const getSenatePreviousSpecialOverrides = (election : number) => {
+    switch(election){
+        case 2016:
+            return [{id:"SAL2", party:"dem", candidate:"Doug Jones", votes:1, elected:true}];
+        default:
+            return [];
+    }
+}
+
 export const senateGhostResults = [
     {
         election: "S2012",

@@ -20,7 +20,7 @@
     background:rgb(240,241,243);
 }
 
-@media screen and (max-width: 750px){
+@media screen and (max-width:768px){
     .hero-item{
         padding:10px;
         gap:10px;

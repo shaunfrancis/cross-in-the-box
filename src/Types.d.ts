@@ -28,10 +28,14 @@ export interface Party {
 export interface MessageData {
     id: number,
     date : Date,
+    text : string,
+
     square? : string,
     old_square? : string,
+
+    pinned? : number,
     no_header? : boolean,
-    text : string,
+
     results? : AnonymousResult[],
     result_type?: number,
     link_title?: string

@@ -53,7 +53,7 @@ export default function RegionBarGraph(
 
                     let votesValue = "";
                     if(totalVotes > 0) votesValue = addThousandsSpacing(result.votes);
-                    else if(result.elected && givenResults.length == 1) votesValue = "Unopposed";
+                    // else if(result.elected && givenResults.length == 1) votesValue = "Unopposed";
                     else if(result.elected) votesValue = "Elected";
 
                     return ( 

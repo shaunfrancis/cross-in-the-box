@@ -11,6 +11,12 @@ export default function HouseResultsSection({ regions, parties, geographic } :
     return ( <>
         <ElectionResultsSection>
 
+            <HouseResultContainer election="H2024" messageGroup="2024"
+                regions={regions}
+                parties={parties}
+                geographic={geographic}
+            />
+
             <HouseResultContainer election="H2022"
                 regions={regions}
                 parties={parties}

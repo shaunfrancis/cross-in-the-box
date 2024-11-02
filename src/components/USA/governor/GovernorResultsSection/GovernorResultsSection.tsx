@@ -29,6 +29,13 @@ export default function GovernorResultsSection({ regions, parties, geographic } 
 
     return ( <>
         <ElectionResultsSection>
+        
+            <GovernorResultContainer context={resultsContext.current} 
+                election="G2024" messageGroup="2024" messagesOpenOnLoad={true}
+                regions={regions}
+                parties={parties}
+                geographic={geographic}
+            />
 
             <GovernorResultContainer context={resultsContext.current} 
                 election="G2023"
