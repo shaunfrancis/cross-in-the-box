@@ -156,25 +156,34 @@ export default function HouseResultContainer(
 
     const mapClickFun = (id: string) => {
         let region = regions.find( r => r.id == id );
-        if(region) router.push('district/' + constituencyToSlug(region.title));
+        if(region) router.push('/usa/house-elections/district/' + constituencyToSlug(region.title));
     };
     const map = () => {
+        const props = {
+            regions: regions,
+            hoverFun: mapHoverFun,
+            clickFun: mapClickFun,
+            fills: fills
+        };
         switch(election){
+            case "H2024":
+                if(geographic) return <USAHouseMapGeographic year="2024" {...props} />;
+                else return <USAHouseMap year="2024" {...props} />;
             case "H2022":
-                if(geographic) return <USAHouseMapGeographic year="2022" regions={regions} hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
-                else return <USAHouseMap year="2022" regions={regions} hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
+                if(geographic) return <USAHouseMapGeographic year="2022" {...props} />;
+                else return <USAHouseMap year="2022" {...props} />;
             case "H2020":
-                if(geographic) return <USAHouseMapGeographic year="2020" regions={regions} hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
-                else return <USAHouseMap year="2020" regions={regions} hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
+                if(geographic) return <USAHouseMapGeographic year="2020" {...props} />;
+                else return <USAHouseMap year="2020" {...props} />;
             case "H2018":
-                if(geographic) return <USAHouseMapGeographic year="2018" regions={regions} hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
-                else return <USAHouseMap year="2018" regions={regions} hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
+                if(geographic) return <USAHouseMapGeographic year="2018" {...props} />;
+                else return <USAHouseMap year="2018" {...props} />;
             case "H2016":
-                if(geographic) return <USAHouseMapGeographic year="2016" regions={regions} hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
-                else return <USAHouseMap year="2016" regions={regions} hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
+                if(geographic) return <USAHouseMapGeographic year="2016" {...props} />;
+                else return <USAHouseMap year="2016" {...props} />;
             case "H2014": case "H2012":
-                if(geographic) return <USAHouseMapGeographic year="2012" regions={regions} hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
-                else return <USAHouseMap year="2012" regions={regions} hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
+                if(geographic) return <USAHouseMapGeographic year="2012" {...props} />;
+                else return <USAHouseMap year="2012" {...props} />;
         }
     };
 
@@ -193,7 +202,7 @@ export default function HouseResultContainer(
             <span>This election was annulled due to fraud.</span>
         </> );
 
-        if(electionType(id) == "rounds") resultNodes.push(
+        if(electionType(id) == "rounds" && subElections.length >= 1) resultNodes.push(
             <PopupBarGraph 
                 key={subElections[0].subid}
                 results={subElections[0].results}

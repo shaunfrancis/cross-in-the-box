@@ -157,13 +157,13 @@ export default function PresidentialResultContainer(
 
     const mapClickFun = (id: string) => {
         let region = regions.find( r => r.id == id );
-        if(region) router.push('state/' + constituencyToSlug(region.title));
+        if(region) router.push('/usa/presidential-elections/state/' + constituencyToSlug(region.title));
     };
     const map = () => {
         switch(election){
             case "P2024":
-                if(geographic) return <USAPresidential2024GeographicMap hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
-                else return <USAPresidential2024Map hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
+                if(geographic) return <USAPresidential2024GeographicMap regions={regions} hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
+                else return <USAPresidential2024Map regions={regions} hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
             case "P2020": case "P2016": case "P2012":
                 if(geographic) return <USAPresidential2012GeographicMap hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
                 else return <USAPresidential2012Map hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
@@ -180,7 +180,7 @@ export default function PresidentialResultContainer(
         const subElections = getResultsBySubElection(regionResults);
         const resultNodes : React.ReactNode[] = [];
 
-        if(electionType(id) == "rounds") resultNodes.push(
+        if(electionType(id) == "rounds" && subElections.length >= 1) resultNodes.push(
             <PopupBarGraph 
                 key={subElections[0].subid}
                 results={subElections[0].results}

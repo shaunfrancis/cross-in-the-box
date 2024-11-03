@@ -1,33 +1,37 @@
-import { Context, useContext, useEffect, useRef, useState } from "react";
+import { Context, createContext, useContext, useEffect, useRef, useState } from "react";
 
 import styles from 'src/components/shared/ElectionResultContainer/ElectionResultContainer.module.css';
 import ElectionResultContainer from "../../../../shared/ElectionResultContainer/ElectionResultContainer";
 import HoverPopup from "../../../../shared/HoverPopup/HoverPopup";
 import PopupBarGraph from "../../../../shared/PopupBarGraph/PopupBarGraph";
-import { Party, Region, Result, Update } from "src/Types";
+import { Party, Region, Result, ResultsContext, Update } from "src/Types";
 import { DefaultParty, Endpoint } from "src/constants/shared";
 import { useRouter } from "next/navigation";
 import { constituencyToSlug } from "src/lib/UK";
 import { getMessages, getResultsBySubElection, parseJSONWithDates, useOnScreen } from "src/lib/shared";
 import USAGovernor1960Map from "src/components/maps/USAGovernor1960Map";
 import ElectionSummaryBars from "src/components/shared/ElectionSummaries/ElectionSummaryBars/ElectionSummaryBars";
-import { electionType, governorCaucusMap, subidLabels } from "src/constants/USA";
+import { electionType, governorCaucusMap, governorGhostResults, subidLabels } from "src/constants/USA";
 import USAGovernor1960GeographicMap from "src/components/maps/USAGovernor1960GeographicMap";
 
 export default function GovernorResultContainer( 
-    { context, election, live = false, title = [election.replace(/[^0-9.]/g, ''), "Gubernatorial", "Elections"], preloadedResults, regions, parties, messageGroup, messagesOpenOnLoad, geographic, changes, dedicatedPage, winFormula = (results : Result[]) => results.filter(r => r.elected) } : 
     { 
-        context : Context<{
-            bank : {
-                election : string;
-                date : Date;
-                results : Result[];
-            }[],
-            promises : {
-                election : string,
-                promise : Promise<Result[]>
-            }[]
-        }>,
+        context = createContext<ResultsContext>({ bank: [], promises: [] }),
+        election, 
+        live = false, 
+        title = [election.replace(/[^0-9.]/g, ''), "Gubernatorial", "Elections"],
+        preloadedResults, 
+        regions, 
+        parties, 
+        messageGroup,
+        messagesOpenOnLoad, 
+        geographic, 
+        changes, 
+        dedicatedPage, 
+        winFormula = (results : Result[]) => results.filter(r => r.elected) 
+    } : 
+    { 
+        context? : Context<ResultsContext>,
         election : string, 
         live? : boolean,
         title? : string[],
@@ -221,11 +225,11 @@ export default function GovernorResultContainer(
 
     const mapClickFun = (id: string) => {
         let region = regions.find( r => r.id == id );
-        if(region) router.push('state/' + constituencyToSlug(region.title));
+        if(region) router.push('/usa/gubernatorial-elections/state/' + constituencyToSlug(region.title));
     };
     const map = () => {
-            if(geographic) return <USAGovernor1960GeographicMap hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
-            else return <USAGovernor1960Map hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
+            if(geographic) return <USAGovernor1960GeographicMap regions={regions} hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
+            else return <USAGovernor1960Map regions={regions} hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
     };
 
     const popupContent = (id? : string) => {
@@ -240,7 +244,7 @@ export default function GovernorResultContainer(
             const subElections = getResultsBySubElection(regionResults);
             const resultNodes : React.ReactNode[] = [];
 
-            if(electionType(id) == "rounds") resultNodes.push(
+            if(electionType(id) == "rounds" && subElections.length >= 1) resultNodes.push(
                 <PopupBarGraph 
                     key={subElections[0].subid}
                     results={subElections[0].results}
@@ -358,7 +362,7 @@ export default function GovernorResultContainer(
             messages={messageGroup ? messages.map(m => m.node) : undefined} messagesOpenOnLoad={messagesOpenOnLoad} 
             map={map()} 
             title={title} 
-            liveTitle={live ? [liveCounter.toString(),"of 435","Seats"] : undefined}
+            liveTitle={live ? [liveCounter.toString(),"of 11","States"] : undefined}
             summary={electionSummaryBars()}
             dedicatedPage={dedicatedPage}
         >

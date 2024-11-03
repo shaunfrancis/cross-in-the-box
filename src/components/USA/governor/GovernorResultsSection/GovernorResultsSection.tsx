@@ -1,22 +1,11 @@
 'use client';
 
-import { Party, Region, Result } from "src/Types";
+import { Party, Region, Result, ResultsContext } from "src/Types";
 import ElectionResultsSection from "src/components/shared/ElectionResultsSection/ElectionResultsSection";
 import GovernorResultContainer from "./GovernorResultContainer/GovernorResultContainer";
 import { Context, createContext, useRef } from "react";
 import { governorGhostResults } from "src/constants/USA";
 
-interface ResultsContext{
-    bank : {
-        election : string,
-        date : Date,
-        results : Result[]
-    }[],
-    promises : {
-        election : string,
-        promise : Promise<Result[]>
-    }[]
-}
 
 export default function GovernorResultsSection({ regions, parties, geographic } : 
     { regions : Region[], parties : Party[], geographic: boolean }
@@ -31,7 +20,7 @@ export default function GovernorResultsSection({ regions, parties, geographic } 
         <ElectionResultsSection>
         
             <GovernorResultContainer context={resultsContext.current} 
-                election="G2024" messageGroup="2024" messagesOpenOnLoad={true}
+                election="G2024" messageGroup="2024" messagesOpenOnLoad={true} live={true}
                 regions={regions}
                 parties={parties}
                 geographic={geographic}

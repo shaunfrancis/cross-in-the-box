@@ -67,26 +67,6 @@ export default function PresidentialStatePage( { slug } : { slug : string } ){
             currentRegion = event.region;
         }
 
-        else if(event.region.id != currentRegion.id){ //find note explaining change from tree
-            const treeLink = data.tree.find(t => t.region_id == event.region.id && t.successor_id == currentRegion.id);
-            if(treeLink){
-                let note = "";
-                if(event.region.title != currentRegion.title) note += "The constituency was renamed to " + currentRegion.title + ".";
-                else note += "Boundary changes occurred.";
-                eventNodes.push(
-                    <article key={"boundary-note-" + index} className={styles["boundary-change-note"]}>{note} {treeLink.note}</article>
-                );
-            }
-            else{
-                eventNodes.push(
-                    <article key={"boundary-note-" + index} className={styles["boundary-change-note"]}>Boundary changes.</article>
-                );
-            }
-
-            if(event.region.title != currentRegion.title) eventNodes.push( <h1>{event.region.title}</h1> );
-            currentRegion = event.region;
-        }
-
         switch(event.type){
             case "election": {
                 let castEvent = event as ElectionEvent;

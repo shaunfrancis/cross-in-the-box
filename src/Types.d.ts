@@ -111,3 +111,15 @@ export interface Update{
     date : Date,
     party : string
 }
+
+export interface ResultsContext{
+    bank : {
+        election : string,
+        date : Date,
+        results : Result[]
+    }[],
+    promises : {
+        election : string,
+        promise : Promise<Result[]>
+    }[]
+}

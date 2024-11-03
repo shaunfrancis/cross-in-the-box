@@ -1,10 +1,10 @@
-import { Context, Fragment, useContext, useEffect, useRef, useState } from "react";
+import { Context, createContext, Fragment, useContext, useEffect, useRef, useState } from "react";
 
 import styles from 'src/components/shared/ElectionResultContainer/ElectionResultContainer.module.css';
 import ElectionResultContainer from "../../../../shared/ElectionResultContainer/ElectionResultContainer";
 import HoverPopup from "../../../../shared/HoverPopup/HoverPopup";
 import PopupBarGraph from "../../../../shared/PopupBarGraph/PopupBarGraph";
-import { MessageData, Party, Region, Result, Update } from "src/Types";
+import { MessageData, Party, Region, Result, ResultsContext, Update } from "src/Types";
 import { DefaultParty, Endpoint } from "src/constants/shared";
 import { useRouter } from "next/navigation";
 import { constituencyToSlug } from "src/lib/UK";
@@ -13,11 +13,11 @@ import USASenate1960Map from "src/components/maps/USASenate1960Map";
 import USASenate1960GeographicMap from "src/components/maps/USASenate1960GeographicMap";
 import ElectionSummaryBars from "src/components/shared/ElectionSummaries/ElectionSummaryBars/ElectionSummaryBars";
 import { electionType, getSenatePreviousSpecialOverrides, senateCaucusMap, subidLabels } from "src/constants/USA";
-import ParsedMessage from "src/components/USA/shared/ParsedMessage/ParsedMessage";
+
 
 export default function SenateResultContainer( 
     { 
-        context,
+        context = createContext<ResultsContext>({ bank: [], promises: [] }),
         election,
         classNo, 
         live = false,
@@ -32,17 +32,7 @@ export default function SenateResultContainer(
         winFormula = (results : Result[]) => results.filter(r => r.elected)
     } : 
     { 
-        context : Context<{
-            bank : {
-                election : string;
-                date : Date;
-                results : Result[];
-            }[],
-            promises : {
-                election : string,
-                promise : Promise<Result[]>
-            }[]
-        }>,
+        context? : Context<ResultsContext>,
         election : string, 
         classNo : 1 | 2 | 3,
         live? : boolean,
@@ -251,16 +241,16 @@ export default function SenateResultContainer(
 
     const mapClickFun = (id: string) => {
         const region = regions.find( r => r.id == id );
-        if(region) router.push('state/' + constituencyToSlug(region.title));
+        if(region) router.push('/usa/senate-elections/state/' + constituencyToSlug(region.title));
     };
     const geographicMapClickFun = (classlessId: string) => {
         const region = regions.find( r => r.id == classlessId + classNo );
-        if(region) router.push('state/' + constituencyToSlug(region.title));
+        if(region) router.push('/usa/senate-elections/state/' + constituencyToSlug(region.title));
     };
 
     const map = () => {
         if(geographic) return <USASenate1960GeographicMap regions={regions} hoverFun={mapHoverFun} clickFun={geographicMapClickFun} fills={fills.filter(f => !f.opacity)} />;
-        else return <USASenate1960Map classNo={classNo} specialNames={getSpecials(results)} hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
+        else return <USASenate1960Map classNo={classNo} specialNames={getSpecials(results)} regions={regions} hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
     };
 
     const popupContent = (id? : string) => geographic ? geographicPopupContent(id) : cartographicPopupContent(id);
@@ -277,7 +267,7 @@ export default function SenateResultContainer(
             const subElections = getResultsBySubElection(regionResults);
             const resultNodes : React.ReactNode[] = [];
 
-            if(electionType(id) == "rounds") resultNodes.push(
+            if(electionType(id) == "rounds" && subElections.length >= 1) resultNodes.push(
                 <PopupBarGraph 
                     key={subElections[0].subid}
                     results={subElections[0].results}

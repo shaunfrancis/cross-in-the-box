@@ -1,4 +1,5 @@
 import { SvgLoader, SvgProxy } from 'react-svgmt';
+import { USASeatsToWatch } from 'src/constants/USA';
 import { Region } from 'src/Types';
 
 export default function USAHouseMap( 
@@ -15,6 +16,8 @@ export default function USAHouseMap(
     //mid-decade redistricting should use same cartographic map
     let baseYear = year;
     switch(year){
+        case "2024":
+            baseYear = "2022"; break;
         case "2020": case "2018": case "2016": 
             baseYear = "2012"; break;
     }
@@ -23,6 +26,14 @@ export default function USAHouseMap(
         const replaces : {state : string, from : string, to : string}[] = [];
 
         switch(year){
+            case "2024":
+                replaces.push({state: "AL", from: "2022", to: "2024"});
+                replaces.push({state: "GA", from: "2022", to: "2024"});
+                replaces.push({state: "LA", from: "2022", to: "2024"});
+                replaces.push({state: "NC", from: "2022", to: "2024"});
+                replaces.push({state: "NY", from: "2022", to: "2024"});
+                break;
+
             case "2020":
                 replaces.push({state: "NC", from: "2012", to: "2020"});
             case "2018":
@@ -47,8 +58,12 @@ export default function USAHouseMap(
         <SvgLoader path={"/maps/USA-house-" + baseYear + ".svg"} onSVGReady={(svg : SVGElement) => { replaceYear(svg) }}>
             {
                 regions.map( (region, index) => {
-                    const fill = fills.find( fill => fill.id === region.id );
-                    if(fill) return (
+                    let fill = fills.find( f => f.id === region.id );
+                    if(!fill){
+                        if(USASeatsToWatch.find( s => s.id == region.id)) fill = {id: region.id, color: "url(#highlight_no_result)"};
+                        else fill = {id: region.id, color: "url(#no_result)"};
+                    }
+                    return (
                         <SvgProxy 
                             key={index} 
                             selector={'[name="' + region.id + '"]'} 
@@ -57,15 +72,6 @@ export default function USAHouseMap(
                             onClick={() => {clickFun(region.id)}}
                             fill={fill.color}
                             style={fill.opacity !== undefined ? "opacity:" + fill.opacity : ""}
-                        />
-                    );
-                    else return (
-                        <SvgProxy 
-                            key={index} 
-                            selector={'[name="' + region.id + '"]'} 
-                            onMouseMove={(event) => { hoverFun(true, event, region.id) }} 
-                            onMouseOut={() => { hoverFun(false) }}
-                            onClick={() => {clickFun(region.id)}}
                         />
                     );
                 })

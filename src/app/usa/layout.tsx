@@ -18,6 +18,7 @@ export const metadata: Metadata = {
 
 export default function USALayout( { children } : { children : React.ReactNode } ){
     const links = [
+        {title: "2024", path: "/usa/2024-elections"},
         {title: "President", path: "/usa/presidential-elections"},
         {title: "Senate", path: "/usa/senate-elections" },
         {title: "House", path: "/usa/house-elections" },

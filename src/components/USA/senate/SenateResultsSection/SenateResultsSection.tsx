@@ -1,22 +1,10 @@
 'use client';
 
-import { Party, Region, Result } from "src/Types";
+import { Party, Region, Result, ResultsContext } from "src/Types";
 import ElectionResultsSection from "src/components/shared/ElectionResultsSection/ElectionResultsSection";
 import SenateResultContainer from "./SenateResultContainer/SenateResultContainer";
 import { Context, createContext, useRef } from "react";
 import { senateGhostResults } from "src/constants/USA";
-
-interface ResultsContext{
-    bank : {
-        election : string,
-        date : Date,
-        results : Result[]
-    }[],
-    promises : {
-        election : string,
-        promise : Promise<Result[]>
-    }[]
-}
 
 export default function SenateResultsSection({ regions, parties, geographic } : 
     { regions : Region[], parties : Party[], geographic: boolean }
@@ -31,7 +19,7 @@ export default function SenateResultsSection({ regions, parties, geographic } :
         <ElectionResultsSection>
 
             <SenateResultContainer context={resultsContext.current} 
-                election="S2024" classNo={1} messageGroup="2024" messagesOpenOnLoad={true}
+                election="S2024" classNo={1} messageGroup="2024" messagesOpenOnLoad={true} live={true}
                 regions={regions}
                 parties={parties}
                 geographic={geographic}

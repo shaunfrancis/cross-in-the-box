@@ -9,6 +9,7 @@ import HeroNav from "src/components/shared/HeroNav/HeroNav";
 import { partyIdToDisplayId } from "src/lib/USA";
 import HouseResultsSection from "src/components/USA/house/HouseResultsSection/HouseResultsSection";
 import HouseSearchSection from "src/components/USA/house/HouseSearchSection/HouseSearchSection";
+import USAMapDefs from "src/components/maps/USAMapDefs";
 
 export default function USAHouseElections(){
     const [regions, setRegions] = useState<Region[]>([]);
@@ -66,7 +67,7 @@ export default function USAHouseElections(){
                 <h1>Find a District</h1>
                 <HouseSearchSection searchInputRef={searchInputRef} />
             </section>
-            {/* <USAMapDefs /> */}
+            <USAMapDefs />
         </main>
     )
 }

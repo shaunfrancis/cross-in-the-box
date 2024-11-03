@@ -9,6 +9,7 @@ import HeroNav from "src/components/shared/HeroNav/HeroNav";
 import { partyIdToDisplayId } from "src/lib/USA";
 import GovernorResultsSection from "src/components/USA/governor/GovernorResultsSection/GovernorResultsSection";
 import GovernorSearchSection from "src/components/USA/governor/GovernorSearchSection/GovernorSearchSection";
+import USAMapDefs from "src/components/maps/USAMapDefs";
 
 export default function USAGovernorElections(){
     const [regions, setRegions] = useState<Region[]>([]);
@@ -66,7 +67,7 @@ export default function USAGovernorElections(){
                 <h1>Find a State</h1>
                 <GovernorSearchSection searchInputRef={searchInputRef} />
             </section>
-            {/* <USAMapDefs /> */}
+            <USAMapDefs />
         </main>
     )
 }

@@ -6,12 +6,13 @@ import { Endpoint } from "src/constants/shared";
 import Toggle from "src/components/shared/Toggle/Toggle";
 import HeroNav from "src/components/shared/HeroNav/HeroNav";
 
-import PresidentialResultsSection from "src/components/USA/presidential/PresidentialResultsSection/PresidentialResultsSection";
-// import USAConstituencySearchSection from "src/components/USA/USAConstituencySearchSection/USAConstituencySearchSection";
-// import USAPollingSection from "src/components/USA/USAPollingSection/USAPollingSection";
-// import USAMapDefs from "src/components/maps/USAMapDefs";
 import { partyIdToDisplayId } from "src/lib/USA";
 import PresidentialSearchSection from "src/components/USA/presidential/PresidentialSearchSection/PresidentialSearchSection";
+import PresidentialResultContainer from "src/components/USA/presidential/PresidentialResultsSection/PresidentialResultContainer/PresidentialResultContainer";
+import ElectionResultsSection from "src/components/shared/ElectionResultsSection/ElectionResultsSection";
+import HouseResultContainer from "src/components/USA/house/HouseResultsSection/HouseResultContainer/HouseResultContainer";
+import SenateResultContainer from "src/components/USA/senate/SenateResultsSection/SenateResultContainer/SenateResultContainer";
+import GovernorResultContainer from "src/components/USA/governor/GovernorResultsSection/GovernorResultContainer/GovernorResultContainer";
 import USAMapDefs from "src/components/maps/USAMapDefs";
 
 export default function USAGeneralElections(){
@@ -30,7 +31,7 @@ export default function USAGeneralElections(){
             partyData.forEach( party => party.displayId = partyIdToDisplayId(party.id) );
             setParties(partyData);
 
-            const regionData : Region[] = await fetch(Endpoint + "/regions/usa/presidential").then( res => res.json() );
+            const regionData : Region[] = await fetch(Endpoint + "/regions/usa").then( res => res.json() );
             setRegions(regionData);
         };
         getData();
@@ -41,7 +42,7 @@ export default function USAGeneralElections(){
 
     const searchInputRef = useRef<HTMLInputElement>(null);
     const heroNavItems = [
-        { title: "Election Results", src:"/images/usa-nav-presidential-results.svg", ref:useRef<HTMLElement>(null) },
+        { title: "Election Results", src:"/images/usa-nav-results.svg", ref:useRef<HTMLElement>(null) },
         { title: "Find a State", src:"/images/nav-region.svg", ref:useRef<HTMLElement>(null), 
             fun: () => { setTimeout( () => { if(searchInputRef.current) searchInputRef.current.focus() }, 100 ) }
         }
@@ -50,7 +51,7 @@ export default function USAGeneralElections(){
     return ( 
         <main>
             <section id="hero">
-                <h1>US Presidential Elections</h1>
+                <h1>2024 US Elections</h1>
                 <HeroNav items={heroNavItems} />
             </section>
 
@@ -64,7 +65,35 @@ export default function USAGeneralElections(){
                         value={geographic}
                     />
                 </div>
-                <PresidentialResultsSection regions={regions} parties={parties} geographic={geographic} />
+                
+                <ElectionResultsSection>
+
+                    <PresidentialResultContainer election="P2024" messageGroup="2024" messagesOpenOnLoad={true} live={true}
+                        regions={regions}
+                        parties={parties}
+                        geographic={geographic}
+                    />
+
+                    <SenateResultContainer election="S2024" classNo={1} live={true}
+                        regions={regions}
+                        parties={parties}
+                        geographic={geographic}
+                    />
+
+                    <HouseResultContainer election="H2024" live={true}
+                        regions={regions}
+                        parties={parties}
+                        geographic={geographic}
+                    />
+
+                    <GovernorResultContainer election="G2024" live={true}
+                        regions={regions}
+                        parties={parties}
+                        geographic={geographic}
+                    />
+
+                </ElectionResultsSection>
+
             </section>
             <section ref={heroNavItems[1].ref} className="shaded purple">
                 <h1>Find a State</h1>
