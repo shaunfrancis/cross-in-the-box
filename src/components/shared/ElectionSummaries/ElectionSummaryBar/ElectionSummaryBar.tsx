@@ -34,6 +34,23 @@ export default function ElectionSummaryBar(
         segments.push(segment);
     } );
 
+    const currentTotal = data.reduce( (accumulator, row) => accumulator + row.count, 0 ) || 1;
+    if(currentTotal < total){ //in live mode and awaiting results
+        const segment = (
+            <div 
+                key={-1}
+                className={styles["summary-segment"] + " " + styles["outstanding"]}
+                style={{
+                    width: (100 * (total - currentTotal) / total) + "%"
+                }}
+            >
+            </div>
+        );
+
+        if(segments.length == 2) segments.splice(1,0,segment);
+        else segments.push(segment);
+    }
+
 
     return ( 
         <div className={styles["summary-bar-container"]}>

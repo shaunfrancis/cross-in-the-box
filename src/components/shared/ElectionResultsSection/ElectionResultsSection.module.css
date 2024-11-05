@@ -2,7 +2,8 @@
     display:flex;
     overflow:auto;
     gap:30px;
-    padding:0 50px 50px var(--left-gap);
+    padding:0 50px 30px var(--left-gap);
+    margin-bottom:20px;
 }
 
 @media screen and (max-width:768px){

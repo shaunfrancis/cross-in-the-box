@@ -1,4 +1,8 @@
-const partyIdToDisplayId = (partyId : string) => {
+import { Endpoint } from "src/constants/shared";
+import { parseJSONWithDates } from "./shared";
+import { Result } from "src/Types";
+
+export const partyIdToDisplayId = (partyId : string) => {
     let displayId = partyId.toUpperCase();
 
     if(["speaker","vacant"].includes(partyId)) displayId = partyId.charAt(0).toUpperCase() + partyId.slice(1);
@@ -7,10 +11,8 @@ const partyIdToDisplayId = (partyId : string) => {
     return displayId;
 }
 
-const stateToSlug = (constituency : string) => {
+export const stateToSlug = (constituency : string) => {
     return constituency.toLowerCase().replace(/ /g, "-").replace(/,|\)|\(/g, "");
 };
 
-const slugToLookupSlug = (slug : string) => { return slug };
-
-export { partyIdToDisplayId, stateToSlug, slugToLookupSlug }
+export const slugToLookupSlug = (slug : string) => { return slug };

@@ -5,6 +5,7 @@ import ElectionResultsSection from "src/components/shared/ElectionResultsSection
 import SenateResultContainer from "./SenateResultContainer/SenateResultContainer";
 import { Context, createContext, useRef } from "react";
 import { senateGhostResults } from "src/constants/USA";
+import { useLiveCloseAndCountedData } from "src/lib/USA-client.tsx";
 
 export default function SenateResultsSection({ regions, parties, geographic } : 
     { regions : Region[], parties : Party[], geographic: boolean }
@@ -15,6 +16,8 @@ export default function SenateResultsSection({ regions, parties, geographic } :
         resultsContext.current = createContext<ResultsContext>( { bank: [...senateGhostResults], promises: [] } );
     }
 
+    const liveCloseAndCountedData = useLiveCloseAndCountedData();
+
     return ( <>
         <ElectionResultsSection>
 
@@ -23,6 +26,7 @@ export default function SenateResultsSection({ regions, parties, geographic } :
                 regions={regions}
                 parties={parties}
                 geographic={geographic}
+                liveCloseAndCountedData={liveCloseAndCountedData}
             />
 
             <SenateResultContainer context={resultsContext.current} 

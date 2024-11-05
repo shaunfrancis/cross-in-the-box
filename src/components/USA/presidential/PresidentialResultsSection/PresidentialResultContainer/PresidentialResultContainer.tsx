@@ -10,13 +10,28 @@ import { constituencyToSlug } from "src/lib/UK";
 import { getMessages, getResultsBySubElection, parseJSONWithDates, useOnScreen } from "src/lib/shared";
 import USAPresidential2012Map from "src/components/maps/USAPresidential2012Map";
 import USAPresidential2012GeographicMap from "src/components/maps/USAPresidential2012GeographicMap";
-import { electionType, stateWeights, subidLabels } from "src/constants/USA";
+import { electionType, stateWeights, subidLabels, USASeatsToWatch } from "src/constants/USA";
 import USAPresidential2024GeographicMap from "src/components/maps/USAPresidential2024GeographicMap";
 import USAPresidential2024Map from "src/components/maps/USAPresidential2024Map";
 import ElectionSummaryBar from "src/components/shared/ElectionSummaries/ElectionSummaryBar/ElectionSummaryBar";
+import LiveCloseAndCountedData from "src/components/USA/shared/LiveCloseAndCountedData/LiveCloseAndCountedData";
 
 export default function PresidentialResultContainer( 
-    { election, live = false, title = [election.replace(/[^0-9.]/g, ''), "Presidential", "Election"], preloadedResults, regions, parties, messageGroup, messagesOpenOnLoad, geographic, changes, dedicatedPage, winFormula = (results : Result[]) => results.filter(r => r.elected) } : 
+    { 
+        election, 
+        live = false, 
+        title = [election.replace(/[^0-9.]/g, ''), "Presidential", "Election"], 
+        preloadedResults, 
+        regions, 
+        parties, 
+        messageGroup, 
+        messagesOpenOnLoad, 
+        geographic, 
+        changes, 
+        dedicatedPage, 
+        winFormula = (results : Result[]) => results.filter(r => r.elected),
+        liveCloseAndCountedData = []
+    } : 
     { 
         election : string, 
         live? : boolean,
@@ -29,7 +44,8 @@ export default function PresidentialResultContainer(
         messagesOpenOnLoad?: boolean,
         geographic? : boolean,
         changes? : boolean,
-        dedicatedPage? : string
+        dedicatedPage? : string,
+        liveCloseAndCountedData? : { id : string, close : Date, counted? : number }[]
     }
 ){
 
@@ -110,9 +126,17 @@ export default function PresidentialResultContainer(
 
             let newResultData : Result[] = [];
 
+            const repeatedPartyMap = new Map<string, number>();
             results.forEach( result => {
-                const updatedRow = updatedResultData.find( d => d.id == result.id && d.p == result.party );
-                if(updatedRow) newResultData.push({...result, votes: updatedRow.v, elected: updatedRow.e});
+                const updatedRows = updatedResultData.filter( d => d.id == result.id && d.p == result.party );
+                //handle the case that, for example, there are multiple ind candidates in the same contest
+                if(updatedRows.length > 1){
+                    let n = repeatedPartyMap.get(JSON.stringify(updatedRows)) || 0;
+                    repeatedPartyMap.set(JSON.stringify(updatedRows), n + 1);
+                    n = Math.min(n, updatedRows.length - 1);
+                    newResultData.push({...result, votes: updatedRows[n].v, elected: updatedRows[n].e});
+                }
+                else if(updatedRows.length == 1) newResultData.push({...result, votes: updatedRows[0].v, elected: updatedRows[0].e});
                 else newResultData.push(result);
             });
             setResults(newResultData);
@@ -161,7 +185,7 @@ export default function PresidentialResultContainer(
     };
     const map = () => {
         switch(election){
-            case "P2024":
+            case "P2024": case "P2025":
                 if(geographic) return <USAPresidential2024GeographicMap regions={regions} hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
                 else return <USAPresidential2024Map regions={regions} hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
             case "P2020": case "P2016": case "P2012":
@@ -200,9 +224,12 @@ export default function PresidentialResultContainer(
             });
         }
         
+        const watchNote = election == "P2024" && USASeatsToWatch.find(s => s.id == id)?.note;
         return ( <>
             <h3>{region.title}</h3>
             {winner && <h4>{winner}</h4>}
+            {!winner && <div style={{maxWidth: "350px"}}>{watchNote}</div>}
+            {<LiveCloseAndCountedData id={region.id} data={liveCloseAndCountedData} />}
             {resultNodes}
         </> )
     }
@@ -236,7 +263,7 @@ export default function PresidentialResultContainer(
             messages={messageGroup ? messages.map(m => m.node) : undefined} messagesOpenOnLoad={messagesOpenOnLoad} 
             map={map()} 
             title={title} 
-            liveTitle={live ? [liveCounter.toString(),"of 50","States"] : undefined}
+            liveTitle={live ? [liveCounter.toString(),"of 56","States & Districts"] : undefined}
             summary={electionSummaryBar()}
             dedicatedPage={dedicatedPage}
         >

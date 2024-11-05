@@ -3,10 +3,13 @@
 import { Party, Region } from "src/Types";
 import ElectionResultsSection from "src/components/shared/ElectionResultsSection/ElectionResultsSection";
 import PresidentialResultContainer from "./PresidentialResultContainer/PresidentialResultContainer";
+import { useLiveCloseAndCountedData } from "src/lib/USA-client.tsx";
 
 export default function PresidentialResultsSection({ regions, parties, geographic } : 
     { regions : Region[], parties : Party[], geographic: boolean }
 ){
+    
+    const liveCloseAndCountedData = useLiveCloseAndCountedData();
 
     return ( <>
         <ElectionResultsSection>
@@ -15,6 +18,7 @@ export default function PresidentialResultsSection({ regions, parties, geographi
                 regions={regions}
                 parties={parties}
                 geographic={geographic}
+                liveCloseAndCountedData={liveCloseAndCountedData}
             />
 
             <PresidentialResultContainer election="P2020" messageGroup="2020"

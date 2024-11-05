@@ -168,9 +168,17 @@ export default function UKElectionResultContainer(
 
             let newResultData : Result[] = [];
 
+            const repeatedPartyMap = new Map<string, number>();
             results.forEach( result => {
-                const updatedRow = updatedResultData.find( d => d.id == result.id && d.p == result.party );
-                if(updatedRow) newResultData.push({...result, votes: updatedRow.v, elected: updatedRow.e});
+                const updatedRows = updatedResultData.filter( d => d.id == result.id && d.p == result.party );
+                //handle the case that, for example, there are multiple ind candidates in the same contest
+                if(updatedRows.length > 1){
+                    let n = repeatedPartyMap.get(JSON.stringify(updatedRows)) || 0;
+                    repeatedPartyMap.set(JSON.stringify(updatedRows), n + 1);
+                    n = Math.min(n, updatedRows.length - 1);
+                    newResultData.push({...result, votes: updatedRows[n].v, elected: updatedRows[n].e});
+                }
+                else if(updatedRows.length == 1) newResultData.push({...result, votes: updatedRows[0].v, elected: updatedRows[0].e});
                 else newResultData.push(result);
             });
             setResults(newResultData);

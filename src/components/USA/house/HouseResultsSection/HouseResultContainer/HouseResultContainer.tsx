@@ -12,9 +12,24 @@ import ElectionSummaryBar from "src/components/shared/ElectionSummaries/Election
 import { electionType, subidLabels } from "src/constants/USA";
 import USAHouseMap from "src/components/maps/USAHouseMap";
 import USAHouseMapGeographic from "src/components/maps/USAHouseMapGeographic";
+import LiveCloseAndCountedData from "src/components/USA/shared/LiveCloseAndCountedData/LiveCloseAndCountedData";
 
 export default function HouseResultContainer( 
-    { election, live = false, title = [election.replace(/[^0-9.]/g, ''), "House", "Elections"], preloadedResults, regions, parties, messageGroup, messagesOpenOnLoad, geographic, changes, dedicatedPage, winFormula = (results : Result[]) => results.filter(r => r.elected) } : 
+    {
+        election,
+        live = false,
+        title = [election.replace(/[^0-9.]/g, ''), "House", "Elections"],
+        preloadedResults,
+        regions,
+        parties,
+        messageGroup,
+        messagesOpenOnLoad,
+        geographic, 
+        changes,
+        dedicatedPage,
+        winFormula = (results : Result[]) => results.filter(r => r.elected),
+        liveCloseAndCountedData = []
+    } : 
     { 
         election : string, 
         live? : boolean,
@@ -27,7 +42,8 @@ export default function HouseResultContainer(
         messagesOpenOnLoad?: boolean,
         geographic? : boolean,
         changes? : boolean,
-        dedicatedPage? : string
+        dedicatedPage? : string,
+        liveCloseAndCountedData? : {id : string, close : Date, counted? : number}[]
     }
 ){
 
@@ -110,9 +126,17 @@ export default function HouseResultContainer(
 
             let newResultData : Result[] = [];
 
+            const repeatedPartyMap = new Map<string, number>();
             results.forEach( result => {
-                const updatedRow = updatedResultData.find( d => d.id == result.id && d.p == result.party );
-                if(updatedRow) newResultData.push({...result, votes: updatedRow.v, elected: updatedRow.e});
+                const updatedRows = updatedResultData.filter( d => d.id == result.id && d.p == result.party );
+                //handle the case that, for example, there are multiple ind candidates in the same contest
+                if(updatedRows.length > 1){
+                    let n = repeatedPartyMap.get(JSON.stringify(updatedRows)) || 0;
+                    repeatedPartyMap.set(JSON.stringify(updatedRows), n + 1);
+                    n = Math.min(n, updatedRows.length - 1);
+                    newResultData.push({...result, votes: updatedRows[n].v, elected: updatedRows[n].e});
+                }
+                else if(updatedRows.length == 1) newResultData.push({...result, votes: updatedRows[0].v, elected: updatedRows[0].e});
                 else newResultData.push(result);
             });
             setResults(newResultData);
@@ -225,6 +249,7 @@ export default function HouseResultContainer(
         return ( <>
             <h3>{region.title}</h3>
             {winner && <h4>{winner}</h4>}
+            {<LiveCloseAndCountedData id={region.id} data={liveCloseAndCountedData} />}
             {resultNodes}
         </> )
     }

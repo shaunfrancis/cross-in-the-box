@@ -21,6 +21,8 @@
     gap:10px;
     margin-left:10px;
     color:#fff;
+    height:25px;
+    line-height:25px;
 }
 .summary-label-party{
     font-weight:500;

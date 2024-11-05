@@ -13,6 +13,7 @@ export default function Page(){
             <li>
                 United States
                 <ul>
+                    <li><a href="usa/2024-elections">2024 Elections</a></li>
                     <li><a href="usa/presidential-elections">Presidential Elections</a></li>
                     <li><a href="usa/senate-elections">Senate Elections</a></li>
                     <li><a href="usa/house-elections">House Elections</a></li>

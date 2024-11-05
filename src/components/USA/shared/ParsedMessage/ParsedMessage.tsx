@@ -2,6 +2,7 @@ import { useRouter } from "next/navigation";
 import Message from "src/components/shared/Message/Message";
 import PopupBarGraph from "src/components/shared/PopupBarGraph/PopupBarGraph";
 import { DefaultParty } from "src/constants/shared";
+import { dateToLongDate } from "src/lib/shared";
 import { MessageData, Party } from "src/Types";
 
 export default function ParsedMessage({parties, message, animate} : { parties : Party[], message : MessageData, animate? : boolean }){
@@ -39,21 +40,25 @@ export default function ParsedMessage({parties, message, animate} : { parties : 
         return spans;
     }
 
-    let date = message.date.getHours().toString().padStart(2,'0') + ":" + message.date.getMinutes().toString().padStart(2,'0');
+    const est = new Date(message.date.toLocaleString("en-US", {timeZone: "America/New_York"}));
+    let time = est.getHours().toString().padStart(2,'0') + ":" + est.getMinutes().toString().padStart(2,'0');
 
-    //for live messages, if event extends beyond Friday following election day then show day of week
-    // if(! [2,3].includes(message.date.getDay())){
-        const dayWord = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][message.date.getDay()];
-        let dayDate = message.date.getDate().toString();
-        switch(dayDate){
-            case "1": case "21": case "31": dayDate += "st"; break;
-            case "2": case "22": dayDate += "nd"; break;
-            case "3": case "23": dayDate += "rd"; break;
-            default: dayDate += "th";
+    let dateString : string;
+    const dayWord = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][est.getDay()];
+
+    if((new Date()).getFullYear() === est.getFullYear()){ //current year, don't show full date
+        //for live messages, if event extends beyond Wednesday following election day then show day of week
+        if(! [2,3].includes(est.getDay())){
+            dateString = dayWord + ", " + time;
         }
-        const month = ["January","February","March","April","May","June","July","August","September","October","November","December"][message.date.getMonth()];
-        date = dayWord + " " + dayDate + " " + month + ", " + date;
-    // }
+        else dateString = time;
+    }
+    else dateString = dayWord + " " + dateToLongDate(est) + ", " + time;
+
+    const date = ( <>
+        {dateString} <span style={{fontSize:"0.8em"}}>ET</span>
+    </> );
+
 
     const square = message.square ? (parties.find(p => p.id == message.square) || DefaultParty) : undefined;
     const oldSquare = message.old_square ? (parties.find(p => p.id == message.old_square) || DefaultParty) : undefined;

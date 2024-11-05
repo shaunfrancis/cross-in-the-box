@@ -4,14 +4,14 @@ import { DefaultParty, Endpoint } from "src/constants/shared";
 import { FullRegionData, ElectionEvent, UpdateEvent, Region } from "src/Types";
 import RegionBarGraph from "src/components/shared/RegionBarGraph/RegionBarGraph";
 import RegionPage from "src/components/shared/RegionPage/RegionPage";
-import { dateToLongDate, parseJSONWithDates } from "src/lib/shared";
+import { dateToLongDate, orderResults, parseJSONWithDates } from "src/lib/shared";
 import Link from 'next/link';
 import HeroNav from 'src/components/shared/HeroNav/HeroNav';
 
 import styles from './PresidentialStatePage.module.css';
 import { constituencyToSlug, partyIdToDisplayId, slugToLookupSlug } from "src/lib/UK";
 import PresidentialSidebar from "./PresidentialSidebar/PresidentialSidebar";
-import { electionType } from "src/constants/USA";
+import { electionType, subidLabels } from "src/constants/USA";
 
 export default function PresidentialStatePage( { slug } : { slug : string } ){
 
@@ -70,10 +70,10 @@ export default function PresidentialStatePage( { slug } : { slug : string } ){
         switch(event.type){
             case "election": {
                 let castEvent = event as ElectionEvent;
-                castEvent.data.results.sort( (a,b) => b.votes - a.votes );
+                castEvent.data.results.sort(orderResults);
                 const subElectionType = electionType(castEvent.region.id);
                 eventNodes.push(
-                    <RegionBarGraph key={index} title={castEvent.data.title} results={castEvent.data.results} parties={data.parties}
+                    <RegionBarGraph key={index} title={castEvent.data.title} subtitles={subidLabels(castEvent.region.id)} results={castEvent.data.results} parties={data.parties}
                     subElectionType={subElectionType} />
                 );
                 break;

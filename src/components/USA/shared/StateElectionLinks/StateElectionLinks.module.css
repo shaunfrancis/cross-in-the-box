@@ -18,3 +18,7 @@
     background:rgb(240,240,240);
     color:#000;
 }
+
+.link-button.current{
+    border:2px solid black;
+}

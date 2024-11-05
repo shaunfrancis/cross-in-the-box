@@ -14,11 +14,14 @@ import HouseResultContainer from "src/components/USA/house/HouseResultsSection/H
 import SenateResultContainer from "src/components/USA/senate/SenateResultsSection/SenateResultContainer/SenateResultContainer";
 import GovernorResultContainer from "src/components/USA/governor/GovernorResultsSection/GovernorResultContainer/GovernorResultContainer";
 import USAMapDefs from "src/components/maps/USAMapDefs";
+import { useLiveCloseAndCountedData } from "src/lib/USA-client.tsx";
 
 export default function USAGeneralElections(){
     const [regions, setRegions] = useState<Region[]>([]);
     const [parties, setParties] = useState<Party[]>([]);
     const [geographic, setGeographic] = useState<boolean>(false);
+
+    const liveCloseAndCountedData = useLiveCloseAndCountedData();
 
     const updateGeographicState = (state : boolean) => {
         setGeographic(state);
@@ -72,24 +75,32 @@ export default function USAGeneralElections(){
                         regions={regions}
                         parties={parties}
                         geographic={geographic}
+                        liveCloseAndCountedData={liveCloseAndCountedData}
+                        title={["President"]}
                     />
 
                     <SenateResultContainer election="S2024" classNo={1} live={true}
                         regions={regions}
                         parties={parties}
                         geographic={geographic}
+                        liveCloseAndCountedData={liveCloseAndCountedData}
+                        title={["Senate"]}
                     />
 
                     <HouseResultContainer election="H2024" live={true}
                         regions={regions}
                         parties={parties}
                         geographic={geographic}
+                        liveCloseAndCountedData={liveCloseAndCountedData}
+                        title={["House"]}
                     />
 
                     <GovernorResultContainer election="G2024" live={true}
                         regions={regions}
                         parties={parties}
                         geographic={geographic}
+                        liveCloseAndCountedData={liveCloseAndCountedData}
+                        title={["Governors"]}
                     />
 
                 </ElectionResultsSection>

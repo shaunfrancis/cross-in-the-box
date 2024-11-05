@@ -11,16 +11,15 @@
         $governor = "G" . $baseId;
 
         $sql = "WITH data AS (
-                    SELECT usa_regions.title, usa_results.region_id, usa_parties.color, usa_parties.textColor, usa_regions.type, usa_elections.date, ROW_NUMBER() OVER (PARTITION BY usa_results.region_id ORDER BY date DESC) as row
+                    SELECT usa_regions.title, usa_results.region_id, usa_results.elected, usa_parties.color, usa_parties.textColor, usa_regions.type, usa_elections.date, ROW_NUMBER() OVER (PARTITION BY usa_results.region_id ORDER BY usa_elections.date DESC, usa_results.elected DESC) as row
                     FROM usa_results
                     JOIN usa_regions ON usa_regions.id = usa_results.region_id
                     JOIN usa_elections ON usa_elections.id = usa_results.election_id
                     LEFT JOIN usa_parties ON usa_parties.id = usa_results.party
-                    WHERE usa_results.elected = 1/*
-                    AND usa_regions.current = 1
-                    */AND (usa_regions.id LIKE :president OR usa_regions.id LIKE :senate OR usa_regions.id LIKE :house OR usa_regions.id LIKE :governor)
+                    WHERE usa_regions.current = 1
+                    AND (usa_regions.id LIKE :president OR usa_regions.id LIKE :senate OR usa_regions.id LIKE :house OR usa_regions.id LIKE :governor)
                 )
-                SELECT title, region_id, color, textColor, type, date
+                SELECT title, region_id, elected, color, textColor, type, date
                 FROM data
                 WHERE row = 1
             ";

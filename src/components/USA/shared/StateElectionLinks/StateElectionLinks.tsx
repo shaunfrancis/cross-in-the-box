@@ -10,7 +10,8 @@ interface Link{
     label : string,
     region_id : string,
     color : string | null,
-    textColor : string | null
+    textColor : string | null,
+    elected : boolean
 }
 
 export default function StateElectionLinks( { region } : { region : Region } ){
@@ -42,9 +43,9 @@ export default function StateElectionLinks( { region } : { region : Region } ){
         return (
             <a 
                 key={index}
-                className={styles["link-button"]} 
+                className={styles["link-button"] + (current ? " " + styles["current"] : "")} 
                 href={href}
-                style={ !current ? {
+                style={link.elected ? {
                     background: link.color || DefaultParty.color,
                     color: link.textColor ? link.textColor : "#fff"
                 } : undefined}

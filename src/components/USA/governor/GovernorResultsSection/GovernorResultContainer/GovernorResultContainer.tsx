@@ -13,6 +13,7 @@ import USAGovernor1960Map from "src/components/maps/USAGovernor1960Map";
 import ElectionSummaryBars from "src/components/shared/ElectionSummaries/ElectionSummaryBars/ElectionSummaryBars";
 import { electionType, governorCaucusMap, governorGhostResults, subidLabels } from "src/constants/USA";
 import USAGovernor1960GeographicMap from "src/components/maps/USAGovernor1960GeographicMap";
+import LiveCloseAndCountedData from "src/components/USA/shared/LiveCloseAndCountedData/LiveCloseAndCountedData";
 
 export default function GovernorResultContainer( 
     { 
@@ -28,7 +29,8 @@ export default function GovernorResultContainer(
         geographic, 
         changes, 
         dedicatedPage, 
-        winFormula = (results : Result[]) => results.filter(r => r.elected) 
+        winFormula = (results : Result[]) => results.filter(r => r.elected),
+        liveCloseAndCountedData = []
     } : 
     { 
         context? : Context<ResultsContext>,
@@ -43,7 +45,8 @@ export default function GovernorResultContainer(
         messagesOpenOnLoad?: boolean,
         geographic? : boolean,
         changes? : boolean,
-        dedicatedPage? : string
+        dedicatedPage? : string,
+        liveCloseAndCountedData? : {id : string, close : Date, counted? : number}[]
     }
 ){
 
@@ -130,6 +133,7 @@ export default function GovernorResultContainer(
                     ...await getResultsFromElection("G" + (electionYear-3))
                 ];
                 winFormula(newOtherClassResults).forEach( result => {
+                    if(resultData.find( r => r.id === result.id )) return;
                     const party : Party = parties.find( p => p.id == result.party ) || DefaultParty;
                     if(party) newFills.push({ 
                         id: result.id, 
@@ -174,14 +178,36 @@ export default function GovernorResultContainer(
     }, 6000);
     useEffect( () => {
         if(!(loadingComplete.current && live)) return;
+
+        //get results from the most recent election for the other two class numbers
+        //for ghost fills
+        const ghostFills : { id : string, color : string, opacity? : number }[] = [];
+        winFormula(otherClassResults).forEach( result => {
+            if(results.find( r => r.id === result.id )) return;
+            const party : Party = parties.find( p => p.id == result.party ) || DefaultParty;
+            if(party) ghostFills.push({ 
+                id: result.id, 
+                color: party.color || "var(--default-color)", 
+                opacity: 1 / 3
+            });
+        });
+
         const getLiveUpdates = async () => {
             let updatedResultData = await fetch(Endpoint + '/results/usa/' + election + '?compact=true').then( res => res.json() );
 
             let newResultData : Result[] = [];
 
+            const repeatedPartyMap = new Map<string, number>();
             results.forEach( result => {
-                const updatedRow = updatedResultData.find( d => d.id == result.id && d.p == result.party );
-                if(updatedRow) newResultData.push({...result, votes: updatedRow.v, elected: updatedRow.e});
+                const updatedRows = updatedResultData.filter( d => d.id == result.id && d.p == result.party );
+                //handle the case that, for example, there are multiple ind candidates in the same contest
+                if(updatedRows.length > 1){
+                    let n = repeatedPartyMap.get(JSON.stringify(updatedRows)) || 0;
+                    repeatedPartyMap.set(JSON.stringify(updatedRows), n + 1);
+                    n = Math.min(n, updatedRows.length - 1);
+                    newResultData.push({...result, votes: updatedRows[n].v, elected: updatedRows[n].e});
+                }
+                else if(updatedRows.length == 1) newResultData.push({...result, votes: updatedRows[0].v, elected: updatedRows[0].e});
                 else newResultData.push(result);
             });
             setResults(newResultData);
@@ -197,7 +223,7 @@ export default function GovernorResultContainer(
                     opacity: changes ? 0.2 : undefined 
                 });
             });
-            setFills(newFills);
+            setFills([...newFills, ...ghostFills]);
             setLiveCounter(updatedLiveCount);
 
             if(messageGroup){
@@ -267,6 +293,7 @@ export default function GovernorResultContainer(
             return ( <>
                 <h3>{region.title}</h3>
                 {winner && <h4>{winner}</h4>}
+                {<LiveCloseAndCountedData id={region.id} data={liveCloseAndCountedData} />}
                 {resultNodes}
             </> )
 
@@ -281,7 +308,7 @@ export default function GovernorResultContainer(
                 <h4>{winner.candidate}</h4>
                 <div className={styles["flex-row"]}>
                     <div className={styles["bloc"]} style={{background:party.color, color:party.textColor}}>{party.displayId}</div>
-                    <span>elected in {year?.getFullYear()}</span>
+                    <span>elected {year ? "in " + year.getFullYear() : "previously"}</span>
                 </div>
             </> );
             else return (<h3>Missing data</h3>);
@@ -296,15 +323,15 @@ export default function GovernorResultContainer(
 
         winFormula([...results, ...otherClassResults]).forEach( (result, index) => {
             if(countedResults.includes(result.id)) return;
+            else if(otherClassResults.includes(result) && results.find(r => r.id == result.id)) return;
             countedResults.push(result.id);
 
             const regionUpdates = updates.filter( u => u.id == result.id );
             const winner = regionUpdates.length > 0 ? regionUpdates[regionUpdates.length - 1].party : result.party;
             const shouldIncrementCount = +(index < winFormula(results).length);
 
-
-            const election = resultsBank.find( r => r.results.includes(result) )?.election;
-            const caucusesWithParty = governorCaucusMap.find(c => c.election === election && c.region === result.id)?.caucusesWith;
+            const resultElection = results.includes(result) ? election : resultsBank.find( r => r.results.includes(result) )?.election;
+            const caucusesWithParty = governorCaucusMap.find(c => c.election === resultElection && c.region === result.id)?.caucusesWith;
             if(caucusesWithParty){
 
                 const mapData = caucusedIndCounts.get(caucusesWithParty) || {
@@ -352,7 +379,7 @@ export default function GovernorResultContainer(
         };
 
         return (
-            <ElectionSummaryBars data={summaries} comboFunction={comboFunction} />
+            <ElectionSummaryBars data={summaries} comboFunction={comboFunction} total={50} />
         );
     }
 

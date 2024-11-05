@@ -115,6 +115,8 @@ export const stateWeights = {
 };
 
 export const senateCaucusMap = [
+    {election: "S2024", region: "SVT1", caucusesWith: "dem"}, //Bernie Sanders
+    {election: "S2024", region: "SME1", caucusesWith: "dem"}, //Angus King
     {election: "S2018", region: "SVT1", caucusesWith: "dem"}, //Bernie Sanders
     {election: "S2018", region: "SME1", caucusesWith: "dem"}, //Angus King
     {election: "S2018", region: "SMS2", caucusesWith: "rep"}, //MS nonpartisan special
@@ -279,17 +281,19 @@ export const governorGhostResults = [
     },
 ];
 
-export const subidLabels = (id : string, subid : number) => {
+export function subidLabels(id: string): { [key: string]: string };
+export function subidLabels(id: string, subid: number): string | undefined;
+export function subidLabels(id : string, subid? : number){
 
+    let subtitles : { [key : string] : string };
     if(id.includes("LA")){ //Louisiana
-        if(subid == 1) return "Jungle primary";
-        if(subid == 2) return "Runoff";
+        subtitles = {"1": "Jungle primary", "2": "Runoff"};
     }
 
-    else{
-        if(subid == 1) return "First round";
-        if(subid == 2) return "Runoff";
-    }
+    else subtitles = {"1": "First round", "2": "Runoff"};
+
+    if(subid === undefined) return subtitles;
+    else if(Object.keys(subtitles).includes(subid.toString())) return subtitles[subid.toString()];
     
 };
 
@@ -302,16 +306,16 @@ export const electionType = (id : string) => {
 }
 
 export const USASeatsToWatch = [
-    {id: "2024GA", note: "Outgoing Scottish Conservative leader Douglas Ross is running here. Having already announced his intention to resign as leader, he has also promised to resign as an MSP if he is elected MP."}, //Aberdeenshire North and Moray East
-    {id: "2024006", note: "Reform UK's only MP - defecting Conservative Lee Anderson - is hoping to retain his seat here. Things are further complicated by Ashfield Independents candidate Jason Zadrozny, who came a respectable second in 2019."}, //Ashfield,
-    {id: "2024085", note: "The Green Party's only seat is potentially at risk following the decision by incumbent Caroline Lucas to step down."}, //Brighton Pavilion
-    {id: "2024089", note: "Co-leader of the Green Party, Carla Denyer, is hoping to secure the Greens' second ever Commons seat."}, //Bristol Central
-    {id: "2024136", note: "Reform UK leader Nigel Farage is running here - his eighth attempt at being elected MP - and polling suggests he has a chance of taking it."}, //Clacton
-    {id: "2024334", note: "Chancellor Jeremy Hunt is fighting to keep his seat in the newly created Godalming and Ash constituency against an expected strong challenge from the Liberal Democrats."}, //Godalming and Ash
-    {id: "2024269", note: "Former Labour leader Jeremy Corbyn is attempting to hold his seat as an independent after being expelled from the Labour party."}, //Islington North
-    {id: "2024552", note: "Sorcha Eastwood has a chance to secure the Alliance Party's second seat here in the constituency vacated by former DUP leader Jeffrey Donaldson."}, //Lagan Valley
-    {id: "2024556", note: "The Alliance Party's Stephen Farry is hoping to hold this seat against the independent former DUP candidate Alex Easton."}, //North Down
-    {id: "2024403", note: "Workers Party leader George Galloway won this seat in a landslide in February's by-election after Labour were forced to withdraw support for their candidate. He's hoping to retain this seat at the general election."}, //Rochdale
-    {id: "2024401", note: "Could Rishi Sunak become the first Prime Minister to lose his seat? Probably not, but recent polls have suggested it's possible this very safe seat is a lot tighter than usual."}, //Richmond and Northallerton
-    {id: "2024619", note: "This constituency, also known as Anglesey, was won by Conservative Virginia Crosbie with one of the smallest winning percentages of 2019 in a tight three-way contest. This time, both Labour and Plaid Cymru will be trying to oust her."} //Ynys Mon
+    {id: "2024PA", note: "With 19 electoral votes at stake, this state is a must-win for Harris and Trump; without it, the path to victory is much harder. In 2020, Biden won the Keystone State by one percentage point, and polls show a tied race this year."},
+    {id: "2024NC", note: "Narrowly voting Republican since 2008, the Tar Heel State's 16 electoral votes are crucial for Trump, but controversy surrounding the GOP's nominee for governor threatens to tilt the state in Harris's direction."},
+    {id: "2024GA", note: "The closest result in 2020 - and the last state to be called for either candidate. In the end, Biden took it by just 12,000 votes out of five million. Trump needs to be winning these 16 electoral votes, and polling shows him up here - just."},
+    {id: "2024WI", note: "Decided by less than one percentage point in 2020 and 2016, Harris needs a win here to be on track to claim the presidency. Polling shows a tied race here once again."},
+    {id: "2024AZ", note: "Voting Democratic in 2020 for the first time since 1996, by just 10,000 votes, polling shows the Grand Canyon State leaning back towards Trump, in what is possibly his best chance at flipping a state."},
+    {id: "2024MI", note: "In 2016, the Great Lakes State narrowly voted for Trump, while in 2020 it broke for Biden. Polling shows an even tighter race this year, with Harris up by under one percentage point."},
+    {id: "2024NV", note: "Trump narrowly failed to win here in 2016 and 2020, but polling this year puts him slightly ahead of Harris."},
+    {id: "2024IA", note: "A late and surprising addition to our \"states to watch\", Iowa voted for Trump by nine percentage points in 2016 and 2020, but a recent poll by Selzer - widely regarded as the gold standard of polling - put Harris ahead by three. If this turns out to be remotely correct, it's likely to have implications across other, crucial Midwestern states."},
+    {id: "SMT1", note: "Incumbent Democratic Senator Jon Tester is facing an uphill battle to keep his seat in this red state. Sparse polling puts his Republican challenger up by five. A loss here would be a blow to the Democrats' chances of retaining the Senate."},
+    {id: "SNE1", note: "Independent candidate Dan Osborn is putting up a strong challenge to the incumbent Republican Senator in this deep red state. With no Democrat on the ballot, Osborn winning here could cost Republicans the Senate."},
+    {id: "STX1", note: "Republican Ted Cruz is up for re-election to the Senate this year, having prevailed in 2018 by just two percentage points. Polling shows him narrowly ahead of his Democratic rival."},
+    {id: "SOH1", note: "Democrat Sherrod Brown is hoping to win his fourth term in the Senate. Ohio has been trending Republican for years, and polling puts him up just one percentage point. "},
 ];

@@ -4,7 +4,7 @@ import styles from 'src/components/shared/ElectionResultContainer/ElectionResult
 import ElectionResultContainer from "../../../../shared/ElectionResultContainer/ElectionResultContainer";
 import HoverPopup from "../../../../shared/HoverPopup/HoverPopup";
 import PopupBarGraph from "../../../../shared/PopupBarGraph/PopupBarGraph";
-import { MessageData, Party, Region, Result, ResultsContext, Update } from "src/Types";
+import { Party, Region, Result, ResultsContext, Update } from "src/Types";
 import { DefaultParty, Endpoint } from "src/constants/shared";
 import { useRouter } from "next/navigation";
 import { constituencyToSlug } from "src/lib/UK";
@@ -12,7 +12,8 @@ import { getMessages, getResultsBySubElection, parseJSONWithDates, useOnScreen }
 import USASenate1960Map from "src/components/maps/USASenate1960Map";
 import USASenate1960GeographicMap from "src/components/maps/USASenate1960GeographicMap";
 import ElectionSummaryBars from "src/components/shared/ElectionSummaries/ElectionSummaryBars/ElectionSummaryBars";
-import { electionType, getSenatePreviousSpecialOverrides, senateCaucusMap, subidLabels } from "src/constants/USA";
+import { electionType, getSenatePreviousSpecialOverrides, senateCaucusMap, subidLabels, USASeatsToWatch } from "src/constants/USA";
+import LiveCloseAndCountedData from "src/components/USA/shared/LiveCloseAndCountedData/LiveCloseAndCountedData";
 
 
 export default function SenateResultContainer( 
@@ -29,7 +30,8 @@ export default function SenateResultContainer(
         geographic,
         changes,
         dedicatedPage,
-        winFormula = (results : Result[]) => results.filter(r => r.elected)
+        winFormula = (results : Result[]) => results.filter(r => r.elected),
+        liveCloseAndCountedData = []
     } : 
     { 
         context? : Context<ResultsContext>,
@@ -44,7 +46,8 @@ export default function SenateResultContainer(
         messagesOpenOnLoad?: boolean,
         geographic? : boolean,
         changes? : boolean,
-        dedicatedPage? : string
+        dedicatedPage? : string,
+        liveCloseAndCountedData? : { id : string, close : Date, counted? : number }[]
     }
 ){
 
@@ -143,10 +146,9 @@ export default function SenateResultContainer(
                     ...getSenatePreviousSpecialOverrides(electionYear-4),
                     ...await getResultsFromElection("S" + (electionYear-4))
                 ];
-                if(election == "S2018") console.log(newOtherClassResults);
 
                 winFormula(newOtherClassResults).forEach( result => {
-                    if(newFills.find( fill => fill.id === result.id )) return;
+                    if(resultData.find( r => r.id === result.id )) return;
                     const party : Party = parties.find( p => p.id == result.party ) || DefaultParty;
                     if(party) newFills.push({ 
                         id: result.id, 
@@ -186,19 +188,41 @@ export default function SenateResultContainer(
         getResults();
     }, [onScreen, parties, regions]);
 
-    /*if(live) setTimeout( () => {
+    if(live) setTimeout( () => {
         setLivePolling(!livePolling); //alternate value to trigger useEffect
     }, 6000);
     useEffect( () => {
         if(!(loadingComplete.current && live)) return;
+
+        //get results from the most recent election for the other two class numbers
+        //for ghost fills
+        const ghostFills : { id : string, color : string, opacity? : number }[] = [];
+        winFormula(otherClassResults).forEach( result => {
+            if(results.find( r => r.id === result.id )) return;
+            const party : Party = parties.find( p => p.id == result.party ) || DefaultParty;
+            if(party) ghostFills.push({ 
+                id: result.id, 
+                color: party.color || "var(--default-color)", 
+                opacity: 1 / 3
+            });
+        });
+
         const getLiveUpdates = async () => {
             let updatedResultData = await fetch(Endpoint + '/results/usa/' + election + '?compact=true').then( res => res.json() );
 
             let newResultData : Result[] = [];
 
+            const repeatedPartyMap = new Map<string, number>();
             results.forEach( result => {
-                const updatedRow = updatedResultData.find( d => d.id == result.id && d.p == result.party );
-                if(updatedRow) newResultData.push({...result, votes: updatedRow.v, elected: updatedRow.e});
+                const updatedRows = updatedResultData.filter( d => d.id == result.id && d.p == result.party );
+                //handle the case that, for example, there are multiple ind candidates in the same contest
+                if(updatedRows.length > 1){
+                    let n = repeatedPartyMap.get(JSON.stringify(updatedRows)) || 0;
+                    repeatedPartyMap.set(JSON.stringify(updatedRows), n + 1);
+                    n = Math.min(n, updatedRows.length - 1);
+                    newResultData.push({...result, votes: updatedRows[n].v, elected: updatedRows[n].e});
+                }
+                else if(updatedRows.length == 1) newResultData.push({...result, votes: updatedRows[0].v, elected: updatedRows[0].e});
                 else newResultData.push(result);
             });
             setResults(newResultData);
@@ -214,7 +238,7 @@ export default function SenateResultContainer(
                     opacity: changes ? 0.2 : undefined 
                 });
             });
-            setFills(newFills);
+            setFills([...newFills, ...ghostFills]);
             setLiveCounter(updatedLiveCount);
 
             if(messageGroup){
@@ -230,7 +254,7 @@ export default function SenateResultContainer(
             }
         };
         getLiveUpdates();
-    }, [livePolling]);*/
+    }, [livePolling]);
 
     const mapHoverFun = (active : boolean = false, event?: React.MouseEvent, id?: string) => {
         const newPopupState = {...popupState, visible: active};
@@ -249,7 +273,19 @@ export default function SenateResultContainer(
     };
 
     const map = () => {
-        if(geographic) return <USASenate1960GeographicMap regions={regions} hoverFun={mapHoverFun} clickFun={geographicMapClickFun} fills={fills.filter(f => !f.opacity)} />;
+        if(geographic){
+            const noResultYetFills : {id : string, color : string}[] = [];
+            regions.forEach( region => {
+                const regionResults = results.filter( result => result.id == region.id );
+                if(regionResults.length == 0) return;
+                const wasElected = regionResults.find( result => result.elected );
+                if(!wasElected){ //if no winner but candidates exist then must be live
+                    const color = USASeatsToWatch.find( s => s.id == region.id) ? "url(#highlight_no_result)" : "url(#no_result)";
+                    noResultYetFills.push({ id: region.id, color: color });
+                }
+            });
+            return <USASenate1960GeographicMap regions={regions} hoverFun={mapHoverFun} clickFun={geographicMapClickFun} fills={[...fills.filter(f => !f.opacity), ...noResultYetFills]} />;
+        }
         else return <USASenate1960Map classNo={classNo} specialNames={getSpecials(results)} regions={regions} hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
     };
 
@@ -287,9 +323,11 @@ export default function SenateResultContainer(
                 });
             }
 
+            const watchNote = election == "S2024" && USASeatsToWatch.find(s => s.id == id)?.note;
             return ( <>
                 <h3>{region.title}</h3>
-                {winner && <h4>{winner}</h4>}
+                {winner ? <h4>{winner}</h4> : <div style={{maxWidth: "350px"}}>{watchNote}</div>}
+                {<LiveCloseAndCountedData id={region.id} data={liveCloseAndCountedData} />}
                 {resultNodes}
             </> )
 
@@ -322,7 +360,11 @@ export default function SenateResultContainer(
             const regionResults = results.filter( result => result.id == id + specificClass ).sort( (a,b) => b.votes - a.votes );
             if(regionResults.length == 0) return;
 
-            nodes.push(<Fragment key={specificClass}>{cartographicPopupContent(id + specificClass)}</Fragment>);
+            nodes.push(
+                <div key={specificClass} style={nodes.length > 0 ? {marginTop: "20px"} : undefined}>
+                    {cartographicPopupContent(id + specificClass)}
+                </div>
+            );
 
         });
 
@@ -346,15 +388,15 @@ export default function SenateResultContainer(
 
         winFormula([...results, ...otherClassResults]).forEach( (result, index) => {
             if(countedResults.includes(result.id)) return;
+            else if(otherClassResults.includes(result) && results.find(r => r.id == result.id)) return;
             countedResults.push(result.id);
 
             const regionUpdates = updates.filter( u => u.id == result.id );
             const winner = regionUpdates.length > 0 ? regionUpdates[regionUpdates.length - 1].party : result.party;
             const shouldIncrementCount = +(index < winFormula(results).length);
 
-            const resultElection = resultsBank.find( r => r.results.includes(result) )?.election;
+            const resultElection = results.includes(result) ? election : resultsBank.find( r => r.results.includes(result) )?.election;
             const caucusesWithParty = senateCaucusMap.find(c => c.election === resultElection && c.region === result.id)?.caucusesWith;
-
             if(caucusesWithParty){
 
                 const mapData = caucusedIndCounts.get(caucusesWithParty) || {
@@ -402,7 +444,7 @@ export default function SenateResultContainer(
         };
 
         return (
-            <ElectionSummaryBars data={summaries} comboFunction={comboFunction} />
+            <ElectionSummaryBars data={summaries} comboFunction={comboFunction} total={100} />
         );
     }
 
@@ -412,7 +454,7 @@ export default function SenateResultContainer(
             messages={messageGroup ? messages.map(m => m.node) : undefined} messagesOpenOnLoad={messagesOpenOnLoad} 
             map={map()} 
             title={title} 
-            liveTitle={live ? [liveCounter.toString(),"of 35","Seats"] : undefined}
+            liveTitle={live ? [liveCounter.toString(),"of 34","Seats"] : undefined}
             summary={electionSummaryBars()}
             dedicatedPage={dedicatedPage}
         >

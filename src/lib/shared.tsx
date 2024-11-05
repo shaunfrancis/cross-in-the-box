@@ -2,7 +2,7 @@
 import { MutableRefObject, RefObject, useEffect, useState } from "react";
 import ParsedMessage from "src/components/USA/shared/ParsedMessage/ParsedMessage";
 import { Endpoint } from "src/constants/shared";
-import { AnonymousResult, MessageData, Party, Poll } from "src/Types";
+import { AnonymousResult, MessageData, Party, Poll, Result } from "src/Types";
 
 export class SearchHandler{
     url : string;
@@ -184,23 +184,36 @@ export const getMessages = async (
         .then( res => res.text() )
         .then( res => parseJSONWithDates(res, "date") );
 
-    messagesData.sort( (a,b) => {
-        return (a.pinned != b.pinned) ? (a.pinned || Infinity) - (b.pinned || Infinity) : b.id - a.id;
-    });
-
-    const newMessages : {id : number, date : Date, node : React.ReactNode}[] = [...existingMessages];
-    messagesData.forEach( (message, index) => {
+    const newMessages : {id : number, date : Date, node : React.ReactNode, pinned? : number}[] = [...existingMessages];
+    messagesData.forEach( message => {
         if(message.date > latestMessageDate.current) latestMessageDate.current = message.date;
 
         const messageToBeUpdated = newMessages.find(m => m.id == message.id);
-        if(messageToBeUpdated) messageToBeUpdated.node = <ParsedMessage key={index} parties={parties} message={message} />;
+        if(messageToBeUpdated) messageToBeUpdated.node = <ParsedMessage key={message.id} parties={parties} message={message} />;
         else newMessages.push( {
             id: message.id,
             date: message.date,
-            node: <ParsedMessage key={index} parties={parties} message={message} animate={existingMessages.length > 0} />
+            pinned: message.pinned,
+            node: <ParsedMessage key={message.id} parties={parties} message={message} animate={existingMessages.length > 0} />
         } );
+    });
+
+    newMessages.sort( (a,b) => {
+        return (a.pinned != b.pinned) ? (a.pinned || Infinity) - (b.pinned || Infinity) : 
+            (a.date.valueOf() != b.date.valueOf()) ? b.date.valueOf() - a.date.valueOf() : b.id - a.id;
     });
 
     return newMessages;
 
+}
+
+export const orderResults = (a : Result, b : Result) => {
+    if(a.votes != b.votes) return b.votes - a.votes;
+    else if(a.elected) return -Infinity;
+    else if(b.elected) return Infinity;
+    else{
+        const aSurname = a.candidate.split(" ")[a.candidate.split(" ").length-1];
+        const bSurname = b.candidate.split(" ")[b.candidate.split(" ").length-1];
+        return aSurname.localeCompare(bSurname);
+    }
 }

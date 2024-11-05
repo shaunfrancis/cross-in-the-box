@@ -5,8 +5,8 @@ import { addThousandsSpacing, getResultsByCandidate, getResultsBySubElection } f
 import { useEffect } from 'react';
 
 export default function RegionBarGraph( 
-    { title, results, parties, subElectionType = "separate" } : 
-    { title : string[], results : AnonymousResult[], parties : Party[], subElectionType? : "separate" | "rounds" } 
+    { title, subtitles, results, parties, subElectionType = "separate" } : 
+    { title : string[], subtitles? : { [key : string] : string }, results : AnonymousResult[], parties : Party[], subElectionType? : "separate" | "rounds" } 
 ){
     while(title.length < 3) title.push("");
 
@@ -53,7 +53,7 @@ export default function RegionBarGraph(
 
                     let votesValue = "";
                     if(totalVotes > 0) votesValue = addThousandsSpacing(result.votes);
-                    // else if(result.elected && givenResults.length == 1) votesValue = "Unopposed";
+                    else if(result.elected && givenResults.length == 1) votesValue = "Unopposed";
                     else if(result.elected) votesValue = "Elected";
 
                     return ( 
@@ -216,7 +216,8 @@ export default function RegionBarGraph(
     if(subElectionType == "separate"){
         const subElections = getResultsBySubElection(results);
         subElections.forEach( subElection => {
-            graphNodes.push( graphContainer(subElection.results, "", subElection.subid) );
+            const subtitle = subtitles && subtitles[subElection.subid];
+            graphNodes.push( graphContainer(subElection.results, subtitle, subElection.subid) );
         });
     }
 

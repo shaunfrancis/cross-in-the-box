@@ -5,6 +5,7 @@ import ElectionResultsSection from "src/components/shared/ElectionResultsSection
 import GovernorResultContainer from "./GovernorResultContainer/GovernorResultContainer";
 import { Context, createContext, useRef } from "react";
 import { governorGhostResults } from "src/constants/USA";
+import { useLiveCloseAndCountedData } from "src/lib/USA-client.tsx";
 
 
 export default function GovernorResultsSection({ regions, parties, geographic } : 
@@ -15,6 +16,8 @@ export default function GovernorResultsSection({ regions, parties, geographic } 
     if(!resultsContext.current){
         resultsContext.current = createContext<ResultsContext>( { bank: [...governorGhostResults], promises: [] } );
     }
+    
+    const liveCloseAndCountedData = useLiveCloseAndCountedData();
 
     return ( <>
         <ElectionResultsSection>
@@ -24,6 +27,7 @@ export default function GovernorResultsSection({ regions, parties, geographic } 
                 regions={regions}
                 parties={parties}
                 geographic={geographic}
+                liveCloseAndCountedData={liveCloseAndCountedData}
             />
 
             <GovernorResultContainer context={resultsContext.current} 

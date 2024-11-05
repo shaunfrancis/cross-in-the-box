@@ -7,9 +7,6 @@ import Toggle from "src/components/shared/Toggle/Toggle";
 import HeroNav from "src/components/shared/HeroNav/HeroNav";
 
 import PresidentialResultsSection from "src/components/USA/presidential/PresidentialResultsSection/PresidentialResultsSection";
-// import USAConstituencySearchSection from "src/components/USA/USAConstituencySearchSection/USAConstituencySearchSection";
-// import USAPollingSection from "src/components/USA/USAPollingSection/USAPollingSection";
-// import USAMapDefs from "src/components/maps/USAMapDefs";
 import { partyIdToDisplayId } from "src/lib/USA";
 import PresidentialSearchSection from "src/components/USA/presidential/PresidentialSearchSection/PresidentialSearchSection";
 import USAMapDefs from "src/components/maps/USAMapDefs";

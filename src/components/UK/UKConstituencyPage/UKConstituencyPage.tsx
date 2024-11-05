@@ -6,7 +6,7 @@ import { FullRegionData, ElectionEvent, UpdateEvent, Region } from "src/Types";
 import RegionBarGraph from "src/components/shared/RegionBarGraph/RegionBarGraph";
 import RegionPage from "src/components/shared/RegionPage/RegionPage";
 import { constituencyToSlug, partyIdToDisplayId, slugToLookupSlug } from "src/lib/UK";
-import { dateToLongDate, parseJSONWithDates } from "src/lib/shared";
+import { dateToLongDate, orderResults, parseJSONWithDates } from "src/lib/shared";
 import UKConstituencySidebar from "./UKConstituencySidebar/UKConstituencySidebar";
 import UKTernaryPlot from '../UKAnalysisSection/UKTernaryPlot/UKTernaryPlot';
 import Link from 'next/link';
@@ -90,7 +90,7 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
         switch(event.type){
             case "election": {
                 let castEvent = event as ElectionEvent;
-                castEvent.data.results.sort( (a,b) => b.votes - a.votes );
+                castEvent.data.results.sort(orderResults);
                 eventNodes.push(
                     <RegionBarGraph key={index} title={castEvent.data.title} results={castEvent.data.results} parties={data.parties} />
                 );

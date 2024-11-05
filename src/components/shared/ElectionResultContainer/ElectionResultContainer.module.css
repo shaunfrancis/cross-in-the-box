@@ -7,7 +7,7 @@
     user-select:none;
     position:relative;
     height:100%;
-    overflow:auto;
+    overflow:hidden auto;
     transition:width 200ms, margin 200ms;
     width:0;
 }
