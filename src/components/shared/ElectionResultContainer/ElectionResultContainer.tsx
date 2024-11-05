@@ -41,7 +41,7 @@ export default forwardRef(function ElectionResultContainer(
     );
 
     return (
-        <div ref={ref} className={styles["election-container"]} style={{height:dimensions.h, minHeight:dimensions.minH}}>
+        <div ref={ref} className={styles["election-container"]} style={{height:"min(" + dimensions.h + ",calc(100vw - 30px))", minHeight:dimensions.minH}}>
             { (messagesOpenOnLoad || (messages && messages.length > 0) ) &&
                 <div className={styles["election-messages-container"] + (messagesVisibility ? " " + styles["visible"] : "")}>
 

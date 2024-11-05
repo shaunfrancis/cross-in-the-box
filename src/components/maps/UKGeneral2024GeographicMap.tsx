@@ -1,7 +1,7 @@
 import { SvgLoader, SvgProxy } from 'react-svgmt';
 import { Region } from 'src/Types';
 import styles from './styles.module.css';
-import { UKSeatsToWatch } from 'src/Constants';
+import { UKSeatsToWatch } from 'src/constants/UK';
 
 export default function UKGeneral2024GeographicMap( 
     { regions, fills = [], hoverFun = () => {}, clickFun = () => {} } : 

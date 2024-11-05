@@ -1,23 +1,12 @@
 'use client';
 
-import { Endpoint } from 'src/Constants';
+import { Endpoint } from 'src/constants/shared';
 import styles from './UKConstituencySearchSection.module.css';
 import { SearchHandler } from 'src/lib/shared';
 import { RefObject, useRef, useState } from 'react';
 import { constituencyToSlug, partyIdToDisplayId } from 'src/lib/UK';
-import { Party } from 'src/Types';
+import { SearchResults, Party } from 'src/Types';
 import Link from 'next/link';
-
-interface SearchResults{
-    regions : {id : string, title : string, current : boolean}[], 
-    candidates : {
-        id : string,
-        title : string,
-        candidate : string,
-        election : string[],
-        party : Party
-    }[]
-}
 
 export default function UKConstituencySearchSection( {searchInputRef} : {searchInputRef? : RefObject<HTMLInputElement>} ){
     const [results, setResults] = useState<SearchResults | null>();

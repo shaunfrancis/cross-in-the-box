@@ -2,7 +2,7 @@
     position:absolute;
     left:0;
     bottom:-20px;
-    width:100vw;
+    width:100%;
     padding:0 30px;
 }
 
@@ -14,7 +14,7 @@
     justify-content:center;
 }
 
-@media screen and (max-width: 750px){
+@media screen and (max-width:768px){
     #hero-nav{ padding:0 15px }
     #hero-nav ul{ gap:15px }
 }

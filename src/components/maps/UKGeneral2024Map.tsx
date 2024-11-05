@@ -1,5 +1,5 @@
 import { SvgLoader, SvgProxy } from 'react-svgmt';
-import { UKSeatsToWatch } from 'src/Constants';
+import { UKSeatsToWatch } from 'src/constants/UK';
 import { Region } from 'src/Types';
 
 export default function UKGeneral2024Map( 

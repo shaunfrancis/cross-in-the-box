@@ -2,7 +2,7 @@ import { Party, Region, Result } from 'src/Types';
 import UKElectionResultContainer from '../UKElectionResultsSection/UKElectionResultContainer/UKElectionResultContainer';
 import styles from './UKAnalysisSection.module.css';
 import { useEffect, useState } from 'react';
-import { Endpoint } from 'src/Constants';
+import { Endpoint } from 'src/constants/shared';
 import UKTernaryPlot from './UKTernaryPlot/UKTernaryPlot';
 
 export default function UKAnalysisSection( { regions, parties, geographic } : 

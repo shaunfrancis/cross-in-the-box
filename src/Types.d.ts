@@ -11,7 +11,8 @@ export interface AnonymousResult{
 }
 
 export interface Result extends AnonymousResult {
-    id: string
+    id: string,
+    subid?: number,
     candidate: string,
     elected: boolean
 }
@@ -27,10 +28,14 @@ export interface Party {
 export interface MessageData {
     id: number,
     date : Date,
+    text : string,
+
     square? : string,
     old_square? : string,
+
+    pinned? : number,
     no_header? : boolean,
-    text : string,
+
     results? : AnonymousResult[],
     result_type?: number,
     link_title?: string
@@ -55,4 +60,66 @@ export interface PollFigure {
 export interface Poll extends PollSkeleton {
     centre: number,
     figures: PollFigure[]
+}
+
+export interface SearchResults{
+    regions : {id : string, title : string, current : boolean}[], 
+    candidates : {
+        id : string,
+        title : string,
+        candidate : string,
+        election : string[],
+        party : Party
+    }[]
+}
+
+export interface FullRegionData{
+    events : Event[],
+    parties : Party[],
+    tree : {
+        region_id: string,
+        successor_id: string,
+        direct_successor: boolean,
+        title: string,
+        note?: string
+    }[]
+}
+
+interface Event{
+    type : string,
+    date : Date,
+    region : Region
+}
+
+export interface ElectionEvent extends Event{
+    data : { 
+        id : string,
+        title : string[],
+        results : Result[] 
+    }
+}
+
+export interface UpdateEvent extends Event{
+    data: {
+        party: string,
+        note: string
+    }
+}
+
+export interface Update{
+    id : string,
+    date : Date,
+    party : string
+}
+
+export interface ResultsContext{
+    bank : {
+        election : string,
+        date : Date,
+        results : Result[]
+    }[],
+    promises : {
+        election : string,
+        promise : Promise<Result[]>
+    }[]
 }

@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from "react";
-import styles from "./UKElectionResultsSection.module.css";
 import UKElectionResultContainer from "./UKElectionResultContainer/UKElectionResultContainer";
-import { Party, Region, Result } from "src/Types";
+import { Party, Region } from "src/Types";
+import ElectionResultsSection from "src/components/shared/ElectionResultsSection/ElectionResultsSection";
 
 export default function UKElectionResultsSection({ regions, parties, geographic } : 
     { regions : Region[], parties : Party[], geographic: boolean }
@@ -11,7 +11,7 @@ export default function UKElectionResultsSection({ regions, parties, geographic 
     const [summaryBlocHover, setSummaryBlocHover] = useState<boolean>(false);
     
     return ( <>
-        <div id={styles["container"]}>
+        <ElectionResultsSection>
             <UKElectionResultContainer election="2024" messageGroup="2024" messagesOpenOnLoad={true}
                 summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]} 
                 regions={regions}
@@ -59,6 +59,6 @@ export default function UKElectionResultsSection({ regions, parties, geographic 
                 parties={parties}
                 geographic={geographic} 
             />
-        </div>
+        </ElectionResultsSection>
     </> )
 }

@@ -6,7 +6,16 @@ export const metadata: Metadata = {
       template: '%s - United Kingdom - Cross In The Box',
       default: 'United Kingdom'
     },
-    description: '',
+    description: '',    
+    icons: {
+        icon: [
+            { url: '/favicons/uk/favicon-48x48.png', sizes: '48x48', type: 'image/png' },
+            { url: '/favicons/uk/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+            { url: '/favicons/uk/favicon-16x16.png', sizes: '32x32', type: 'image/png' }
+        ],
+        apple: [ { url: '/favicons/uk/apple-touch-icon.png', sizes: '180x180' } ]
+    },
+    manifest: '/favicons/uk/site.webmanifest'
   }
 
 export default function UKLayout( { children } : { children : React.ReactNode } ){
@@ -17,7 +26,7 @@ export default function UKLayout( { children } : { children : React.ReactNode } 
     ];
 
     return ( <>
-        <Header links={links} />
+        <Header countryName="United Kingdom" countryAbbrev="uk" links={links} />
         {children}
     </> )
 }

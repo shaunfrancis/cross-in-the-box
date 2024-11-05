@@ -13,14 +13,19 @@
     
     try{
         if(isset($parameters["compact"]) && $parameters["compact"] == "true"){
-            $election_sql = "SELECT region_id as id, party as p, votes as v, elected as e FROM $results_table WHERE election_id = :election";
+            $election_sql = "SELECT region_id as id, election_subid as s, party as p, votes as v, elected as e FROM $results_table WHERE election_id = :election";
         }
-        else $election_sql = "SELECT region_id as id, party, candidate, votes, elected FROM $results_table WHERE election_id = :election";
+        else $election_sql = "SELECT region_id as id, election_subid as subid, party, candidate, votes, elected FROM $results_table WHERE election_id = :election";
 
         $election_results = fetch(
             $election_sql,
             [':election' => $election]
         );
+
+        foreach($election_results as &$result){
+            if(!isset($result['subid'])) unset($result['subid']);
+            if(!isset($result['s'])) unset($result['s']);
+        }
 
         echo json_encode($election_results, JSON_NUMERIC_CHECK);
     }

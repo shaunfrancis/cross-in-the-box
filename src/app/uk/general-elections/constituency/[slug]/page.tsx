@@ -1,4 +1,4 @@
-import { Endpoint } from "src/Constants"
+import { Endpoint } from "src/constants/shared"
 import UKConstituencyPage from "src/components/UK/UKConstituencyPage/UKConstituencyPage";
 import { constituencyToSlug, slugToLookupSlug } from "src/lib/UK";
 

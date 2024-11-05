@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import styles from './UKConstituencyPortrait.module.css';
-import { Endpoint } from 'src/Constants';
+import { Endpoint } from 'src/constants/shared';
 
 export default function UKConstituencyPortrait({ region } : { region : {id? : string, title : string}}){
     const [portrait, setPortrait] = useState<number>(-1);

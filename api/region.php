@@ -52,7 +52,7 @@
             }
         }
         $results = fetch(
-            "SELECT res.region_id, reg.title as region_title, res.election_id as election, e.date as election_date, e.title as election_title, res.party, res.candidate, res.votes, res.elected 
+            "SELECT res.region_id, reg.title as region_title, res.election_id as election, res.election_subid as subid, e.date as election_date, e.title as election_title, res.party, res.candidate, res.votes, res.elected 
             FROM $results_table as res
             JOIN $elections_table as e ON e.id = res.election_id
             JOIN $regions_table as reg ON reg.id = res.region_id
@@ -90,6 +90,7 @@
         */
         $events = array();
         foreach($results as $result){
+            if(is_null($result['subid'])) unset($result['subid']);
 
             $matching_event = false;
             foreach($events as &$event){
@@ -114,6 +115,8 @@
                         "title" => json_decode($result['election_title'])
                     )
                 );
+                if(array_key_exists("subid", $result)) $new_event['data']['subid'] = $result['subid'];
+
                 unset($result['region_id'], $result['region_title'], $result['election'], $result['election_date'], $result['election_title']);
                 $new_event['data']['results'] = array($result);
                 $events[] = $new_event;

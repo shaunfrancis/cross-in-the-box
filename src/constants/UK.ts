@@ -1,14 +1,3 @@
-import { Party } from "./Types";
-
-const Endpoint = process.env.NODE_ENV == "development" ? "http://localhost:8888/elections/api" : "https://crossinthebox.com/api";
-
-const DefaultParty : Party = {
-    id: "?",
-    displayId: "?",
-    title: "Missing data",
-    color: "var(--default-color)"
-};
-
 const UKTicks = [
     {date: "2017-06-08", stack:0, title: ["General","Election"]},
     {date: "2018-07-12", stack:0, title: ["Chequers Agreement","Announced"]},
@@ -39,6 +28,6 @@ const UKSeatsToWatch = [
     {id: "2024403", note: "Workers Party leader George Galloway won this seat in a landslide in February's by-election after Labour were forced to withdraw support for their candidate. He's hoping to retain this seat at the general election."}, //Rochdale
     {id: "2024401", note: "Could Rishi Sunak become the first Prime Minister to lose his seat? Probably not, but recent polls have suggested it's possible this very safe seat is a lot tighter than usual."}, //Richmond and Northallerton
     {id: "2024619", note: "This constituency, also known as Anglesey, was won by Conservative Virginia Crosbie with one of the smallest winning percentages of 2019 in a tight three-way contest. This time, both Labour and Plaid Cymru will be trying to oust her."} //Ynys Mon
-]
+];
 
-export { Endpoint, DefaultParty, UKTicks, UKSeatsToWatch }
+export { UKTicks, UKSeatsToWatch }

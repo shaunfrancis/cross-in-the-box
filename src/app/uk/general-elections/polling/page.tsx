@@ -2,7 +2,7 @@
 
 import styles from './page.module.css';
 import { useEffect, useRef, useState } from "react";
-import { Endpoint } from "src/Constants";
+import { Endpoint } from "src/constants/shared";
 import { Party, Poll } from "src/Types";
 import HeroNav from "src/components/shared/HeroNav/HeroNav";
 import PollGraph from "src/components/shared/PollGraph/PollGraph";
@@ -27,8 +27,8 @@ export default function UKPolling(){
     }, []);
     
     const heroNavItems = [
-        { title: "Graph", src:"/images/uk-nav-polling.svg", ref:useRef<HTMLElement>(null) },
-        { title: "Data", src:"/images/uk-nav-constituency.svg", ref:useRef<HTMLElement>(null) }
+        { title: "Graph", src:"/images/nav-polling.svg", ref:useRef<HTMLElement>(null) },
+        { title: "Data", src:"/images/nav-region.svg", ref:useRef<HTMLElement>(null) }
     ]
     
     return ( 

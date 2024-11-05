@@ -8,20 +8,15 @@ import UKGeneral2024GeographicMap from "src/components/maps/UKGeneral2024Geograp
 import ElectionResultContainer from "../../../shared/ElectionResultContainer/ElectionResultContainer";
 import HoverPopup from "../../../shared/HoverPopup/HoverPopup";
 import PopupBarGraph from "../../../shared/PopupBarGraph/PopupBarGraph";
-import ElectionSummaryBlocs from "../../../shared/ElectionSummaryBlocs/ElectionSummaryBlocs";
-import { MessageData, Party, Region, Result } from "src/Types";
-import { DefaultParty, Endpoint, UKSeatsToWatch } from "src/Constants";
+import { MessageData, Party, Region, Result, Update } from "src/Types";
+import { DefaultParty, Endpoint } from "src/constants/shared";
+import { UKSeatsToWatch } from "src/constants/UK";
 import { useRouter } from "next/navigation";
 import { constituencyToSlug } from "src/lib/UK";
 import PartyProgressionBlocs from "src/components/shared/PartyProgressionBlocs/PartyProgressionBlocs";
-import { dateToLongDate, parseJSONWithDates, useOnScreen } from "src/lib/shared";
+import { dateToLongDate, getMessages, parseJSONWithDates, useOnScreen } from "src/lib/shared";
 import Message from "src/components/shared/Message/Message";
-
-interface Update{
-    id : string,
-    date : Date,
-    party : string
-}
+import ElectionSummaryBlocs from "src/components/shared/ElectionSummaries/ElectionSummaryBlocs/ElectionSummaryBlocs";
 
 export default function UKElectionResultContainer( 
     { election, live = false, title = [election, "General", "Election"], preloadedResults, regions, parties, summaryBlocHoverState, messageGroup, messagesOpenOnLoad, geographic, changes, dedicatedPage, winFormula = (results : Result[]) => results.filter(r => r.elected) } : 
@@ -156,17 +151,7 @@ export default function UKElectionResultContainer(
             setFills(newFills);
 
             if(messageGroup){
-                const messagesData : MessageData[] = await fetch(Endpoint + '/messages/uk/' + messageGroup)
-                    .then( res => res.text() )
-                    .then( res => parseJSONWithDates(res, "date") );
-                //hardcode live message stick to top
-                messagesData.sort( (a,b) => { const aId = a.id == 1229 ? 1 : 0; const bId = b.id == 1229 ? 1 : 0; return bId - aId } );
-
-                const newMessages : {id : number, date : Date, node : React.ReactNode}[] = [];
-                messagesData.forEach( message => {
-                    if(message.date > latestMessageDate.current) latestMessageDate.current = message.date;
-                    newMessages.push( {id: message.id, date: message.date, node: parseMessage(message)} );
-                });
+                const newMessages = await getMessages(parties, latestMessageDate, '/messages/uk/' + messageGroup);
                 setMessages(newMessages);
             }
         };
@@ -183,9 +168,17 @@ export default function UKElectionResultContainer(
 
             let newResultData : Result[] = [];
 
+            const repeatedPartyMap = new Map<string, number>();
             results.forEach( result => {
-                const updatedRow = updatedResultData.find( d => d.id == result.id && d.p == result.party );
-                if(updatedRow) newResultData.push({...result, votes: updatedRow.v, elected: updatedRow.e});
+                const updatedRows = updatedResultData.filter( d => d.id == result.id && d.p == result.party );
+                //handle the case that, for example, there are multiple ind candidates in the same contest
+                if(updatedRows.length > 1){
+                    let n = repeatedPartyMap.get(JSON.stringify(updatedRows)) || 0;
+                    repeatedPartyMap.set(JSON.stringify(updatedRows), n + 1);
+                    n = Math.min(n, updatedRows.length - 1);
+                    newResultData.push({...result, votes: updatedRows[n].v, elected: updatedRows[n].e});
+                }
+                else if(updatedRows.length == 1) newResultData.push({...result, votes: updatedRows[0].v, elected: updatedRows[0].e});
                 else newResultData.push(result);
             });
             setResults(newResultData);
@@ -207,21 +200,12 @@ export default function UKElectionResultContainer(
             if(messageGroup){
                 const since = new Date(latestMessageDate.current.valueOf());
                 since.setHours(since.getHours() - (new Date()).getTimezoneOffset()/60);
-                const messagesData : MessageData[] = await fetch(Endpoint + '/messages/uk/' + messageGroup + '?since=' + since.toISOString())
-                    .then( res => res.text() )
-                    .then( res => parseJSONWithDates(res, "date") );
-
-                const newMessages : {id : number, date : Date, node : React.ReactNode}[] = [...messages];
-                messagesData.forEach( message => {
-                    if(message.date > latestMessageDate.current) latestMessageDate.current = message.date;
-
-                    const messageToBeUpdated = newMessages.find(m => m.id == message.id);
-                    if(messageToBeUpdated) messageToBeUpdated.node = parseMessage(message);
-                    else newMessages.push( {id: message.id, date: message.date, node: parseMessage(message, true)} );
-                });
-                newMessages.sort( (a,b) => b.date.valueOf() - a.date.valueOf() );
-                //hardcode live message stick to top
-                newMessages.sort( (a,b) => { const aId = a.id == 1229 ? 1 : 0; const bId = b.id == 1229 ? 1 : 0; return bId - aId } );
+                const newMessages = await getMessages(
+                    parties,
+                    latestMessageDate,
+                    '/messages/uk/' + messageGroup + '?since=' + since.toISOString(),
+                    messages
+                );
 
                 setMessages(newMessages);
             }

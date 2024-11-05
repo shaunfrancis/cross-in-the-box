@@ -8,17 +8,17 @@ interface LinkDetails {
     path: string
 }
 
-export default function Header( { links = [] } : { links? : Array<LinkDetails> } ){
+export default function Header( { countryName, countryAbbrev, links = [] } : { countryName : string, countryAbbrev? : string, links? : Array<LinkDetails> } ){
     const pathname = usePathname();
 
     return (
         <header id={styles["header"]}>
 
             <a href="/" id={styles["logo-container"]}>
-                <img src="/images/logo.svg" />
+                <img src={"/images/" + (countryAbbrev ? countryAbbrev + "-" : "") + "logo.svg"} />
             </a>
 
-            <h1>United Kingdom</h1>
+            <h1><a href="/" className="unstyled">{countryName}</a></h1>
 
             <nav>
                 <ul>

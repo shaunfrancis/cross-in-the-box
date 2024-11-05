@@ -7,7 +7,7 @@
     if(count($request) == 0) fail(404, "Not found");
 
     $country = $request[0];
-    $accepted_countries = array("uk");
+    $accepted_countries = array("uk", "usa");
     if(!in_array($country, $accepted_countries)) fail(404, "Not Found");
 
     $boundary_changes_table = $country . "_boundary_changes";
@@ -24,6 +24,9 @@
 
     
     switch($resource){
+        case "elections": // elections/{country}/{election} - get election information for a country by election ID
+            require 'elections.php';
+            break;
         case "messages": // messages/{country}/{election} - get messages for a country by election ID
             require 'messages.php';
             break;
@@ -36,16 +39,16 @@
         case "region": // region/{country}/{region} - get results for a region by country and region ID
             require 'region.php';
             break;
-        case "regions": // regions/{country} - get list of regions by country ID
+        case "regions": // regions/{country}/{type?} - get list of regions by country ID (matching a given type)?
             require 'regions.php';
             break;
         case "results": // results/{country}/{election} - get results for a country by election ID
             require 'results.php';
             break;
-        case "search": // search/{country}/{query} - get list of regions by country with title or candidate name similarity to query
+        case "search": // search/{country}/{query}/{type?} - get list of regions by country with title or candidate name similarity to query (matching a given type)?
             require 'search.php';
             break;
-        case "slug-lookup": // slug-lookup/{country}/{region-slug} - get country region ID from region slug
+        case "slug-lookup": // slug-lookup/{country}/{region-slug}/{type?} - get country region ID from region slug (matching a given type)?
             require 'slug-lookup.php';
             break;
         case "updates": // updates/{country}/{election} - get list of changes/updates to regions by country since election

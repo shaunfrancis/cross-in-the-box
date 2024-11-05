@@ -1,49 +1,16 @@
 'use client';
 import styles from './UKConstituencyPage.module.css';
 import { useEffect, useRef, useState } from "react";
-import { DefaultParty, Endpoint } from "src/Constants";
-import { AnonymousResult, Party, Region } from "src/Types";
+import { DefaultParty, Endpoint } from "src/constants/shared";
+import { FullRegionData, ElectionEvent, UpdateEvent, Region } from "src/Types";
 import RegionBarGraph from "src/components/shared/RegionBarGraph/RegionBarGraph";
 import RegionPage from "src/components/shared/RegionPage/RegionPage";
 import { constituencyToSlug, partyIdToDisplayId, slugToLookupSlug } from "src/lib/UK";
-import { dateToLongDate, parseJSONWithDates } from "src/lib/shared";
+import { dateToLongDate, orderResults, parseJSONWithDates } from "src/lib/shared";
 import UKConstituencySidebar from "./UKConstituencySidebar/UKConstituencySidebar";
 import UKTernaryPlot from '../UKAnalysisSection/UKTernaryPlot/UKTernaryPlot';
 import Link from 'next/link';
 import HeroNav from 'src/components/shared/HeroNav/HeroNav';
-
-interface FullRegionData{
-    events : Event[],
-    parties : Party[],
-    tree : {
-        region_id: string,
-        successor_id: string,
-        direct_successor: boolean,
-        title: string,
-        note?: string
-    }[]
-}
-
-interface Event{
-    type : string,
-    date : Date,
-    region : Region
-}
-
-interface ElectionEvent extends Event{
-    data : { 
-        id : string,
-        title : string[],
-        results : AnonymousResult[] 
-    }
-}
-
-interface UpdateEvent extends Event{
-    data: {
-        party: string,
-        note: string
-    }
-}
 
 export default function UKConstituencyPage( { slug } : { slug : string } ){
 
@@ -123,7 +90,7 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
         switch(event.type){
             case "election": {
                 let castEvent = event as ElectionEvent;
-                castEvent.data.results.sort( (a,b) => b.votes - a.votes );
+                castEvent.data.results.sort(orderResults);
                 eventNodes.push(
                     <RegionBarGraph key={index} title={castEvent.data.title} results={castEvent.data.results} parties={data.parties} />
                 );
@@ -149,8 +116,8 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
     });
 
     const heroNavItems = [
-        { title: "Results and Changes", src:"/images/uk-nav-constituency.svg", ref:useRef<HTMLElement>(null) }/*,
-        { title: "heading", src:"/images/uk-nav-constituency.svg", ref:useRef<HTMLElement>(null) },*/
+        { title: "Results and Changes", src:"/images/nav-region.svg", ref:useRef<HTMLElement>(null) }/*,
+        { title: "heading", src:"/images/nav-region.svg", ref:useRef<HTMLElement>(null) },*/
     ]
 
     return ( <>
@@ -175,7 +142,7 @@ export default function UKConstituencyPage( { slug } : { slug : string } ){
                 </section>
             }
 
-            <section ref={heroNavItems[0].ref} style={{paddingTop:"0"}}>
+            <section ref={heroNavItems[0].ref}>
                 {eventNodes}
             </section>
 
