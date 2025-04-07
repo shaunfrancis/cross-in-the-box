@@ -5,6 +5,12 @@ export default function Page(){
         <p>You can access the completed pages:</p>
         <ul>
             <li>
+                Canada
+                <ul>
+                    <li><a href="canada/federal-elections">Federal Elections</a></li>
+                </ul>
+            </li>
+            <li>
                 United Kingdom
                 <ul>
                     <li><a href="uk/general-elections">General Elections</a></li>
