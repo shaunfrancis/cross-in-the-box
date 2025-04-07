@@ -15,6 +15,7 @@ import USAPresidential2024GeographicMap from "src/components/maps/USAPresidentia
 import USAPresidential2024Map from "src/components/maps/USAPresidential2024Map";
 import ElectionSummaryBar from "src/components/shared/ElectionSummaries/ElectionSummaryBar/ElectionSummaryBar";
 import LiveCloseAndCountedData from "src/components/USA/shared/LiveCloseAndCountedData/LiveCloseAndCountedData";
+import { regionUrlFun, timeFun } from "src/lib/USA";
 
 export default function PresidentialResultContainer( 
     { 
@@ -109,7 +110,7 @@ export default function PresidentialResultContainer(
             setFills(newFills);
 
             if(messageGroup){
-                const newMessages = await getMessages(parties, latestMessageDate, '/messages/usa/' + messageGroup);
+                const newMessages = await getMessages(parties, latestMessageDate, '/messages/usa/' + messageGroup, regionUrlFun, timeFun);
                 setMessages(newMessages);
             }
         };
@@ -163,6 +164,8 @@ export default function PresidentialResultContainer(
                     parties,
                     latestMessageDate,
                     '/messages/usa/' + messageGroup + '?since=' + since.toISOString(),
+                    regionUrlFun,
+                    timeFun,
                     messages
                 );
 

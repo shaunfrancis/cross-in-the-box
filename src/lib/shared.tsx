@@ -1,6 +1,6 @@
 'use client';
 import { MutableRefObject, RefObject, useEffect, useState } from "react";
-import ParsedMessage from "src/components/USA/shared/ParsedMessage/ParsedMessage";
+import ParsedMessage from "src/components/shared/ParsedMessage/ParsedMessage";
 import { Endpoint } from "src/constants/shared";
 import { AnonymousResult, MessageData, Party, Poll, Result } from "src/Types";
 
@@ -170,9 +170,11 @@ export const getResultsByCandidate = (results : AnonymousResult[]) => {
 }
 
 export const getMessages = async (
-    parties : Party[], 
+    parties : Party[],
     latestMessageDate : MutableRefObject<Date>, 
     url : string,
+    regionUrlFun : (slug : string, type? : string) => string,
+    timeFun : (message : MessageData) => React.ReactNode,
     existingMessages : {
         id: number;
         date: Date;
@@ -189,12 +191,12 @@ export const getMessages = async (
         if(message.date > latestMessageDate.current) latestMessageDate.current = message.date;
 
         const messageToBeUpdated = newMessages.find(m => m.id == message.id);
-        if(messageToBeUpdated) messageToBeUpdated.node = <ParsedMessage key={message.id} parties={parties} message={message} />;
+        if(messageToBeUpdated) messageToBeUpdated.node = <ParsedMessage key={message.id} parties={parties} message={message} urlFun={regionUrlFun} timeFun={timeFun} />;
         else newMessages.push( {
             id: message.id,
             date: message.date,
             pinned: message.pinned,
-            node: <ParsedMessage key={message.id} parties={parties} message={message} animate={existingMessages.length > 0} />
+            node: <ParsedMessage key={message.id} parties={parties} message={message} animate={existingMessages.length > 0} urlFun={regionUrlFun} timeFun={timeFun} />
         } );
     });
 

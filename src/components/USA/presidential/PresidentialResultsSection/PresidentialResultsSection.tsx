@@ -14,7 +14,7 @@ export default function PresidentialResultsSection({ regions, parties, geographi
     return ( <>
         <ElectionResultsSection>
 
-            <PresidentialResultContainer election="P2024" messageGroup="2024" messagesOpenOnLoad={true} live={true}
+            <PresidentialResultContainer election="P2024" messageGroup="2024" messagesOpenOnLoad={true} live={false}
                 regions={regions}
                 parties={parties}
                 geographic={geographic}

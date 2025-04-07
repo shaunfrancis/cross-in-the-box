@@ -14,7 +14,7 @@ export default function HouseResultsSection({ regions, parties, geographic } :
     return ( <>
         <ElectionResultsSection>
 
-            <HouseResultContainer election="H2024" messageGroup="2024" messagesOpenOnLoad={true} live={true}
+            <HouseResultContainer election="H2024" messageGroup="2024" messagesOpenOnLoad={true} live={false}
                 regions={regions}
                 parties={parties}
                 geographic={geographic}

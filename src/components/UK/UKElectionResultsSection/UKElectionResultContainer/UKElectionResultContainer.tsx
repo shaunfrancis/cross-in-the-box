@@ -12,7 +12,7 @@ import { MessageData, Party, Region, Result, Update } from "src/Types";
 import { DefaultParty, Endpoint } from "src/constants/shared";
 import { UKSeatsToWatch } from "src/constants/UK";
 import { useRouter } from "next/navigation";
-import { constituencyToSlug } from "src/lib/UK";
+import { constituencyToSlug, regionUrlFun, timeFun } from "src/lib/UK";
 import PartyProgressionBlocs from "src/components/shared/PartyProgressionBlocs/PartyProgressionBlocs";
 import { dateToLongDate, getMessages, parseJSONWithDates, useOnScreen } from "src/lib/shared";
 import Message from "src/components/shared/Message/Message";
@@ -77,37 +77,6 @@ export default function UKElectionResultContainer(
         return spans;
     }
 
-    const parseMessage = (message: MessageData, animate?: boolean) => {
-        let date : string;
-        if(changes) date = dateToLongDate(message.date);
-        else date = message.date.getHours().toString().padStart(2,'0') + ":" + message.date.getMinutes().toString().padStart(2,'0');
-
-        //for live messages, if event extends beyond Friday following election day then show day of week
-        if(! [4,5].includes(message.date.getDay())){
-            const day = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][message.date.getDay()];
-            date = day + ", " + date;
-        }
-    
-        const square = message.square ? (parties.find(p => p.id == message.square) || DefaultParty) : undefined;
-        const oldSquare = message.old_square ? (parties.find(p => p.id == message.old_square) || DefaultParty) : undefined;
-    
-        let messageResults : React.ReactNode[] = [];
-        if(message.results) switch(message.result_type){
-            case 1: //exit poll                            
-                messageResults.push( <PopupBarGraph key={"msg-result"} title={message.link_title} raw={true} goal={326/650} parties={parties} results={message.results.sort( (a,b) => b.votes - a.votes )} /> );
-                break;
-            default:
-                messageResults.push( <PopupBarGraph key={"msg-result"} title={message.link_title} parties={parties} results={message.results.sort( (a,b) => b.votes - a.votes )} />);
-        }
-    
-        return ( 
-            <Message key={message.id} animate={animate} noHeader={message.no_header} date={date} square={square} oldSquare={oldSquare}>
-                {addConstituencyLinks(message.text)}
-                {messageResults}
-            </Message>
-        )
-    }
-
     useEffect( () => {
         if( loadingComplete.current || !onScreen || parties.length == 0 || regions.length == 0 || (preloadedResults && preloadedResults.length == 0)) return;
         loadingComplete.current = true;
@@ -151,7 +120,7 @@ export default function UKElectionResultContainer(
             setFills(newFills);
 
             if(messageGroup){
-                const newMessages = await getMessages(parties, latestMessageDate, '/messages/uk/' + messageGroup);
+                const newMessages = await getMessages(parties, latestMessageDate, '/messages/uk/' + messageGroup, regionUrlFun, timeFun);
                 setMessages(newMessages);
             }
         };
@@ -204,6 +173,8 @@ export default function UKElectionResultContainer(
                     parties,
                     latestMessageDate,
                     '/messages/uk/' + messageGroup + '?since=' + since.toISOString(),
+                    regionUrlFun,
+                    timeFun,
                     messages
                 );
 

@@ -1,0 +1,11 @@
+.card{
+    background:#fff;
+    text-align:center;
+    padding:20px;
+    box-shadow:1px 1px 0 1px var(--box-shadow-color);
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+    height:100%;
+    cursor:pointer;
+}

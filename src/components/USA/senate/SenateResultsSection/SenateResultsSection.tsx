@@ -22,7 +22,7 @@ export default function SenateResultsSection({ regions, parties, geographic } :
         <ElectionResultsSection>
 
             <SenateResultContainer context={resultsContext.current} 
-                election="S2024" classNo={1} messageGroup="2024" messagesOpenOnLoad={true} live={true}
+                election="S2024" classNo={1} messageGroup="2024" messagesOpenOnLoad={true} live={false}
                 regions={regions}
                 parties={parties}
                 geographic={geographic}

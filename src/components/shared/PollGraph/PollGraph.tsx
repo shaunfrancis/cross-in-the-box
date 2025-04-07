@@ -105,10 +105,12 @@ export default function PollGraph({ polls, parties, maxParties = Infinity, compa
                 const x = (( (poll.centre - firstPoll) / (lastPoll - firstPoll) ) * (w - yAxisOffset) + yAxisOffset).toFixed(1);
                 const y = ((1 - (figure.figure / yLimit)) * (h - xAxisOffset)).toFixed(1);
                 const color = party.color || "var(--default-color)";
+
+                const size = ((poll.sample ?? -1) > 100000) ? 8 : 2;
                 pointsArray.push(
                     <rect key={pollIndex + "-" + figIndex} 
-                        x={parseFloat(x)-1} y={parseFloat(y)-1} 
-                        width="2" height="2" opacity={0.33} fill={color} 
+                        x={parseFloat(x)-size/2} y={parseFloat(y)-size/2} 
+                        width={size} height={size} opacity={0.33} fill={color} 
                     />
                 );
             });

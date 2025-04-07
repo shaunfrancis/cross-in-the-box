@@ -71,7 +71,7 @@ export default function USAGeneralElections(){
                 
                 <ElectionResultsSection>
 
-                    <PresidentialResultContainer election="P2024" messageGroup="2024" messagesOpenOnLoad={true} live={true}
+                    <PresidentialResultContainer election="P2024" messageGroup="2024" messagesOpenOnLoad={true} live={false}
                         regions={regions}
                         parties={parties}
                         geographic={geographic}
@@ -79,7 +79,7 @@ export default function USAGeneralElections(){
                         title={["President"]}
                     />
 
-                    <SenateResultContainer election="S2024" classNo={1} live={true}
+                    <SenateResultContainer election="S2024" classNo={1} live={false}
                         regions={regions}
                         parties={parties}
                         geographic={geographic}
@@ -87,7 +87,7 @@ export default function USAGeneralElections(){
                         title={["Senate"]}
                     />
 
-                    <HouseResultContainer election="H2024" live={true}
+                    <HouseResultContainer election="H2024" live={false}
                         regions={regions}
                         parties={parties}
                         geographic={geographic}
@@ -95,7 +95,7 @@ export default function USAGeneralElections(){
                         title={["House"]}
                     />
 
-                    <GovernorResultContainer election="G2024" live={true}
+                    <GovernorResultContainer election="G2024" live={false}
                         regions={regions}
                         parties={parties}
                         geographic={geographic}
