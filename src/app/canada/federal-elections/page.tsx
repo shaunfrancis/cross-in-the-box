@@ -55,7 +55,7 @@ export default function CanadaFederalElections(){
                     <h1>Election Results</h1>
                     <Toggle 
                         from={"/images/usa-cartographic-icon.svg"} 
-                        to={"/images/usa-geographic-icon.svg"} 
+                        to={"/images/canada-geographic-icon.svg"} 
                         fun={(state) => { updateGeographicState(state) }}
                         value={geographic}
                     />
