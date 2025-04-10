@@ -9,7 +9,7 @@ import PopupBarGraph from "../../../shared/PopupBarGraph/PopupBarGraph";
 import { Party, Region, Result, Update } from "src/Types";
 import { DefaultParty, Endpoint } from "src/constants/shared";
 import { useRouter } from "next/navigation";
-import { constituencyToSlug, regionUrlFun, timeFun } from "src/lib/UK";
+import { constituencyToSlug, regionUrlFun, timeFun } from "src/lib/Canada";
 import PartyProgressionBlocs from "src/components/shared/PartyProgressionBlocs/PartyProgressionBlocs";
 import { getMessages, parseJSONWithDates, useOnScreen } from "src/lib/shared";
 import ElectionSummaryBlocs from "src/components/shared/ElectionSummaries/ElectionSummaryBlocs/ElectionSummaryBlocs";
@@ -166,11 +166,11 @@ export default function CanadaElectionResultContainer(
 
     const mapClickFun = (id: string) => {
         let region = regions.find( r => r.id == id );
-        if(region) router.push('constituency/' + constituencyToSlug(region.title));
+        if(region) router.push('riding/' + constituencyToSlug(region.title));
     };
     const map = () => {
         switch(election){
-            case "2021":
+            case "2021": case "2019": case "2015":
                 if(geographic) return <CanadaFederal2015GeographicMap hoverFun={mapHoverFun} clickFun={mapClickFun} regions={regions} fills={fills} />;
                 else return <UKGeneral2024Map hoverFun={mapHoverFun} clickFun={mapClickFun} regions={regions} fills={fills} />;
         }

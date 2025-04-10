@@ -1,21 +1,20 @@
 'use client';
 
 import { Endpoint } from 'src/constants/shared';
+import styles from './CanadaRidingSearchSection.module.css';
 import { highlightRelevance, RegionSearchHandler } from 'src/lib/shared';
 import { RefObject, useRef, useState } from 'react';
+import { constituencyToSlug, partyIdToDisplayId } from 'src/lib/Canada';
 import { SearchResults } from 'src/Types';
 import Link from 'next/link';
 
-import styles from './GovernorSearchSection.module.css';
-import { stateToSlug, partyIdToDisplayId } from 'src/lib/USA';
-
-export default function GovernorSearchSection( {searchInputRef} : {searchInputRef? : RefObject<HTMLInputElement>} ){
+export default function CanadaRidingSearchSection( {searchInputRef} : {searchInputRef? : RefObject<HTMLInputElement>} ){
     const [results, setResults] = useState<SearchResults | null>();
     const [displayCount, setDisplayCount] = useState<number>(15);
     const [currentQuery, setCurrentQuery] = useState<string>("");
     const [status, setStatus] = useState<string>("");
 
-    const handler = useRef(new RegionSearchHandler(Endpoint + "/search/usa/", "/governor"));
+    const handler = useRef(new RegionSearchHandler(Endpoint + "/search/canada/"));
     const search = async (query : string) => {
         if(query.length >= 3) setStatus("Searching..."); 
         else setStatus("");
@@ -48,11 +47,11 @@ export default function GovernorSearchSection( {searchInputRef} : {searchInputRe
                     results.regions.map( (region, index) => {
                         if(index >= displayCount) return;
                         return (
-                            <Link key={index} href={'/usa/gubernatorial-elections/state/' + stateToSlug(region.title)} className={styles["result"] + " unstyled"}>
+                            <Link key={index} href={'/canada/federal-elections/riding/' + constituencyToSlug(region.title)} className={styles["result"] + " unstyled"}>
                                 <h2 className={styles["result-title"]}>
                                     {highlightRelevance(currentQuery, region.title)}
                                 </h2>
-                                {!region.current && <span style={{color: "#666"}}>Abolished constituency</span>}
+                                {!region.current && <span style={{color: "#666"}}>Abolished riding</span>}
                             </Link>
                         )
                     })
@@ -61,7 +60,7 @@ export default function GovernorSearchSection( {searchInputRef} : {searchInputRe
                 results.candidates.map( (region, index) => {
                     if(results.regions.length + index >= displayCount) return;
                     return (
-                        <Link key={index} href={'/usa/gubernatorial-elections/state/' + stateToSlug(region.title)} className={styles["result"] + " unstyled"}>
+                        <Link key={index} href={'/canada/federal-elections/ridings/' + constituencyToSlug(region.title)} className={styles["result"] + " unstyled"}>
                             <h2 className={styles["result-title"]}>
                                 <div 
                                     className={styles["title-bloc"]}

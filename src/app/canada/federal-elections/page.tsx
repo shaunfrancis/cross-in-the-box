@@ -1,14 +1,13 @@
 "use client";
 
-import UKConstituencySearchSection from "src/components/UK/UKConstituencySearchSection/UKConstituencySearchSection";
 import { useEffect, useRef, useState } from "react";
 import { Party, Region } from "src/Types";
 import { Endpoint } from "src/constants/shared";
 import { partyIdToDisplayId } from "src/lib/UK";
 import Toggle from "src/components/shared/Toggle/Toggle";
-import UKMapDefs from "src/components/maps/UKMapDefs";
 import HeroNav from "src/components/shared/HeroNav/HeroNav";
 import CanadaElectionResultsSection from "src/components/Canada/CanadaElectionResultsSection/CanadaElectionResultsSection";
+import CanadaRidingSearchSection from "src/components/Canada/CanadaRidingSearchSection/CanadaRidingSearchSection";
 
 export default function CanadaFederalElections(){
     const [regions, setRegions] = useState<Region[]>([]);
@@ -54,7 +53,7 @@ export default function CanadaFederalElections(){
                 <div className="section-heading">
                     <h1>Election Results</h1>
                     <Toggle 
-                        from={"/images/usa-cartographic-icon.svg"} 
+                        from={"/images/canada-cartographic-icon.svg"} 
                         to={"/images/canada-geographic-icon.svg"} 
                         fun={(state) => { updateGeographicState(state) }}
                         value={geographic}
@@ -64,9 +63,8 @@ export default function CanadaFederalElections(){
             </section>
             <section ref={heroNavItems[1].ref} className="shaded purple">
                 <h1>Find a Riding</h1>
-                <UKConstituencySearchSection searchInputRef={searchInputRef} />
+                <CanadaRidingSearchSection searchInputRef={searchInputRef} />
             </section>
-            <UKMapDefs />
         </main>
     )
 }
