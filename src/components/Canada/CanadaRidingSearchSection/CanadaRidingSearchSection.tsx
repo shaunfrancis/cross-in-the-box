@@ -60,7 +60,7 @@ export default function CanadaRidingSearchSection( {searchInputRef} : {searchInp
                 results.candidates.map( (region, index) => {
                     if(results.regions.length + index >= displayCount) return;
                     return (
-                        <Link key={index} href={'/canada/federal-elections/ridings/' + constituencyToSlug(region.title)} className={styles["result"] + " unstyled"}>
+                        <Link key={index} href={'/canada/federal-elections/riding/' + constituencyToSlug(region.title)} className={styles["result"] + " unstyled"}>
                             <h2 className={styles["result-title"]}>
                                 <div 
                                     className={styles["title-bloc"]}

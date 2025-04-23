@@ -36,7 +36,7 @@ export default function CanadaFederalElections(){
 
     const searchInputRef = useRef<HTMLInputElement>(null);
     const heroNavItems = [
-        { title: "Election Results", src:"/images/usa-nav-results.svg", ref:useRef<HTMLElement>(null) },
+        { title: "Election Results", src:"/images/canada-nav-results.svg", ref:useRef<HTMLElement>(null) },
         { title: "Find a Riding", src:"/images/nav-region.svg", ref:useRef<HTMLElement>(null), 
             fun: () => { setTimeout( () => { if(searchInputRef.current) searchInputRef.current.focus() }, 100 ) }
         }

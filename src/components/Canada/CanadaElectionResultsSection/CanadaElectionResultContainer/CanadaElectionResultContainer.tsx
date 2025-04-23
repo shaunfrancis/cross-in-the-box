@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 
-import UKGeneral2024Map from "src/components/maps/UKGeneral2024Map";
+import CanadaFederal2025GeographicMap from "src/components/maps/CanadaFederal2025GeographicMap";
 import CanadaFederal2015GeographicMap from "src/components/maps/CanadaFederal2015GeographicMap";
+import CanadaFederal2025Map from "src/components/maps/CanadaFederal2025Map";
+import CanadaFederal2015Map from "src/components/maps/CanadaFederal2015Map";
 
 import ElectionResultContainer from "../../../shared/ElectionResultContainer/ElectionResultContainer";
 import HoverPopup from "../../../shared/HoverPopup/HoverPopup";
@@ -13,9 +15,6 @@ import { constituencyToSlug, regionUrlFun, timeFun } from "src/lib/Canada";
 import PartyProgressionBlocs from "src/components/shared/PartyProgressionBlocs/PartyProgressionBlocs";
 import { getMessages, parseJSONWithDates, useOnScreen } from "src/lib/shared";
 import ElectionSummaryBlocs from "src/components/shared/ElectionSummaries/ElectionSummaryBlocs/ElectionSummaryBlocs";
-import CanadaFederal2025GeographicMap from "src/components/maps/CanadaFederal2025GeographicMap";
-import CanadaFederal2025Map from "src/components/maps/CanadaFederal2025Map";
-
 export default function CanadaElectionResultContainer( 
     { election, live = false, title = [election, "Federal", "Election"], preloadedResults, regions, parties, summaryBlocHoverState, messageGroup, messagesOpenOnLoad, geographic, changes, dedicatedPage, winFormula = (results : Result[]) => results.filter(r => r.elected) } : 
     { 
@@ -177,7 +176,7 @@ export default function CanadaElectionResultContainer(
                 else return <CanadaFederal2025Map hoverFun={mapHoverFun} clickFun={mapClickFun} regions={regions} fills={fills} />;
             case "2021": case "2019": case "2015":
                 if(geographic) return <CanadaFederal2015GeographicMap hoverFun={mapHoverFun} clickFun={mapClickFun} regions={regions} fills={fills} />;
-                else return <UKGeneral2024Map hoverFun={mapHoverFun} clickFun={mapClickFun} regions={regions} fills={fills} />;
+                else return <CanadaFederal2015Map hoverFun={mapHoverFun} clickFun={mapClickFun} regions={regions} fills={fills} />;
         }
     };
 

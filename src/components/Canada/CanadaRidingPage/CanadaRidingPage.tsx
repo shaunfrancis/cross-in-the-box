@@ -69,9 +69,8 @@ export default function CanadaRidingPage( { slug } : { slug : string } ){
         else if(event.region.id != currentRegion.id){ //find note explaining change from tree
             const treeLink = data.tree.find(t => t.region_id == event.region.id && t.successor_id == currentRegion.id);
             if(treeLink){
-                let note = "";
-                if(event.region.title != currentRegion.title) note += "The constituency was renamed to " + currentRegion.title + ".";
-                else note += "Boundary changes occurred.";
+                let note = "Boundary changes occurred.";
+                if(event.region.title != currentRegion.title) note += " The constituency was renamed to " + currentRegion.title + ".";
                 eventNodes.push(
                     <article key={"boundary-note-" + index} className={styles["boundary-change-note"]}>{note} {treeLink.note}</article>
                 );
@@ -133,7 +132,7 @@ export default function CanadaRidingPage( { slug } : { slug : string } ){
 
             {succeededByNodes.length > 0 &&
                 <section id={styles["abolished-container"]} className="shaded yellow">
-                    <h2>This constituency was abolished following a boundary review. It was succeeded by:</h2>
+                    <h2>This riding was abolished following a federal election redistribution. It was succeeded by:</h2>
                     <div id={styles["abolished-links-container"]}>
                         {succeededByNodes}
                     </div>
