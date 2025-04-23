@@ -15,7 +15,7 @@ export default function CanadaRidingPage( { slug } : { slug : string } ){
 
     let prettySlug = "";
     slug.replace(/-/g, " ").split(" ").forEach( slugPiece => {
-        if(["and","upon","on","under","h","an"].includes(slugPiece)) prettySlug += slugPiece + " ";
+        if(["and","the","to","of","de","la","du","des"].includes(slugPiece)) prettySlug += slugPiece + " ";
         else prettySlug += slugPiece.charAt(0).toUpperCase() + slugPiece.slice(1) + " ";
     });
     let [region, setRegion] = useState<{id? : string, title : string}>({ title: prettySlug });

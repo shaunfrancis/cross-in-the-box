@@ -1,0 +1,383 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 39 26" stroke-width="0.04" stroke="white" fill="#eee">
+    <style>#canada-2025-svg rect{ cursor:pointer; transition: fill 1000ms, opacity 500ms }</style>
+    <g id="canada-2025-svg">
+        <!--Yukon, NW Territories, Nunavut-->
+        <rect x="0" y="4" width="1" height="1" name="202560001" />
+        <rect x="1" y="4" width="1" height="1" name="202561001" />
+        <rect x="2" y="4" width="1" height="1" name="202562001" />
+
+        <!--Newfoundland and Labrador-->
+        <rect x="34" y="0" width="1" height="1" name="202510005" />
+        <rect x="35" y="0" width="1" height="1" name="202510007" />
+        <rect x="30" y="1" width="1" height="1" name="202510004" />
+        <rect x="34" y="1" width="1" height="1" name="202510003" />
+        <rect x="35" y="1" width="1" height="1" name="202510001" />
+        <rect x="36" y="1" width="1" height="1" name="202510006" />
+        <rect x="37" y="1" width="1" height="1" name="202510002" />
+
+        <!--Prince Edward Island-->
+        <rect x="34" y="3" width="1" height="1" name="202511003" />
+        <rect x="35" y="3" width="1" height="1" name="202511004" />
+        <rect x="36" y="3" width="1" height="1" name="202511001" />
+        <rect x="36" y="4" width="1" height="1" name="202511002" />
+
+        <!--Nova Scotia-->
+        <rect x="38" y="5" width="1" height="1" name="202512011" />
+        <rect x="36" y="6" width="1" height="1" name="202512004" />
+        <rect x="37" y="6" width="1" height="1" name="202512003" />
+        <rect x="38" y="6" width="1" height="1" name="202512002" />
+        <rect x="36" y="7" width="1" height="1" name="202512008" />
+        <rect x="37" y="7" width="1" height="1" name="202512007" />
+        <rect x="38" y="7" width="1" height="1" name="202512009" />
+        <rect x="37" y="8" width="1" height="1" name="202512006" />
+        <rect x="38" y="8" width="1" height="1" name="202512005" />
+        <rect x="36" y="9" width="1" height="1" name="202512001" />
+        <rect x="37" y="9" width="1" height="1" name="202512010" />
+
+        <!--New Brunswick-->
+        <rect x="32" y="5" width="1" height="1" name="202513005" />
+        <rect x="33" y="5" width="1" height="1" name="202513001" />
+        <rect x="34" y="5" width="1" height="1" name="202513007" />
+        <rect x="32" y="6" width="1" height="1" name="202513010" />
+        <rect x="33" y="6" width="1" height="1" name="202513003" />
+        <rect x="34" y="6" width="1" height="1" name="202513006" />
+        <rect x="35" y="6" width="1" height="1" name="202513002" />
+        <rect x="33" y="7" width="1" height="1" name="202513009" />
+        <rect x="34" y="7" width="1" height="1" name="202513008" />
+        <rect x="35" y="7" width="1" height="1" name="202513004" />
+
+        <!--British Columbia-->
+        <rect x="0" y="5" width="1" height="1" name="202559031" />
+        <rect x="1" y="5" width="1" height="1" name="202559026" />
+        <rect x="2" y="5" width="1" height="1" name="202559015" />
+        <rect x="3" y="5" width="1" height="1" name="202559014" />
+        <rect x="4" y="5" width="1" height="1" name="202559007" />
+        <rect x="0" y="6" width="1" height="1" name="202559004" />
+        <rect x="1" y="6" width="1" height="1" name="202559022" />
+        <rect x="2" y="6" width="1" height="1" name="202559023" />
+        <rect x="3" y="6" width="1" height="1" name="202559016" />
+        <rect x="4" y="6" width="1" height="1" name="202559041" />
+        <rect x="0" y="7" width="1" height="1" name="202559035" />
+        <rect x="1" y="7" width="1" height="1" name="202559003" />
+        <rect x="2" y="7" width="1" height="1" name="202559025" />
+        <rect x="3" y="7" width="1" height="1" name="202559008" />
+        <rect x="4" y="7" width="1" height="1" name="202559005" />
+        <rect x="5" y="7" width="1" height="1" name="202559030" />
+        <rect x="0" y="8" width="1" height="1" name="202559040" />
+        <rect x="1" y="8" width="1" height="1" name="202559038" />
+        <rect x="2" y="8" width="1" height="1" name="202559036" />
+        <rect x="3" y="8" width="1" height="1" name="202559039" />
+        <rect x="4" y="8" width="1" height="1" name="202559037" />
+        <rect x="5" y="8" width="1" height="1" name="202559020" />
+        <rect x="6" y="8" width="1" height="1" name="202559018" />
+        <rect x="0" y="9" width="1" height="1" name="202559021" />
+        <rect x="1" y="9" width="1" height="1" name="202559043" />
+        <rect x="2" y="9" width="1" height="1" name="202559027" />
+        <rect x="3" y="9" width="1" height="1" name="202559028" />
+        <rect x="4" y="9" width="1" height="1" name="202559002" />
+        <rect x="5" y="9" width="1" height="1" name="202559033" />
+        <rect x="6" y="9" width="1" height="1" name="202559013" />
+        <rect x="7" y="9" width="1" height="1" name="202559024" />
+        <rect x="1" y="10" width="1" height="1" name="202559009" />
+        <rect x="2" y="10" width="1" height="1" name="202559010" />
+        <rect x="3" y="10" width="1" height="1" name="202559019" />
+        <rect x="4" y="10" width="1" height="1" name="202559011" />
+        <rect x="5" y="10" width="1" height="1" name="202559034" />
+        <rect x="6" y="10" width="1" height="1" name="202559006" />
+        <rect x="7" y="10" width="1" height="1" name="202559017" />
+        <rect x="3" y="11" width="1" height="1" name="202559012" />
+        <rect x="4" y="11" width="1" height="1" name="202559042" />
+        <rect x="5" y="11" width="1" height="1" name="202559029" />
+        <rect x="6" y="11" width="1" height="1" name="202559032" />
+        <rect x="7" y="11" width="1" height="1" name="202559001" />
+
+        <!--Alberta-->
+        <rect x="5" y="5" width="1" height="1" name="202548026" />
+        <rect x="6" y="5" width="1" height="1" name="202548032" />
+        <rect x="7" y="5" width="1" height="1" name="202548017" />
+        <rect x="8" y="5" width="1" height="1" name="202548018" />
+        <rect x="9" y="5" width="1" height="1" name="202548036" />
+        <rect x="10" y="5" width="1" height="1" name="202548035" />
+        <rect x="11" y="5" width="1" height="1" name="202548025" />
+        <rect x="5" y="6" width="1" height="1" name="202548031" />
+        <rect x="6" y="6" width="1" height="1" name="202548019" />
+        <rect x="7" y="6" width="1" height="1" name="202548023" />
+        <rect x="8" y="6" width="1" height="1" name="202548015" />
+        <rect x="9" y="6" width="1" height="1" name="202548016" />
+        <rect x="10" y="6" width="1" height="1" name="202548022" />
+        <rect x="11" y="6" width="1" height="1" name="202548027" />
+        <rect x="6" y="7" width="1" height="1" name="202548037" />
+        <rect x="7" y="7" width="1" height="1" name="202548033" />
+        <rect x="8" y="7" width="1" height="1" name="202548034" />
+        <rect x="9" y="7" width="1" height="1" name="202548020" />
+        <rect x="10" y="7" width="1" height="1" name="202548021" />
+        <rect x="11" y="7" width="1" height="1" name="202548028" />
+        <rect x="7" y="8" width="1" height="1" name="202548001" />
+        <rect x="8" y="8" width="1" height="1" name="202548011" />
+        <rect x="9" y="8" width="1" height="1" name="202548014" />
+        <rect x="10" y="8" width="1" height="1" name="202548009" />
+        <rect x="11" y="8" width="1" height="1" name="202548002" />
+        <rect x="8" y="9" width="1" height="1" name="202548006" />
+        <rect x="9" y="9" width="1" height="1" name="202548005" />
+        <rect x="10" y="9" width="1" height="1" name="202548004" />
+        <rect x="11" y="9" width="1" height="1" name="202548007" />
+        <rect x="8" y="10" width="1" height="1" name="202548013" />
+        <rect x="9" y="10" width="1" height="1" name="202548008" />
+        <rect x="10" y="10" width="1" height="1" name="202548010" />
+        <rect x="11" y="10" width="1" height="1" name="202548012" />
+        <rect x="8" y="11" width="1" height="1" name="202548024" />
+        <rect x="9" y="11" width="1" height="1" name="202548029" />
+        <rect x="10" y="11" width="1" height="1" name="202548003" />
+        <rect x="11" y="11" width="1" height="1" name="202548030" />
+
+        <!--Saskatchewan-->
+        <rect x="12" y="6" width="1" height="1" name="202547003" />
+        <rect x="12" y="7" width="1" height="1" name="202547001" />
+        <rect x="13" y="7" width="1" height="1" name="202547005" />
+        <rect x="12" y="8" width="1" height="1" name="202547010" />
+        <rect x="13" y="8" width="1" height="1" name="202547002" />
+        <rect x="12" y="9" width="1" height="1" name="202547011" />
+        <rect x="13" y="9" width="1" height="1" name="202547009" />
+        <rect x="12" y="10" width="1" height="1" name="202547004" />
+        <rect x="13" y="10" width="1" height="1" name="202547014" />
+        <rect x="12" y="11" width="1" height="1" name="202547006" />
+        <rect x="13" y="11" width="1" height="1" name="202547007" />
+        <rect x="12" y="12" width="1" height="1" name="202547013" />
+        <rect x="13" y="12" width="1" height="1" name="202547008" />
+        <rect x="13" y="13" width="1" height="1" name="202547012" />
+
+        <!--Manitoba-->
+        <rect x="14" y="8" width="1" height="1" name="202546002" />
+        <rect x="14" y="9" width="1" height="1" name="202546007" />
+        <rect x="15" y="9" width="1" height="1" name="202546011" />
+        <rect x="16" y="9" width="1" height="1" name="202546004" />
+        <rect x="17" y="9" width="1" height="1" name="202546009" />
+        <rect x="14" y="10" width="1" height="1" name="202546014" />
+        <rect x="15" y="10" width="1" height="1" name="202546010" />
+        <rect x="16" y="10" width="1" height="1" name="202546003" />
+        <rect x="14" y="11" width="1" height="1" name="202546013" />
+        <rect x="15" y="11" width="1" height="1" name="202546008" />
+        <rect x="14" y="12" width="1" height="1" name="202546005" />
+        <rect x="15" y="12" width="1" height="1" name="202546012" />
+        <rect x="14" y="13" width="1" height="1" name="202546001" />
+        <rect x="15" y="13" width="1" height="1" name="202546006" />
+
+        <!--Ontario-->
+        <rect x="18" y="9" width="1" height="1" name="202535107" />
+        <rect x="19" y="9" width="1" height="1" name="202535108" />
+        <rect x="20" y="9" width="1" height="1" name="202535044" />
+        <rect x="17" y="10" width="1" height="1" name="202535091" />
+        <rect x="18" y="10" width="1" height="1" name="202535104" />
+        <rect x="19" y="10" width="1" height="1" name="202535103" />
+        <rect x="20" y="10" width="1" height="1" name="202535073" />
+        <rect x="21" y="10" width="1" height="1" name="202535002" />
+        <rect x="22" y="10" width="1" height="1" name="202535081" />
+        <rect x="23" y="10" width="1" height="1" name="202535043" />
+        <rect x="24" y="10" width="1" height="1" name="202535082" />
+        <rect x="16" y="11" width="1" height="1" name="202535045" />
+        <rect x="17" y="11" width="1" height="1" name="202535084" />
+        <rect x="18" y="11" width="1" height="1" name="202535035" />
+        <rect x="19" y="11" width="1" height="1" name="202535040" />
+        <rect x="20" y="11" width="1" height="1" name="202535006" />
+        <rect x="21" y="11" width="1" height="1" name="202535046" />
+        <rect x="22" y="11" width="1" height="1" name="202535051" />
+        <rect x="23" y="11" width="1" height="1" name="202535067" />
+        <rect x="24" y="11" width="1" height="1" name="202535079" />
+        <rect x="16" y="12" width="1" height="1" name="202535099" />
+        <rect x="17" y="12" width="1" height="1" name="202535005" />
+        <rect x="18" y="12" width="1" height="1" name="202535004" />
+        <rect x="19" y="12" width="1" height="1" name="202535121" />
+        <rect x="20" y="12" width="1" height="1" name="202535086" />
+        <rect x="21" y="12" width="1" height="1" name="202535074" />
+        <rect x="22" y="12" width="1" height="1" name="202535052" />
+        <rect x="23" y="12" width="1" height="1" name="202535020" />
+        <rect x="24" y="12" width="1" height="1" name="202535080" />
+        <rect x="25" y="12" width="1" height="1" name="202535077" />
+        <rect x="26" y="12" width="1" height="1" name="202535088" />
+        <rect x="16" y="13" width="1" height="1" name="202535098" />
+        <rect x="17" y="13" width="1" height="1" name="202535008" />
+        <rect x="18" y="13" width="1" height="1" name="202535078" />
+        <rect x="19" y="13" width="1" height="1" name="202535097" />
+        <rect x="20" y="13" width="1" height="1" name="202535096" />
+        <rect x="21" y="13" width="1" height="1" name="202535095" />
+        <rect x="22" y="13" width="1" height="1" name="202535092" />
+        <rect x="23" y="13" width="1" height="1" name="202535056" />
+        <rect x="24" y="13" width="1" height="1" name="202535102" />
+        <rect x="16" y="14" width="1" height="1" name="202535069" />
+        <rect x="17" y="14" width="1" height="1" name="202535001" />
+        <rect x="18" y="14" width="1" height="1" name="202535116" />
+        <rect x="19" y="14" width="1" height="1" name="202535093" />
+        <rect x="20" y="14" width="1" height="1" name="202535106" />
+        <rect x="21" y="14" width="1" height="1" name="202535089" />
+        <rect x="22" y="14" width="1" height="1" name="202535058" />
+        <rect x="23" y="14" width="1" height="1" name="202535057" />
+        <rect x="24" y="14" width="1" height="1" name="202535094" />
+        <rect x="16" y="15" width="1" height="1" name="202535068" />
+        <rect x="17" y="15" width="1" height="1" name="202535117" />
+        <rect x="18" y="15" width="1" height="1" name="202535087" />
+        <rect x="19" y="15" width="1" height="1" name="202535007" />
+        <rect x="20" y="15" width="1" height="1" name="202535041" />
+        <rect x="21" y="15" width="1" height="1" name="202535120" />
+        <rect x="22" y="15" width="1" height="1" name="202535026" />
+        <rect x="23" y="15" width="1" height="1" name="202535109" />
+        <rect x="24" y="15" width="1" height="1" name="202535110" />
+        <rect x="16" y="16" width="1" height="1" name="202535003" />
+        <rect x="17" y="16" width="1" height="1" name="202535047" />
+        <rect x="18" y="16" width="1" height="1" name="202535023" />
+        <rect x="19" y="16" width="1" height="1" name="202535024" />
+        <rect x="20" y="16" width="1" height="1" name="202535031" />
+        <rect x="21" y="16" width="1" height="1" name="202535029" />
+        <rect x="22" y="16" width="1" height="1" name="202535122" />
+        <rect x="23" y="16" width="1" height="1" name="202535022" />
+        <rect x="24" y="16" width="1" height="1" name="202535111" />
+        <rect x="25" y="16" width="1" height="1" name="202535112" />
+        <rect x="18" y="17" width="1" height="1" name="202535113" />
+        <rect x="19" y="17" width="1" height="1" name="202535011" />
+        <rect x="20" y="17" width="1" height="1" name="202535061" />
+        <rect x="21" y="17" width="1" height="1" name="202535062" />
+        <rect x="22" y="17" width="1" height="1" name="202535030" />
+        <rect x="23" y="17" width="1" height="1" name="202535105" />
+        <rect x="24" y="17" width="1" height="1" name="202535100" />
+        <rect x="17" y="18" width="1" height="1" name="202535025" />
+        <rect x="18" y="18" width="1" height="1" name="202535009" />
+        <rect x="19" y="18" width="1" height="1" name="202535010" />
+        <rect x="20" y="18" width="1" height="1" name="202535013" />
+        <rect x="21" y="18" width="1" height="1" name="202535065" />
+        <rect x="22" y="18" width="1" height="1" name="202535060" />
+        <rect x="23" y="18" width="1" height="1" name="202535066" />
+        <rect x="24" y="18" width="1" height="1" name="202535063" />
+        <rect x="25" y="18" width="1" height="1" name="202535064" />
+        <rect x="17" y="19" width="1" height="1" name="202535016" />
+        <rect x="18" y="19" width="1" height="1" name="202535012" />
+        <rect x="19" y="19" width="1" height="1" name="202535014" />
+        <rect x="20" y="19" width="1" height="1" name="202535033" />
+        <rect x="21" y="19" width="1" height="1" name="202535115" />
+        <rect x="22" y="19" width="1" height="1" name="202535018" />
+        <rect x="23" y="19" width="1" height="1" name="202535076" />
+        <rect x="24" y="19" width="1" height="1" name="202535075" />
+        <rect x="18" y="20" width="1" height="1" name="202535114" />
+        <rect x="19" y="20" width="1" height="1" name="202535048" />
+        <rect x="20" y="20" width="1" height="1" name="202535032" />
+        <rect x="21" y="20" width="1" height="1" name="202535039" />
+        <rect x="22" y="20" width="1" height="1" name="202535036" />
+        <rect x="23" y="20" width="1" height="1" name="202535017" />
+        <rect x="17" y="21" width="1" height="1" name="202535049" />
+        <rect x="18" y="21" width="1" height="1" name="202535050" />
+        <rect x="19" y="21" width="1" height="1" name="202535019" />
+        <rect x="20" y="21" width="1" height="1" name="202535015" />
+        <rect x="21" y="21" width="1" height="1" name="202535038" />
+        <rect x="22" y="21" width="1" height="1" name="202535037" />
+        <rect x="17" y="22" width="1" height="1" name="202535085" />
+        <rect x="18" y="22" width="1" height="1" name="202535083" />
+        <rect x="19" y="22" width="1" height="1" name="202535072" />
+        <rect x="20" y="22" width="1" height="1" name="202535101" />
+        <rect x="21" y="22" width="1" height="1" name="202535070" />
+        <rect x="22" y="22" width="1" height="1" name="202535071" />
+        <rect x="16" y="23" width="1" height="1" name="202535090" />
+        <rect x="17" y="23" width="1" height="1" name="202535042" />
+        <rect x="18" y="23" width="1" height="1" name="202535059" />
+        <rect x="19" y="23" width="1" height="1" name="202535055" />
+        <rect x="20" y="23" width="1" height="1" name="202535053" />
+        <rect x="21" y="23" width="1" height="1" name="202535054" />
+        <rect x="16" y="24" width="1" height="1" name="202535119" />
+        <rect x="17" y="24" width="1" height="1" name="202535118" />
+        <rect x="18" y="24" width="1" height="1" name="202535027" />
+        <rect x="19" y="24" width="1" height="1" name="202535034" />
+        <rect x="16" y="25" width="1" height="1" name="202535028" />
+        <rect x="17" y="25" width="1" height="1" name="202535021" />
+
+        <!--Quebec-->
+        <rect x="29" y="1" width="1" height="1" name="202524001" />
+        <rect x="29" y="2" width="1" height="1" name="202524033" />
+        <rect x="30" y="2" width="1" height="1" name="202524021" />
+        <rect x="29" y="3" width="1" height="1" name="202524070" />
+        <rect x="30" y="3" width="1" height="1" name="202524051" />
+        <rect x="31" y="3" width="1" height="1" name="202524030" />
+        <rect x="28" y="4" width="1" height="1" name="202524016" />
+        <rect x="29" y="4" width="1" height="1" name="202524020" />
+        <rect x="30" y="4" width="1" height="1" name="202524058" />
+        <rect x="31" y="4" width="1" height="1" name="202524018" />
+        <rect x="28" y="5" width="1" height="1" name="202524059" />
+        <rect x="29" y="5" width="1" height="1" name="202524008" />
+        <rect x="30" y="5" width="1" height="1" name="202524062" />
+        <rect x="31" y="5" width="1" height="1" name="202524024" />
+        <rect x="28" y="6" width="1" height="1" name="202524044" />
+        <rect x="29" y="6" width="1" height="1" name="202524043" />
+        <rect x="30" y="6" width="1" height="1" name="202524040" />
+        <rect x="31" y="6" width="1" height="1" name="202524010" />
+        <rect x="26" y="7" width="1" height="1" name="202524036" />
+        <rect x="27" y="7" width="1" height="1" name="202524012" />
+        <rect x="28" y="7" width="1" height="1" name="202524075" />
+        <rect x="29" y="7" width="1" height="1" name="202524009" />
+        <rect x="30" y="7" width="1" height="1" name="202524046" />
+        <rect x="31" y="7" width="1" height="1" name="202524006" />
+        <rect x="26" y="8" width="1" height="1" name="202524057" />
+        <rect x="27" y="8" width="1" height="1" name="202524029" />
+        <rect x="28" y="8" width="1" height="1" name="202524023" />
+        <rect x="29" y="8" width="1" height="1" name="202524061" />
+        <rect x="30" y="8" width="1" height="1" name="202524072" />
+        <rect x="25" y="9" width="1" height="1" name="202524002" />
+        <rect x="26" y="9" width="1" height="1" name="202524005" />
+        <rect x="27" y="9" width="1" height="1" name="202524039" />
+        <rect x="28" y="9" width="1" height="1" name="202524055" />
+        <rect x="29" y="9" width="1" height="1" name="202524066" />
+        <rect x="30" y="9" width="1" height="1" name="202524019" />
+        <rect x="25" y="10" width="1" height="1" name="202524025" />
+        <rect x="26" y="10" width="1" height="1" name="202524047" />
+        <rect x="27" y="10" width="1" height="1" name="202524064" />
+        <rect x="28" y="10" width="1" height="1" name="202524050" />
+        <rect x="29" y="10" width="1" height="1" name="202524073" />
+        <rect x="30" y="10" width="1" height="1" name="202524060" />
+        <rect x="25" y="11" width="1" height="1" name="202524028" />
+        <rect x="26" y="11" width="1" height="1" name="202524063" />
+        <rect x="27" y="11" width="1" height="1" name="202524074" />
+        <rect x="28" y="11" width="1" height="1" name="202524004" />
+        <rect x="29" y="11" width="1" height="1" name="202524027" />
+        <rect x="30" y="11" width="1" height="1" name="202524031" />
+        <rect x="27" y="12" width="1" height="1" name="202524045" />
+        <rect x="28" y="12" width="1" height="1" name="202524078" />
+        <rect x="29" y="12" width="1" height="1" name="202524013" />
+        <rect x="30" y="12" width="1" height="1" name="202524069" />
+        <rect x="25" y="13" width="1" height="1" name="202524056" />
+        <rect x="26" y="13" width="1" height="1" name="202524038" />
+        <rect x="27" y="13" width="1" height="1" name="202524003" />
+        <rect x="28" y="13" width="1" height="1" name="202524054" />
+        <rect x="29" y="13" width="1" height="1" name="202524026" />
+        <rect x="30" y="13" width="1" height="1" name="202524042" />
+        <rect x="25" y="14" width="1" height="1" name="202524034" />
+        <rect x="26" y="14" width="1" height="1" name="202524068" />
+        <rect x="27" y="14" width="1" height="1" name="202524053" />
+        <rect x="28" y="14" width="1" height="1" name="202524065" />
+        <rect x="29" y="14" width="1" height="1" name="202524037" />
+        <rect x="30" y="14" width="1" height="1" name="202524041" />
+        <rect x="25" y="15" width="1" height="1" name="202524022" />
+        <rect x="26" y="15" width="1" height="1" name="202524035" />
+        <rect x="27" y="15" width="1" height="1" name="202524048" />
+        <rect x="28" y="15" width="1" height="1" name="202524052" />
+        <rect x="29" y="15" width="1" height="1" name="202524077" />
+        <rect x="30" y="15" width="1" height="1" name="202524015" />
+        <rect x="26" y="16" width="1" height="1" name="202524076" />
+        <rect x="27" y="16" width="1" height="1" name="202524049" />
+        <rect x="28" y="16" width="1" height="1" name="202524011" />
+        <rect x="29" y="16" width="1" height="1" name="202524071" />
+        <rect x="25" y="17" width="1" height="1" name="202524007" />
+        <rect x="26" y="17" width="1" height="1" name="202524017" />
+        <rect x="27" y="17" width="1" height="1" name="202524032" />
+        <rect x="28" y="17" width="1" height="1" name="202524067" />
+        <rect x="29" y="17" width="1" height="1" name="202524014" />
+    </g>
+    <!--Provincial borders-->
+    <g style="pointer-events:none" stroke-width="0.16" fill="none">
+        <path d="M0 5l1 0l0 -1" />
+        <path d="M1 5l1 0l0 -1" />
+        <path d="M2 5l1 0" />
+        <path d="M3 5l2 0l0 2l1 0l0 1l1 0l0 1l1 0l0 3" />
+        <path d="M5 5l7 0l0 8" />
+        <path d="M14 7l0 7" />
+        <path d="M18 9l0 1l-1 0l0 1l-1 0l0 6" />
+        <path d="M30 1l0 1l1 0" />
+        <path d="M36 6l0 2" />
+        <path d="M32 3l0 5" />
+        <path d="M25 9l0 3l2 0l0 1l-1 0l0 3l1 0l0 1l-1 0l0 2" />
+    </g>
+</svg>

@@ -13,6 +13,8 @@ import { constituencyToSlug, regionUrlFun, timeFun } from "src/lib/Canada";
 import PartyProgressionBlocs from "src/components/shared/PartyProgressionBlocs/PartyProgressionBlocs";
 import { getMessages, parseJSONWithDates, useOnScreen } from "src/lib/shared";
 import ElectionSummaryBlocs from "src/components/shared/ElectionSummaries/ElectionSummaryBlocs/ElectionSummaryBlocs";
+import CanadaFederal2025GeographicMap from "src/components/maps/CanadaFederal2025GeographicMap";
+import CanadaFederal2025Map from "src/components/maps/CanadaFederal2025Map";
 
 export default function CanadaElectionResultContainer( 
     { election, live = false, title = [election, "Federal", "Election"], preloadedResults, regions, parties, summaryBlocHoverState, messageGroup, messagesOpenOnLoad, geographic, changes, dedicatedPage, winFormula = (results : Result[]) => results.filter(r => r.elected) } : 
@@ -33,7 +35,7 @@ export default function CanadaElectionResultContainer(
     }
 ){
 
-    const dimensions = {w:"calc( 1.1 * (100vh - 100px) )", h:"calc(100vh - 100px)", minW:"425px", minH:"500px"};
+    const dimensions = {w:"calc( 1.15 * (100vh - 100px) )", h:"calc(100vh - 100px)", minW:"425px", minH:"500px"};
     const router = useRouter();
     const container = useRef<HTMLDivElement>(null);
     const onScreen = useOnScreen(container);
@@ -170,6 +172,9 @@ export default function CanadaElectionResultContainer(
     };
     const map = () => {
         switch(election){
+            case "2025":
+                if(geographic) return <CanadaFederal2025GeographicMap hoverFun={mapHoverFun} clickFun={mapClickFun} regions={regions} fills={fills} />;
+                else return <CanadaFederal2025Map hoverFun={mapHoverFun} clickFun={mapClickFun} regions={regions} fills={fills} />;
             case "2021": case "2019": case "2015":
                 if(geographic) return <CanadaFederal2015GeographicMap hoverFun={mapHoverFun} clickFun={mapClickFun} regions={regions} fills={fills} />;
                 else return <UKGeneral2024Map hoverFun={mapHoverFun} clickFun={mapClickFun} regions={regions} fills={fills} />;

@@ -12,6 +12,13 @@ export default function CanadaElectionResultsSection({ regions, parties, geograp
     
     return ( <>
         <ElectionResultsSection>
+            <CanadaElectionResultContainer election="2025"
+                summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]} 
+                regions={regions}
+                parties={parties}
+                geographic={geographic}
+            />
+
             <CanadaElectionResultContainer election="2021"
                 summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]} 
                 regions={regions}
