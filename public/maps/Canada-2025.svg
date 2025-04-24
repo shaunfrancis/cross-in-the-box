@@ -378,6 +378,6 @@
         <path d="M30 1l0 1l1 0" />
         <path d="M36 6l0 2" />
         <path d="M32 3l0 5" />
-        <path d="M25 9l0 3l2 0l0 1l-1 0l0 3l1 0l0 1l-1 0l0 2" />
+        <path d="M25 9l0 3l2 0l0 1l-2 0l0 3l1 0l0 1l-1 0l0 1l5 0"/>
     </g>
 </svg>
