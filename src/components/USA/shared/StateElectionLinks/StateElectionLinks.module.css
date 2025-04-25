@@ -17,6 +17,7 @@
     font-size:16px;
     background:rgb(240,240,240);
     color:#000;
+    box-sizing:border-box;
 }
 
 .link-button.current{

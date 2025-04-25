@@ -8,4 +8,6 @@
     -webkit-user-select:none;
     -moz-user-select:none;
     user-select:none;
+    max-height:100vh;
+    overflow:hidden;
 }

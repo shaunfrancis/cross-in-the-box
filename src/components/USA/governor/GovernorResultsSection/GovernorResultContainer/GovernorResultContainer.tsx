@@ -14,6 +14,7 @@ import ElectionSummaryBars from "src/components/shared/ElectionSummaries/Electio
 import { electionType, governorCaucusMap, governorGhostResults, subidLabels } from "src/constants/USA";
 import USAGovernor1960GeographicMap from "src/components/maps/USAGovernor1960GeographicMap";
 import LiveCloseAndCountedData from "src/components/USA/shared/LiveCloseAndCountedData/LiveCloseAndCountedData";
+import { regionUrlFun, timeFun } from "src/lib/USA";
 
 export default function GovernorResultContainer( 
     { 
@@ -166,7 +167,7 @@ export default function GovernorResultContainer(
             setFills(newFills);
 
             if(messageGroup){
-                const newMessages = await getMessages(parties, latestMessageDate, '/messages/usa/' + messageGroup);
+                const newMessages = await getMessages(parties, latestMessageDate, '/messages/usa/' + messageGroup, regionUrlFun, timeFun);
                 setMessages(newMessages);
             }
         };
@@ -233,6 +234,8 @@ export default function GovernorResultContainer(
                     parties,
                     latestMessageDate,
                     '/messages/usa/' + messageGroup + '?since=' + since.toISOString(),
+                    regionUrlFun,
+                    timeFun,
                     messages
                 );
 

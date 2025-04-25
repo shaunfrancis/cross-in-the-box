@@ -9,7 +9,7 @@
             FROM $polls_table as polls
             LEFT JOIN $pollsters_table as pollsters
             ON pollsters.id = polls.pollster
-            WHERE polls.start > '2019-12-12'
+            WHERE polls.start > '2021-12-31'
         ");
         $figures = fetch("SELECT poll_id, party, figure FROM $poll_figures_table");
 

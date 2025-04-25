@@ -13,6 +13,7 @@ import { electionType, subidLabels } from "src/constants/USA";
 import USAHouseMap from "src/components/maps/USAHouseMap";
 import USAHouseMapGeographic from "src/components/maps/USAHouseMapGeographic";
 import LiveCloseAndCountedData from "src/components/USA/shared/LiveCloseAndCountedData/LiveCloseAndCountedData";
+import { regionUrlFun, timeFun } from "src/lib/USA";
 
 export default function HouseResultContainer( 
     {
@@ -109,7 +110,7 @@ export default function HouseResultContainer(
             setFills(newFills);
 
             if(messageGroup){
-                const newMessages = await getMessages(parties, latestMessageDate, '/messages/usa/' + messageGroup);
+                const newMessages = await getMessages(parties, latestMessageDate, '/messages/usa/' + messageGroup, regionUrlFun, timeFun);
                 setMessages(newMessages);
             }
         };
@@ -162,6 +163,8 @@ export default function HouseResultContainer(
                     parties,
                     latestMessageDate,
                     '/messages/usa/' + messageGroup + '?since=' + since.toISOString(),
+                    regionUrlFun,
+                    timeFun,
                     messages
                 );
 

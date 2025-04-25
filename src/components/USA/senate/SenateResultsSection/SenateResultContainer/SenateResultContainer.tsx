@@ -14,6 +14,7 @@ import USASenate1960GeographicMap from "src/components/maps/USASenate1960Geograp
 import ElectionSummaryBars from "src/components/shared/ElectionSummaries/ElectionSummaryBars/ElectionSummaryBars";
 import { electionType, getSenatePreviousSpecialOverrides, senateCaucusMap, subidLabels, USASeatsToWatch } from "src/constants/USA";
 import LiveCloseAndCountedData from "src/components/USA/shared/LiveCloseAndCountedData/LiveCloseAndCountedData";
+import { regionUrlFun, timeFun } from "src/lib/USA";
 
 
 export default function SenateResultContainer( 
@@ -181,7 +182,7 @@ export default function SenateResultContainer(
             setFills(newFills);
 
             if(messageGroup){
-                const newMessages = await getMessages(parties, latestMessageDate, '/messages/usa/' + messageGroup);
+                const newMessages = await getMessages(parties, latestMessageDate, '/messages/usa/' + messageGroup, regionUrlFun, timeFun);
                 setMessages(newMessages);
             }
         };
@@ -248,6 +249,8 @@ export default function SenateResultContainer(
                     parties,
                     latestMessageDate,
                     '/messages/usa/' + messageGroup + '?since=' + since.toISOString(),
+                    regionUrlFun,
+                    timeFun,
                     messages
                 );
                 setMessages(newMessages);

@@ -30,6 +30,7 @@
         );
 
         foreach($links as &$link){
+            $link['elected'] = intval($link['elected']);
             switch($link['type']){
                 case "presidential":
                     if(str_contains($link['title'], "At-Large")) $link['label'] = "At-Large";

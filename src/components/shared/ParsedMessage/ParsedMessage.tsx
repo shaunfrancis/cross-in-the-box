@@ -2,10 +2,23 @@ import { useRouter } from "next/navigation";
 import Message from "src/components/shared/Message/Message";
 import PopupBarGraph from "src/components/shared/PopupBarGraph/PopupBarGraph";
 import { DefaultParty } from "src/constants/shared";
-import { dateToLongDate } from "src/lib/shared";
 import { MessageData, Party } from "src/Types";
 
-export default function ParsedMessage({parties, message, animate} : { parties : Party[], message : MessageData, animate? : boolean }){
+export default function ParsedMessage(
+    {
+        parties,
+        message,
+        animate,
+        urlFun,
+        timeFun
+    } : {
+        parties : Party[],
+        message : MessageData,
+        animate? : boolean,
+        urlFun : (slug : string, type? : string) => string,
+        timeFun : (message : MessageData) => React.ReactNode
+    }
+){
     const router = useRouter();
     const addElectionLinks = (text : string) : React.ReactNode[] => {
         
@@ -14,16 +27,10 @@ export default function ParsedMessage({parties, message, animate} : { parties : 
             if(link == "") return;
     
             if(index % 2){
-                const [_, type, slug, displayText] = link.split("@");
+                let [_, type, slug, displayText] = ["", "", link, link]; 
+                if(link.includes("@")) [_ = "", type = "", slug = "", displayText = ""] = link.split("@");
     
-                let url = "/usa/";
-                switch(type){
-                    case "president": url += "presidential-elections/state/"; break;
-                    case "senate": url += "senate-elections/state/"; break;
-                    case "house": url += "house-elections/district/"; break;
-                    case "governor": url += "gubernatorial-elections/state/";
-                }
-                url += slug;
+                const url = urlFun(slug, type);
     
                 spans.push(
                     <span 
@@ -40,24 +47,7 @@ export default function ParsedMessage({parties, message, animate} : { parties : 
         return spans;
     }
 
-    const est = new Date(message.date.toLocaleString("en-US", {timeZone: "America/New_York"}));
-    let time = est.getHours().toString().padStart(2,'0') + ":" + est.getMinutes().toString().padStart(2,'0');
-
-    let dateString : string;
-    const dayWord = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][est.getDay()];
-
-    if((new Date()).getFullYear() === est.getFullYear()){ //current year, don't show full date
-        //for live messages, if event extends beyond Wednesday following election day then show day of week
-        if(! [2,3].includes(est.getDay())){
-            dateString = dayWord + ", " + time;
-        }
-        else dateString = time;
-    }
-    else dateString = dayWord + " " + dateToLongDate(est) + ", " + time;
-
-    const date = ( <>
-        {dateString} <span style={{fontSize:"0.8em"}}>ET</span>
-    </> );
+    const date = timeFun(message);
 
 
     const square = message.square ? (parties.find(p => p.id == message.square) || DefaultParty) : undefined;
@@ -69,7 +59,9 @@ export default function ParsedMessage({parties, message, animate} : { parties : 
             messageResults.push( <PopupBarGraph key={"msg-result"} title={message.link_title} raw={true} goal={326/650} parties={parties} results={message.results.sort( (a,b) => b.votes - a.votes )} /> );
             break;
         default:
-            messageResults.push( <PopupBarGraph key={"msg-result"} title={message.link_title} parties={parties} results={message.results.sort( (a,b) => b.votes - a.votes )} />);
+            let hardcodeTitle : string | null = null;
+            if(message.date.getFullYear() == 2024 && !message.link_title) hardcodeTitle = "Partial results";
+            messageResults.push( <PopupBarGraph key={"msg-result"} title={hardcodeTitle ?? message.link_title} parties={parties} results={message.results.sort( (a,b) => b.votes - a.votes )} />);
     }
 
     return ( 

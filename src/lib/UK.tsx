@@ -1,6 +1,6 @@
 import { Endpoint } from "src/constants/shared";
-import { Poll, PollFigure, PollSkeleton } from "src/Types";
-import { parseJSONWithDates } from "./shared";
+import { MessageData, Poll, PollFigure, PollSkeleton } from "src/Types";
+import { dateToLongDate, parseJSONWithDates } from "./shared";
 
 const parsePollData = async () => {
     const data : {polls: PollSkeleton[], figures: PollFigure[]} = await fetch(Endpoint + "/polls/uk")
@@ -39,5 +39,37 @@ const slugToLookupSlug = (slug : string) => {
     if(slug == "ynys-mon") return "ynys-môn";
     return slug;
 };
+
+export const regionUrlFun = (slug : string, type? : string) => {
+    let url = "/uk/";
+    switch(type){
+        case "general": url += "general-elections/"; break;
+        default: url += "general-elections/"
+    }
+    url += 'constituency/' + constituencyToSlug(slug);
+    return url;
+}
+
+export const timeFun = (message : MessageData) => {
+    // const est = new Date(message.date.toLocaleString("en-GB", {timeZone: "Europe/London"}));
+    let time = message.date.getHours().toString().padStart(2,'0') + ":" + message.date.getMinutes().toString().padStart(2,'0');
+
+    let dateString : string;
+    const dayWord = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][message.date.getDay()];
+
+    /*if((new Date()).getFullYear() === est.getFullYear()){ //current year, don't show full date
+        //for live messages, if event extends beyond Wednesday following election day then show day of week
+        // console.log([5,6].includes(est.getDate()));
+        if([2,3].includes(est.getDay()) && [5,6].includes(est.getDate())){
+            dateString = time;
+        }
+        else dateString = dayWord + ", " + time;
+    }
+    else */dateString = dayWord + " " + dateToLongDate(message.date) + ", " + time;
+
+    return ( <>
+        {dateString}
+    </> );
+}
 
 export { parsePollData, partyIdToDisplayId, constituencyToSlug, slugToLookupSlug }

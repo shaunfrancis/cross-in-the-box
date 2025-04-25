@@ -70,6 +70,7 @@ export default function RegionBarGraph(
                             <div 
                                 className={styles["bar-graph-candidate"] + " " + styles["bar-graph-bloc"]}
                                 style={{background: bgColor, color: party.textColor}}
+                                title={result.candidate}
                             >
                                 {result.candidate}
                             </div>

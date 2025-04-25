@@ -1,0 +1,14 @@
+RewriteEngine On
+RewriteBase /
+
+ErrorDocument 404 /404/
+
+<ifModule mod_headers.c>
+    Header set X-Frame-Options "deny"
+    Header set Content-Security-Policy "frame-ancestors 'none'"
+</ifModule>
+
+# DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION BEGIN
+<IfModule Litespeed>
+</IfModule>
+# DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION END

@@ -5,7 +5,15 @@
     $slug = urldecode($request[1]);
     if(count($request) == 3) $type = $request[2];
 
-    $sql = "SELECT id, title FROM $regions_table WHERE REPLACE(REGEXP_REPLACE(LOWER(title), '[,()]', ''),' ','-') = :slug";
+    // First, lowercase the title
+    // Then, replace , ( ) ' with empty string
+    // Then replace spaces and em dashes with hyphen
+    $sql = "SELECT id, title FROM $regions_table WHERE 
+        REGEXP_REPLACE(
+            REGEXP_REPLACE(LOWER(title), '[,()\\']', ''),
+            '[ —]',
+            '-'
+        ) = :slug";
     $params = [':slug' => $slug];
 
     if(isset($type)){

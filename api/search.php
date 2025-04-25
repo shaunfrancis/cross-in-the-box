@@ -23,9 +23,9 @@
     }
     
     try{
-        $words = explode(" ", strtolower($query));
+        $words = preg_split('/ |-|—/', strtolower($query));
         $filtered_words = array_filter($words, function($word){
-            return !in_array($word, ["and", "the"]);
+            return !in_array(trim($word), ["and", "the", ""]);
         });
         if(count($filtered_words) > 0) $words = array_values($filtered_words);
 
