@@ -171,9 +171,9 @@
         <rect x="19" y="10" width="1" height="1" name="202535103" />
         <rect x="20" y="10" width="1" height="1" name="202535073" />
         <rect x="21" y="10" width="1" height="1" name="202535002" />
-        <rect x="22" y="10" width="1" height="1" name="202535081" />
-        <rect x="23" y="10" width="1" height="1" name="202535043" />
-        <rect x="24" y="10" width="1" height="1" name="202535082" />
+        <rect x="24" y="10" width="1" height="1" name="202535081" />
+        <rect x="22" y="10" width="1" height="1" name="202535043" />
+        <rect x="23" y="10" width="1" height="1" name="202535082" />
         <rect x="16" y="11" width="1" height="1" name="202535045" />
         <rect x="17" y="11" width="1" height="1" name="202535084" />
         <rect x="18" y="11" width="1" height="1" name="202535035" />
@@ -240,15 +240,15 @@
         <rect x="24" y="17" width="1" height="1" name="202535100" />
         <rect x="17" y="18" width="1" height="1" name="202535025" />
         <rect x="18" y="18" width="1" height="1" name="202535009" />
-        <rect x="19" y="18" width="1" height="1" name="202535010" />
-        <rect x="20" y="18" width="1" height="1" name="202535013" />
+        <rect x="20" y="18" width="1" height="1" name="202535010" />
+        <rect x="18" y="19" width="1" height="1" name="202535013" />
         <rect x="21" y="18" width="1" height="1" name="202535065" />
         <rect x="22" y="18" width="1" height="1" name="202535060" />
         <rect x="23" y="18" width="1" height="1" name="202535066" />
         <rect x="24" y="18" width="1" height="1" name="202535063" />
         <rect x="25" y="18" width="1" height="1" name="202535064" />
-        <rect x="17" y="19" width="1" height="1" name="202535016" />
-        <rect x="18" y="19" width="1" height="1" name="202535012" />
+        <rect x="17" y="17" width="1" height="1" name="202535016" />
+        <rect x="19" y="18" width="1" height="1" name="202535012" />
         <rect x="19" y="19" width="1" height="1" name="202535014" />
         <rect x="20" y="19" width="1" height="1" name="202535033" />
         <rect x="21" y="19" width="1" height="1" name="202535115" />
@@ -271,8 +271,8 @@
         <rect x="18" y="22" width="1" height="1" name="202535083" />
         <rect x="19" y="22" width="1" height="1" name="202535072" />
         <rect x="20" y="22" width="1" height="1" name="202535101" />
-        <rect x="21" y="22" width="1" height="1" name="202535070" />
-        <rect x="22" y="22" width="1" height="1" name="202535071" />
+        <rect x="22" y="22" width="1" height="1" name="202535070" />
+        <rect x="21" y="22" width="1" height="1" name="202535071" />
         <rect x="16" y="23" width="1" height="1" name="202535090" />
         <rect x="17" y="23" width="1" height="1" name="202535042" />
         <rect x="18" y="23" width="1" height="1" name="202535059" />
