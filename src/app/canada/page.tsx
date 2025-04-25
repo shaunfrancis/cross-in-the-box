@@ -10,7 +10,7 @@ export default function Canada(){
             </section>
 
             <MapCardGroup>
-                <MapCard title="Federal Elections" href="federal-elections" src="/maps/Canada-2024.svg" />
+                <MapCard title="Federal Elections" href="federal-elections" src="/maps/Canada-2025.svg" />
             </MapCardGroup>
         </main>
     )
