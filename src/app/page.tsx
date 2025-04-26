@@ -1,6 +1,6 @@
 export default function Page(){
     return ( <main style={{padding:"30px"}}>
-        <img src="images/logo.svg" width="200" alt="Cross In The Box" />
+        <img src="images/logo.png" width="200" alt="Cross In The Box" />
         <p>Welcome to Cross In The Box! This website contains interactive election results for countries around the world. It is currently under construction, and more pages will be added in time.</p>
         <p>You can access the completed pages:</p>
         <ul>

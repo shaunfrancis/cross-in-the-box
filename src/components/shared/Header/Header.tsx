@@ -15,7 +15,7 @@ export default function Header( { countryName, countryAbbrev, links = [] } : { c
         <header id={styles["header"]}>
 
             <a href="/" id={styles["logo-container"]}>
-                <img src={"/images/" + (countryAbbrev ? countryAbbrev + "-" : "") + "logo.svg"} />
+                <img src={"/images/" + (countryAbbrev ? countryAbbrev + "-logo.svg" : "logo.png")} />
             </a>
 
             <h1><a href="/" className="unstyled">{countryName}</a></h1>
