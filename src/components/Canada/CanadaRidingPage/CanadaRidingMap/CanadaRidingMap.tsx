@@ -19,7 +19,9 @@ export default function CanadaRidingMap( { region } : { region : {id? : string, 
     const [success, setSuccess] = useState<boolean>(true);
     
     useEffect(() => {
-        if(!region.id) return;
+        if(!region.id || region.id.toString().substring(0, 4) !== "2025"){
+            return setSuccess(false);
+        }
 
         const geoJsonUrl = `https://maps-cartes.services.geo.ca/server_serveur/rest/services/ELECTIONS/FED_CA_2023_106_en/MapServer/0/query?where=FED_NUM%3D${region.id.toString().substring(4)}&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&units=esriSRUnit_Foot&returnGeometry=true&returnTrueCurves=false&returnIdsOnly=false&returnCountOnly=false&returnZ=false&returnM=false&returnDistinctValues=false&returnExtentOnly=false&featureEncoding=esriDefault&f=geojson`;
 

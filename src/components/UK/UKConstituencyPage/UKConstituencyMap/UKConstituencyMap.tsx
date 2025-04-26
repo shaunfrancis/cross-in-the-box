@@ -24,7 +24,7 @@ export default function UKConstituencyMap( { region } : { region : {id? : string
     const [success, setSuccess] = useState<boolean>(true);
     
     useEffect(() => {
-        if(!region.id) return;
+        if(!region.id) return setSuccess(false);
 
         const publicKey = '95biRMMW8Pj6N4HUQGAGYamNa2f0FKt3';
         const serviceUrl = 'https://api.os.uk/maps/vector/v1/vts';
