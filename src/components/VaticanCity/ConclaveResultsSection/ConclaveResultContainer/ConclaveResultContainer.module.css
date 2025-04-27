@@ -8,9 +8,12 @@
 }
 
 .election-heading-container{
+    flex:0 0 280px;
+    height:150px;
     display:flex;
     flex-direction:column;
     align-items:center;
+    justify-content:center;
     gap:5px;
 }
 
@@ -58,14 +61,19 @@
     width:100%;
 }
 
-.election-result-container{
+.election-results-container{
     display:flex;
+    flex-wrap:wrap;
+    flex:1;
+    row-gap:20px;
 }
 
-.day-container{
-    padding:20px;
+.election-results-container > div{
+    flex:0 0 250px;
+    height:150px;
+    padding-top:0px;
 }
 
-    .day-container:nth-child(2n+1){
-        background:#eee;
-    }
+.election-results-container > *:nth-child(n+2){
+    background:#eee;
+}

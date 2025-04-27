@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import { constituencyToSlug, regionUrlFun, timeFun } from "src/lib/UK";
 import PartyProgressionBlocs from "src/components/shared/PartyProgressionBlocs/PartyProgressionBlocs";
 import { getMessages, parseJSONWithDates, useOnScreen } from "src/lib/shared";
+import VaticanConclaveMap from "src/components/maps/VaticanConclaveMap";
 
 export default function ConclaveResultContainer( 
     { election, live = false, title = [election, "General", "Election"], preloadedResults, regions, parties, summaryBlocHoverState, messageGroup, messagesOpenOnLoad, geographic, changes, winFormula = (results : Result[]) => results.filter(r => r.elected) } : 
@@ -228,20 +229,18 @@ export default function ConclaveResultContainer(
                 </div>
             </div>
 
-            <div className={styles["election-result-container"]}>
+            <div className={styles["election-results-container"]}>
                 {
-                    tempResults.map(day => {
-                        return (
-                            <div className={styles["day-container"]}>
-                                {
-                                    day.map(result => {
-                                        return (
-                                            result
-                                        )
-                                    })
-                                }
-                            </div>
-                        )
+                    tempResults.map( (results, day) => {
+                        return ( <>
+                            { results.map( (result, i) => {
+                                return (
+                                    <div className={day % 2 ? undefined : styles["odd-day"]}>
+                                        <VaticanConclaveMap key={Math.random()} seed={day + "-" + i} hoverFun={mapHoverFun} elected={result === "white"} electors={115} />
+                                    </div>
+                                )
+                            })}
+                        </>)
                     })
                 }
             </div>
