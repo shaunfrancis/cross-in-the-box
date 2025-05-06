@@ -122,7 +122,7 @@ export default function ConclaveResultContainer(
                                                     }
                                                 </header>
                                                 <VaticanConclaveMap
-                                                    seed={day + "-" + i} 
+                                                    seed={i + "-" + dayIndex + "-" + election}
                                                     hoverFun={mapHoverFun} 
                                                     elected={result.elected} 
                                                     electors={result.votes} 
