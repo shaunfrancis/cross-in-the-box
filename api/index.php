@@ -7,7 +7,7 @@
     if(count($request) == 0) fail(404, "Not found");
 
     $country = $request[0];
-    $accepted_countries = array("uk", "usa", "vatican");
+    $accepted_countries = array("canada", "uk", "usa", "vatican");
     if(!in_array($country, $accepted_countries)) fail(404, "Not Found");
 
     $boundary_changes_table = $country . "_boundary_changes";

@@ -2,7 +2,7 @@
 
 import { Endpoint } from 'src/constants/shared';
 import styles from './UKConstituencySearchSection.module.css';
-import { SearchHandler } from 'src/lib/shared';
+import { highlightRelevance, RegionSearchHandler } from 'src/lib/shared';
 import { RefObject, useRef, useState } from 'react';
 import { constituencyToSlug, partyIdToDisplayId } from 'src/lib/UK';
 import { SearchResults, Party } from 'src/Types';
@@ -14,7 +14,7 @@ export default function UKConstituencySearchSection( {searchInputRef} : {searchI
     const [currentQuery, setCurrentQuery] = useState<string>("");
     const [status, setStatus] = useState<string>("");
 
-    const handler = useRef(new SearchHandler(Endpoint + "/search/uk/"));
+    const handler = useRef(new RegionSearchHandler(Endpoint + "/search/uk/"));
     const search = async (query : string) => {
         if(query.length >= 3) setStatus("Searching..."); 
         else setStatus("");
@@ -27,26 +27,6 @@ export default function UKConstituencySearchSection( {searchInputRef} : {searchI
         setDisplayCount(15);
         setResults(searchResults ? searchResults : null);
         setCurrentQuery(searchResults ? query : "");
-    }
-
-    const highlightRelevance = (text : string) : React.ReactNode[] => {
-        const words = currentQuery.split(" ");
-        words.sort( (a,b) => b.length - a.length );
-        
-        let regexPattern = "(";
-        words.forEach( (word, index) => {
-            regexPattern += (index == 0 ? "" : "|") + word;
-        })
-        regexPattern += ")";
-
-        const spans : React.ReactNode[] = [];
-        text.split( new RegExp(regexPattern, "gi") ).forEach( (fragment, index) => {
-            if(fragment != "") spans.push(
-                <span key={index} style={ index % 2 ? {} : {color: "#666"} }>{fragment}</span>
-            )
-        });
-        
-        return spans;
     }
 
     return (
@@ -69,7 +49,7 @@ export default function UKConstituencySearchSection( {searchInputRef} : {searchI
                         return (
                             <Link key={index} href={'/uk/general-elections/constituency/' + constituencyToSlug(region.title)} className={styles["result"] + " unstyled"}>
                                 <h2 className={styles["result-title"]}>
-                                    {highlightRelevance(region.title)}
+                                    {highlightRelevance(currentQuery, region.title)}
                                 </h2>
                                 {!region.current && <span style={{color: "#666"}}>Abolished constituency</span>}
                             </Link>
@@ -88,7 +68,7 @@ export default function UKConstituencySearchSection( {searchInputRef} : {searchI
                                 >
                                     {partyIdToDisplayId(region.party.id)}
                                 </div>
-                                {highlightRelevance(region.candidate)}
+                                {highlightRelevance(currentQuery, region.candidate)}
                             </h2>
                             <span style={{color: "#666"}}>{region.title} candidate, {region.election.join(" ")}</span>
                         </Link>

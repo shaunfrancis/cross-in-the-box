@@ -24,7 +24,7 @@ export default function UKConstituencyMap( { region } : { region : {id? : string
     const [success, setSuccess] = useState<boolean>(true);
     
     useEffect(() => {
-        if(!region.id) return;
+        if(!region.id) return setSuccess(false);
 
         const publicKey = '95biRMMW8Pj6N4HUQGAGYamNa2f0FKt3';
         const serviceUrl = 'https://api.os.uk/maps/vector/v1/vts';
@@ -75,7 +75,7 @@ export default function UKConstituencyMap( { region } : { region : {id? : string
                             url: tiles,
                             projection: 'EPSG:27700',
                             tileGrid: tileGrid,
-                            attributions: "Source: Office for National Statistics licensed under the Open Government Licence v.3.0.Contains OS data © Crown copyright and database right [2024]"
+                            attributions: "Source: Office for National Statistics licensed under the Open Government Licence v.3.0. Contains OS data © Crown copyright and database right [2024]"
                         })
                     )
                 });

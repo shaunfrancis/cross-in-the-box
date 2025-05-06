@@ -2,9 +2,9 @@
 import { MutableRefObject, RefObject, useEffect, useState } from "react";
 import ParsedMessage from "src/components/shared/ParsedMessage/ParsedMessage";
 import { Endpoint } from "src/constants/shared";
-import { AnonymousResult, MessageData, Party, Poll, Result } from "src/Types";
+import { AnonymousResult, MessageData, Party, Poll, Result, SearchResults } from "src/Types";
 
-export class SearchHandler{
+export class SearchHandler<Type>{
     url : string;
     suffix : string;
     previousQuery : string;
@@ -29,7 +29,7 @@ export class SearchHandler{
         return true;
     }
 
-    async search<Type>(query : string) : Promise<Type | null>{
+    async search(query : string) : Promise<Type | null>{
         const permissionToProceed = await this.permission(query);
         if(!permissionToProceed) return null;
 
@@ -37,6 +37,69 @@ export class SearchHandler{
         if(query != this.previousQuery) return null;
         return response;
     }
+}
+
+export class RegionSearchHandler extends SearchHandler<SearchResults>{
+    constructor(url : string, suffix : string = ""){
+        super(url, suffix);
+    }
+
+    async search(query : string) : Promise<SearchResults | null>{
+        const results : SearchResults | null = await super.search(query);
+        if(results){
+            const precedence = (result : string) : number => {
+                const words = query.split(/ |-|—/g);
+                words.sort( (a,b) => b.length - a.length );
+                
+                let regexPattern = "(";
+                words.forEach( (word, index) => {
+                    regexPattern += (index == 0 ? "" : "|") + word.normalize("NFD").replace(/[\u0300-\u036f]/g, '');
+                })
+                regexPattern += ")";
+
+                let intersections = 0;
+                result
+                    .normalize("NFD")
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .split( new RegExp(regexPattern, "gi") )
+                    .forEach( (fragment, index) => {
+                        if(index % 2) intersections += fragment.length;
+                    }
+                );
+                
+                return intersections;
+            };
+            results.regions.sort( (a, b) =>  precedence(b.title) - precedence(a.title) );
+            results.candidates.sort( (a, b) =>  precedence(b.candidate) - precedence(a.candidate) );
+        }
+        return results;
+    }
+}
+
+export const highlightRelevance = (query : string, title : string) : React.ReactNode[] => {
+    const words = query.split(/ |-|—/g);
+    words.sort( (a,b) => b.length - a.length );
+    
+    let regexPattern = "(";
+    words.forEach( (word, index) => {
+        regexPattern += (index == 0 ? "" : "|") + word.normalize("NFD").replace(/[\u0300-\u036f]/g, '');
+    })
+    regexPattern += ")";
+
+    const spans : React.ReactNode[] = [];
+    const accentInsensitiveTitle = title.normalize("NFD").replace(/[\u0300-\u036f]/g, '');
+    let index = 0;
+    accentInsensitiveTitle.split( new RegExp(regexPattern, "gi") ).forEach( (fragment, key) => {
+        if(fragment != ""){
+            const accentedFragment = title.substring(index, index + fragment.length);
+            index += fragment.length;
+            spans.push(
+                <span key={key} style={ key % 2 ? {} : {color: "#666"} }>{accentedFragment}</span>
+            );
+        }
+    });
+    
+    return spans;
 }
 
 export const useOnScreen = (ref : RefObject<Element>) : boolean => {

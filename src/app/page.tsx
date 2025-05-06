@@ -1,9 +1,15 @@
 export default function Page(){
     return ( <main style={{padding:"30px"}}>
-        <img src="images/logo.svg" width="200" alt="Cross In The Box" />
+        <img src="images/logo.png" width="200" alt="Cross In The Box" />
         <p>Welcome to Cross In The Box! This website contains interactive election results for countries around the world. It is currently under construction, and more pages will be added in time.</p>
         <p>You can access the completed pages:</p>
         <ul>
+            <li>
+                Canada
+                <ul>
+                    <li><a href="canada/federal-elections">Federal Elections</a></li>
+                </ul>
+            </li>
             <li>
                 United Kingdom
                 <ul>
@@ -27,6 +33,27 @@ export default function Page(){
                 </ul>
             </li>
         </ul>
-        <p>This website is a development of the existing pages at <a href="https://politics.tennessine.co.uk">politics.tennessine.co.uk</a>, where you can find other elections yet to be added here.</p>
+        <p>This website is a redevelopment of the existing pages at <a href="https://politics.tennessine.co.uk">politics.tennessine.co.uk</a>. You can access the pages yet to be added here on Tennessine:</p>
+        <ul>
+            <li>
+                France
+                <ul>
+                    <li><a href="https://politics.tennessine.co.uk/france/presidential-elections/overview/citb/">Presidential Elections</a></li>
+                </ul>
+            </li>
+            <li>
+                Hungary
+                <ul>
+                    <li><a href="https://politics.tennessine.co.uk/hungary/parliamentary-elections/overview/citb/">Parliamentary Elections</a></li>
+                </ul>
+            </li>
+            <li>
+                United Kingdom
+                <ul>
+                    <li><a href="https://politics.tennessine.co.uk/uk/scottish-parliament-elections/overview/citb/">Scottish Parliament Elections</a></li>
+                    <li><a href="https://politics.tennessine.co.uk/uk/senedd-cymru-elections/overview/citb/">Senedd Cymru Elections</a></li>
+                </ul>
+            </li>
+        </ul>
     </main> )
 }
