@@ -26,6 +26,12 @@ export default function Page(){
                     <li><a href="usa/gubernatorial-elections">Gubernatorial Elections</a></li>
                 </ul>
             </li>
+            <li>
+                Vatican City
+                <ul>
+                    <li><a href="vatican-city/papal-conclaves">Papal Conclaves</a></li>
+                </ul>
+            </li>
         </ul>
         <p>This website is a redevelopment of the existing pages at <a href="https://politics.tennessine.co.uk">politics.tennessine.co.uk</a>. You can access the pages yet to be added here on Tennessine:</p>
         <ul>
