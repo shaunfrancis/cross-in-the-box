@@ -14,8 +14,7 @@ import { UKSeatsToWatch } from "src/constants/UK";
 import { useRouter } from "next/navigation";
 import { constituencyToSlug, regionUrlFun, timeFun } from "src/lib/UK";
 import PartyProgressionBlocs from "src/components/shared/PartyProgressionBlocs/PartyProgressionBlocs";
-import { dateToLongDate, getMessages, parseJSONWithDates, useOnScreen } from "src/lib/shared";
-import Message from "src/components/shared/Message/Message";
+import { getMessages, parseJSONWithDates, useOnScreen } from "src/lib/shared";
 import ElectionSummaryBlocs from "src/components/shared/ElectionSummaries/ElectionSummaryBlocs/ElectionSummaryBlocs";
 
 export default function UKElectionResultContainer( 

@@ -8,18 +8,24 @@ const VaticanConclaveMap = memo(function VaticanConclaveMap(
         electors : number,
         seed? : string,
         elected? : boolean,
-        hoverFun? : (active?: boolean, event?: React.MouseEvent, id?: string) => void
+        hoverFun? : (active?: boolean, event?: MouseEvent, elected?: boolean) => void
     }
 ){
     const origin = [40, 185];
-    const minSize = 25;
-    const maxSize = 25;
+    const minSize = 15;
+    const maxSize = 15;
     const farthestPoint = [240 - maxSize, 240 - maxSize];
 
     const random = new seedrandom(seed);
 
     return ( <>
         <SvgLoader path="/maps/Vatican.svg">
+
+            <SvgProxy
+                selector={'path[name="smoke-mouse-capture"]'}
+                onMouseMove={(event) => { hoverFun(true, event, elected) }} 
+                onMouseOut={() => { hoverFun(false) }}
+            />
 
             <SvgProxy
                 selector={'g[name="smoke-group"]'}
@@ -48,7 +54,7 @@ const VaticanConclaveMap = memo(function VaticanConclaveMap(
                         rect.setAttributeNS(null, 'y', y.toString());
                         rect.setAttributeNS(null, 'width', size);
                         rect.setAttributeNS(null, 'height', size);
-                        rect.addEventListener('mousemove', (event) => { hoverFun(true, event) } );
+                        rect.addEventListener('mousemove', (event) => { hoverFun(true, event, elected) } );
                         rect.addEventListener('mouseout', () => { hoverFun(false) } );
                         g.appendChild(rect);
                     };

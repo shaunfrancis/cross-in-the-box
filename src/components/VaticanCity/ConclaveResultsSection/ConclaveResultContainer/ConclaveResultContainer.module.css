@@ -45,6 +45,7 @@
     flex-direction:column;
     gap:5px;
     width:100%;
+    height:65px;
 }
 
 .papal-name{
@@ -54,6 +55,17 @@
     background:#ffee00;
     width:100%;
     font-weight:500;
+    height:35px;
+    line-height:25px;
+    transition:200ms;
+    &.loading{
+        background:#eee;
+        color:transparent;
+    }
+    &.awaiting{
+        background:var(--default-color);
+        color:#fff;
+    }
 }
 
 .real-name{
@@ -69,11 +81,54 @@
 }
 
 .election-results-container > div{
-    flex:0 0 250px;
+    flex:0 0 190px;
     height:150px;
-    padding-top:0px;
+    padding:0 20px;
+    & > svg{
+        aspect-ratio:256 / 200;
+    }
 }
 
-.election-results-container > *:nth-child(n+2){
+.result-container{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    animation:200ms fadeIn;
+}
+@keyframes fadeIn{
+    from { opacity:0 }
+    to { opacity:1 }
+}
+
+.result-header{
+    flex:0 0 50px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.odd-day{
     background:#eee;
+}
+
+@media screen and (max-width: 920px){
+    .container{
+        flex-direction:column;
+    }
+    .election-heading-container{
+        flex-basis:auto;
+        height:unset;
+    }
+    .election-results-container{
+        justify-content:center;
+        row-gap:0;
+    }
+
+    .result-container:not(.odd-day + .odd-day, :first-child){
+        margin-top:20px;
+    }
+    .odd-day + .odd-day{
+        padding-top:20px;
+        height:170px;
+    }
 }

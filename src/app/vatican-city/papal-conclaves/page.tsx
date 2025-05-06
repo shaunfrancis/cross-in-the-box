@@ -13,18 +13,18 @@ export default function VaticanPapalConclaves(){
 
     useEffect( () => {
         const getData = async () => {
-            const partyData : Party[] = await fetch(Endpoint + "/parties/uk").then( res => res.json() );
+            const partyData : Party[] = await fetch(Endpoint + "/parties/vatican").then( res => res.json() );
             partyData.forEach( party => party.displayId = partyIdToDisplayId(party.id) );
             setParties(partyData);
 
-            const regionData : Region[] = await fetch(Endpoint + "/regions/uk").then( res => res.json() );
+            const regionData : Region[] = await fetch(Endpoint + "/regions/vatican").then( res => res.json() );
             setRegions(regionData);
         };
         getData();
     }, []);
 
     const heroNavItems = [
-        { title: "Election Results", src:"/images/uk-nav-results.svg", ref:useRef<HTMLElement>(null) }
+        { title: "Election Results", src:"/images/vatican-nav-results.svg", ref:useRef<HTMLElement>(null) }
     ]
     
     return ( 
@@ -38,7 +38,7 @@ export default function VaticanPapalConclaves(){
                 {/* <div className="section-heading">
                     <h1>Election Results</h1>
                 </div> */}
-                <ConclaveResultsSection regions={regions} parties={parties} geographic={false} />
+                <ConclaveResultsSection regions={regions} parties={parties} />
             </section>
         </main>
     )

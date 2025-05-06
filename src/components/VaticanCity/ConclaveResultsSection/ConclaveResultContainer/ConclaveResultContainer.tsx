@@ -1,252 +1,143 @@
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import styles from './ConclaveResultContainer.module.css';
 
-import UKGeneral2010Map from "../../../maps/UKGeneral2010Map";
-import UKGeneral2010GeographicMap from "src/components/maps/UKGeneral2010GeographicMap";
-
-import HoverPopup from "../../../shared/HoverPopup/HoverPopup";
-import PopupBarGraph from "../../../shared/PopupBarGraph/PopupBarGraph";
-import { Party, Region, Result, Update } from "src/Types";
-import { DefaultParty, Endpoint } from "src/constants/shared";
-import { UKSeatsToWatch } from "src/constants/UK";
-import { useRouter } from "next/navigation";
-import { constituencyToSlug, regionUrlFun, timeFun } from "src/lib/UK";
-import PartyProgressionBlocs from "src/components/shared/PartyProgressionBlocs/PartyProgressionBlocs";
-import { getMessages, parseJSONWithDates, useOnScreen } from "src/lib/shared";
 import VaticanConclaveMap from "src/components/maps/VaticanConclaveMap";
 
+import HoverPopup from "../../../shared/HoverPopup/HoverPopup";
+import { AnonymousResult, Party, Region, Result, Update } from "src/Types";
+import { Endpoint } from "src/constants/shared";
+import { getResultsBySubElection, useOnScreen } from "src/lib/shared";
+
 export default function ConclaveResultContainer( 
-    { election, live = false, title = [election, "General", "Election"], preloadedResults, regions, parties, summaryBlocHoverState, messageGroup, messagesOpenOnLoad, geographic, changes, winFormula = (results : Result[]) => results.filter(r => r.elected) } : 
+    { election, title = [election, "Papal", "Conclave"], preloadedResults, regions, parties } : 
     { 
-        election : string, 
-        live? : boolean,
+        election : string,
         title? : string[],
         preloadedResults? : Result[],
         regions : Region[],
         parties : Party[],
-        winFormula? : (results : Result[]) => Result[],
-        summaryBlocHoverState? : [boolean, React.Dispatch<React.SetStateAction<boolean>>],
-        messageGroup? : string,
-        messagesOpenOnLoad?: boolean,
-        geographic? : boolean,
-        changes? : boolean,
     }
 ){
 
-    const router = useRouter();
     const container = useRef<HTMLDivElement>(null);
     const onScreen = useOnScreen(container);
     const loadingComplete = useRef<boolean>(false);
+    const winFormula = (results : Result[]) => results.filter(r => r.elected);
     
-    let [fills, setFills] = useState<{id: string, color: string, opacity?: number}[]>([]);
-    let [popupState, setPopupState] = useState<{visible: boolean, coordinates:[number,number], id?: string}>( { visible: false, coordinates:[0,0] } );
+    let [popupState, setPopupState] = useState<{visible: boolean, coordinates:[number,number], elected?: boolean}>( { visible: false, coordinates:[0,0] } );
     let [results, setResults] = useState<Result[]>([]);
-    let [updates, setUpdates] = useState<Update[]>([]);
-
-    let [messages, setMessages] = useState<{id: number, date: Date, node: React.ReactNode}[]>([]);
-    let latestMessageDate = useRef<Date>(new Date(0));
-
-    let [livePolling, setLivePolling] = useState<boolean>(false);
-    let [liveCounter, setLiveCounter] = useState<number>(0);
 
     useEffect( () => {
         if( loadingComplete.current || !onScreen || parties.length == 0 || regions.length == 0 || (preloadedResults && preloadedResults.length == 0)) return;
         loadingComplete.current = true;
         
         const getResults = async () => {
-            let updateData : Update[] = [];
-            if(changes){
-                updateData = await fetch(Endpoint + "/updates/uk/" + election)
-                    .then( res => res.text() )
-                    .then( res => parseJSONWithDates(res, "date") );
-                    
-                updateData.sort( (a,b) => a.date.valueOf() - b.date.valueOf() );
-                setUpdates(updateData);
-            }
 
             let resultData : Result[];
-            if(!preloadedResults) resultData = await fetch(Endpoint + '/results/uk/' + election).then( res => res.json() );
+            if(!preloadedResults) resultData = await fetch(Endpoint + '/results/vatican/' + election).then( res => res.json() );
             else resultData = preloadedResults;
             setResults(resultData);
-
-            let updatedLiveCount = 0;
-            const newFills : {id: string, color: string, opacity?: number}[] = [];
-            winFormula(resultData).forEach( result => {
-                updatedLiveCount++;
-                const regionUpdates = updateData.filter( u => u.id == result.id );
-                if(regionUpdates.length > 0){
-                    const latestUpdate = regionUpdates[regionUpdates.length - 1];
-                    const party : Party = parties.find( p => p.id == latestUpdate.party ) || DefaultParty;
-                    if(party) newFills.push({ id: latestUpdate.id, color: party.color || "var(--default-color)" });
-                }
-                else{
-                    const party : Party = parties.find( p => p.id == result.party ) || DefaultParty;
-                    if(party) newFills.push({ 
-                        id: result.id, 
-                        color: party.color || "var(--default-color)", 
-                        opacity: changes ? 0.2 : undefined 
-                    });
-                }
-            });
-            setLiveCounter(updatedLiveCount);
-            setFills(newFills);
-
-            if(messageGroup){
-                const newMessages = await getMessages(parties, latestMessageDate, '/messages/uk/' + messageGroup, regionUrlFun, timeFun);
-                setMessages(newMessages);
-            }
         };
         getResults();
     }, [onScreen, preloadedResults, parties, regions]);
 
-    if(live) setTimeout( () => {
-        setLivePolling(!livePolling); //alternate value to trigger useEffect
-    }, 6000);
-    useEffect( () => {
-        if(!(loadingComplete.current && live)) return;
-        const getLiveUpdates = async () => {
-            let updatedResultData = await fetch(Endpoint + '/results/uk/' + election + '?compact=true').then( res => res.json() );
-
-            let newResultData : Result[] = [];
-
-            const repeatedPartyMap = new Map<string, number>();
-            results.forEach( result => {
-                const updatedRows = updatedResultData.filter( d => d.id == result.id && d.p == result.party );
-                //handle the case that, for example, there are multiple ind candidates in the same contest
-                if(updatedRows.length > 1){
-                    let n = repeatedPartyMap.get(JSON.stringify(updatedRows)) || 0;
-                    repeatedPartyMap.set(JSON.stringify(updatedRows), n + 1);
-                    n = Math.min(n, updatedRows.length - 1);
-                    newResultData.push({...result, votes: updatedRows[n].v, elected: updatedRows[n].e});
-                }
-                else if(updatedRows.length == 1) newResultData.push({...result, votes: updatedRows[0].v, elected: updatedRows[0].e});
-                else newResultData.push(result);
-            });
-            setResults(newResultData);
-            
-            const newFills : {id: string, color: string, opacity?: number}[] = [];
-            let updatedLiveCount = 0;
-            winFormula(newResultData).forEach( result => {
-                updatedLiveCount++;
-                const party : Party = parties.find( p => p.id == result.party ) || DefaultParty;
-                if(party) newFills.push({ 
-                    id: result.id, 
-                    color: party.color || "var(--default-color)", 
-                    opacity: changes ? 0.2 : undefined 
-                });
-            });
-            setFills(newFills);
-            setLiveCounter(updatedLiveCount);
-
-            if(messageGroup){
-                const since = new Date(latestMessageDate.current.valueOf());
-                since.setHours(since.getHours() - (new Date()).getTimezoneOffset()/60);
-                const newMessages = await getMessages(
-                    parties,
-                    latestMessageDate,
-                    '/messages/uk/' + messageGroup + '?since=' + since.toISOString(),
-                    regionUrlFun,
-                    timeFun,
-                    messages
-                );
-
-                setMessages(newMessages);
-            }
-        };
-        getLiveUpdates();
-    }, [livePolling]);
-
-    const mapHoverFun = (active : boolean = false, event?: React.MouseEvent, id?: string) => {
+    const mapHoverFun = (active : boolean = false, event?: MouseEvent, elected?: boolean) => {
         const newPopupState = {...popupState, visible: active};
         if(event) newPopupState.coordinates = [event.clientX, event.clientY];
-        if(id) newPopupState.id = id;
+        newPopupState.elected = elected;
         setPopupState(newPopupState);
     };
 
-    const mapClickFun = (id: string) => {
-        let region = regions.find( r => r.id == id );
-        if(region) router.push('constituency/' + constituencyToSlug(region.title));
-    };
-    const map = () => {
-        switch(election){
-            case "2019": case "2017": case "2015": case "2010":
-                if(geographic) return <UKGeneral2010GeographicMap hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
-                else return <UKGeneral2010Map hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
+    const popupContent = (elected? : boolean) => {
+
+        if(elected){
+            const partyId = results.find(result => result.elected)?.party;
+            const party = parties.find(party => party.id === partyId);
+            if(party){
+                return ( <>
+                    <h3>Habemus Papam</h3>
+                    <span>{party.title} was elected</span>
+                </> )
+            }
         }
-    };
-
-    const popupContent = (id? : string) => {
-        const region = regions.find( region => region.id == id );
-        if(!region) return <h3>Missing data</h3>;
-        
-        const regionResults = results.filter( result => result.id == id ).sort( (a,b) => b.votes - a.votes );
-        const winner = winFormula(regionResults)[0]?.candidate;
-
-        const regionUpdates = updates.filter( u => u.id == region.id );
-        const partyProgression : Party[] = [parties.find(p => p.id == winFormula(regionResults)[0]?.party) || DefaultParty];
-        regionUpdates.forEach( update => {
-            partyProgression.push( parties.find(p => p.id == update.party) || DefaultParty );
-        });
-
-
-        const watchNote = election == "2024" && UKSeatsToWatch.find(s => s.id == id)?.note;
-        
+        else if(results[0]?.votes === 0){ // used in rare case that conclave is currently ongoing
+            return ( <>
+                <h3>Awaiting Smoke</h3>
+                <span>No pope has been elected yet</span>
+            </> )
+        }
         return ( <>
-            <h3>{region.title}</h3>
-            {winner && <h4>{winner}</h4>}
-            {!winner && <div style={{maxWidth: "350px"}}>{watchNote}</div>}
-            { partyProgression.length > 1 && <PartyProgressionBlocs parties={partyProgression} /> }
-            <PopupBarGraph results={regionResults} parties={parties} />
+            <h3>Black Smoke</h3>
+            <span>No pope was elected</span>
         </> )
     }
 
+    const winningResult = winFormula(results);
+    const winningCandidate = winningResult[0]?.candidate;
+    const winningPapalName = parties.find(party => party.id === winningResult[0]?.party)?.title;
 
-    var tempResults = [
-        ["black","black"],
-        ["black","black","white"]
-    ];
+    const papalNameClasses = [styles["papal-name"]];
+    if(results.length === 0) papalNameClasses.push(styles["loading"]);
+    else if(!winningPapalName) papalNameClasses.push(styles["awaiting"]);
 
     return ( <>
-        <div className={styles['container']}>
+        <div className={styles['container']} ref={container}>
 
             <div className={styles["election-heading-container"]}>
                 <div className={styles["election-title"]}>
                     <h2>
-                        <div className={styles["election-title-text"]}>2013</div>
+                        <div className={styles["election-title-text"]}>{title[0]}</div>
                         <div className={styles["election-subtitle-text"]}>
-                            <span>Papal</span><br/>
-                            <span>Conclave</span>
+                            <span>{title[1]}</span><br/>
+                            <span>{title[2]}</span>
                         </div>
                     </h2>
                 </div>
+                
                 <div className={styles["pope-container"]}>
-                    <div className={styles["papal-name"]}>
-                        Pope Francis
+                    <div className={papalNameClasses.join(" ")}>
+                        {results.length > 0 ? (winningPapalName || "No Pope Yet") : ""}
                     </div>
                     <div className={styles["real-name"]}>
-                        Jorge Mario Bergoglio
+                        {winningCandidate}
                     </div>
                 </div>
+                    
             </div>
 
             <div className={styles["election-results-container"]}>
                 {
-                    tempResults.map( (results, day) => {
-                        return ( <>
-                            { results.map( (result, i) => {
-                                return (
-                                    <div className={day % 2 ? undefined : styles["odd-day"]}>
-                                        <VaticanConclaveMap key={Math.random()} seed={day + "-" + i} hoverFun={mapHoverFun} elected={result === "white"} electors={115} />
-                                    </div>
-                                )
-                            })}
-                        </>)
-                    })
+                    getResultsBySubElection(results)
+                        .sort( (a,b) => a.subid - b.subid )
+                        .map( (day : { subid: number; results: AnonymousResult[] }, dayIndex) => {
+                            day.results.sort( (a,b) => Number(a.elected) - Number(b.elected) );
+                            return (<Fragment key={dayIndex}>
+                                {
+                                    day.results.map( (result, i) => {
+                                        return (
+                                            <div className={styles["result-container"] + (day.subid % 2 ? "" : " " + styles["odd-day"])} key={i}>
+                                                <header className={styles["result-header"]}>
+                                                    { i === 0 &&
+                                                        <h3>Day {day.subid}</h3>
+                                                    }
+                                                </header>
+                                                <VaticanConclaveMap
+                                                    seed={day + "-" + i} 
+                                                    hoverFun={mapHoverFun} 
+                                                    elected={result.elected} 
+                                                    electors={result.votes} 
+                                                />
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </Fragment>)
+                        })
                 }
             </div>
 
             <HoverPopup visible={popupState.visible} coordinates={popupState.coordinates}>
-                {popupContent(popupState.id)}
+                {popupContent(popupState.elected)}
             </HoverPopup>
         </div>
     </> )
