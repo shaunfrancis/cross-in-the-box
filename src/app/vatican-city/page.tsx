@@ -10,7 +10,7 @@ export default function VaticanCity(){
             </section>
 
             <MapCardGroup>
-                <MapCard title="Papal Conclaves" href="papal-conclaves" src="/maps/UK-2024.svg" />
+                <MapCard title="Papal Conclaves" href="papal-conclaves" src="/images/vatican-blank.svg" />
             </MapCardGroup>
         </main>
     )
