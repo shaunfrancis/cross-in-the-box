@@ -4,9 +4,11 @@ export default function LiveCloseAndCountedData( {id, data} : { id : string, dat
     const datum = data.find( d => d.id === id );
     if(!datum) return;
 
-    if(datum.counted) return (
-        <span className={styles["note"]}>Estimated {datum.counted}% counted</span>
-    );
+    if(datum.counted){
+        if(datum.counted != 100) return (
+            <span className={styles["note"]}>Estimated {datum.counted}% counted</span>
+        );
+    }
     else{
         const timeUntilPollsClose = Math.floor( (datum.close.valueOf() - (new Date()).valueOf()) / 1000 / 60 );
         const timeUnit = "minute" + (timeUntilPollsClose != 1 ? "s" : "");
