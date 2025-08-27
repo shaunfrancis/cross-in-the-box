@@ -1,4 +1,5 @@
 <?php 
+    namespace Shared;
     $heroNavItems = [
         [ 'title' => "Election results", 'src' => "/images/uk-nav-results.svg", 'id' => "election-results" ],
         [ 'title' => "Find a constituency", 'src' => "/images/nav-region.svg", 'id' => "find-a-constituency" ],
@@ -22,7 +23,15 @@
             */) ?>
         </div>
         <?php ElectionResultsSection::open(); ?>
-            <p>content</p>
+            <!--<UKElectionResultContainer election="2024" messageGroup="2024" messagesOpenOnLoad={true}
+                summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]} 
+                regions={regions}
+                parties={parties}
+                geographic={geographic}
+            />-->
+            <?php \UK\ElectionResultContainer::show(
+                $title = ["2019", "General", "Election"]
+            ); ?>
         <?php ElectionResultsSection::close(); ?>
         <!--<UKElectionResultsSection regions={regions} parties={parties} geographic={geographic} />-->
     </section>

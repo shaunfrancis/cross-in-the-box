@@ -1,4 +1,5 @@
 @import '../app/pages/style.css';
+@import '../app/components/shared/ElectionResultContainer/ElectionResultContainer.css';
 @import '../app/components/shared/ElectionResultsSection/ElectionResultsSection.css';
 @import '../app/components/shared/Header/Header.css';
 @import '../app/components/shared/HeroNav/HeroNav.css';
