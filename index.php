@@ -43,12 +43,47 @@
     function renderPage($path, $params = []){
         $fullPath = sprintf('app/pages/%s/index.php', $path);
         if(isSanitaryPath($path) && file_exists($fullPath)){
+
+            // First, render inits (down the tree)
+            foreach(initPaths($path) as $initPath) require $initPath;
+
+            // Next, render page
             ob_start();
             require $fullPath;
-            echo renderLayouts(ob_get_clean(), $path . '/index.php');
+
+            // Finally, recurse up the tree to wrap page in layouts
+            foreach(getLayoutPaths($path . '/index.php') as $layoutPath){
+                $children = ob_get_clean();
+                ob_start();
+                require $layoutPath;
+            }
+            
         }
         else error(404);
         exit;
+    }
+
+    function initPaths($path){
+        $initPaths = [];
+        $directory = dirname($path);
+        while($path !== $directory){
+            $path = $directory;
+            if(isSanitaryPath($directory, 'init.php')){
+                $initPaths[] = sprintf("app/pages/%s/init.php", $directory);
+            }
+            $directory = dirname($directory);
+        }
+        return $initPaths;
+    }
+
+    function getLayoutPaths($path){
+        $layoutPaths = [];
+        do{
+            $nextPath = nextLayoutPath($path);
+            $layoutPaths[] = sprintf("app/pages/%s/layout.php", $nextPath);
+            $path = dirname($nextPath);
+        } while( !empty($nextPath) );
+        return $layoutPaths;
     }
 
     function nextLayoutPath($path){
@@ -61,16 +96,6 @@
             $directory = dirname($directory);
         }
         return NULL;
-    }
-
-    function renderLayouts($children, $path){
-        $layoutPath = nextLayoutPath($path);
-        if(empty($layoutPath)) return $children;
-        else{
-            ob_start();
-            require sprintf("app/pages/%s/layout.php", $layoutPath);
-            return renderLayouts(ob_get_clean(), $layoutPath);
-        }
     }
 
     function error($status){

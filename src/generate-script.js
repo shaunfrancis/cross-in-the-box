@@ -1,7 +1,6 @@
 const fs = require('fs');
 
-fs.writeFileSync('compiled/script.js','');
-scanDirectory('app/pages');
+fs.writeFileSync('compiled/components.js','');
 scanDirectory('app/components');
 function scanDirectory(dir){
     fs.readdirSync(dir).forEach(path => {
@@ -9,7 +8,7 @@ function scanDirectory(dir){
             scanDirectory(dir + '/' + path);
         }
         else if(path.endsWith(".js")){
-            fs.appendFileSync('compiled/script.js', fs.readFileSync(dir + '/' + path) + '\n');
+            fs.appendFileSync('compiled/components.js', fs.readFileSync(dir + '/' + path) + '\n');
         }
     });
 }
