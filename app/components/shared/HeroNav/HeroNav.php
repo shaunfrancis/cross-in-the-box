@@ -1,6 +1,7 @@
 <?php
+namespace Shared;
 
-class HeroNav extends Component{
+class HeroNav extends \Base\Component{
 
     static function render(array $items = []): void { ?>
     

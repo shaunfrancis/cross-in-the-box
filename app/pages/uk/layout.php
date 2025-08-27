@@ -1,4 +1,5 @@
-<?php
+<?php namespace Shared; 
+
 function getCountryAbbrev(){ return "uk"; }
 function getCountryName(){ return "United Kingdom"; }
 function getLinks(){

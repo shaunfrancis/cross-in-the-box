@@ -1,6 +1,7 @@
 <?php
+namespace Shared;
 
-class Header extends Component{
+class Header extends \Base\Component{
 
     static function render(string $countryName, ?string $countryAbbrev = NULL, ?array $links = []): void { 
         global $request;

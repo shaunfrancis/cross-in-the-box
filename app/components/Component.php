@@ -1,4 +1,5 @@
 <?php
+namespace Base;
 
 class Component{
 
@@ -7,7 +8,7 @@ class Component{
         static::render(...$args);
         echo ob_get_clean();
     }
-    
+
     static function open(...$args){
         ob_start();
         static::renderOpen(...$args);

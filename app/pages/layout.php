@@ -1,3 +1,4 @@
+<?php namespace Shared; ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,9 +8,9 @@
 </head>
 <body>
     <?php Header::show(
-        $countryName = function_exists('getCountryName') ? getCountryName() ?? '' : (!empty($countryName) ? $countryName : ''),
-        $countryAbbrev = function_exists('getCountryAbbrev') ? getCountryAbbrev() ?? NULL : (!empty($countryAbbrev) ? $countryAbbrev : NULL),
-        $links = function_exists('getLinks') ? getLinks() ?? [] : (!empty($links) ? $links : []),
+        function_exists('Shared\getCountryName') ? getCountryName() ?? '' : (!empty($countryName) ? $countryName : ''),
+        function_exists('Shared\getCountryAbbrev') ? getCountryAbbrev() ?? NULL : (!empty($countryAbbrev) ? $countryAbbrev : NULL),
+        function_exists('Shared\getLinks') ? getLinks() ?? [] : (!empty($links) ? $links : []),
     ); ?>
     <?= $children ?? ""; ?>
 </body>

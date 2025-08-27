@@ -1,6 +1,7 @@
 <?php
+namespace Shared;
 
-class Toggle extends Component{
+class Toggle extends \Base\Component{
 
     static function render(string $from, string $to): void { ?>
         <div class="Toggle">

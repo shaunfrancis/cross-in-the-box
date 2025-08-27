@@ -1,6 +1,5 @@
 <?php
-
-    $request = array_filter( preg_split( '/\//', str_replace(['/elections/'], '', $_SERVER['REQUEST_URI']) ) );
+    $request = array_values( array_filter( preg_split( '/\//', str_replace(['/elections/'], '', $_SERVER['REQUEST_URI']) ) ) );
     if(str_contains($_SERVER['REQUEST_URI'], '.') || str_contains($_SERVER['REQUEST_URI'], '%2e')) error(404);
 
     $params = [
@@ -20,7 +19,7 @@
     spl_autoload_register( function() use ($request) {
         require_once sprintf('%s/app/components/Component.php', __DIR__);
         $country = $request[0] ?? "*";
-        $search = sprintf('%s/app/components/{shared,$s}/*/*.php', __DIR__, $country);
+        $search = sprintf('%s/app/components/{shared,%s}/*/*.php', __DIR__, $country);
         foreach( glob($search, GLOB_BRACE) as $file ){
             require_once($file);
         }
