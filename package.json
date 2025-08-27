@@ -1,33 +1,10 @@
 {
-  "name": "elections",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "cross-in-the-box",
+  "version": "5.0.0",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@next/third-parties": "^14.2.3",
-    "@types/openlayers": "^4.6.23",
-    "@types/proj4": "^2.5.5",
-    "next": "^14.2.3",
-    "ol": "^10.2.1",
-    "ol-mapbox-style": "^12.3.3",
-    "proj4": "^2.11.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-svgmt": "^2.0.2",
-    "seedrandom": "^3.0.5"
+    "build": "node src/generate-script.js; node src/generate-imports.js; npx parcel build src/style.css --dist-dir compiled --no-source-maps"
   },
   "devDependencies": {
-    "@types/node": "20.11.30",
-    "@types/react": "^18.2.64",
-    "@types/react-dom": "^18.2.21",
-    "typescript": "^5.4.2"
+    "parcel": "^2.15.4"
   }
 }
