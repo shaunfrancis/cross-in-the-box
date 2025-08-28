@@ -1,63 +1,41 @@
 <?php
 namespace Shared;
 
-/* import { RefObject, forwardRef, useRef, useState } from 'react';
-import styles from './ElectionResultContainer.module.css';
-import PlaceholderMessage from '../PlaceholderMessage/PlaceholderMessage';
-
-export default forwardRef(function ElectionResultContainer( 
-    { dimensions, messages, messagesOpenOnLoad, map, summary, children } : { 
-        dimensions: {w:string,h:string,minW:string,minH:string}, 
-        messages?: React.ReactNode[],
-        messagesOpenOnLoad?: boolean,
-        map: React.ReactNode,
-        summary? : React.ReactNode,
-        children : React.ReactNode 
-    }, 
-    ref : RefObject<HTMLDivElement>
-){
-    let [messagesVisibility, setMessagesVisiblity] = useState<boolean>(messagesOpenOnLoad || false);
-
-    */ ?>
-
-<?php
-
 class ElectionResultContainer extends \Base\Component{
 
     static function renderOpen(
-        array $title, 
-        ?string $dedicatedPage = NULL
+        string $election,
+        string $map,
+        array $title,                           // [string, string, string]
+        array $dimensions,                      // [w: string, h: string, minW: string, minH: string]
+        ?array $messages = ['exist' => FALSE],  // [exist: bool, open: bool]
+        ?string $dedicatedPage = NULL  
     ): void { ?>
 
-        <div class="ElectionResultContainer" style={{height:"min(" + dimensions.h + ",calc(100vw - 30px))", minHeight:dimensions.minH}}>
-            { (messagesOpenOnLoad || (messages && messages.length > 0) ) &&
-                <div class="ElectionResultContainer__messages-container"] + (messagesVisibility ? " " + styles["visible"] : "")}>
+        <div class="ElectionResultContainer" data-election="<?= $election; ?>" style="height: min(<?= $dimensions['h']; ?>, calc(100vw - 30px)); min-height: <?= $dimensions['minH']; ?>;">
+            
+            <?php if(!empty($messages['exist'])) : ?>
+                <div class="ElectionResultContainer__messages-container<?= !empty($messages['open']) ? " visible" : ""; ?>">
 
                     <div class="ElectionResultContainer__messages-inner-container">
-                        {messagesOpenOnLoad && (messages && messages.length == 0) && 
-                            ( <>
+                        <?php if(!empty($messages['exist'])): ?>
                                 <PlaceholderMessage />
-                                <PlaceholderMessage />
-                                <PlaceholderMessage />
-                                <PlaceholderMessage />
-                                <PlaceholderMessage />
-                                <PlaceholderMessage />
-                                <PlaceholderMessage />
-                                <PlaceholderMessage />
-                                <PlaceholderMessage />
-                            </> )
-                        }
+                        <?php endif; ?>
                         {messagesVisibility && messages}
                     </div>
                     
                 </div>
-            }
-            <div class="ElectionResultContainer__results-container" style={{width:dimensions.w, minWidth:"min( calc(100vw - 30px), " + dimensions.minW + ")"}}>
+            <?php endif; ?>
+
+            <div class="ElectionResultContainer__results-container" style="width: <?= $dimensions['w']; ?>; min-width: min( calc(100vw - 30px), <?= $dimensions['minW']; ?>);">
                 <div class="ElectionResultContainer__heading-container"]>
                     <div class="ElectionResultContainer__title">
-                        { messages &&
-                            <img src="/images/messages.svg" class="ElectionResultContainer__messages-button" onClick={() => {setMessagesVisiblity(!messagesVisibility)}} />
-                        }
+                        
+                        <?php if(!empty($messages['exist'])) : ?>
+                            <button class="ElectionResultContainer__messages-button">
+                                <img src="/public/images/messages.svg" alt="Toggle message visibility" />
+                            </button>
+                        <?php endif; ?>
 
                         <h2>
                             <?php if(!empty($dedicatedPage)) : ?>
@@ -75,13 +53,15 @@ class ElectionResultContainer extends \Base\Component{
                         </h2>
 
                     </div>
-                    {summary}
+                    
+                    <div class="ElectionResultContainer__summary-container"></div>
+
                 </div>
                 <div class="ElectionResultContainer__map-container">
-                    {map}
+                    <?= $map; ?>
                 </div>
             </div>
-
+            <?php //Children ?>
 <?php }
 
 static function renderClose(): void{ echo '</div>'; }

@@ -1,6 +1,8 @@
 const fs = require('fs');
 
-const writtenFiles = [];
+fs.writeFileSync('src/shared.js', fs.readFileSync('app/pages/script.js') + '\n');
+const writtenFiles = ['src/shared.js'];
+
 scanDirectory('app/components');
 function scanDirectory(dir){
     fs.readdirSync(dir).forEach(path => {
@@ -9,9 +11,13 @@ function scanDirectory(dir){
         }
         else if(path.endsWith(".js")){
             const label = dir.split("/")[2] || "shared";
-            const writeToPath = 'compiled/' + label + '.js';
-            if(writtenFiles.includes(writeToPath)) fs.appendFileSync(writeToPath, fs.readFileSync(dir + '/' + path) + '\n');
-            else fs.writeFileSync(writeToPath, fs.readFileSync(dir + '/' + path) + '\n');
+            const writeToPath = 'src/' + label + '.js';
+            const content = fs.readFileSync(dir + '/' + path).toString('utf8').replace(/[\n\r]+/g, '\n');
+            if(writtenFiles.includes(writeToPath)) fs.appendFileSync(writeToPath, content + '\n');
+            else{
+                fs.writeFileSync(writeToPath, content + '\n');
+                writtenFiles.push(writeToPath);
+            }
         }
     });
 }

@@ -2,7 +2,7 @@
 namespace UK;
 /*
 export default function UKElectionResultContainer( 
-    { election, title = [election, "General", "Election"], preloadedResults, regions, parties, summaryBlocHoverState, messageGroup, messagesOpenOnLoad, geographic, changes, winFormula = (results : Result[]) => results.filter(r => r.elected) } : 
+    { election, title = [election, "General", "Election"], preloadedResults, regions, parties, summaryBlocHoverState, messageGroup, geographic, changes, winFormula = (results : Result[]) => results.filter(r => r.elected) } : 
     { 
         election : string, 
         title? : string[],
@@ -12,14 +12,11 @@ export default function UKElectionResultContainer(
         winFormula? : (results : Result[]) => Result[],
         summaryBlocHoverState? : [boolean, React.Dispatch<React.SetStateAction<boolean>>],
         messageGroup? : string,
-        messagesOpenOnLoad?: boolean,
         geographic? : boolean,
         changes? : boolean,
     }
 ){
 
-    const dimensions = {w:"calc( 0.85 * (100vh - 100px) )", h:"calc(100vh - 100px)", minW:live ? "525px" : "425px", minH:"500px"};
-    const router = useRouter();
     const container = useRef<HTMLDivElement>(null);
     const onScreen = useOnScreen(container);
     const loadingComplete = useRef<boolean>(false);
@@ -180,8 +177,7 @@ export default function UKElectionResultContainer(
 
     return ( <>
         <ElectionResultContainer
-            dimensions={dimensions} 
-            messages={messageGroup ? messages.map(m => m.node) : undefined} messagesOpenOnLoad={messagesOpenOnLoad} 
+            messages={messageGroup ? messages.map(m => m.node) : undefined}
             map={map()} 
             summary={electionSummaryBlocs()}
         >
@@ -194,13 +190,31 @@ export default function UKElectionResultContainer(
 
 class ElectionResultContainer extends \Base\Component{
     static function render (
-        array $title,
+        string $election,
+        array $title,                               // [string, string, string]
+        ?array $messages = ['exist' => FALSE],      // [exist: bool, open: bool]
         ?string $dedicatedPage = NULL
     ){
-        \Shared\ElectionResultContainer::open($title, $dedicatedPage);
+
+        $map = self::generateMap($election);
+
+        $dimensions = ['w' => "calc( 0.85 * (100vh - 100px) )", 'h' => "calc(100vh - 100px)", 'minW' => "425px", 'minH' => "500px"];
         ?>
-            
-        <?php
-        \Shared\ElectionResultContainer::close();
+
+        <?= \Shared\ElectionResultContainer::open($election, $map, $title, $dimensions, $messages, $dedicatedPage); ?>
+        
+        <?= \Shared\ElectionResultContainer::close(); ?>
+    <?php }
+
+    static function generateMap(string $election){
+        switch($election){
+            case "2024":
+                $map = file_get_contents('public/maps/UK-2024.svg');
+                break;
+            case "2019": case "2017": case "2015":
+                $map = file_get_contents('public/maps/UK-2010.svg');
+                break;
+        }
+        return $map;
     }
 }

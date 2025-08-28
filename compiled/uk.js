@@ -1,0 +1,1 @@
+(()=>{window.addEventListener("DOMContentLoaded",()=>{let t=[];for(let n of document.querySelectorAll(".ElectionResultContainer"))t.push(new e(n))});class e extends ElectionResultContainer{constructor(e){super(e)}}})();

@@ -2,7 +2,7 @@
   "name": "cross-in-the-box",
   "version": "5.0.0",
   "scripts": {
-    "build": "node src/generate-scripts.js; node src/generate-imports.js; npx parcel build src/style.css --dist-dir compiled --no-source-maps"
+    "build": "node src/generate-scripts.js; node src/generate-imports.js; npx parcel build src/style.css --dist-dir compiled --no-source-maps; npx parcel build src/shared.js --dist-dir compiled --no-source-maps; npx parcel build src/uk.js --dist-dir compiled --no-source-maps"
   },
   "devDependencies": {
     "parcel": "^2.15.4"

@@ -142,6 +142,12 @@
 }
 
 .ElectionResultContainer__messages-button{
+    appearance:none;
+    -webkit-appearance:none;
+    padding:0;
+    margin:0;
+    background:none;
+    box-shadow:none;
     cursor:pointer;
     width:35px;
 }
