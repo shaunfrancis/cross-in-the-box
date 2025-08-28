@@ -2,13 +2,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>test</title>
+    <title><?= implode(" | ", $_title ?? []); ?><?= count($title ?? []) > 0 ? " | " : ""; ?>Cross In The Box</title>
     <link rel="stylesheet" type="text/css" href="/compiled/style.css" />
-    <script src="/compiled/components.js"></script>
-    <?php foreach($headInjections ?? [] as $content) echo $content; ?>
+    <script src="/compiled/shared.js"></script>
+    <?php if(!empty($_country)) : ?><script src="/compiled/<?= $_country; ?>.js"></script><?php endif; ?>
+    <?php foreach($_headInjections ?? [] as $content) echo $content; ?>
 </head>
 <body>
-    <?php Header::show($countryName ?? '', $countryAbbrev ?? NULL, $headerLinks ?? []); ?>
-    <?= $children ?? ""; ?>
+    <?php Header::show($_countryName ?? '', $_countryAbbrev ?? NULL, $_headerLinks ?? []); ?>
+    <?= $_children ?? ""; ?>
 </body>
 </html>

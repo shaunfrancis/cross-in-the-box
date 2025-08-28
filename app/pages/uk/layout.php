@@ -1,2 +1,2 @@
 <?php namespace Shared;
-echo $children;
+echo $_children;
