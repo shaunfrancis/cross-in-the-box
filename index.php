@@ -18,8 +18,8 @@
     }
 
     spl_autoload_register( function() use ($request) {
-        require_once sprintf('%s/app/components/Component.php', __DIR__);
-        $search = sprintf('%s/app/components/{shared,%s}/*/*.php', __DIR__, $_country ?? "*");
+        require_once sprintf('%s/app/ssr-components/Component.php', __DIR__);
+        $search = sprintf('%s/app/ssr-components/{shared,%s}/*/*.php', __DIR__, $_country ?? "*");
         foreach( glob($search, GLOB_BRACE) as $file ){
             require_once($file);
         }

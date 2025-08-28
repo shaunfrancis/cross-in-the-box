@@ -3,7 +3,7 @@ const fs = require('fs');
 fs.writeFileSync('src/shared.js', fs.readFileSync('app/pages/script.js') + '\n');
 const writtenFiles = ['src/shared.js'];
 
-scanDirectory('app/components');
+scanDirectory('app/ssr-components');
 function scanDirectory(dir){
     fs.readdirSync(dir).forEach(path => {
         if(fs.lstatSync(dir + '/' + path).isDirectory()){

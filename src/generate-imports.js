@@ -2,7 +2,8 @@ const fs = require('fs');
 
 fs.writeFileSync('src/style.css','');
 scanDirectory('app/pages');
-scanDirectory('app/components');
+scanDirectory('app/ssr-components');
+scanDirectory('app/csr-components');
 function scanDirectory(dir){
     fs.readdirSync(dir).forEach(path => {
         if(fs.lstatSync(dir + '/' + path).isDirectory()){
