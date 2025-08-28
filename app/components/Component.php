@@ -6,7 +6,7 @@ class Component{
     static function show(...$args){
         ob_start();
         static::render(...$args);
-        echo ob_get_clean();
+        return ob_get_clean();
     }
 
     static function open(...$args){
@@ -14,8 +14,8 @@ class Component{
         static::renderOpen(...$args);
     }
     static function close(...$args){
-        echo static::renderClose(...$args);
-        echo ob_get_clean();
+        static::renderClose(...$args);
+        return ob_get_clean();
     }
 
 }

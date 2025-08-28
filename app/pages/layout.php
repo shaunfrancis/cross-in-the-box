@@ -9,7 +9,7 @@
     <?php foreach($_headInjections ?? [] as $content) echo $content; ?>
 </head>
 <body>
-    <?php Header::show($_countryName ?? '', $_countryAbbrev ?? NULL, $_headerLinks ?? []); ?>
+    <?= Header::show($_countryName ?? '', $_countryAbbrev ?? NULL, $_headerLinks ?? []); ?>
     <?= $_children ?? ""; ?>
 </body>
 </html>

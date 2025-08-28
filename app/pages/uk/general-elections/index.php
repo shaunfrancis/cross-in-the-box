@@ -9,30 +9,50 @@
 <main>
     <section id="hero">
         <h1>UK General Elections</h1>
-        <?php HeroNav::show($heroNavItems); ?>
+        <?= HeroNav::show($heroNavItems); ?>
     </section>
 
     <section id="election-results">
         <div class="section-heading">
             <h1>Election results</h1>
-            <?php Toggle::show(
+            <?= Toggle::show(
                 $from = "/images/uk-cartographic-icon.svg",
                 $to = "/images/uk-geographic-icon.svg",/*
                 fun={(state) => { updateGeographicState(state) }},
                 value={geographic}
             */) ?>
         </div>
-        <?php ElectionResultsSection::open(); ?>
+        <?= ElectionResultsSection::open(); ?>
             <!--<UKElectionResultContainer election="2024" messageGroup="2024" messagesOpenOnLoad={true}
                 summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]} 
                 regions={regions}
                 parties={parties}
                 geographic={geographic}
             />-->
-            <?php \UK\ElectionResultContainer::show(
-                $title = ["2019", "General", "Election"]
+            <?= \UK\ElectionResultContainer::show(
+                $election = "2024",
+                $title = ["2024", "General", "Election"],
+                $messages = ['exist' => TRUE, 'open' => TRUE]
             ); ?>
-        <?php ElectionResultsSection::close(); ?>
+
+            <?= \UK\ElectionResultContainer::show(
+                $election = "2019",
+                $title = ["2019", "General", "Election"],
+                $messages = ['exist' => TRUE]
+            ); ?>
+
+            <?= \UK\ElectionResultContainer::show(
+                $election = "2017",
+                $title = ["2017", "General", "Election"],
+                $messages = ['exist' => TRUE]
+            ); ?>
+
+            <?= \UK\ElectionResultContainer::show(
+                $election = "2015",
+                $title = ["2015", "General", "Election"],
+                $messages = ['exist' => FALSE]
+            ); ?>
+        <?= ElectionResultsSection::close(); ?>
         <!--<UKElectionResultsSection regions={regions} parties={parties} geographic={geographic} />-->
     </section>
 

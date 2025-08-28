@@ -21,7 +21,7 @@ class Header extends \Base\Component{
             <nav>
                 <ul>
                     <?php foreach($links as $link) : ?>
-                        <li class="<?= str_starts_with($link['path'], '/' . implode('/', $request)) ? "Header__selected" : ""; ?>">
+                        <li class="<?= str_starts_with('/' . implode('/', $request), $link['path']) ? "Header__selected" : ""; ?>">
                             <a href="<?= $link['path']; ?>"><?= $link['title']; ?></a>
                         </li>
                     <?php endforeach; ?>
