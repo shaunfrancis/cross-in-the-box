@@ -188,7 +188,7 @@ export default function UKElectionResultContainer(
     </> )
 } */
 
-class ElectionResultContainer extends \Base\Component{
+class ElectionResultContainer extends \Shared\ElectionResultContainer{
     static function render (
         string $election,
         array $title,                               // [string, string, string]

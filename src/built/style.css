@@ -1,0 +1,7 @@
+@import '../../app/pages/style.css';
+@import '../../app/ssr-components/shared/ElectionResultContainer/ElectionResultContainer.css';
+@import '../../app/ssr-components/shared/ElectionResultsSection/ElectionResultsSection.css';
+@import '../../app/ssr-components/shared/Header/Header.css';
+@import '../../app/ssr-components/shared/HeroNav/HeroNav.css';
+@import '../../app/ssr-components/shared/Toggle/Toggle.css';
+@import '../../app/csr-components/shared/ElectionSummaryBlocs/ElectionSummaryBlocs.css';

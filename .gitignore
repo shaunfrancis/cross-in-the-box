@@ -7,8 +7,4 @@ api/credentials.php
 dashboard
 out
 
-src/app
-src/components
-src/constants
-src/lib
-src/Types.d.ts
+src-old

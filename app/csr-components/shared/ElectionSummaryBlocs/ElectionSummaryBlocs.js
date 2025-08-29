@@ -1,5 +1,5 @@
 export default class ElectionSummaryBlocs{
-    static show({ innerHTML = "default" }){
+    static render({ innerHTML = "default" }){
         const container = document.createElement('div');
         container.classList.add('ElectionSummaryBlocs');
 
