@@ -2,11 +2,10 @@
 namespace UK;
 /*
 export default function UKElectionResultContainer( 
-    { election, title = [election, "General", "Election"], preloadedResults, regions, parties, summaryBlocHoverState, messageGroup, geographic, changes, winFormula = (results : Result[]) => results.filter(r => r.elected) } : 
+    { election, title = [election, "General", "Election"], regions, parties, summaryBlocHoverState, messageGroup, geographic, changes, winFormula = (results : Result[]) => results.filter(r => r.elected) } : 
     { 
         election : string, 
         title? : string[],
-        preloadedResults? : Result[],
         regions : Region[],
         parties : Party[],
         winFormula? : (results : Result[]) => Result[],

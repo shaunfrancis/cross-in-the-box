@@ -117,6 +117,10 @@
     animation:phase infinite forwards 6s;
 }
 
+.ElectionResultContainer__summary-container{
+    min-height:35px;
+}
+
 .flex-row{
     font-size:0.8em;
     display:flex;

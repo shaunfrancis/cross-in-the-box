@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 // find all js files to bundle
-const files = scanDirectory('app/ssr-components');
+const files = [...scanDirectory('app/pages'), ...scanDirectory('app/ssr-components')];
 function scanDirectory(dir, files = []){
     fs.readdirSync(dir).forEach(path => {
         if(fs.lstatSync(dir + '/' + path).isDirectory()){
@@ -15,8 +15,7 @@ function scanDirectory(dir, files = []){
 }
 
 // write shared.js and [country].js files
-fs.writeFileSync('src/built/shared.js', fs.readFileSync('app/pages/script.js') + '\n');
-const writtenFiles = ['src/built/shared.js'];
+const writtenFiles = [];
 files.forEach( ({dir, path}) => {
     const label = dir.split("/")[2] || "shared";
     const writeToPath = 'src/built/' + label + '.js';
