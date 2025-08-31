@@ -11,17 +11,15 @@ window.addEventListener('DOMContentLoaded', () => {
 
 class UKElectionResultContainer extends ElectionResultContainer{
     constructor(elt){
-        super(elt);
+        super(elt, UKGeneral);
     }
 
     addSummary(){
-        const winFormula = (results) => results.filter(result => result.elected);
         const summaries = []; // {party : Party, count : number}[]
-        winFormula(this.data.results).forEach( result => {
+        this.winFormula(this.data.results).forEach( result => {
             
-            // const regionUpdates = updates.filter( u => u.id == result.id );
-            // const winner = regionUpdates.length > 0 ? regionUpdates[regionUpdates.length - 1].party : result.party;
-            const winner = result.party;
+            const regionUpdates = this.data.updates.filter( u => u.id == result.id );
+            const winner = regionUpdates.length > 0 ? regionUpdates[regionUpdates.length - 1].party : result.party;
 
             if(!summaries.find( summary => summary.party.id == winner)){
                 const party = CachedData.parties.find( party => party.id === result.party) || DefaultParty;

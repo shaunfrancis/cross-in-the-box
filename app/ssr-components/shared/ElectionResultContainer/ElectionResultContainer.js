@@ -3,11 +3,15 @@ class ElectionResultContainer{
     static observer;
     static elementMaps = new WeakMap();
 
-    constructor(elt){
+    constructor(elt, MapClass){
         this.structure = this.hydrate(elt);
+
+        this.map = new MapClass(this.structure.map.container);
 
         this.data = {
             election: this.structure.container.getAttribute('data-election'),
+            updates: [],
+            results: []
         };
 
         this.constructor.elementMaps.set(this.structure.container, this);
@@ -20,6 +24,7 @@ class ElectionResultContainer{
                         ElectionResultContainer.elementMaps.delete(entry.target);
                         await instance.downloadData(instance.data);
                         instance.addSummary();
+                        instance.updateMap();
                     }
                 }
             });
@@ -46,6 +51,9 @@ class ElectionResultContainer{
             },
             summary: {
                 container: elt.querySelector('.ElectionResultContainer__summary-container'),
+            },
+            map: {
+                container: elt.querySelector('.ElectionResultContainer__map-container'),
             }
         }
     }
@@ -86,8 +94,36 @@ class ElectionResultContainer{
         CachedData.results[election] = this.data.results;
     }
 
+    winFormula(results){
+        return results.filter(result => result.elected);
+    }
+
     addSummary(){
         this.structure.summary.container.innerHTML = "summary inner";
+    }
+
+    updateMap(showChanges = false){
+        const newFills = []; // {id: string, color: string, opacity?: number}[]
+        this.winFormula(this.data.results).forEach( result => {
+            const regionUpdates = this.data.updates.filter( u => u.id == result.id );
+            if(regionUpdates.length > 0){
+                const latestUpdate = regionUpdates[regionUpdates.length - 1];
+                const party = CachedData.parties.find( p => p.id == latestUpdate.party ) || DefaultParty;
+                if(party) newFills.push({ id: latestUpdate.id, color: party.color || "var(--default-color)" });
+            }
+            else{
+                const party = CachedData.parties.find( p => p.id == result.party ) || DefaultParty;
+                if(party) newFills.push({ 
+                    id: result.id, 
+                    color: party.color || "var(--default-color)", 
+                    opacity: showChanges ? 0.2 : undefined 
+                });
+            }
+        });
+        
+        this.map.fill(
+            CachedData.regions, newFills
+        );
     }
 
     /*const getResults = async () => {
@@ -95,24 +131,7 @@ class ElectionResultContainer{
 
             resultData
 
-            const newFills : {id: string, color: string, opacity?: number}[] = [];
-            winFormula(resultData).forEach( result => {
-                const regionUpdates = updateData.filter( u => u.id == result.id );
-                if(regionUpdates.length > 0){
-                    const latestUpdate = regionUpdates[regionUpdates.length - 1];
-                    const party : Party = parties.find( p => p.id == latestUpdate.party ) || DefaultParty;
-                    if(party) newFills.push({ id: latestUpdate.id, color: party.color || "var(--default-color)" });
-                }
-                else{
-                    const party : Party = parties.find( p => p.id == result.party ) || DefaultParty;
-                    if(party) newFills.push({ 
-                        id: result.id, 
-                        color: party.color || "var(--default-color)", 
-                        opacity: changes ? 0.2 : undefined 
-                    });
-                }
-            });
-            setFills(newFills);
+            fills
 
             if(messageGroup){
                 const newMessages = await getMessages(parties, latestMessageDate, '/messages/uk/' + messageGroup, regionUrlFun, timeFun);

@@ -34,30 +34,30 @@ export default class ElectionSummaryBlocs{
                 if(position >= data.length) break;
 
                 if(shouldShowOther && i == 0 && j == 4){
-                    const bloc = new Elt({tag: 'div', classList: ["ElectionSummaryBlocs-bloc", "other-bloc"]});
+                    const bloc = new Elt({tag: 'div', classList: ["ElectionSummaryBlocs__bloc", "other-bloc"]});
                     bloc.addEventListener('mouseover', () => { this.hover = true });
                     bloc.addEventListener('mouseout', () => { this.hover = false });
                     
                     bloc.appendChild(
-                        new Elt({tag: 'span', classList: ["ElectionSummaryBlocs-party"], innerHTML: "Other"})
+                        new Elt({tag: 'span', classList: ["ElectionSummaryBlocs__party"], innerHTML: "Other"})
                     );
                     bloc.appendChild(
-                        new Elt({tag: 'span', classList: ["ElectionSummaryBlocs-count"], innerHTML : totalOther})
+                        new Elt({tag: 'span', classList: ["ElectionSummaryBlocs__count"], innerHTML : totalOther})
                     );
                     blocs.push(bloc);
                 }
                 else{
                     const bloc = new Elt({
                         tag: 'div',
-                        classList: ["ElectionSummaryBlocs-bloc"],
+                        classList: ["ElectionSummaryBlocs__bloc"],
                         style: "background: " + (data[position].party.color || "var(--default-color)") + ";" + 
                             "color: " + data[position].party.textColor
                     });
                     bloc.appendChild(
-                        new Elt({tag: 'span', classList: ["ElectionSummaryBlocs-party"], innerHTML: data[position].party.displayId || data[position].party.id})
+                        new Elt({tag: 'span', classList: ["ElectionSummaryBlocs__party"], innerHTML: data[position].party.displayId || data[position].party.id})
                     );
                     bloc.appendChild(
-                        new Elt({tag: 'span', classList: ["ElectionSummaryBlocs-count"], innerHTML: data[position].displayCount || data[position].count})
+                        new Elt({tag: 'span', classList: ["ElectionSummaryBlocs__count"], innerHTML: data[position].displayCount || data[position].count})
                     );
                     blocs.push(bloc);
                 }
@@ -66,7 +66,7 @@ export default class ElectionSummaryBlocs{
             const row = new Elt({
                 tag: 'div',
                 classList: [
-                    "ElectionSummaryBlocs-row",
+                    "ElectionSummaryBlocs__row",
                     (i === 0 ? null : "hidden-row"),
                     (rowLength === Infinity ? "single-row" : null)
                 ].filter(Boolean)
@@ -75,6 +75,7 @@ export default class ElectionSummaryBlocs{
             container.appendChild(row);
         }
 
+        setTimeout( () => { container.classList.add('visible'); }, 1);
         
         return container;
     }

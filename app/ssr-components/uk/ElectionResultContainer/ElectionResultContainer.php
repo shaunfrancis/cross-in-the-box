@@ -195,7 +195,7 @@ class ElectionResultContainer extends \Shared\ElectionResultContainer{
         ?string $dedicatedPage = NULL
     ){
 
-        $map = self::generateMap($election);
+        $map = self::getMapClass($election);
 
         $dimensions = ['w' => "calc( 0.85 * (100vh - 100px) )", 'h' => "calc(100vh - 100px)", 'minW' => "425px", 'minH' => "500px"];
         ?>
@@ -205,15 +205,15 @@ class ElectionResultContainer extends \Shared\ElectionResultContainer{
         <?= \Shared\ElectionResultContainer::close(); ?>
     <?php }
 
-    static function generateMap(string $election){
+    static function getMapClass(string $election){
         switch($election){
             case "2024":
-                $map = file_get_contents('public/maps/UK-2024.svg');
+                $MapClass = '\UK\Maps\General2024';
                 break;
             case "2019": case "2017": case "2015":
-                $map = file_get_contents('public/maps/UK-2010.svg');
+                $MapClass = '\UK\Maps\General2010';
                 break;
         }
-        return $map;
+        return $MapClass;
     }
 }

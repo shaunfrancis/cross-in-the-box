@@ -5,9 +5,14 @@
     gap:5px;
     align-items:center;
     height:25px;
+    opacity:0;
+}
+.ElectionSummaryBlocs.visible{
+    opacity:1;
+    transition:opacity 200ms;
 }
 
-.ElectionSummaryBlocs-row{
+.ElectionSummaryBlocs__row{
     display:flex;
     gap:5px;
     height:25px;
@@ -33,7 +38,7 @@
     max-width:120px;
 }
 
-.ElectionSummaryBlocs-bloc{
+.ElectionSummaryBlocs__bloc{
     cursor:default;
     color:#fff;
     min-width:80px;
@@ -56,11 +61,11 @@
         background:#EEE;
     }
 
-.ElectionSummaryBlocs-party{
+.ElectionSummaryBlocs__party{
     font-weight:500;
 }
 
-.ElectionSummaryBlocs-count{
+.ElectionSummaryBlocs__count{
     font-weight:400;
 }
 

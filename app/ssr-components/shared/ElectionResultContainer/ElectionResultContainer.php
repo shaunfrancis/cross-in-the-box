@@ -5,7 +5,7 @@ class ElectionResultContainer extends \Base\Component{
 
     static function renderOpen(
         string $election,
-        string $map,
+        string $map,                            // Map subclass as a string
         array $title,                           // [string, string, string]
         array $dimensions,                      // [w: string, h: string, minW: string, minH: string]
         ?array $messages = ['exist' => FALSE],  // [exist: bool, open: bool]
@@ -58,7 +58,7 @@ class ElectionResultContainer extends \Base\Component{
 
                 </div>
                 <div class="ElectionResultContainer__map-container">
-                    <?= $map; ?>
+                    <?= $map::show(); ?>
                 </div>
             </div>
             <?php //Children ?>
