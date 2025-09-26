@@ -210,7 +210,7 @@ class ElectionResultContainer extends \Shared\ElectionResultContainer{
             case "2024":
                 $MapClass = '\UK\Maps\General2024';
                 break;
-            case "2019": case "2017": case "2015":
+            case "2019": case "2017": case "2015": case "2010":
                 $MapClass = '\UK\Maps\General2010';
                 break;
         }

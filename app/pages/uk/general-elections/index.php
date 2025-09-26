@@ -52,6 +52,12 @@
                 $title = ["2015", "General", "Election"],
                 $messages = ['exist' => FALSE]
             ); ?>
+
+            <?= \UK\ElectionResultContainer::show(
+                $election = "2010",
+                $title = ["2010", "General", "Election"],
+                $messages = ['exist' => FALSE]
+            ); ?>
         <?= ElectionResultsSection::close(); ?>
         <!--<UKElectionResultsSection regions={regions} parties={parties} geographic={geographic} />-->
     </section>

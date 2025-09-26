@@ -9,7 +9,7 @@
 }
 .ElectionSummaryBlocs.visible{
     opacity:1;
-    transition:opacity 200ms;
+    transition:opacity 500ms;
 }
 
 .ElectionSummaryBlocs__row{
