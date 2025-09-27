@@ -21,7 +21,7 @@ class ElectionResultContainer{
     static elementMaps = new WeakMap();
     constructor(elt, MapClass){
         this.structure = this.hydrate(elt);
-        this.map = new MapClass(this.structure.map.container);
+        this.map = new MapClass(this.structure);
         this.data = {
             election: this.structure.container.getAttribute('data-election'),
             updates: [],
@@ -148,10 +148,39 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 });
 class Map{
-    constructor(elt){
-        this.structure = {
-            container: elt
-        };
+    static instances = [];
+    
+    constructor(structure){
+        Map.instances.push(this);
+        this.structure = structure;
+    }
+    set type(type){
+        this.structure.map.container.innerHTML = type;
+    }
+}
+class Toggle{
+    static register(id, fun){
+        const elts = document.querySelectorAll('.Toggle[data-id="' + id + '"]');
+        for(const elt of elts){
+            const off = elt.querySelector('.Toggle__off');
+            const on = elt.querySelector('.Toggle__on');
+            const inner = elt.querySelector('.Toggle__inner');
+            const outer = elt.querySelector('.Toggle__outer');
+            let state = false;
+            outer.addEventListener('click', () => {
+                state = !state;
+                inner.classList.toggle('Toggle__toggled');
+                fun(state);
+            });
+            off.addEventListener('click', () => {
+                inner.classList.remove('Toggle__toggled');
+                fun(false);
+            });
+            on.addEventListener('click', () => {
+                inner.classList.add('Toggle__toggled');
+                fun(true);
+            });
+        }
     }
 }
 
@@ -201,6 +230,9 @@ class UKElectionResultContainer extends ElectionResultContainer{
 class UKGeneral extends Map{
     constructor(elt){
         super(elt);
+        Toggle.register('map-type', (bool) => {
+            this.type = bool ? "geographic" : "cartographic";
+        });
     }
     fill(
         regions,                            // Region[]

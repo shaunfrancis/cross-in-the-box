@@ -1,6 +1,10 @@
 class UKGeneral extends Map{
     constructor(elt){
         super(elt);
+
+        Toggle.register('map-type', (bool) => {
+            this.type = bool ? "geographic" : "cartographic";
+        });
     }
 
     fill(

@@ -6,7 +6,7 @@ class ElectionResultContainer{
     constructor(elt, MapClass){
         this.structure = this.hydrate(elt);
 
-        this.map = new MapClass(this.structure.map.container);
+        this.map = new MapClass(this.structure);
 
         this.data = {
             election: this.structure.container.getAttribute('data-election'),

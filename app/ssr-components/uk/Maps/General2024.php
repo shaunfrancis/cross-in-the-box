@@ -2,7 +2,8 @@
 namespace UK\Maps;
 
 class General2024 extends \Shared\Map{
-    static function render(): void { 
-        echo file_get_contents('public/maps/UK-2024.svg');
-    }
+    static $types = array(
+        'cartographic' => 'public/maps/UK-2024.svg',
+        'geographic' => 'public/maps/UK-2024-geographic.svg',
+    );
 }

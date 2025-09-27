@@ -28,7 +28,7 @@ class ElectionResultContainer extends \Base\Component{
             <?php endif; ?>
 
             <div class="ElectionResultContainer__results-container" style="width: <?= $dimensions['w']; ?>; min-width: min( calc(100vw - 30px), <?= $dimensions['minW']; ?>);">
-                <div class="ElectionResultContainer__heading-container"]>
+                <div class="ElectionResultContainer__heading-container">
                     <div class="ElectionResultContainer__title">
                         
                         <?php if(!empty($messages['exist'])) : ?>
@@ -57,9 +57,9 @@ class ElectionResultContainer extends \Base\Component{
                     <div class="ElectionResultContainer__summary-container"></div>
 
                 </div>
-                <div class="ElectionResultContainer__map-container">
-                    <?= $map::show(); ?>
-                </div>
+
+                <?= $map::show(); ?>
+                
             </div>
             <?php //Children ?>
 <?php }

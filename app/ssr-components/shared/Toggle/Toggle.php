@@ -3,25 +3,20 @@ namespace Shared;
 
 class Toggle extends \Base\Component{
 
-    static function render(string $from, string $to): void { ?>
-        <div class="Toggle">
+    static function render(string $id = "", string $from, string $to): void { ?>
+        <div class="Toggle"<?php if(!empty($id)) : ?> data-id="<?= $id; ?>"<?php endif; ?>>
 
-            <img src="/public/<?= $from; ?>" <?php /*onClick={() => { fun(false); setState(false) }}*/ ?> />
+            <button class="Toggle__off unstyled">
+                <img src="/public/<?= $from; ?>" />
+            </button>
 
-            <div 
-                class="Toggle__outer"
-                <?php /*onClick={() => {
-                    if(valueProvided) nextState = !value;
-                    else nextState = !state;
-
-                    fun(nextState); 
-                    setState(nextState);
-                }}*/ ?>
-            >
-                <div <?php /*class={"Toggle__inner" + ( ( (valueProvided && value) || (!valueProvided && state) ) ? " " + styles["toggled"] : "")}*/ ?> class="Toggle__inner"></div>
-            </div>
+            <button class="Toggle__outer unstyled">
+                <div class="Toggle__inner"></div>
+            </button>
             
-            <img src="/public/<?= $to; ?>" <?php /*onClick={() => { fun(true); setState(true) }}*/ ?> />
+            <button class="Toggle__on unstyled">
+                <img src="/public/<?= $to; ?>" />
+            </button>
 
         </div>
     <?php }

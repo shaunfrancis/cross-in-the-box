@@ -2,6 +2,7 @@
     display:inline-block;
     -webkit-user-select:none;
     user-select:none;
+    font-size:0;
 }
 
 .Toggle > *{
@@ -9,12 +10,12 @@
     vertical-align:middle;
 }
 
-.Toggle > img{
+:is(.Toggle__off, .Toggle__on) > img{
     height:50px;
     cursor:pointer;
 }
 
-.Toggle__outer{
+button.Toggle__outer{
     width:50px;
     height:25px;
     border-radius:2px;
@@ -32,8 +33,10 @@
     position:absolute;
     margin-left:3px;
     margin-top:3px;
+    top:0;
     left:0;
     transition:300ms;
+    pointer-events:none;
 }
     .Toggle__inner.Toggle__toggled{
         left:calc(100% - 20px - 6px);

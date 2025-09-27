@@ -16,6 +16,7 @@
         <div class="section-heading">
             <h1>Election results</h1>
             <?= Toggle::show(
+                $id = "map-type",
                 $from = "/images/uk-cartographic-icon.svg",
                 $to = "/images/uk-geographic-icon.svg",/*
                 fun={(state) => { updateGeographicState(state) }},
@@ -59,7 +60,6 @@
                 $messages = ['exist' => FALSE]
             ); ?>
         <?= ElectionResultsSection::close(); ?>
-        <!--<UKElectionResultsSection regions={regions} parties={parties} geographic={geographic} />-->
     </section>
 
     <section id="find-a-constituency" class="shaded purple">
