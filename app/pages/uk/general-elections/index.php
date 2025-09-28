@@ -18,10 +18,8 @@
             <?= Toggle::show(
                 $id = "map-type",
                 $from = "/images/uk-cartographic-icon.svg",
-                $to = "/images/uk-geographic-icon.svg",/*
-                fun={(state) => { updateGeographicState(state) }},
-                value={geographic}
-            */) ?>
+                $to = "/images/uk-geographic-icon.svg",
+            ) ?>
         </div>
         <?= ElectionResultsSection::open(); ?>
             <!--<UKElectionResultContainer election="2024" messageGroup="2024" messagesOpenOnLoad={true}
