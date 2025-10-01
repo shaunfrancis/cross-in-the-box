@@ -75,6 +75,7 @@ class ElectionResultContainer{
         }
         return {
             container: elt,
+            hoverPopup: elt.querySelector('.ElectionResultContainer__hover-popup'),
             messages: {
                 container: messagesContainer,
                 toggleButton: toggleMessagesButton,
@@ -186,8 +187,8 @@ class Map{
                                                     // (any, ...) => string
         fills = [],                                 // list of fills to apply to given region ids
                                                     // ?{id : string, color : string, opacity? : number}[]
-        hoverFun = (active,event,id) => {},         // optional function to execute on hover of regions
-                                                    // ?(active?: boolean, event?: React.MouseEvent, id?: string) => void
+        hoverFun = (active, popup, id) => {},       // optional function to execute on hover of regions
+                                                    // ?(active : boolean, popup : HTMLDivElement, id?: string) => void
         clickFun = (id) => {}                       // optional function to execute on click of regions
                                                     // ?(id?: string) => void
     }){
@@ -200,10 +201,22 @@ class Map{
             regionElt.setAttribute('fill', fill.color);
             regionElt.setAttribute('style', fill.opacity !== undefined ? "opacity:" + fill.opacity : "");
             regionElt.addEventListener('mousemove', (event) => {
-                hoverFun(true, event, region.id);
+                const popup = this.containerInstance.structure.hoverPopup;
+                const coordinates = [event.clientX, event.clientY];
+                const width = popup.offsetWidth;
+                const height = popup.offsetHeight;
+                const offsets = [0,0];
+                if(coordinates[0] + 20 + width > window.innerWidth) offsets[0] = -(width + 40);
+                if(coordinates[1] + 20 + height > window.innerHeight) offsets[1] = window.innerHeight - height - 20 - coordinates[1];
+                popup.style.left = coordinates[0] + offsets[0] + 20 + "px";
+                popup.style.top = coordinates[1] + offsets[1] + 20 + "px";
+                popup.classList.remove('hidden');
+                hoverFun(true, popup, region.id);
             });
             regionElt.addEventListener('mouseout', () => {
-                hoverFun(false);
+                const popup = this.containerInstance.structure.hoverPopup;
+                popup.classList.add('hidden');
+                hoverFun(false, popup);
             });
             regionElt.addEventListener('click', () => {
                 clickFun(region.id);
@@ -266,6 +279,7 @@ const partyIdToDisplayId = (partyId) => {
     else if(displayId.startsWith("IND_")) displayId = displayId.substring(4);
     return displayId;
 }
+import Elt from 'components/shared/_Elt/_Elt';
 import ElectionSummaryBlocs from 'components/shared/ElectionSummaryBlocs/ElectionSummaryBlocs';
 window.addEventListener('DOMContentLoaded', () => {
     const instances = [];
@@ -302,7 +316,37 @@ class UKElectionResultContainer extends ElectionResultContainer{
             ElectionSummaryBlocs.render({ data: summaries, rowLength: 5 })
         );
     }
+    fillMap(data){
+        data.hoverFun = (active, popup, id) => {
+            if(!active) return;
+            popup.innerHTML = "";
+            const region = CachedData.regions.find( region => region.id == id );
+            if(!region) return popup.appendChild( new Elt({tag: 'h3', innerHTML: "Missing data"}) );
+            popup.appendChild( new Elt({tag: 'h3', innerHTML: region.title}) );
+            const regionResults = this.data.results.filter( result => result.id == id ).sort( (a,b) => b.votes - a.votes );
+            const winner = this.winFormula(regionResults)[0]?.candidate;
+            if(winner) popup.appendChild( new Elt({tag: 'h4', innerHTML: winner}) );
+        };
+        super.fillMap(data);
+    }
 }
+/*
+        
+      
+        const regionUpdates = updates.filter( u => u.id == region.id );
+        const partyProgression : Party[] = [parties.find(p => p.id == winFormula(regionResults)[0]?.party) || DefaultParty];
+        regionUpdates.forEach( update => {
+            partyProgression.push( parties.find(p => p.id == update.party) || DefaultParty );
+        });
+        const watchNote = election == "2024" && UKSeatsToWatch.find(s => s.id == id)?.note;
+        
+        return ( <>
+            <h3>{region.title}</h3>
+            {winner && <h4>{winner}</h4>}
+            {!winner && <div style={{maxWidth: "350px"}}>{watchNote}</div>}
+            { partyProgression.length > 1 && <PartyProgressionBlocs parties={partyProgression} /> }
+            <PopupBarGraph results={regionResults} parties={parties} />
+        </> )*/
 class UKGeneral extends Map{
     constructor(container, containerInstance, {election, type, src}){
         super(container, containerInstance);

@@ -13,6 +13,7 @@ class ElectionResultContainer extends \Base\Component{
     ): void { ?>
 
         <div class="ElectionResultContainer" data-election="<?= $election; ?>" style="height: min(<?= $dimensions['h']; ?>, calc(100vw - 30px)); min-height: <?= $dimensions['minH']; ?>;">
+            <div class="ElectionResultContainer__hover-popup hidden"></div>
             
             <?php if(!empty($messages['exist'])) : ?>
                 <div class="ElectionResultContainer__messages-container<?= !empty($messages['open']) ? " visible" : ""; ?>">

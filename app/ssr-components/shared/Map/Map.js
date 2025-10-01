@@ -25,8 +25,8 @@ class Map{
         fills = [],                                 // list of fills to apply to given region ids
                                                     // ?{id : string, color : string, opacity? : number}[]
 
-        hoverFun = (active,event,id) => {},         // optional function to execute on hover of regions
-                                                    // ?(active?: boolean, event?: React.MouseEvent, id?: string) => void
+        hoverFun = (active, popup, id) => {},       // optional function to execute on hover of regions
+                                                    // ?(active : boolean, popup : HTMLDivElement, id?: string) => void
 
         clickFun = (id) => {}                       // optional function to execute on click of regions
                                                     // ?(id?: string) => void
@@ -44,10 +44,25 @@ class Map{
             regionElt.setAttribute('style', fill.opacity !== undefined ? "opacity:" + fill.opacity : "");
 
             regionElt.addEventListener('mousemove', (event) => {
-                hoverFun(true, event, region.id);
+                const popup = this.containerInstance.structure.hoverPopup;
+                const coordinates = [event.clientX, event.clientY];
+                const width = popup.offsetWidth;
+                const height = popup.offsetHeight;
+
+                const offsets = [0,0];
+                if(coordinates[0] + 20 + width > window.innerWidth) offsets[0] = -(width + 40);
+                if(coordinates[1] + 20 + height > window.innerHeight) offsets[1] = window.innerHeight - height - 20 - coordinates[1];
+
+                popup.style.left = coordinates[0] + offsets[0] + 20 + "px";
+                popup.style.top = coordinates[1] + offsets[1] + 20 + "px";
+                popup.classList.remove('hidden');
+
+                hoverFun(true, popup, region.id);
             });
             regionElt.addEventListener('mouseout', () => {
-                hoverFun(false);
+                const popup = this.containerInstance.structure.hoverPopup;
+                popup.classList.add('hidden');
+                hoverFun(false, popup);
             });
             regionElt.addEventListener('click', () => {
                 clickFun(region.id);

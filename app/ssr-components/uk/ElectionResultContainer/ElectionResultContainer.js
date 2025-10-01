@@ -1,3 +1,4 @@
+import Elt from 'components/shared/_Elt/_Elt';
 import ElectionSummaryBlocs from 'components/shared/ElectionSummaryBlocs/ElectionSummaryBlocs';
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -39,4 +40,38 @@ class UKElectionResultContainer extends ElectionResultContainer{
             ElectionSummaryBlocs.render({ data: summaries, rowLength: 5 })
         );
     }
+
+    fillMap(data){
+        data.hoverFun = (active, popup, id) => {
+            if(!active) return;
+            popup.innerHTML = "";
+
+            const region = CachedData.regions.find( region => region.id == id );
+            if(!region) return popup.appendChild( new Elt({tag: 'h3', innerHTML: "Missing data"}) );
+            popup.appendChild( new Elt({tag: 'h3', innerHTML: region.title}) );
+
+            const regionResults = this.data.results.filter( result => result.id == id ).sort( (a,b) => b.votes - a.votes );
+            const winner = this.winFormula(regionResults)[0]?.candidate;
+            if(winner) popup.appendChild( new Elt({tag: 'h4', innerHTML: winner}) );
+
+        };
+        super.fillMap(data);
+    }
 }
+
+/*
+        const regionUpdates = updates.filter( u => u.id == region.id );
+        const partyProgression : Party[] = [parties.find(p => p.id == winFormula(regionResults)[0]?.party) || DefaultParty];
+        regionUpdates.forEach( update => {
+            partyProgression.push( parties.find(p => p.id == update.party) || DefaultParty );
+        });
+
+        const watchNote = election == "2024" && UKSeatsToWatch.find(s => s.id == id)?.note;
+        
+        return ( <>
+            <h3>{region.title}</h3>
+            {winner && <h4>{winner}</h4>}
+            {!winner && <div style={{maxWidth: "350px"}}>{watchNote}</div>}
+            { partyProgression.length > 1 && <PartyProgressionBlocs parties={partyProgression} /> }
+            <PopupBarGraph results={regionResults} parties={parties} />
+        </> )*/

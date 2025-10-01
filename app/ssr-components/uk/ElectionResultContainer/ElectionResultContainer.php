@@ -101,26 +101,9 @@ export default function UKElectionResultContainer(
         getResults();
     }, [onScreen, preloadedResults, parties, regions]);
 
-    const mapHoverFun = (active : boolean = false, event?: React.MouseEvent, id?: string) => {
-        const newPopupState = {...popupState, visible: active};
-        if(event) newPopupState.coordinates = [event.clientX, event.clientY];
-        if(id) newPopupState.id = id;
-        setPopupState(newPopupState);
-    };
-
     const mapClickFun = (id: string) => {
         let region = regions.find( r => r.id == id );
         if(region) router.push('constituency/' + constituencyToSlug(region.title));
-    };
-    const map = () => {
-        switch(election){
-            case "2024":
-                if(geographic) return <UKGeneral2024GeographicMap hoverFun={mapHoverFun} clickFun={mapClickFun} regions={regions} fills={fills} />;
-                else return <UKGeneral2024Map hoverFun={mapHoverFun} clickFun={mapClickFun} regions={regions} fills={fills} />;
-            case "2019": case "2017": case "2015": case "2010":
-                if(geographic) return <UKGeneral2010GeographicMap hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
-                else return <UKGeneral2010Map hoverFun={mapHoverFun} clickFun={mapClickFun} fills={fills} />;
-        }
     };
 
     const popupContent = (id? : string) => {
@@ -136,7 +119,6 @@ export default function UKElectionResultContainer(
             partyProgression.push( parties.find(p => p.id == update.party) || DefaultParty );
         });
 
-
         const watchNote = election == "2024" && UKSeatsToWatch.find(s => s.id == id)?.note;
         
         return ( <>
@@ -146,32 +128,6 @@ export default function UKElectionResultContainer(
             { partyProgression.length > 1 && <PartyProgressionBlocs parties={partyProgression} /> }
             <PopupBarGraph results={regionResults} parties={parties} />
         </> )
-    }
-
-    const electionSummaryBlocs = () => {
-        const summaries : {party : Party, count : number}[] = [];
-        winFormula(results).forEach( result => {
-            
-            const regionUpdates = updates.filter( u => u.id == result.id );
-            const winner = regionUpdates.length > 0 ? regionUpdates[regionUpdates.length - 1].party : result.party;
-
-            if(!summaries.find( s => s.party.id == winner)){
-                const party : Party = parties.find( p => p.id == winner ) || DefaultParty;
-                summaries.push({ party: party, count: 1 });
-            }
-            else summaries.find( s => s.party.id == winner )!.count++;
-
-        });
-        summaries.sort( (a,b) => {
-            const getCount = (x:{party: Party, count: number}) => {
-                return (["vacant","speaker","ind"].includes(x.party.id)) ? -Infinity : x.count;
-            }
-            return getCount(b) - getCount(a) || a.party.id.localeCompare(b.party.id);
-         } );
-
-        return (
-            <ElectionSummaryBlocs data={summaries} rowLength={5} hoverState={summaryBlocHoverState} />
-        );
     }
 
     return ( <>
@@ -201,7 +157,6 @@ class ElectionResultContainer extends \Shared\ElectionResultContainer{
         ?>
 
         <?= \Shared\ElectionResultContainer::open($election, $map, $title, $dimensions, $messages, $dedicatedPage); ?>
-        
         <?= \Shared\ElectionResultContainer::close(); ?>
     <?php }
 
