@@ -5,14 +5,26 @@ class ElectionResultContainer{
 
     constructor(elt, MapClass){
         this.structure = this.hydrate(elt);
-
-        this.map = new MapClass(this.structure);
-
         this.data = {
             election: this.structure.container.getAttribute('data-election'),
             updates: [],
             results: []
         };
+
+        Toggle.register('map-type', (bool) => {
+            const map = this.maps.find(map => 
+                map.type === (bool ? "geographic" : "cartographic")
+            );
+            if(map) map.show();
+        });
+
+        this.maps = (this.structure.maps.types).map(container => {
+            const instance = new MapClass(container, this, { election: this.data.election, type: container.getAttribute('data-type'), src: container.getAttribute('data-src') });
+            // clean up HTML
+            container.removeAttribute('data-type');
+            container.removeAttribute('data-src');
+            return instance;
+        });
 
         this.constructor.elementMaps.set(this.structure.container, this);
         if(!this.constructor.observer) this.constructor.observer = new IntersectionObserver( (entries, observer) => {
@@ -31,6 +43,14 @@ class ElectionResultContainer{
         });
         
         this.constructor.observer.observe(this.structure.container);
+    }
+
+    get visibleMap(){
+        return this.maps.find(map => map.visible) || this.maps[0];
+    }
+    fillMap(data){
+        this.currentFillData = data;
+        this.visibleMap.fill(data);
     }
 
     hydrate(elt){
@@ -52,8 +72,9 @@ class ElectionResultContainer{
             summary: {
                 container: elt.querySelector('.ElectionResultContainer__summary-container'),
             },
-            map: {
+            maps: {
                 container: elt.querySelector('.ElectionResultContainer__map-container'),
+                types: [...elt.querySelectorAll('.ElectionResultContainer__map-container > div')]
             }
         }
     }
@@ -121,9 +142,7 @@ class ElectionResultContainer{
             }
         });
         
-        this.map.fill(
-            CachedData.regions, newFills
-        );
+        this.fillMap({ regions: CachedData.regions, fills: newFills });
     }
 
     /*const getResults = async () => {

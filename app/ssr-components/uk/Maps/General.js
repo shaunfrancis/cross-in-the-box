@@ -1,42 +1,25 @@
 class UKGeneral extends Map{
-    constructor(elt){
-        super(elt);
-
-        Toggle.register('map-type', (bool) => {
-            this.type = bool ? "geographic" : "cartographic";
-        });
+    constructor(container, containerInstance, {election, type, src}){
+        super(container, containerInstance);
+        this.election = election;
+        this.type = type;
     }
 
-    fill(
-        regions,                            // Region[]
-        fills = [],                         // ?{id : string, color : string, opacity? : number}[]
-        hoverFun = (active,event,id) => {}, // ?(active?: boolean, event?: React.MouseEvent, id?: string) => void
-        clickFun = (id) => {}               // ?(id?: string) => void
-    ){
+    async download(){
+        await (super.download.bind(this))();
 
-        regions.map( region => {
-            let fill = fills.find(f => f.id == region.id);
-            if(!fill){
-                // if(UKSeatsToWatch.find( s => s.id == region.id)) fill = {id: region.id, color: "url(#highlight_no_result)"};
-                // else fill = {id: region.id, color: "url(#no_result)"};
-                fill = {id: region.id, color: "transparent"};
+        if(this.type === "geographic"){
+            const attribution = this.structure.container.appendChild( document.createElement('p') );
+            attribution.classList.add('Map__attribution');
+
+            switch(this.src){
+                case "public/maps/UK-2024-geographic.svg":
+                    attribution.innerHTML = 'Adapted from <a target="_blank" href="https://commons.wikimedia.org/wiki/File:UK_House_of_Commons_constituencies_2023.svg">File:UK House of Commons constituencies 2023.svg</a>. Licensed under the <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.en">Creative Commons Attribution-Share Alike 4.0 International</a> license. Contains public sector information licensed under the <a target="_blank" href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government Licence v3.0.</a>';
+                    break;
+                case "public/maps/UK-2010-geographic.svg":
+                    attribution.innerHTML = 'Adapted from <a target="_blank" href="https://commons.wikimedia.org/wiki/File:2017UKElectionMap.svg">File:2017UKElectionMap.svg</a>. Licensed under the <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.en">Creative Commons Attribution-Share Alike 4.0 International</a> license.';
+                    break;
             }
-
-            const square = this.structure.container.querySelector('rect[name="' + region.id + '"]');
-            if(!square) return;
-
-            square.setAttribute('fill', fill.color);
-            square.setAttribute('style', fill.opacity !== undefined ? "opacity:" + fill.opacity : "");
-
-            square.addEventListener('mousemove', (event) => {
-                hoverFun(true, event, region.id);
-            });
-            square.addEventListener('mouseout', () => {
-                hoverFun(false);
-            });
-            square.addEventListener('click', () => {
-                clickFun(region.id);
-            });
-        });
+        }
     }
 }
