@@ -1,8 +1,6 @@
 class UKGeneral extends Map{
     constructor(container, containerInstance, {election, type, src}){
-        super(container, containerInstance);
-        this.election = election;
-        this.type = type;
+        super(container, containerInstance, {election, type, src});
     }
 
     async download(){
@@ -11,6 +9,8 @@ class UKGeneral extends Map{
         if(this.type === "geographic"){
             const attribution = this.structure.container.appendChild( document.createElement('p') );
             attribution.classList.add('Map__attribution');
+
+            console.log(this);
 
             switch(this.src){
                 case "public/maps/UK-2024-geographic.svg":

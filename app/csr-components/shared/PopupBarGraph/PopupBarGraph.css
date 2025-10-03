@@ -1,0 +1,55 @@
+.PopupBarGraph__title{
+    margin:10px 0 0 0;
+    font-size:0.8em;
+    font-weight:450;
+}
+
+.PopupBarGraph{
+    margin:10px 0 0 0;
+}
+
+.PopupBarGraph__row{
+    display:flex;
+    gap:4px;
+    margin:4px 0;
+    color:#fff;
+    font-size:0.8em;
+}
+
+.PopupBarGraph__bloc{
+    padding:2px 4px;
+    border-radius:2px;
+}
+
+.PopupBarGraph__party{
+    width:65px;
+    text-align:center;
+}
+
+.PopupBarGraph__percentage{
+    width:65px;
+    text-align:right;
+}
+
+.PopupBarGraph__bar-container{
+    position:relative;
+    width:120px;
+    background:rgb(227,227,227);
+    border-radius:2px;
+}
+
+.PopupBarGraph__bar{
+    height:100%;
+    padding:0;
+    position:relative;
+    z-index:1;
+}
+
+.PopupBarGraph__goal{
+    width:2px;
+    top:-10px;
+    height:calc(20px + 100%);
+    position:absolute;
+    background:#000;
+    border-radius:2px;
+}

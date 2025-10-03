@@ -175,10 +175,13 @@ window.addEventListener('DOMContentLoaded', () => {
 class Map{
     static instances = [];
     
-    constructor(container, containerInstance){
+    constructor(container, containerInstance, {election, type, src}){
         Map.instances.push(this);
         this.structure = {container: container};
         this.containerInstance = containerInstance;
+        this.election = election;
+        this.type = type;
+        this.src = src;
         this.downloaded = this.structure.container.innerHTML !== "";
         this.downloadParameters = {};
         if(!this.downloaded){
@@ -202,30 +205,32 @@ class Map{
         regions.map( region => {
             let fill = fills.find(f => f.id == region.id);
             if(!fill) fill = {id: region.id, color: "transparent"};
-            const regionElt = this.structure.container.querySelector( regionSelector(region.id) );
-            if(!regionElt) return;
-            regionElt.setAttribute('fill', fill.color);
-            regionElt.setAttribute('style', fill.opacity !== undefined ? "opacity:" + fill.opacity : "");
-            regionElt.addEventListener('mousemove', (event) => {
-                const popup = this.containerInstance.structure.hoverPopup;
-                const coordinates = [event.clientX, event.clientY];
-                const width = popup.offsetWidth;
-                const height = popup.offsetHeight;
-                const offsets = [0,0];
-                if(coordinates[0] + 20 + width > window.innerWidth) offsets[0] = -(width + 40);
-                if(coordinates[1] + 20 + height > window.innerHeight) offsets[1] = window.innerHeight - height - 20 - coordinates[1];
-                popup.style.left = coordinates[0] + offsets[0] + 20 + "px";
-                popup.style.top = coordinates[1] + offsets[1] + 20 + "px";
-                popup.classList.remove('hidden');
-                hoverFun(true, popup, region.id);
-            });
-            regionElt.addEventListener('mouseout', () => {
-                const popup = this.containerInstance.structure.hoverPopup;
-                popup.classList.add('hidden');
-                hoverFun(false, popup);
-            });
-            regionElt.addEventListener('click', () => {
-                clickFun(region.id);
+            const regionElts = this.structure.container.querySelectorAll( regionSelector(region.id) );
+            if(regionElts.length === 0) return;
+            regionElts.forEach(regionElt => {
+                regionElt.setAttribute('fill', fill.color);
+                regionElt.setAttribute('style', fill.opacity !== undefined ? "opacity:" + fill.opacity : "");
+                regionElt.addEventListener('mousemove', (event) => {
+                    const popup = this.containerInstance.structure.hoverPopup;
+                    const coordinates = [event.clientX, event.clientY];
+                    const width = popup.offsetWidth;
+                    const height = popup.offsetHeight;
+                    const offsets = [0,0];
+                    if(coordinates[0] + 20 + width > window.innerWidth) offsets[0] = -(width + 40);
+                    if(coordinates[1] + 20 + height > window.innerHeight) offsets[1] = window.innerHeight - height - 20 - coordinates[1];
+                    popup.style.left = coordinates[0] + offsets[0] + 20 + "px";
+                    popup.style.top = coordinates[1] + offsets[1] + 20 + "px";
+                    popup.classList.remove('hidden');
+                    hoverFun(true, popup, region.id);
+                });
+                regionElt.addEventListener('mouseout', () => {
+                    const popup = this.containerInstance.structure.hoverPopup;
+                    popup.classList.add('hidden');
+                    hoverFun(false, popup);
+                });
+                regionElt.addEventListener('click', () => {
+                    clickFun(region.id);
+                });
             });
         });
     }
@@ -288,6 +293,7 @@ const partyIdToDisplayId = (partyId) => {
 import Elt from 'components/shared/_Elt/_Elt';
 import ElectionSummaryBlocs from 'components/shared/ElectionSummaryBlocs/ElectionSummaryBlocs';
 import PartyProgressionBlocs from 'components/shared/PartyProgressionBlocs/PartyProgressionBlocs';
+import PopupBarGraph from 'components/shared/PopupBarGraph/PopupBarGraph';
 window.addEventListener('DOMContentLoaded', () => {
     const instances = [];
     for(const elt of document.querySelectorAll('.ElectionResultContainer')){
@@ -343,7 +349,7 @@ class UKElectionResultContainer extends ElectionResultContainer{
             });
             if(partyProgression.length > 1) popup.appendChild( PartyProgressionBlocs.render({ parties: partyProgression }) );
             // Bar graph
-            // popup.appendChild( PopupBarGraph.render({ results: regionResults, parties: CachedData.parties }) );
+            popup.appendChild( PopupBarGraph.render({ results: regionResults, parties: CachedData.parties }) );
         };
         super.fillMap(data);
     }
@@ -360,15 +366,14 @@ class UKElectionResultContainer extends ElectionResultContainer{
         </> )*/
 class UKGeneral extends Map{
     constructor(container, containerInstance, {election, type, src}){
-        super(container, containerInstance);
-        this.election = election;
-        this.type = type;
+        super(container, containerInstance, {election, type, src});
     }
     async download(){
         await (super.download.bind(this))();
         if(this.type === "geographic"){
             const attribution = this.structure.container.appendChild( document.createElement('p') );
             attribution.classList.add('Map__attribution');
+            console.log(this);
             switch(this.src){
                 case "public/maps/UK-2024-geographic.svg":
                     attribution.innerHTML = 'Adapted from <a target="_blank" href="https://commons.wikimedia.org/wiki/File:UK_House_of_Commons_constituencies_2023.svg">File:UK House of Commons constituencies 2023.svg</a>. Licensed under the <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.en">Creative Commons Attribution-Share Alike 4.0 International</a> license. Contains public sector information licensed under the <a target="_blank" href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government Licence v3.0.</a>';

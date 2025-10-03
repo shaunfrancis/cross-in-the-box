@@ -50,8 +50,7 @@ export default class ElectionSummaryBlocs{
                     const bloc = new Elt({
                         tag: 'div',
                         classList: ["ElectionSummaryBlocs__bloc"],
-                        style: "background: " + (data[position].party.color || "var(--default-color)") + ";" + 
-                            "color: " + data[position].party.textColor
+                        style: {background: (data[position].party.color || "var(--default-color)"), color: data[position].party.textColor}
                     });
                     bloc.appendChild(
                         new Elt({tag: 'span', classList: ["ElectionSummaryBlocs__party"], innerHTML: data[position].party.displayId || data[position].party.id})

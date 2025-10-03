@@ -1,6 +1,7 @@
 import Elt from 'components/shared/_Elt/_Elt';
 import ElectionSummaryBlocs from 'components/shared/ElectionSummaryBlocs/ElectionSummaryBlocs';
 import PartyProgressionBlocs from 'components/shared/PartyProgressionBlocs/PartyProgressionBlocs';
+import PopupBarGraph from 'components/shared/PopupBarGraph/PopupBarGraph';
 
 window.addEventListener('DOMContentLoaded', () => {
     const instances = [];
@@ -67,7 +68,7 @@ class UKElectionResultContainer extends ElectionResultContainer{
             if(partyProgression.length > 1) popup.appendChild( PartyProgressionBlocs.render({ parties: partyProgression }) );
 
             // Bar graph
-            // popup.appendChild( PopupBarGraph.render({ results: regionResults, parties: CachedData.parties }) );
+            popup.appendChild( PopupBarGraph.render({ results: regionResults, parties: CachedData.parties }) );
         };
         super.fillMap(data);
     }

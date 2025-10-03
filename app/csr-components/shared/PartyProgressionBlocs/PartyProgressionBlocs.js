@@ -11,7 +11,7 @@ export default class PartyProgressionBlocs{
                 new Elt({
                     tag: "div",
                     classList: ["PartyProgressionBlocs__bloc"],
-                    style: `background:${party.color}; color:${party.textColor}`,
+                    style: { background: party.color, color: party.textColor },
                     innerHTML: party.displayId
                 })
             );

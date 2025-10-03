@@ -106,30 +106,6 @@ export default function UKElectionResultContainer(
         if(region) router.push('constituency/' + constituencyToSlug(region.title));
     };
 
-    const popupContent = (id? : string) => {
-        const region = regions.find( region => region.id == id );
-        if(!region) return <h3>Missing data</h3>;
-        
-        const regionResults = results.filter( result => result.id == id ).sort( (a,b) => b.votes - a.votes );
-        const winner = winFormula(regionResults)[0]?.candidate;
-
-        const regionUpdates = updates.filter( u => u.id == region.id );
-        const partyProgression : Party[] = [parties.find(p => p.id == winFormula(regionResults)[0]?.party) || DefaultParty];
-        regionUpdates.forEach( update => {
-            partyProgression.push( parties.find(p => p.id == update.party) || DefaultParty );
-        });
-
-        const watchNote = election == "2024" && UKSeatsToWatch.find(s => s.id == id)?.note;
-        
-        return ( <>
-            <h3>{region.title}</h3>
-            {winner && <h4>{winner}</h4>}
-            {!winner && <div style={{maxWidth: "350px"}}>{watchNote}</div>}
-            { partyProgression.length > 1 && <PartyProgressionBlocs parties={partyProgression} /> }
-            <PopupBarGraph results={regionResults} parties={parties} />
-        </> )
-    }
-
     return ( <>
         <ElectionResultContainer
             messages={messageGroup ? messages.map(m => m.node) : undefined}
