@@ -6,3 +6,4 @@
 @import '../../app/ssr-components/shared/Map/Map.css';
 @import '../../app/ssr-components/shared/Toggle/Toggle.css';
 @import '../../app/csr-components/shared/ElectionSummaryBlocs/ElectionSummaryBlocs.css';
+@import '../../app/csr-components/shared/PartyProgressionBlocs/PartyProgressionBlocs.css';

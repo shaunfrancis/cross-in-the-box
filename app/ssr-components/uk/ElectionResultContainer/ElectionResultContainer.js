@@ -1,5 +1,6 @@
 import Elt from 'components/shared/_Elt/_Elt';
 import ElectionSummaryBlocs from 'components/shared/ElectionSummaryBlocs/ElectionSummaryBlocs';
+import PartyProgressionBlocs from 'components/shared/PartyProgressionBlocs/PartyProgressionBlocs';
 
 window.addEventListener('DOMContentLoaded', () => {
     const instances = [];
@@ -19,7 +20,7 @@ class UKElectionResultContainer extends ElectionResultContainer{
         const summaries = []; // {party : Party, count : number}[]
         this.winFormula(this.data.results).forEach( result => {
             
-            const regionUpdates = this.data.updates.filter( u => u.id == result.id );
+            const regionUpdates = this.data.updates.filter( update => update.id == result.id );
             const winner = regionUpdates.length > 0 ? regionUpdates[regionUpdates.length - 1].party : result.party;
 
             if(!summaries.find( summary => summary.party.id == winner)){
@@ -47,25 +48,32 @@ class UKElectionResultContainer extends ElectionResultContainer{
             popup.innerHTML = "";
 
             const region = CachedData.regions.find( region => region.id == id );
+            const regionResults = this.data.results.filter( result => result.id == id ).sort( (a,b) => b.votes - a.votes );
+            const regionUpdates = this.data.updates.filter( update => update.id == region.id );
+
+            // Title
             if(!region) return popup.appendChild( new Elt({tag: 'h3', innerHTML: "Missing data"}) );
             popup.appendChild( new Elt({tag: 'h3', innerHTML: region.title}) );
 
-            const regionResults = this.data.results.filter( result => result.id == id ).sort( (a,b) => b.votes - a.votes );
+            // Winning candidate
             const winner = this.winFormula(regionResults)[0]?.candidate;
             if(winner) popup.appendChild( new Elt({tag: 'h4', innerHTML: winner}) );
 
+            // Party progression blocs
+            const partyProgression = [CachedData.parties.find( party => party.id === this.winFormula(regionResults)[0]?.party ) || DefaultParty];
+            regionUpdates.forEach( update => {
+                partyProgression.push( CachedData.parties.find( party => party.id == update.party ) || DefaultParty );
+            });
+            if(partyProgression.length > 1) popup.appendChild( PartyProgressionBlocs.render({ parties: partyProgression }) );
+
+            // Bar graph
+            // popup.appendChild( PopupBarGraph.render({ results: regionResults, parties: CachedData.parties }) );
         };
         super.fillMap(data);
     }
 }
 
 /*
-        const regionUpdates = updates.filter( u => u.id == region.id );
-        const partyProgression : Party[] = [parties.find(p => p.id == winFormula(regionResults)[0]?.party) || DefaultParty];
-        regionUpdates.forEach( update => {
-            partyProgression.push( parties.find(p => p.id == update.party) || DefaultParty );
-        });
-
         const watchNote = election == "2024" && UKSeatsToWatch.find(s => s.id == id)?.note;
         
         return ( <>

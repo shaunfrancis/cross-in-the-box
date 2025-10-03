@@ -13,6 +13,13 @@ class CachedData{
     static regions = [];
 };
 
+const DefaultParty = {
+    id: "?",
+    displayId: "?",
+    title: "Missing data",
+    color: "var(--default-color)"
+}
+
 const parseJSONWithDates = (text, keys) => {
     if(typeof keys === "string") keys = [keys];
     return JSON.parse(text, (key, value) => {
