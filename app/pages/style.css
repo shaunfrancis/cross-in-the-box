@@ -124,14 +124,14 @@ main > section > .section-heading{
     gap:20px 50px;
 }
 
-span.interactive{
+a.interactive{
     cursor:pointer;
     text-decoration:underline;
     text-underline-offset:2px;
     transition:background-color 100ms;
     padding:0 1px;
 }
-span.interactive:hover{
+a.interactive:hover{
     background-color:rgb(230,230,230);
 }
 

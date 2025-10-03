@@ -10,17 +10,25 @@
     overflow:hidden auto;
     transition:width 200ms, margin 200ms;
     width:0;
-}
-    .ElectionResultContainer__messages-container.visible{
+    isolation:isolate;
+    &.visible{
         scroll-snap-align: center;
         width:310px;
     }
+    &.loading{
+        & > .ElectionResultContainer__messages-inner-container{
+            opacity:0;
+        }
+    }
+}
 
 .ElectionResultContainer__messages-inner-container{
     -webkit-user-select:auto;
     user-select:auto;
     width:300px;
     overflow:auto;
+    opacity:1;
+    transition:opacity 200ms;
 }
 
 .ElectionResultContainer__messages-scroll-button{
@@ -63,6 +71,7 @@
     position:relative;
 }
 .ElectionResultContainer__map-container > div{
+    grid-area: 1 / 1;
     width:100%;
     height:100%;
     justify-content:center;
@@ -159,7 +168,7 @@
     100%{ opacity:0 }
 }
 
-.ElectionResultContainer__messages-button{
+button.ElectionResultContainer__messages-button{
     appearance:none;
     -webkit-appearance:none;
     padding:0;
@@ -170,7 +179,7 @@
     width:35px;
 }
     
-    .ElectionResultContainer__messages-button:hover{ opacity: 0.6 }
+    button.ElectionResultContainer__messages-button:hover{ opacity: 0.6 }
 
 .ElectionResultContainer__hover-popup{
     position:fixed;

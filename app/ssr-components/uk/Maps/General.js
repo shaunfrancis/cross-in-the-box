@@ -10,8 +10,6 @@ class UKGeneral extends Map{
             const attribution = this.structure.container.appendChild( document.createElement('p') );
             attribution.classList.add('Map__attribution');
 
-            console.log(this);
-
             switch(this.src){
                 case "public/maps/UK-2024-geographic.svg":
                     attribution.innerHTML = 'Adapted from <a target="_blank" href="https://commons.wikimedia.org/wiki/File:UK_House_of_Commons_constituencies_2023.svg">File:UK House of Commons constituencies 2023.svg</a>. Licensed under the <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.en">Creative Commons Attribution-Share Alike 4.0 International</a> license. Contains public sector information licensed under the <a target="_blank" href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government Licence v3.0.</a>';

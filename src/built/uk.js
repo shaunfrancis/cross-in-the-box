@@ -9,7 +9,7 @@ class CachedData{
     static parties = [];
     static regions = [];
 };
-const DefaultParty = {
+const DefaultParty = window.DefaultParty = {
     id: "?",
     displayId: "?",
     title: "Missing data",
@@ -22,6 +22,19 @@ const parseJSONWithDates = (text, keys) => {
         return value;
     });
 }
+const dateToLongDate = (date, includeYear = date.getFullYear() !== (new Date()).getFullYear()) => {
+    let ordinalIndicator = "th";
+    if(![11,12,13].includes(date.getDate())) switch(date.getDate() % 10){
+        case 1: ordinalIndicator = "st"; break;
+        case 2: ordinalIndicator = "nd"; break;
+        case 3: ordinalIndicator = "rd";
+    }
+    const month = ["January","February","March","April","May","June","July","August","September","October","November","December"][date.getMonth()];
+    let longDate = date.getDate().toString() + ordinalIndicator + " " + month;
+    if(includeYear) longDate += " " + date.getFullYear();
+    return longDate;
+}
+import Message from "components/shared/Message/Message";
 class ElectionResultContainer{
     static observer;
     static elementMaps = new WeakMap();
@@ -31,6 +44,10 @@ class ElectionResultContainer{
             election: this.structure.container.getAttribute('data-election'),
             updates: [],
             results: []
+        };
+        this.attributes = {
+            messageGroup: this.structure.messages.container?.getAttribute('data-group'),
+            showChanges: this.structure.container.getAttribute('data-show-changes')
         };
         Toggle.register('map-type', (bool) => {
             const map = this.maps.find(map => 
@@ -53,9 +70,10 @@ class ElectionResultContainer{
                     const instance = ElectionResultContainer.elementMaps.get(entry.target);
                     if(instance){
                         ElectionResultContainer.elementMaps.delete(entry.target);
-                        await instance.downloadData(instance.data);
+                        await instance.downloadData(instance.data, instance.attributes);
                         instance.addSummary();
                         instance.updateMap();
+                        if(instance.data.messages) instance.addMessages();
                     }
                 }
             });
@@ -84,6 +102,7 @@ class ElectionResultContainer{
             hoverPopup: elt.querySelector('.ElectionResultContainer__hover-popup'),
             messages: {
                 container: messagesContainer,
+                innerContainer: messagesContainer?.querySelector('.ElectionResultContainer__messages-inner-container'),
                 toggleButton: toggleMessagesButton,
             },
             summary: {
@@ -95,7 +114,7 @@ class ElectionResultContainer{
             }
         }
     }
-    async downloadData({ election, showChanges = false }){
+    async downloadData({ election }, { messageGroup, showChanges }){
         if(CachedData.parties.length === 0){
             if(!CachedData.partiesPromise){
                 CachedData.partiesPromise = fetch(Endpoint + "/parties/uk").then( async res => {
@@ -126,13 +145,21 @@ class ElectionResultContainer{
         }
         this.data.results =  await fetch(Endpoint + '/results/uk/' + election).then( res => res.json() );
         CachedData.results[election] = this.data.results;
+        if(messageGroup){ 
+            //const newMessages = await getMessages(parties, latestMessageDate, '/messages/uk/' + messageGroup, regionUrlFun, timeFun);
+            this.data.messages = await fetch(Endpoint + '/messages/uk/' + messageGroup)
+                .then( res => res.text() )
+                .then( res => parseJSONWithDates(res, 'date'));
+            this.data.messages.sort( (a,b) => {
+                return (a.pinned != b.pinned) ? (a.pinned || Infinity) - (b.pinned || Infinity) : 
+                    (a.date.valueOf() != b.date.valueOf()) ? b.date.valueOf() - a.date.valueOf() : b.id - a.id;
+            });
+        }
     }
     winFormula(results){
         return results.filter(result => result.elected);
     }
-    addSummary(){
-        this.structure.summary.container.innerHTML = "summary inner";
-    }
+    addSummary(){}
     updateMap(showChanges = false){
         const newFills = []; // {id: string, color: string, opacity?: number}[]
         this.winFormula(this.data.results).forEach( result => {
@@ -154,15 +181,47 @@ class ElectionResultContainer{
         
         this.fillMap({ regions: CachedData.regions, fills: newFills });
     }
-    /*const getResults = async () => {
-            updateData
-            resultData
-            fills
-            if(messageGroup){
-                const newMessages = await getMessages(parties, latestMessageDate, '/messages/uk/' + messageGroup, regionUrlFun, timeFun);
-                setMessages(newMessages);
-            }
-        };*/
+    addMessages({
+        dateFun = (date) => date, 
+        urlFun = (slug, type) => "#",
+        childrenFun
+    }){ 
+        
+        const injectLinks = (text) => {
+            const spans = [];
+            text.split("#").forEach( (link, index) => {
+                if(link == "") return;
+        
+                if(index % 2){
+                    let [_, type, slug, displayText] = ["", "", link, link]; 
+                    if(link.includes("@")) [_ = "", type = "", slug = "", displayText = ""] = link.split("@");
+  
+                    const span = new Elt({
+                        tag: 'a',
+                        classList: ["interactive", "unstyled"],
+                        href: urlFun(slug, type),
+                        innerHTML: displayText
+                    });
+                    spans.push(span);
+                }
+                else spans.push( new Elt({ tag: 'span', innerHTML: link }) );
+            });
+            return spans;
+        }
+        this.data.messages.forEach(message => {
+            const square = message.square ? (CachedData.parties.find(p => p.id == message.square) || DefaultParty) : null;
+            const oldSquare = message.old_square ? (CachedData.parties.find(p => p.id == message.old_square) || DefaultParty) : null;
+            const children = childrenFun ? [...injectLinks(message.text), ...childrenFun(message)] : injectLinks(message.text);
+            this.structure.messages.innerContainer.appendChild( Message.render({
+                date: dateFun(message.date),
+                noHeader: message.no_header,
+                oldSquare: oldSquare,
+                square: square,
+                children: children
+            }) );
+        });
+        this.structure.messages.container.classList.remove('loading');
+    }
 }
 window.addEventListener('DOMContentLoaded', () => {
     for(const item of document.getElementsByClassName('HeroNav__item')){
@@ -333,6 +392,10 @@ class UKElectionResultContainer extends ElectionResultContainer{
         );
     }
     fillMap(data){
+        data.clickFun = (id) => {
+            let region = CachedData.regions.find( r => r.id == id );
+            if(region) window.location.href = '/uk/general-elections/constituency/' + constituencyToSlug(region.title);
+        }
         data.hoverFun = (active, popup, id) => {
             if(!active) return;
             popup.innerHTML = "";
@@ -354,11 +417,48 @@ class UKElectionResultContainer extends ElectionResultContainer{
             // Bar graph
             popup.appendChild( PopupBarGraph.render({ results: regionResults, parties: CachedData.parties }) );
         };
-        data.clickFun = (id) => {
-            let region = CachedData.regions.find( r => r.id == id );
-            if(region) window.location.href = 'constituency/' + constituencyToSlug(region.title);
-        }
         super.fillMap(data);
+    }
+    addMessages(){
+        const dateFun = (date) => {
+            let time = date.getHours().toString().padStart(2,'0') + ":" + date.getMinutes().toString().padStart(2,'0');
+            const dayWord = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][date.getDay()];
+            const dateString = dayWord + " " + dateToLongDate(date) + ", " + time;
+            return dateString;
+        };
+        const urlFun = (slug, type) => {
+            let url = "/uk/";
+            switch(type){
+                case "general": url += "general-elections/"; break;
+                default: url += "general-elections/"
+            }
+            url += 'constituency/' + constituencyToSlug(slug);
+            return url;
+        }
+        const childrenFun = (message) => {
+            let messageResults = [];
+            if(message.results) switch(message.result_type){
+                case 1: //exit poll      
+                    messageResults.push( PopupBarGraph.render({
+                        results: message.results.sort( (a,b) => b.votes - a.votes ),
+                        parties: CachedData.parties,
+                        goal: 326/650,
+                        format: "n",
+                        title: message.link_title
+                    }) );
+                    break;
+                default:
+                    let hardcodeTitle = null;
+                    if(message.date.getFullYear() == 2024 && !message.link_title) hardcodeTitle = "Partial results";
+                    messageResults.push( PopupBarGraph.render({
+                        results: message.results.sort( (a,b) => b.votes - a.votes ),
+                        parties: CachedData.parties,
+                        title: hardcodeTitle ?? message.link_title
+                    }) );
+            }
+            return messageResults;
+        }
+        super.addMessages({ dateFun: dateFun, urlFun: urlFun, childrenFun: childrenFun });
     }
 }
 class UKGeneral extends Map{
@@ -370,7 +470,6 @@ class UKGeneral extends Map{
         if(this.type === "geographic"){
             const attribution = this.structure.container.appendChild( document.createElement('p') );
             attribution.classList.add('Map__attribution');
-            console.log(this);
             switch(this.src){
                 case "public/maps/UK-2024-geographic.svg":
                     attribution.innerHTML = 'Adapted from <a target="_blank" href="https://commons.wikimedia.org/wiki/File:UK_House_of_Commons_constituencies_2023.svg">File:UK House of Commons constituencies 2023.svg</a>. Licensed under the <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.en">Creative Commons Attribution-Share Alike 4.0 International</a> license. Contains public sector information licensed under the <a target="_blank" href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government Licence v3.0.</a>';

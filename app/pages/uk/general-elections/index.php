@@ -31,31 +31,29 @@
             <?= \UK\ElectionResultContainer::show(
                 $election = "2024",
                 $title = ["2024", "General", "Election"],
-                $messages = ['exist' => TRUE, 'open' => TRUE]
+                $messages = ['group' => "2024", 'open' => TRUE]
             ); ?>
 
             <?= \UK\ElectionResultContainer::show(
                 $election = "2019",
                 $title = ["2019", "General", "Election"],
-                $messages = ['exist' => TRUE]
+                $messages = ['group' => "2019"]
             ); ?>
 
             <?= \UK\ElectionResultContainer::show(
                 $election = "2017",
                 $title = ["2017", "General", "Election"],
-                $messages = ['exist' => TRUE]
+                $messages = ['group' => "2017"]
             ); ?>
 
             <?= \UK\ElectionResultContainer::show(
                 $election = "2015",
                 $title = ["2015", "General", "Election"],
-                $messages = ['exist' => FALSE]
             ); ?>
 
             <?= \UK\ElectionResultContainer::show(
                 $election = "2010",
                 $title = ["2010", "General", "Election"],
-                $messages = ['exist' => FALSE]
             ); ?>
         <?= ElectionResultsSection::close(); ?>
     </section>

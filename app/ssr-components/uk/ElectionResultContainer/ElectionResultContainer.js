@@ -47,7 +47,7 @@ class UKElectionResultContainer extends ElectionResultContainer{
 
         data.clickFun = (id) => {
             let region = CachedData.regions.find( r => r.id == id );
-            if(region) window.location.href = 'constituency/' + constituencyToSlug(region.title);
+            if(region) window.location.href = '/uk/general-elections/constituency/' + constituencyToSlug(region.title);
         }
 
         data.hoverFun = (active, popup, id) => {
@@ -78,5 +78,49 @@ class UKElectionResultContainer extends ElectionResultContainer{
         };
 
         super.fillMap(data);
+    }
+
+    addMessages(){
+        const dateFun = (date) => {
+            let time = date.getHours().toString().padStart(2,'0') + ":" + date.getMinutes().toString().padStart(2,'0');
+            const dayWord = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][date.getDay()];
+            const dateString = dayWord + " " + dateToLongDate(date) + ", " + time;
+            return dateString;
+        };
+        const urlFun = (slug, type) => {
+            let url = "/uk/";
+            switch(type){
+                case "general": url += "general-elections/"; break;
+                default: url += "general-elections/"
+            }
+            url += 'constituency/' + constituencyToSlug(slug);
+            return url;
+        }
+
+        const childrenFun = (message) => {
+            let messageResults = [];
+            if(message.results) switch(message.result_type){
+                case 1: //exit poll      
+                    messageResults.push( PopupBarGraph.render({
+                        results: message.results.sort( (a,b) => b.votes - a.votes ),
+                        parties: CachedData.parties,
+                        goal: 326/650,
+                        format: "n",
+                        title: message.link_title
+                    }) );
+                    break;
+                default:
+                    let hardcodeTitle = null;
+                    if(message.date.getFullYear() == 2024 && !message.link_title) hardcodeTitle = "Partial results";
+                    messageResults.push( PopupBarGraph.render({
+                        results: message.results.sort( (a,b) => b.votes - a.votes ),
+                        parties: CachedData.parties,
+                        title: hardcodeTitle ?? message.link_title
+                    }) );
+            }
+            return messageResults;
+        }
+
+        super.addMessages({ dateFun: dateFun, urlFun: urlFun, childrenFun: childrenFun });
     }
 }

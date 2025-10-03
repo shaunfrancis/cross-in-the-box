@@ -1,3 +1,5 @@
+import Message from "components/shared/Message/Message";
+
 class ElectionResultContainer{
 
     static observer;
@@ -9,6 +11,10 @@ class ElectionResultContainer{
             election: this.structure.container.getAttribute('data-election'),
             updates: [],
             results: []
+        };
+        this.attributes = {
+            messageGroup: this.structure.messages.container?.getAttribute('data-group'),
+            showChanges: this.structure.container.getAttribute('data-show-changes')
         };
 
         Toggle.register('map-type', (bool) => {
@@ -34,9 +40,10 @@ class ElectionResultContainer{
                     const instance = ElectionResultContainer.elementMaps.get(entry.target);
                     if(instance){
                         ElectionResultContainer.elementMaps.delete(entry.target);
-                        await instance.downloadData(instance.data);
+                        await instance.downloadData(instance.data, instance.attributes);
                         instance.addSummary();
                         instance.updateMap();
+                        if(instance.data.messages) instance.addMessages();
                     }
                 }
             });
@@ -68,6 +75,7 @@ class ElectionResultContainer{
             hoverPopup: elt.querySelector('.ElectionResultContainer__hover-popup'),
             messages: {
                 container: messagesContainer,
+                innerContainer: messagesContainer?.querySelector('.ElectionResultContainer__messages-inner-container'),
                 toggleButton: toggleMessagesButton,
             },
             summary: {
@@ -80,7 +88,7 @@ class ElectionResultContainer{
         }
     }
 
-    async downloadData({ election, showChanges = false }){
+    async downloadData({ election }, { messageGroup, showChanges }){
 
         if(CachedData.parties.length === 0){
             if(!CachedData.partiesPromise){
@@ -114,15 +122,24 @@ class ElectionResultContainer{
 
         this.data.results =  await fetch(Endpoint + '/results/uk/' + election).then( res => res.json() );
         CachedData.results[election] = this.data.results;
+
+        if(messageGroup){ 
+            //const newMessages = await getMessages(parties, latestMessageDate, '/messages/uk/' + messageGroup, regionUrlFun, timeFun);
+            this.data.messages = await fetch(Endpoint + '/messages/uk/' + messageGroup)
+                .then( res => res.text() )
+                .then( res => parseJSONWithDates(res, 'date'));
+            this.data.messages.sort( (a,b) => {
+                return (a.pinned != b.pinned) ? (a.pinned || Infinity) - (b.pinned || Infinity) : 
+                    (a.date.valueOf() != b.date.valueOf()) ? b.date.valueOf() - a.date.valueOf() : b.id - a.id;
+            });
+        }
     }
 
     winFormula(results){
         return results.filter(result => result.elected);
     }
 
-    addSummary(){
-        this.structure.summary.container.innerHTML = "summary inner";
-    }
+    addSummary(){}
 
     updateMap(showChanges = false){
         const newFills = []; // {id: string, color: string, opacity?: number}[]
@@ -146,16 +163,48 @@ class ElectionResultContainer{
         this.fillMap({ regions: CachedData.regions, fills: newFills });
     }
 
-    /*const getResults = async () => {
-            updateData
+    addMessages({
+        dateFun = (date) => date, 
+        urlFun = (slug, type) => "#",
+        childrenFun
+    }){ 
+        
+        const injectLinks = (text) => {
+            const spans = [];
+            text.split("#").forEach( (link, index) => {
+                if(link == "") return;
+        
+                if(index % 2){
+                    let [_, type, slug, displayText] = ["", "", link, link]; 
+                    if(link.includes("@")) [_ = "", type = "", slug = "", displayText = ""] = link.split("@");
+  
+                    const span = new Elt({
+                        tag: 'a',
+                        classList: ["interactive", "unstyled"],
+                        href: urlFun(slug, type),
+                        innerHTML: displayText
+                    });
+                    spans.push(span);
+                }
+                else spans.push( new Elt({ tag: 'span', innerHTML: link }) );
+            });
+            return spans;
+        }
 
-            resultData
+        this.data.messages.forEach(message => {
+            const square = message.square ? (CachedData.parties.find(p => p.id == message.square) || DefaultParty) : null;
+            const oldSquare = message.old_square ? (CachedData.parties.find(p => p.id == message.old_square) || DefaultParty) : null;
 
-            fills
+            const children = childrenFun ? [...injectLinks(message.text), ...childrenFun(message)] : injectLinks(message.text);
 
-            if(messageGroup){
-                const newMessages = await getMessages(parties, latestMessageDate, '/messages/uk/' + messageGroup, regionUrlFun, timeFun);
-                setMessages(newMessages);
-            }
-        };*/
+            this.structure.messages.innerContainer.appendChild( Message.render({
+                date: dateFun(message.date),
+                noHeader: message.no_header,
+                oldSquare: oldSquare,
+                square: square,
+                children: children
+            }) );
+        });
+        this.structure.messages.container.classList.remove('loading');
+    }
 }

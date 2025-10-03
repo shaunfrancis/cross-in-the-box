@@ -8,23 +8,25 @@ class ElectionResultContainer extends \Base\Component{
         string $map,                            // Map subclass as a string
         array $title,                           // [string, string, string]
         array $dimensions,                      // [w: string, h: string, minW: string, minH: string]
-        ?array $messages = ['exist' => FALSE],  // [exist: bool, open: bool]
+        ?array $messages = [],                  // [group: string, open: bool?]
+        ?bool $showChanges = FALSE,
         ?string $dedicatedPage = NULL  
     ): void { ?>
 
-        <div class="ElectionResultContainer" data-election="<?= $election; ?>" style="height: min(<?= $dimensions['h']; ?>, calc(100vw - 30px)); min-height: <?= $dimensions['minH']; ?>;">
+        <div
+            class="ElectionResultContainer"
+            data-election="<?= $election; ?>"
+            <?php if($showChanges) : ?>data-show-changes="true"<?php endif; ?>
+            style="height: min(<?= $dimensions['h']; ?>, calc(100vw - 30px)); min-height: <?= $dimensions['minH']; ?>;"
+        >
             <div class="ElectionResultContainer__hover-popup hidden"></div>
             
-            <?php if(!empty($messages['exist'])) : ?>
-                <div class="ElectionResultContainer__messages-container<?= !empty($messages['open']) ? " visible" : ""; ?>">
-
-                    <div class="ElectionResultContainer__messages-inner-container">
-                        <?php if(!empty($messages['exist'])): ?>
-                                <PlaceholderMessage />
-                        <?php endif; ?>
-                        {messagesVisibility && messages}
-                    </div>
-                    
+            <?php if(!empty($messages['group'])) : ?>
+                <div
+                    data-group="<?= $messages['group']; ?>"
+                    class="ElectionResultContainer__messages-container loading<?= !empty($messages['open']) ? " visible" : ""; ?>"
+                >
+                    <div class="ElectionResultContainer__messages-inner-container"><?php/*placeholder here?*/?></div>
                 </div>
             <?php endif; ?>
 
@@ -32,7 +34,7 @@ class ElectionResultContainer extends \Base\Component{
                 <div class="ElectionResultContainer__heading-container">
                     <div class="ElectionResultContainer__title">
                         
-                        <?php if(!empty($messages['exist'])) : ?>
+                        <?php if(!empty($messages['group'])) : ?>
                             <button class="ElectionResultContainer__messages-button">
                                 <img src="/public/images/messages.svg" alt="Toggle message visibility" />
                             </button>

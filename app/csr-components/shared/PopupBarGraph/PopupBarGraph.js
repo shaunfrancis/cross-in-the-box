@@ -17,7 +17,7 @@ export default class PopupBarGraph{
 
         results.forEach( result => {
             const percentage = totalVotes == 0 ? 0 : (100 * result.votes / totalVotes).toFixed(2);
-            const party = parties.find( party => party.id == result.party ) || DefaultParty;
+            const party = parties.find( party => party.id == result.party ) || globalThis.DefaultParty;
             const bgColor = party.color || "var(--default-color)";
 
             let numberValue = "";

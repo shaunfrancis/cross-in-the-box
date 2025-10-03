@@ -101,11 +101,6 @@ export default function UKElectionResultContainer(
         getResults();
     }, [onScreen, preloadedResults, parties, regions]);
 
-    const mapClickFun = (id: string) => {
-        let region = regions.find( r => r.id == id );
-        if(region) router.push('constituency/' + constituencyToSlug(region.title));
-    };
-
     return ( <>
         <ElectionResultContainer
             messages={messageGroup ? messages.map(m => m.node) : undefined}
@@ -123,7 +118,8 @@ class ElectionResultContainer extends \Shared\ElectionResultContainer{
     static function render (
         string $election,
         array $title,                               // [string, string, string]
-        ?array $messages = ['exist' => FALSE],      // [exist: bool, open: bool]
+        ?array $messages = [],                      // [group: string, open: bool?]
+        ?bool $showChanges = FALSE,
         ?string $dedicatedPage = NULL
     ){
 
@@ -132,7 +128,7 @@ class ElectionResultContainer extends \Shared\ElectionResultContainer{
         $dimensions = ['w' => "calc( 0.85 * (100vh - 100px) )", 'h' => "calc(100vh - 100px)", 'minW' => "425px", 'minH' => "500px"];
         ?>
 
-        <?= \Shared\ElectionResultContainer::open($election, $map, $title, $dimensions, $messages, $dedicatedPage); ?>
+        <?= \Shared\ElectionResultContainer::open($election, $map, $title, $dimensions, $messages, $showChanges, $dedicatedPage); ?>
         <?= \Shared\ElectionResultContainer::close(); ?>
     <?php }
 

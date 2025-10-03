@@ -1,11 +1,11 @@
+.PopupBarGraph{
+    margin:10px 0 0 0;
+}
+
 .PopupBarGraph__title{
     margin:10px 0 0 0;
     font-size:0.8em;
     font-weight:450;
-}
-
-.PopupBarGraph{
-    margin:10px 0 0 0;
 }
 
 .PopupBarGraph__row{
