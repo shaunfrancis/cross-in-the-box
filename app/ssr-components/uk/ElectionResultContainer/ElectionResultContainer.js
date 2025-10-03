@@ -44,6 +44,12 @@ class UKElectionResultContainer extends ElectionResultContainer{
     }
 
     fillMap(data){
+
+        data.clickFun = (id) => {
+            let region = CachedData.regions.find( r => r.id == id );
+            if(region) window.location.href = 'constituency/' + constituencyToSlug(region.title);
+        }
+
         data.hoverFun = (active, popup, id) => {
             if(!active) return;
             popup.innerHTML = "";
@@ -70,17 +76,7 @@ class UKElectionResultContainer extends ElectionResultContainer{
             // Bar graph
             popup.appendChild( PopupBarGraph.render({ results: regionResults, parties: CachedData.parties }) );
         };
+
         super.fillMap(data);
     }
 }
-
-/*
-        const watchNote = election == "2024" && UKSeatsToWatch.find(s => s.id == id)?.note;
-        
-        return ( <>
-            <h3>{region.title}</h3>
-            {winner && <h4>{winner}</h4>}
-            {!winner && <div style={{maxWidth: "350px"}}>{watchNote}</div>}
-            { partyProgression.length > 1 && <PartyProgressionBlocs parties={partyProgression} /> }
-            <PopupBarGraph results={regionResults} parties={parties} />
-        </> )*/

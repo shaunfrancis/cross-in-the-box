@@ -290,6 +290,9 @@ const partyIdToDisplayId = (partyId) => {
     else if(displayId.startsWith("IND_")) displayId = displayId.substring(4);
     return displayId;
 }
+const constituencyToSlug = (title) => {
+    return title.toLowerCase().replace(/ /g, "-").replace(/,|\)|\(/g, "").replace(/ô/g, "o");
+};
 import Elt from 'components/shared/_Elt/_Elt';
 import ElectionSummaryBlocs from 'components/shared/ElectionSummaryBlocs/ElectionSummaryBlocs';
 import PartyProgressionBlocs from 'components/shared/PartyProgressionBlocs/PartyProgressionBlocs';
@@ -351,19 +354,13 @@ class UKElectionResultContainer extends ElectionResultContainer{
             // Bar graph
             popup.appendChild( PopupBarGraph.render({ results: regionResults, parties: CachedData.parties }) );
         };
+        data.clickFun = (id) => {
+            let region = CachedData.regions.find( r => r.id == id );
+            if(region) window.location.href = 'constituency/' + constituencyToSlug(region.title);
+        }
         super.fillMap(data);
     }
 }
-/*
-        const watchNote = election == "2024" && UKSeatsToWatch.find(s => s.id == id)?.note;
-        
-        return ( <>
-            <h3>{region.title}</h3>
-            {winner && <h4>{winner}</h4>}
-            {!winner && <div style={{maxWidth: "350px"}}>{watchNote}</div>}
-            { partyProgression.length > 1 && <PartyProgressionBlocs parties={partyProgression} /> }
-            <PopupBarGraph results={regionResults} parties={parties} />
-        </> )*/
 class UKGeneral extends Map{
     constructor(container, containerInstance, {election, type, src}){
         super(container, containerInstance, {election, type, src});

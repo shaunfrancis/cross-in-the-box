@@ -6,3 +6,7 @@ const partyIdToDisplayId = (partyId) => {
 
     return displayId;
 }
+
+const constituencyToSlug = (title) => {
+    return title.toLowerCase().replace(/ /g, "-").replace(/,|\)|\(/g, "").replace(/ô/g, "o");
+};
