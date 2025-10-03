@@ -26,7 +26,7 @@ class ElectionResultContainer extends \Base\Component{
                     data-group="<?= $messages['group']; ?>"
                     class="ElectionResultContainer__messages-container loading<?= !empty($messages['open']) ? " visible" : ""; ?>"
                 >
-                    <div class="ElectionResultContainer__messages-inner-container"><?php/*placeholder here?*/?></div>
+                    <div class="ElectionResultContainer__messages-inner-container"></div>
                 </div>
             <?php endif; ?>
 

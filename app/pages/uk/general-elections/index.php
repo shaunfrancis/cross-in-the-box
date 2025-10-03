@@ -22,12 +22,6 @@
             ) ?>
         </div>
         <?= ElectionResultsSection::open(); ?>
-            <!--<UKElectionResultContainer election="2024" messageGroup="2024" messagesOpenOnLoad={true}
-                summaryBlocHoverState={[summaryBlocHover, setSummaryBlocHover]} 
-                regions={regions}
-                parties={parties}
-                geographic={geographic}
-            />-->
             <?= \UK\ElectionResultContainer::show(
                 $election = "2024",
                 $title = ["2024", "General", "Election"],
@@ -60,6 +54,7 @@
 
     <section id="find-a-constituency" class="shaded purple">
         <h1>Find a constituency</h1>
+        <?= \UK\RegionSearchSection::show(); ?>
         <!--<UKConstituencySearchSection searchInputRef={searchInputRef} />-->
     </section>
             
