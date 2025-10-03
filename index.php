@@ -49,6 +49,10 @@
             // First, render inits (down the tree)
             foreach(getInitPaths($path . '/index.php') as $initPath) require $initPath;
 
+            // Now, check how many levels of dynamic paths are accepted
+            // and 404 if incompatible
+            if(count($_params['path']) > ($_dynamic_params_accepted ?? 0)) error(404);
+
             // Next, render page
             ob_start();
             require $fullPath;
