@@ -46,7 +46,7 @@ class ElectionResultContainer extends \Base\Component{
                             <?php endif; ?>
                                     <div class="ElectionResultContainer__title-text"><?= $title[0] ?? ''; ?></div>
                                     <div class="ElectionResultContainer__subtitle-text">
-                                        <span><?= $title[1] ?? ''; ?></span><br/>
+                                        <span><?= $title[1] ?? ''; ?></span>
                                         <span><?= $title[2] ?? ''; ?></span>
                                     </div>
                             <?php if(!empty($dedicatedPage)) : ?>

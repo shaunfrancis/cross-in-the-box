@@ -102,22 +102,27 @@
     display:flex;
     align-items:baseline;
     gap:10px;
+    margin:5px 0 10px 0;
 }
 
 .ElectionResultContainer__title h2, .ElectionResultContainer__title h2 a{
     display:flex;
     align-items:center;
+    align-items:last baseline;
     gap:5px;
 }
 
     .ElectionResultContainer__title-text{
-        font-size:2.7rem;
+        font-size:2.8rem;
+        line-height:1;
     }
 
     .ElectionResultContainer__subtitle-text{
         font-size:1.3rem;
-        line-height:1.4rem;
+        line-height:1.3rem;
         text-align:left;
+        display:flex;
+        flex-direction:column;
     }
 
 .ElectionResultContainer__live-title{
