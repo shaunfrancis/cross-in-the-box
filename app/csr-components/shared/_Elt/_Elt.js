@@ -1,5 +1,5 @@
 export default class Elt{
-    constructor({tag, classList = [], style = {}, innerHTML = null, ...attributes}){
+    constructor({tag, classList = [], style = {}, innerHTML = null, children = [], ...attributes}){
         const newTag = document.createElement(tag);
         newTag.classList.add(...classList);
                 
@@ -10,6 +10,7 @@ export default class Elt{
         if(styles.length > 0) newTag.setAttribute('style', styles);
 
         if(innerHTML) newTag.innerHTML = innerHTML;
+        if(children.length > 0) newTag.append(...children);
 
         Object.entries(attributes).forEach( ([key, value]) => {
             newTag.setAttribute(key, value);

@@ -4,6 +4,7 @@
 @import '../../app/ssr-components/shared/Header/Header.css';
 @import '../../app/ssr-components/shared/HeroNav/HeroNav.css';
 @import '../../app/ssr-components/shared/Map/Map.css';
+@import '../../app/ssr-components/shared/RegionSearchSection/RegionSearchSection.css';
 @import '../../app/ssr-components/shared/Toggle/Toggle.css';
 @import '../../app/csr-components/shared/ElectionSummaryBlocs/ElectionSummaryBlocs.css';
 @import '../../app/csr-components/shared/Message/Message.css';

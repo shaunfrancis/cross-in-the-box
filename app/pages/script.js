@@ -20,6 +20,37 @@ const DefaultParty = window.DefaultParty = {
     color: "var(--default-color)"
 }
 
+class SearchHandler{
+    constructor(url, suffix = ""){
+        this.url = url;
+        this.suffix = suffix;
+        this.previousQuery = "";
+    }
+
+    async permission(query){
+        query = query.trim();
+
+        if(query == this.previousQuery) return false;
+        this.previousQuery = query.trim();
+
+        if(query.length <= 2) return false;
+
+        await new Promise( sleep => setTimeout(sleep, 500) );
+
+        if(query != this.previousQuery) return false;
+        return true;
+    }
+
+    async search(query){
+        const permissionToProceed = await this.permission(query);
+        if(!permissionToProceed) return null;
+
+        const response = await fetch(this.url + encodeURIComponent(query) + this.suffix).then( res => res.json() );
+        if(query != this.previousQuery) return null;
+        return response;
+    }
+}
+
 const parseJSONWithDates = (text, keys) => {
     if(typeof keys === "string") keys = [keys];
     return JSON.parse(text, (key, value) => {
