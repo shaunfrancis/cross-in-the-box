@@ -379,7 +379,7 @@ class RegionSearchSection{
     addResults(
         { regions, candidates },
         query,
-        { resultsHref = (region) => "#", abolishedLabel = "Abolished" },
+        { resultsHref = (region) => "#", abolishedLabel = "Abolished", candidateLabel = "candidate", winnerLabel = "winner" },
         start = 0
     ){
         const highlightRelevance = (query, title) => {
@@ -418,7 +418,12 @@ class RegionSearchSection{
                 );
                 moreButton.addEventListener('click', () => {
                     moreButton.remove();
-                    this.addResults({ regions, candidates }, query, { resultsHref, abolishedLabel }, start + 15);
+                    this.addResults(
+                        { regions, candidates },
+                        query,
+                        { resultsHref, abolishedLabel, candidateLabel, winnerLabel },
+                        start + 15
+                    );
                 });
                 break;
             }
@@ -454,7 +459,7 @@ class RegionSearchSection{
                     new Elt({
                         tag: 'span',
                         style: { color: "#666" },
-                        innerHTML: region.title + " candidate, " + region.election.join(" ")
+                        innerHTML: region.title + " " + (region.elected ? winnerLabel : candidateLabel) + ", " + region.election.join(" ")
                     })
                 ]);
             }
@@ -491,7 +496,9 @@ class RegionSearchHandler extends SearchHandler{
                 return intersections;
             };
             results.regions.sort( (a, b) =>  precedence(b.title) - precedence(a.title) );
-            results.candidates.sort( (a, b) =>  precedence(b.candidate) - precedence(a.candidate) );
+            results.candidates.sort( (a, b) =>  {
+                return (precedence(b.candidate) + (b.elected ? 1000 : 0) - precedence(a.candidate) - (a.elected ? 1000 : 0));
+            });
         }
         return results;
     }
@@ -677,7 +684,8 @@ class UKRegionSearchSection extends RegionSearchSection{
             const searchResults = await this.search(query);
             if(searchResults) this.addResults(searchResults, query, {
                 resultsHref: (region) => '/uk/general-elections/constituency/' + constituencyToSlug(region.title),
-                abolishedLabel: "Abolished constituency"
+                abolishedLabel: "Abolished constituency",
+                winnerLabel: "MP"
             });
         });
     }

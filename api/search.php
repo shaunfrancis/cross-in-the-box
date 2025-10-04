@@ -73,7 +73,7 @@
 
         $type_fragment = isset($type) ? " AND regions.type = ?" : "";
         $candidates_sql = "SELECT * FROM (
-            SELECT regions.id, regions.title, results.candidate, results.party, results.votes, elections.title as election, elections.date, parties.title as party_title, parties.color, parties.textColor
+            SELECT regions.id, regions.title, results.candidate, results.party, results.votes, results.elected, elections.title as election, elections.date, parties.title as party_title, parties.color, parties.textColor
             FROM $results_table as results
             JOIN $regions_table as regions
             ON regions.id = results.region_id

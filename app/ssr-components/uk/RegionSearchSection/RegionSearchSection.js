@@ -15,7 +15,8 @@ class UKRegionSearchSection extends RegionSearchSection{
             const searchResults = await this.search(query);
             if(searchResults) this.addResults(searchResults, query, {
                 resultsHref: (region) => '/uk/general-elections/constituency/' + constituencyToSlug(region.title),
-                abolishedLabel: "Abolished constituency"
+                abolishedLabel: "Abolished constituency",
+                winnerLabel: "MP"
             });
         });
     }
