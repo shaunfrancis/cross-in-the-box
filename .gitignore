@@ -3,7 +3,7 @@
 node_modules
 .parcel-cache
 
-api/credentials.php
+api/DB.php
 dashboard
 out
 
