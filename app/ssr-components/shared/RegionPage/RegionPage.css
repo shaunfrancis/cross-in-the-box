@@ -1,0 +1,59 @@
+.RegionPage{
+    display:flex;
+}
+
+.RegionPage aside{
+    flex:0 0 400px;
+    padding:30px;
+    overflow-y:auto;
+    font-size:12px;
+    & > section{
+        padding:10px;
+        &.shaded{
+            padding:30px;
+        }
+        & > h1{
+            margin-bottom:20px;
+        }
+    }
+}
+
+.RegionPage main{
+    flex:1;
+    padding:30px 50px 50px 50px;
+    overflow:auto;
+    display:flex;
+    flex-direction:column;
+    gap:30px;
+}
+.RegionPage main > section{ margin: 0 }
+.RegionPage main > section:has(article){ padding: 0 }
+
+.RegionPage main section h1{ margin: 30px 0 0 0 }
+
+.RegionPage main article{ position: relative }
+.RegionPage main article:not(:last-child):before{
+    content:"";
+    position:absolute;
+    background:#DDD;
+    width:4px;
+    height:30px;
+    top:100%;
+    left:calc(50% - 2px);
+    z-index:-1;
+}
+
+@media screen and (max-width:1024px){
+    .RegionPage{
+        flex-direction:column-reverse;
+        height:auto;
+    }
+
+    .RegionPage main{
+        padding:20px;
+    }
+
+    .RegionPage aside{
+        flex-basis:auto;
+    }
+}

@@ -70,7 +70,7 @@ class SearchService extends APIService{
             });
 
 
-            if($country == "uk"){
+            if($request[0] == "uk"){
                 require_once './functions/uk_postcode_search.php';
                 $region_titles = uk_postcode_search($query);
 

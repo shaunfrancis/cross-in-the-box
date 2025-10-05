@@ -1,6 +1,7 @@
 <?php
     $request = array_values( array_filter( preg_split( '/\//', str_replace(['/elections/'], '', $_SERVER['REQUEST_URI']) ) ) );
     if(str_contains($_SERVER['REQUEST_URI'], '.') || str_contains($_SERVER['REQUEST_URI'], '%2e')){
+        http_response_code(404);
         require 'app/pages/404.php';
         exit;
     }
@@ -83,6 +84,7 @@
                 if(!is_numeric($errorStatus)) $errorStatus = 500;
 
                 $errorPath = nextPath($path . '/index.php', $errorStatus . '.php');
+                http_response_code($errorStatus);
                 require sprintf('app/pages/%s/%s.php', $errorPath, $errorStatus);
             }
 
@@ -97,6 +99,7 @@
             
         }
         else{
+            http_response_code(404);
             require 'app/pages/404.php';
             exit;
         }
