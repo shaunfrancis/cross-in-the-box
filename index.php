@@ -18,9 +18,15 @@
     }
 
     spl_autoload_register( function() use ($request) {
+        // Base component
         require_once sprintf('%s/app/ssr-components/Component.php', __DIR__);
+        // SSR components
         $search = sprintf('%s/app/ssr-components/{shared,%s}/*/*.php', __DIR__, $_country ?? "*");
         foreach( glob($search, GLOB_BRACE) as $file ){
+            require_once($file);
+        }
+        // API services
+        foreach( glob(sprintf('%s/api/{*/,}/[!_]*.php', __DIR__), GLOB_BRACE) as $file ){
             require_once($file);
         }
     });
