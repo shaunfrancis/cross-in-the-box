@@ -1,6 +1,9 @@
 <?php
     $request = array_values( array_filter( preg_split( '/\//', str_replace(['/elections/'], '', $_SERVER['REQUEST_URI']) ) ) );
-    if(str_contains($_SERVER['REQUEST_URI'], '.') || str_contains($_SERVER['REQUEST_URI'], '%2e')) error(404);
+    if(str_contains($_SERVER['REQUEST_URI'], '.') || str_contains($_SERVER['REQUEST_URI'], '%2e')){
+        require 'app/pages/404.php';
+        exit;
+    }
 
     $_country = $request[0] ?? NULL;
     $_params = [
@@ -53,25 +56,50 @@
         if(isSanitaryPath($path) && file_exists($fullPath)){
 
             // First, render inits (down the tree)
-            foreach(getInitPaths($path . '/index.php') as $initPath) require $initPath;
+            foreach(getInitPaths($path . '/index.php') as $initPath){
+                try{
+                    require $initPath;
+                    if(!empty($_error)) throw new Exception($_error);
+                }
+                catch(Exception $error){
+                    // Catch any intentional exceptions thrown in inits (i.e. 404s)
+                    // as well as any $_errors flagged by inits without throwing (intended to allow continued execution where necessary)
+                    $_error = $error->getMessage();
+                }
+            }
+                
+            // Attempt to render page if no $_errors caught in init
+            try{
+                if(count($_params['path']) > ($_dynamic_params_accepted ?? 0)) throw new Exception(404);
+                if(!empty($_error)) throw new Exception($_error);
 
-            // Now, check how many levels of dynamic paths are accepted
-            // and 404 if incompatible
-            if(count($_params['path']) > ($_dynamic_params_accepted ?? 0)) error(404);
+                ob_start();
+                require $fullPath;
+            }
+            catch(Exception $error){
+                ob_start();
+                // Traverse up for error page
+                $errorStatus = $error->getMessage();
+                if(!is_numeric($errorStatus)) $errorStatus = 500;
 
-            // Next, render page
-            ob_start();
-            require $fullPath;
+                $errorPath = nextPath($path . '/index.php', $errorStatus . '.php');
+                require sprintf('app/pages/%s/%s.php', $errorPath, $errorStatus);
+            }
 
             // Finally, recurse up the tree to wrap page in layouts
-            foreach(getLayoutPaths($path . '/index.php') as $layoutPath){
+            $layoutPaths = traverseUpForPaths($path . '/index.php', 'layout.php');
+            foreach($layoutPaths as $layoutPath){
                 $_children = ob_get_clean();
                 ob_start();
                 require $layoutPath;
             }
+            echo ob_get_clean();
             
         }
-        else error(404);
+        else{
+            require 'app/pages/404.php';
+            exit;
+        }
         exit;
     }
 
@@ -88,32 +116,25 @@
         return $initPaths;
     }
 
-    function getLayoutPaths($path){
+    function traverseUpForPaths($path, $target){
         $layoutPaths = [];
         do{
-            $nextPath = nextLayoutPath($path);
-            $layoutPaths[] = sprintf("app/pages/%s/layout.php", $nextPath);
+            $nextPath = nextPath($path, $target);
+            $layoutPaths[] = sprintf("app/pages/%s/%s", $nextPath, $target);
             $path = dirname($nextPath);
         } while( !empty($nextPath) );
         return $layoutPaths;
     }
 
-    function nextLayoutPath($path){
+    function nextPath($path, $target){
         $directory = dirname($path);
         while($path !== $directory){
             $path = $directory;
-            if(isSanitaryPath($directory, 'layout.php')){
+            if(isSanitaryPath($directory, $target)){
                 return $directory;
             }
             $directory = dirname($directory);
         }
         return NULL;
-    }
-
-    function error($status){
-        echo match($status){
-            404 => "404",
-        };
-        exit;
     }
 ?>
