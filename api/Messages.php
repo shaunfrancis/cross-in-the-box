@@ -78,7 +78,7 @@ class MessagesService extends APIService{
 
             array_multisort(array_column($parsed_messages, 'date'), SORT_DESC, $parsed_messages);
 
-            return json_encode($parsed_messages, JSON_NUMERIC_CHECK);
+            return $parsed_messages;
         }
         catch(\Exception $error){ return self::fail(500, "Internal server error"); }
     }

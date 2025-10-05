@@ -144,7 +144,7 @@ class RegionService extends APIService{
                 $events[] = $new_event;
             }
 
-            return json_encode(array( "events" => $events, "parties" => $parties, "tree" => $tree_results ), JSON_NUMERIC_CHECK);
+            return array( "events" => $events, "parties" => $parties, "tree" => $tree_results );
         }
         catch(\Exception $error){ return self::fail(500, "Internal server error"); }
     }

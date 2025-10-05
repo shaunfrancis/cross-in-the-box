@@ -30,7 +30,7 @@ class ResultsService extends APIService{
                 if(!isset($result['s'])) unset($result['s']);
             }
 
-            return json_encode($election_results, JSON_NUMERIC_CHECK);
+            return $election_results;
         }
         catch(\Exception $error){ return self::fail(500, "Internal server error"); }
     }

@@ -51,7 +51,7 @@ class StateLinksService extends APIService{
                 }
             }
 
-            return json_encode( $links );
+            return $links;
         }
         catch(\Exception $error){ return self::fail(500, "Internal server error"); }
     }

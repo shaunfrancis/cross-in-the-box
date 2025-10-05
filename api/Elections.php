@@ -15,7 +15,7 @@ class ElectionsService extends APIService{
                 [':election' => $election]
             );
 
-            if(count($election_data) >= 1) return json_encode($election_data[0], JSON_NUMERIC_CHECK);
+            if(count($election_data) >= 1) return $election_data[0];
             else return self::fail(404, "Not found");
         }
         catch(\Exception $error){ return self::fail(500, "Internal server error"); }

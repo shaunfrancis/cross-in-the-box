@@ -20,7 +20,7 @@ class PollsService extends APIService{
                 $poll = array_filter($poll);
             }
 
-            return json_encode(array("polls" => $polls, "figures" => $figures), JSON_NUMERIC_CHECK);
+            return array("polls" => $polls, "figures" => $figures);
         }
         catch(\Exception $error){ return self::fail(500, "Internal server error"); }
     }

@@ -127,7 +127,7 @@ class SearchService extends APIService{
                 unset($candidate['party_title'], $candidate['color'], $candidate['textColor'], $candidate['votes']);
             }
 
-            return json_encode( array( "regions" => $regions, "candidates" => $candidates ), JSON_NUMERIC_CHECK);
+            return array( "regions" => $regions, "candidates" => $candidates );
         }
         catch(\Exception $error){ return self::fail(500, "Internal server error"); }
     }

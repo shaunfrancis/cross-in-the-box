@@ -14,7 +14,7 @@ class UpdatesService extends APIService{
                 [':election' => $election]
             );
 
-            return json_encode($updates, JSON_NUMERIC_CHECK);
+            return $updates;
         }
         catch(\Exception $error){ return self::fail(500, "Internal server error"); }
     }

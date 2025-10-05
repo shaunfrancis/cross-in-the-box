@@ -29,7 +29,7 @@ class SlugLookupService extends APIService{
             $regions = self::fetch( $sql, $params );
 
             if(count($regions) == 0) return self::fail(404, "Not found");
-            else return json_encode($regions[0], JSON_NUMERIC_CHECK);
+            else return $regions[0];
         }
         catch(\Exception $error){ return self::fail(500, "Internal server error"); }
     }

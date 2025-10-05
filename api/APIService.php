@@ -2,6 +2,8 @@
 namespace API;
 
 class APIService{
+    static bool $apiMode = FALSE;
+
     static function setup(string $country){
         return (object)[
             'boundary_changes' => $country . "_boundary_changes",
@@ -45,7 +47,10 @@ class APIService{
     }
 
     static function fail($status, $error){
-        http_response_code($status);
-        return json_encode( array("error" => $error) );
+        if(self::$apiMode){
+            http_response_code($status);
+            return array("error" => $error);
+        }
+        else return array("status" => $status, "error" => $error);
     }
 }

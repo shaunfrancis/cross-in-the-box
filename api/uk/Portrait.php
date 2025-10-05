@@ -3,7 +3,7 @@ namespace API;
 class PortraitService extends APIService{
 
     static function call(array $request){
-        $tables = parent::setup($country);
+        $tables = parent::setup($request[0]);
         if(count($request) != 3) return self::fail(404, "Not found");
 
         $constituency = $request[2];
@@ -15,12 +15,12 @@ class PortraitService extends APIService{
             );
 
             if(count($portrait_results) == 0){
-                return json_encode( array( "hasPortrait" => FALSE ) );
+                return array( "hasPortrait" => FALSE );
                 return;
             }
 
             $portrait_id = $portrait_results[0]['portrait'];
-            return json_encode( array( "hasPortrait" => TRUE, "id" => $portrait_id ) );
+            return array( "hasPortrait" => TRUE, "id" => $portrait_id );
         }
         catch(\Exception $error){ return self::fail(500, "Internal server error"); }
     }

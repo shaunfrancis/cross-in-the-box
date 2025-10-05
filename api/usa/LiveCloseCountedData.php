@@ -7,7 +7,7 @@ class LiveCloseCountedDataService extends APIService{
         
         try{
             $data = self::fetch("SELECT id, close, counted FROM usa_live_close_counted_data");
-            return json_encode($data, JSON_NUMERIC_CHECK);
+            return $data;
         }
         catch(\Exception $error){ return self::fail(500, "Internal server error"); }
     }

@@ -13,7 +13,7 @@ class PartiesService extends APIService{
                 if(!isset($party['textColor'])) unset($party['textColor']);
             }
 
-            return json_encode($parties, JSON_NUMERIC_CHECK);
+            return $parties;
         }
         catch(\Exception $error){ return self::fail(500, "Internal server error"); }
     }

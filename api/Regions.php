@@ -13,7 +13,7 @@ class RegionsService extends APIService{
 
             $regions = self::fetch($query, isset($type) ? [':type' => $type] : NULL);
 
-            return json_encode($regions, JSON_NUMERIC_CHECK);
+            return $regions;
         }
         catch(\Exception $error){ return self::fail(500, "Internal server error"); }
         
