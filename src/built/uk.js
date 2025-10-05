@@ -34,7 +34,7 @@ class SearchHandler{
         const permissionToProceed = await this.permission(query);
         if(!permissionToProceed) return null;
         const response = await fetch(this.url + encodeURIComponent(query) + this.suffix).then( res => res.json() );
-        if(query != this.previousQuery) return null;
+        if(query.trim() != this.previousQuery) return null;
         return response;
     }
 }
@@ -374,6 +374,7 @@ class RegionSearchSection{
         
         if(searchResults && searchResults.regions.length + searchResults.candidates.length == 0) this.status = "No results found.";
         else this.status = "";
+        if(!searchResults && query.trim().length < 3) this.structure.results.container.innerHTML = "";
         return searchResults;
     }
     addResults(

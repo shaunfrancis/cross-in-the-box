@@ -46,7 +46,8 @@ class SearchHandler{
         if(!permissionToProceed) return null;
 
         const response = await fetch(this.url + encodeURIComponent(query) + this.suffix).then( res => res.json() );
-        if(query != this.previousQuery) return null;
+        if(query.trim() != this.previousQuery) return null;
+
         return response;
     }
 }

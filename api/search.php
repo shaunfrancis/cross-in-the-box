@@ -29,6 +29,16 @@
         });
         if(count($filtered_words) > 0) $words = array_values($filtered_words);
 
+        // reduce instances of one- or two-letter words being searced by combining with preceding word
+        for($i = 0; $i < count($words); $i++){
+            if(strlen($words[$i]) < 3){
+                if($i > 0) $words[$i - 1] .= " " . $words[$i];
+                else if($i + 1 < count($words)) $words[$i + 1] = $words[$i] . " " . $words[$i + 1];
+                $words[$i] = NULL;
+            }
+        }
+        $words = array_filter($words);
+
         foreach($words as &$word) $word = "%" . $word . "%";
 
         $params = [...$words];

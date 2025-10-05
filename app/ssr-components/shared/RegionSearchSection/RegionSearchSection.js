@@ -38,6 +38,8 @@ class RegionSearchSection{
         if(searchResults && searchResults.regions.length + searchResults.candidates.length == 0) this.status = "No results found.";
         else this.status = "";
 
+        if(!searchResults && query.trim().length < 3) this.structure.results.container.innerHTML = "";
+
         return searchResults;
     }
 
