@@ -6,6 +6,7 @@
   },
   "devDependencies": {
     "esbuild": "0.25.9",
-    "parcel": "^2.15.4"
+    "parcel": "^2.15.4",
+    "parcel-optimizer-css-url": "^2.0.2"
   }
 }

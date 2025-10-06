@@ -4,7 +4,7 @@ node_modules
 .parcel-cache
 
 api/DB.php
-dashboard
+dev
 out
 
 src-old

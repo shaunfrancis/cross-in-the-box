@@ -52,7 +52,7 @@ export default class PopupBarGraph{
 
                 new Elt({
                     tag: 'div',
-                    classList: ["PopupBarGraph__percentage", "PopupBarGraph__bloc"],
+                    classList: ["PopupBarGraph__percentage", "PopupBarGraph__bloc", "tnum"],
                     style: { background: bgColor, color: party.textColor },
                     innerHTML: numberValue,
                 }),

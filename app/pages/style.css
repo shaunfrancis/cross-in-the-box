@@ -12,6 +12,17 @@
     font-family: "Oswald", sans-serif;
 }
 
+@font-face{
+    font-family: "OswaldTnum";
+    font-display: swap;
+    src: _url("/public/Oswald-tnum.woff2") format('woff2');
+    unicode-range: U+0020, U+002C, U+002E, U+0025, U+0030-0039, U+2044, U+00BC-00BE, U+00B2-U+00B3, U+00B9, U+2074;
+}
+.tnum{
+    font-family: "OswaldTnum", "Oswald", sans-serif;
+    font-variant-numeric: tabular-nums;
+}
+
 html{
     font-size: 16px;
 }
