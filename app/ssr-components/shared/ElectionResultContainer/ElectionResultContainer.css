@@ -17,7 +17,9 @@
     }
     &.loading{
         & > .ElectionResultContainer__messages-inner-container{
-            opacity:0;
+            background-image:_url("/public/images/message-placeholder.svg");
+            background-size: contain;
+            height:100%;
         }
     }
 }
@@ -28,7 +30,6 @@
     width:300px;
     overflow:auto;
     opacity:1;
-    transition:opacity 200ms;
 }
 
 .ElectionResultContainer__messages-scroll-button{
