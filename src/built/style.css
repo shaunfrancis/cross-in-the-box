@@ -4,6 +4,8 @@
 @import '../../app/ssr-components/shared/Header/Header.css';
 @import '../../app/ssr-components/shared/HeroNav/HeroNav.css';
 @import '../../app/ssr-components/shared/Map/Map.css';
+@import '../../app/ssr-components/shared/RegionBarGraph/RegionBarGraph.css';
+@import '../../app/ssr-components/shared/RegionLayout/RegionLayout.css';
 @import '../../app/ssr-components/shared/RegionPage/RegionPage.css';
 @import '../../app/ssr-components/shared/RegionSearchSection/RegionSearchSection.css';
 @import '../../app/ssr-components/shared/Toggle/Toggle.css';

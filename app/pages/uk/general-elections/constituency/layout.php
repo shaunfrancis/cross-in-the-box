@@ -14,7 +14,7 @@
     <?php if(empty($_error)) echo HeroNav::show($heroNavItems); ?>
 </section>
 
-<?= RegionPage::openSidebar(); ?>
+<?= RegionLayout::openSidebar(); ?>
     <section class="shaded purple">
         <h1>Find a constituency</h1>
         <?= \UK\RegionSearchSection::show(); ?>
@@ -28,6 +28,6 @@
             <p>Data missing or incorrect? <a href="mailto:hello@tennessine.co.uk?subject=Election%20data%20wrong%20or%20missing">Let us know.</a></p>
         </section>
     <?php endif; ?>
-<?= RegionPage::openMain(); ?>
+<?= RegionLayout::openMain(); ?>
     <?= $_children; ?>
-<?= RegionPage::close(); ?>
+<?= RegionLayout::close(); ?>

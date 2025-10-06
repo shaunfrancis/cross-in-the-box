@@ -19,18 +19,18 @@ if(empty($region) || !empty($region['error'])){
     throw new Exception(404);
 }
 
-$results = API\RegionService::call(["uk", $region['id']]);
+$data = API\RegionService::call(["uk", $region['id']]);
 
-usort($results['events'], function($a, $b){
+usort($data['events'], function($a, $b){
     return DateTime::createFromFormat('Y-m-d H:i:s', $a['date']) < DateTime::createFromFormat('Y-m-d H:i:s', $b['date']); 
 });
 
 // check if constituency was renamed (but not replaced);
 // if so, simulate redirect with canonical link and history.replaceState injection,
 // but no need to actually redirect since data already download and is equivalent
-if(!empty($results['events'][0]['region']['title']) && $results['events'][0]['region']['title'] != $region['title']){
-    $region['title'] = $results['events'][0]['region']['title'];
-    $region['id'] = $results['events'][0]['region']['id'];
+if(!empty($data['events'][0]['region']['title']) && $data['events'][0]['region']['title'] != $region['title']){
+    $region['title'] = $data['events'][0]['region']['title'];
+    $region['id'] = $data['events'][0]['region']['id'];
 
     $newSlug = preg_replace(
         '/,|\)|\(/', "", preg_replace(
@@ -46,10 +46,5 @@ if(!empty($results['events'][0]['region']['title']) && $results['events'][0]['re
 $_title[] = $region['title'];
 
 /*
-    const resultData : FullRegionData = await fetch(Endpoint + "/region/uk/" + regionData.id)
-        .then( res => res.text() )
-        .then( text => parseJSONWithDates(text, "date") );
-        
-    resultData.events.sort( (a,b) => b.date.valueOf() - a.date.valueOf() );
     resultData.parties.forEach( party => { party.displayId = partyIdToDisplayId(party.id) });
 */
