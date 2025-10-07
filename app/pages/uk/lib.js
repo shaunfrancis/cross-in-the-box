@@ -19,6 +19,7 @@ const partyIdToDisplayId = (partyId) => {
     return displayId;
 }
 
+/* Duplicated in lib/uk.php */
 const constituencyToSlug = (title) => {
     return title.toLowerCase().replace(/ /g, "-").replace(/,|\)|\(/g, "").replace(/ô/g, "o");
 };

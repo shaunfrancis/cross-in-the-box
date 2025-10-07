@@ -1,5 +1,6 @@
 <?php
 namespace Shared;
+include_once './app/lib/shared.php';
 
 class RegionPage extends \Base\Component{
     
@@ -130,7 +131,7 @@ class RegionPage extends \Base\Component{
             <div class="RegionPage__party-bloc" <?php /*style={{background:party.color, color:party.textColor}}*/ ?>>
                 <?= $event['data']['party']; ?>
             </div>
-            <h2>{dateToLongDate(castEvent.date)}</h2>
+            <h2><?= dateToLongDate( $event['date'] ); ?></h2>
             <span><?= $event['data']['note']; ?></span>
 
         </article>

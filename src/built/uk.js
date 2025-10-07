@@ -67,6 +67,7 @@ const parseJSONWithDates = (text, keys) => {
         return value;
     });
 }
+/* Duplicated in lib/shared.php */
 const dateToLongDate = (date, includeYear = date.getFullYear() !== (new Date()).getFullYear()) => {
     let ordinalIndicator = "th";
     if(![11,12,13].includes(date.getDate())) switch(date.getDate() % 10){
@@ -573,6 +574,7 @@ const partyIdToDisplayId = (partyId) => {
     else if(displayId.startsWith("IND_")) displayId = displayId.substring(4);
     return displayId;
 }
+/* Duplicated in lib/uk.php */
 const constituencyToSlug = (title) => {
     return title.toLowerCase().replace(/ /g, "-").replace(/,|\)|\(/g, "").replace(/ô/g, "o");
 };

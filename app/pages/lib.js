@@ -87,6 +87,7 @@ const parseJSONWithDates = (text, keys) => {
     });
 }
 
+/* Duplicated in lib/shared.php */
 const dateToLongDate = (date, includeYear = date.getFullYear() !== (new Date()).getFullYear()) => {
     let ordinalIndicator = "th";
     if(![11,12,13].includes(date.getDate())) switch(date.getDate() % 10){

@@ -1,17 +1,13 @@
 <?php
+include_once './app/lib/uk.php';
 $_dynamic_params_accepted = 1;
-
-$slugToLookupSlug = function(string $slug){
-    if($slug == "ynys-mon") return "ynys-môn";
-    return $slug;
-};
 
 if(empty($_params['path'][0])){
     $region = ['title' => "Constituency not found"];
     throw new Exception(404);
 }
 
-$slug = $slugToLookupSlug($_params['path'][0]);
+$slug = UK\slugToLookupSlug($_params['path'][0]);
 $region = API\SlugLookupService::call(["uk", $slug]);
 
 if(empty($region) || !empty($region['error'])){
@@ -32,13 +28,7 @@ if(!empty($data['events'][0]['region']['title']) && $data['events'][0]['region']
     $region['title'] = $data['events'][0]['region']['title'];
     $region['id'] = $data['events'][0]['region']['id'];
 
-    $newSlug = preg_replace(
-        '/,|\)|\(/', "", preg_replace(
-            '/ô/', "o", preg_replace(
-                '/ /', "-", strtolower($region['title'])
-            )
-        )
-    );
+    $newSlug = UK\constituencyToSlug($region['title']);
     $_headInjections[] = sprintf('<link rel="canonical" href="https://crossinthebox.com/uk/general-elections/constituency/%s" />', $newSlug);
     $_headInjections[] = sprintf('<script>history.replaceState(null,"","%s");</script>', $newSlug);
 }
