@@ -80,7 +80,7 @@ class RegionBarGraph extends \Base\Component{
 
             ?>
 
-            <div class="RegionBarGraph__row">
+            <div class="RegionBarGraph__row" data-party="<?= $result['party']; ?>">
                 <div class="RegionBarGraph__party RegionBarGraph__bloc">
                     <span><?= $result['party']; ?></span>
                     <div class="RegionBarGraph__hover"></div>
