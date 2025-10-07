@@ -1,3 +1,9 @@
+.RegionPage.pre-hydration{
+    & .RegionPage__update-note .RegionPage__party-bloc{
+        text-transform:uppercase;
+    }
+}
+
 .RegionPage__boundary-change-note{
     padding:30px 30px;
     border-top:3px dashed #DDD;

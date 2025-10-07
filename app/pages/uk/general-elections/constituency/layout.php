@@ -1,7 +1,7 @@
 <?php 
     namespace Shared;
     $heroNavItems = [
-        [ 'title' => "Results and changes", 'src' => "/images/nav-region.svg", 'id' => "" ],
+        [ 'title' => "Results and changes", 'src' => "/images/nav-region.svg", 'id' => "election-results" ],
     ];
 ?>
 

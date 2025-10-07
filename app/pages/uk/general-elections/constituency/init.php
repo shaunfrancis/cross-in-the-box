@@ -44,7 +44,3 @@ if(!empty($data['events'][0]['region']['title']) && $data['events'][0]['region']
 }
 
 $_title[] = $region['title'];
-
-/*
-    resultData.parties.forEach( party => { party.displayId = partyIdToDisplayId(party.id) });
-*/

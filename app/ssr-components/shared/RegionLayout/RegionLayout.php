@@ -7,7 +7,7 @@ class RegionLayout extends \Base\Component{
         ob_start();
     ?>
 
-        <div class="RegionPage">
+        <div class="RegionPage pre-hydration">
             <aside>
                 <?php //Children ?>
 
