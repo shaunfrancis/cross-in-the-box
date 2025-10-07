@@ -1,13 +1,35 @@
 const Endpoint = "/api";
-class CachedData{
-    constructor(){}
+class CachedDataSkeleton{
+    static parties = [];
+    static fetchParties(){ return new Promise( res => res([]) ); }
+    static regions = [];
+    static fetchRegions(){ return new Promise( res => res([]) ); }
     static _results = {};
     static get results(){
         return this._results;
     }
-    
-    static parties = [];
-    static regions = [];
+    static downloadProperty(key, path, applyTransform = (_) => _){
+        return new Promise( async resolve => {
+            // check if parties already exists
+            if(this[key].length !== 0) return resolve(this[key]);
+            // look in localStorage first
+            // (implement later!!)
+            // now download
+            const promiseKey = key + "Promise";
+            if(!this[promiseKey]){
+                this[promiseKey] = fetch(path).then( async res => {
+                    const data = await res.json();
+                    delete this[promiseKey];
+                    return data;
+                });
+            }
+            const data = await this[promiseKey];
+            applyTransform(data);
+            this[key] = data;
+            // (set in localStorage here)
+            resolve(data);
+        });
+    }
 };
 const DefaultParty = window.DefaultParty = {
     id: "?",
@@ -138,28 +160,8 @@ class ElectionResultContainer{
         }
     }
     async downloadData({ election }, { messageGroup, showChanges }){
-        if(CachedData.parties.length === 0){
-            if(!CachedData.partiesPromise){
-                CachedData.partiesPromise = fetch(Endpoint + "/parties/uk").then( async res => {
-                    const data = await res.json();
-                    delete CachedData.partiesPromise;
-                    return data;
-                });
-            }
-            const partyData = await CachedData.partiesPromise;
-            partyData.forEach( party => party.displayId = partyIdToDisplayId(party.id) );
-            CachedData.parties = partyData;
-        }
-        if(CachedData.regions.length === 0){
-            if(!CachedData.regionsPromise){
-                CachedData.regionsPromise = fetch(Endpoint + "/regions/uk").then( async res => {
-                    const data = await res.json();
-                    return data;
-                });
-            }
-            const regionsData = await CachedData.regionsPromise;
-            CachedData.regions = regionsData;
-        }
+        if(CachedData.parties.length === 0) await CachedData.fetchParties();
+        if(CachedData.regions.length === 0) await CachedData.fetchRegions();
         if(showChanges){
             this.data.updates = await fetch(Endpoint + "/updates/uk/" + election)
                 .then( res => res.text() )
@@ -183,7 +185,7 @@ class ElectionResultContainer{
         return results.filter(result => result.elected);
     }
     addSummary(){}
-    updateMap(showChanges = false){
+updateMap(showChanges = false){
         const newFills = []; // {id: string, color: string, opacity?: number}[]
         this.winFormula(this.data.results).forEach( result => {
             const regionUpdates = this.data.updates.filter( u => u.id == result.id );
@@ -339,6 +341,30 @@ class Map{
         }
     }
 }
+window.addEventListener('DOMContentLoaded', async () => {
+    if(CachedData.parties.length === 0) await CachedData.fetchParties();
+    for(const container of document.querySelectorAll('.RegionBarGraph')){
+        for(const row of container.querySelectorAll('.RegionBarGraph__row')){
+            const partyId = row.getAttribute('data-party');
+            const blocs = {
+                party: row.querySelector('.RegionBarGraph__party'),
+                candidate: row.querySelector('.RegionBarGraph__candidate'),
+                votes: row.querySelector('.RegionBarGraph__votes'),
+                percentage: row.querySelector('.RegionBarGraph__percentage'),
+                bar: row.querySelector('.RegionBarGraph__bar'),
+            };
+            let party = CachedData.parties.find( p => p.id === partyId );
+            if(!party) party = DefaultParty;
+            Object.values(blocs).forEach( elt => {
+                elt.style.background = party.color || "var(--default-color)";
+                if(party.textColor) elt.style.color = party.textColor;
+            });
+            blocs.party.querySelector('span').innerHTML = party.displayId;
+            row.querySelector('.RegionBarGraph__hover').innerHTML = party.title;
+        }
+        container.classList.remove('pre-hydration');
+    }
+});
 class RegionSearchSection{
     constructor(elt){
         this.structure = this.hydrate(elt);
@@ -531,6 +557,16 @@ class Toggle{
     }
 }
 
+class CachedData extends CachedDataSkeleton{
+    static fetchParties(){
+        return this.downloadProperty("parties", Endpoint + "/parties/uk", (data) => {
+            data.forEach( party => party.displayId = partyIdToDisplayId(party.id) );
+        });
+    }
+    static fetchRegions(){
+        return this.downloadProperty("regions", Endpoint + "/regions/uk");
+    }
+}
 const partyIdToDisplayId = (partyId) => {
     let displayId = partyId.toUpperCase();
     if(["speaker","vacant"].includes(partyId)) displayId = partyId.charAt(0).toUpperCase() + partyId.slice(1);

@@ -1,3 +1,15 @@
+class CachedData extends CachedDataSkeleton{
+    static fetchParties(){
+        return this.downloadProperty("parties", Endpoint + "/parties/uk", (data) => {
+            data.forEach( party => party.displayId = partyIdToDisplayId(party.id) );
+        });
+    }
+
+    static fetchRegions(){
+        return this.downloadProperty("regions", Endpoint + "/regions/uk");
+    }
+}
+
 const partyIdToDisplayId = (partyId) => {
     let displayId = partyId.toUpperCase();
 

@@ -90,28 +90,8 @@ class ElectionResultContainer{
 
     async downloadData({ election }, { messageGroup, showChanges }){
 
-        if(CachedData.parties.length === 0){
-            if(!CachedData.partiesPromise){
-                CachedData.partiesPromise = fetch(Endpoint + "/parties/uk").then( async res => {
-                    const data = await res.json();
-                    delete CachedData.partiesPromise;
-                    return data;
-                });
-            }
-            const partyData = await CachedData.partiesPromise;
-            partyData.forEach( party => party.displayId = partyIdToDisplayId(party.id) );
-            CachedData.parties = partyData;
-        }
-        if(CachedData.regions.length === 0){
-            if(!CachedData.regionsPromise){
-                CachedData.regionsPromise = fetch(Endpoint + "/regions/uk").then( async res => {
-                    const data = await res.json();
-                    return data;
-                });
-            }
-            const regionsData = await CachedData.regionsPromise;
-            CachedData.regions = regionsData;
-        }
+        if(CachedData.parties.length === 0) await CachedData.fetchParties();
+        if(CachedData.regions.length === 0) await CachedData.fetchRegions();
 
         if(showChanges){
             this.data.updates = await fetch(Endpoint + "/updates/uk/" + election)
@@ -141,7 +121,7 @@ class ElectionResultContainer{
 
     addSummary(){}
 
-    updateMap(showChanges = false){
+updateMap(showChanges = false){
         const newFills = []; // {id: string, color: string, opacity?: number}[]
         this.winFormula(this.data.results).forEach( result => {
             const regionUpdates = this.data.updates.filter( u => u.id == result.id );

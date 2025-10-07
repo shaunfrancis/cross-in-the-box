@@ -1,16 +1,43 @@
 const Endpoint = "/api";
 
-class CachedData{
+class CachedDataSkeleton{
 
-    constructor(){}
+    static parties = [];
+    static fetchParties(){ return new Promise( res => res([]) ); }
+    static regions = [];
+    static fetchRegions(){ return new Promise( res => res([]) ); }
 
     static _results = {};
     static get results(){
         return this._results;
     }
-    
-    static parties = [];
-    static regions = [];
+
+    static downloadProperty(key, path, applyTransform = (_) => _){
+        return new Promise( async resolve => {
+            // check if parties already exists
+            if(this[key].length !== 0) return resolve(this[key]);
+
+            // look in localStorage first
+            // (implement later!!)
+
+            // now download
+            const promiseKey = key + "Promise";
+            if(!this[promiseKey]){
+                this[promiseKey] = fetch(path).then( async res => {
+                    const data = await res.json();
+                    delete this[promiseKey];
+                    return data;
+                });
+            }
+
+            const data = await this[promiseKey];
+            applyTransform(data);
+            this[key] = data;
+            // (set in localStorage here)
+
+            resolve(data);
+        });
+    }
 };
 
 const DefaultParty = window.DefaultParty = {
