@@ -28,8 +28,8 @@ files.forEach( ({dir, path}) => {
 });
 
 // Bundle shared.js into each [country].js file
-writtenFiles.forEach( (file, index) => {
-    if(index === 0) return; // skip shared.js itself
-    fs.writeFileSync(file, fs.readFileSync(writtenFiles[0]) + "\n" + fs.readFileSync(file));
+const sharedFile = writtenFiles.find( file => file === "src/built/shared.js" );
+writtenFiles.filter(file => file != sharedFile).forEach( (file, index) => {
+    fs.writeFileSync(file, fs.readFileSync(sharedFile) + "\n" + fs.readFileSync(file));
 });
-fs.rmSync(writtenFiles[0]);
+fs.rmSync(sharedFile);

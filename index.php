@@ -123,8 +123,10 @@
         $layoutPaths = [];
         do{
             $nextPath = nextPath($path, $target);
-            $layoutPaths[] = sprintf("app/pages/%s/%s", $nextPath, $target);
-            $path = dirname($nextPath);
+            if(!empty($nextPath)){
+                $layoutPaths[] = sprintf("app/pages/%s/%s", $nextPath, $target);
+                $path = $nextPath;
+            }
         } while( !empty($nextPath) );
         return $layoutPaths;
     }
@@ -134,7 +136,6 @@
         while($path !== $directory){
             $path = $directory;
             if(isSanitaryPath($directory, $target)){
-                if($directory === "/") $directory = "";
                 return $directory;
             }
             $directory = dirname($directory);
