@@ -7,7 +7,7 @@
         --max-rounds: 3;
         display:grid;
         row-gap:30px;
-        grid-template-columns:30px 80px repeat(var(--max-rounds), minmax(20px, min-content)) 1fr 30px;
+        grid-template-columns:30px 85px repeat(var(--max-rounds), minmax(20px, min-content)) 1fr 30px;
     }
 
     section:has(> .RegionBarGraph) > *{
@@ -56,7 +56,7 @@
     grid-template-columns:subgrid;
 }
 
-.bar-graph-heading > .RegionBarGraph__bloc{ 
+.RegionBarGraph__heading > .RegionBarGraph__bloc{ 
     background: #eee;
     color:#555;
     cursor:default;
@@ -79,6 +79,7 @@
     cursor:pointer;
     overflow:visible;
     grid-column:1;
+    padding:4px 8px;
 }
 
 .RegionBarGraph__party span{

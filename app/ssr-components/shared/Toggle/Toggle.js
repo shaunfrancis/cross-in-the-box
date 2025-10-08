@@ -14,12 +14,14 @@ class Toggle{
 
             const off = elt.querySelector('.Toggle__off');
             if(off) off.addEventListener('click', () => {
+                state = false;
                 inner.classList.remove('Toggle__toggled');
                 fun(false);
             });
 
             const on = elt.querySelector('.Toggle__on');
             if(on) on.addEventListener('click', () => {
+                state = true;
                 inner.classList.add('Toggle__toggled');
                 fun(true);
             });

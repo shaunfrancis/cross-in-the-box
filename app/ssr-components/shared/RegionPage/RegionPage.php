@@ -110,25 +110,10 @@ class RegionPage extends \Base\Component{
         );
     }
 
-    static function renderUpdateEvent($event){ 
-        
-        /* const party = data.parties.find( p => p.id == castEvent.data.party ) || DefaultParty;
-            eventNodes.push(
-                <article className={styles["update-note"]} key={index}>
-
-                    <div className={styles["party-bloc"]} style={{background:party.color, color:party.textColor}}>
-                        {party.displayId}
-                    </div>
-                    <h2>{dateToLongDate(castEvent.date)}</h2>
-                    <span>{castEvent.data.note}</span>
-
-                </article>
-            );
-            */
-        ?>
+    static function renderUpdateEvent($event){ ?>
         <article class="RegionPage__update-note">
 
-            <div class="RegionPage__party-bloc" <?php /*style={{background:party.color, color:party.textColor}}*/ ?>>
+            <div class="RegionPage__party-bloc" data-party="<?= $event['data']['party']; ?>">
                 <?= $event['data']['party']; ?>
             </div>
             <h2><?= dateToLongDate( $event['date'] ); ?></h2>
