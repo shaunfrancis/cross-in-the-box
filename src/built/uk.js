@@ -1,32 +1,71 @@
 const Endpoint = "/api";
 class CachedDataSkeleton{
-    static parties = [];
-    static fetchParties(){ return new Promise( res => res([]) ); }
-    static regions = [];
-    static fetchRegions(){ return new Promise( res => res([]) ); }
-    static _results = {};
-    static get results(){
-        return this._results;
+    static promises = {};
+    // fallback methods
+    static fetchArray(){ return new Promise( res => res([]) ); }
+    static fetchObject(key){
+        return new Promise( res => {
+            const obj = {};
+            obj[key] = [];
+            res(obj);
+        } );
     }
-    static downloadProperty(key, path, applyTransform = (_) => _){
-        return new Promise( async resolve => {
-            // check if parties already exists
-            if(this[key].length !== 0) return resolve(this[key]);
-            // look in localStorage first
-            // (implement later!!)
-            // now download
-            const promiseKey = key + "Promise";
-            if(!this[promiseKey]){
-                this[promiseKey] = fetch(path).then( async res => {
-                    const data = await res.json();
-                    delete this[promiseKey];
-                    return data;
+    static parties = [];
+    static fetchParties(){ return this.fetchArray(); }
+    static regions = [];
+    static fetchRegions(){ return this.fetchArray(); }
+    static results = {};
+    static fetchResults(_){ return this.fetchObject(_); }
+    static messages = {};
+    static fetchMessages(group, path){
+        return this.downloadProperty(["messages", group], path, {
+            applyParse: async (response) => {
+                const text = await response.text();
+                const json = parseJSONWithDates(text, 'date');
+                return json;
+            },
+            applyTransform: (data) => {
+                data.sort( (a,b) => {
+                    return (a.pinned != b.pinned) ? (a.pinned || Infinity) - (b.pinned || Infinity) : 
+                        (a.date.valueOf() != b.date.valueOf()) ? b.date.valueOf() - a.date.valueOf() : b.id - a.id;
                 });
             }
-            const data = await this[promiseKey];
+        });
+    }
+    static downloadProperty(propertyArray, path, { applyParse, applyTransform = (_) => _ } = {} ){
+        return new Promise( async resolve => {
+            
+            const propertyValue = propertyArray.reduce( (obj, key) => {
+                if(!obj) return null;
+                else return obj[key];
+            }, this);
+            
+            // check if value already exists
+            if(propertyValue && propertyValue.length !== 0) return resolve(property);
+            // look in localStorage first (indexedDB?)
+            // (implement later!!)
+            // now download
+            const promiseKey = propertyArray.join("|");
+            let existingPromise = this.promises[promiseKey];
+            if(!existingPromise){
+                existingPromise = fetch(path).then( async res => {
+                    let data;
+                    if(applyParse) data = await applyParse(res);
+                    else data = await res.json();
+                    this.promises[promiseKey]
+                    return data;
+                });
+                this.promises[promiseKey] = existingPromise;
+            }
+            const data = await existingPromise;
             applyTransform(data);
-            this[key] = data;
-            // (set in localStorage here)
+            let parent = this;
+            for(let i = 0; i < propertyArray.length - 1; i++){
+                if(!parent[propertyArray[i]]) parent[propertyArray[i]] = {};
+                parent = parent[propertyArray[i]];
+            }
+            parent[propertyArray[propertyArray.length - 1]] = data;
+            // (set in localStorage (indexedDB?) here)
             resolve(data);
         });
     }
@@ -86,6 +125,7 @@ class ElectionResultContainer{
     static elementMaps = new WeakMap();
     constructor(elt, MapClass){
         this.structure = this.hydrate(elt);
+        this.winFormulaName = this.structure.container.getAttribute('data-win-formula');
         this.data = {
             election: this.structure.container.getAttribute('data-election'),
             updates: [],
@@ -106,6 +146,7 @@ class ElectionResultContainer{
             // clean up HTML
             container.removeAttribute('data-type');
             container.removeAttribute('data-src');
+            container.removeAttribute('data-win-formula');
             return instance;
         });
         this.constructor.elementMaps.set(this.structure.container, this);
@@ -119,7 +160,7 @@ class ElectionResultContainer{
                         await instance.downloadData(instance.data, instance.attributes);
                         instance.addSummary();
                         instance.updateMap();
-                        if(instance.data.messages) instance.addMessages();
+                        if(CachedData.messages[instance.attributes.messageGroup]) instance.addMessages();
                     }
                 }
             });
@@ -163,32 +204,44 @@ class ElectionResultContainer{
     async downloadData({ election }, { messageGroup, showChanges }){
         if(CachedData.parties.length === 0) await CachedData.fetchParties();
         if(CachedData.regions.length === 0) await CachedData.fetchRegions();
+        if(!CachedData.results[election]) await CachedData.fetchResults(election);
         if(showChanges){
             this.data.updates = await fetch(Endpoint + "/updates/uk/" + election)
                 .then( res => res.text() )
                 .then( res => parseJSONWithDates(res, "date") );
             this.data.updates.sort( (a,b) => a.date.valueOf() - b.date.valueOf() );
         }
-        this.data.results =  await fetch(Endpoint + '/results/uk/' + election).then( res => res.json() );
-        CachedData.results[election] = this.data.results;
-        if(messageGroup){ 
-            //const newMessages = await getMessages(parties, latestMessageDate, '/messages/uk/' + messageGroup, regionUrlFun, timeFun);
-            this.data.messages = await fetch(Endpoint + '/messages/uk/' + messageGroup)
-                .then( res => res.text() )
-                .then( res => parseJSONWithDates(res, 'date'));
-            this.data.messages.sort( (a,b) => {
-                return (a.pinned != b.pinned) ? (a.pinned || Infinity) - (b.pinned || Infinity) : 
-                    (a.date.valueOf() != b.date.valueOf()) ? b.date.valueOf() - a.date.valueOf() : b.id - a.id;
-            });
-        }
+        if(messageGroup && !CachedData.messages[messageGroup]) await CachedData.fetchMessages(messageGroup);
     }
     winFormula(results){
-        return results.filter(result => result.elected);
+        switch(this.winFormulaName){
+            case "second-place": { // parties in second place
+                const regionResults = [];
+                results.forEach(result => {
+                    if(!(result.id in regionResults)){
+                        regionResults[result.id] = { largest: result, secondLargest: {votes: -Infinity}, count: 1 }
+                    }
+                    else{
+                        if(result.votes > regionResults[result.id].largest.votes){
+                            regionResults[result.id].secondLargest = regionResults[result.id].largest;
+                            regionResults[result.id].largest = result;
+                        }
+                        else if(result.votes > regionResults[result.id].secondLargest.votes){
+                            regionResults[result.id].secondLargest = result;
+                        }
+                        regionResults[result.id].count++;
+                    }
+                });
+                return regionResults.filter( regionResult => regionResult.count > 1).map( regionResult => regionResult.secondLargest );
+            }
+            default: // any elected
+                return results.filter(result => result.elected);
+        }
     }
     addSummary(){}
-updateMap(showChanges = false){
+    updateMap(showChanges = false){
         const newFills = []; // {id: string, color: string, opacity?: number}[]
-        this.winFormula(this.data.results).forEach( result => {
+        this.winFormula(CachedData.results[this.data.election]).forEach( result => {
             const regionUpdates = this.data.updates.filter( u => u.id == result.id );
             if(regionUpdates.length > 0){
                 const latestUpdate = regionUpdates[regionUpdates.length - 1];
@@ -234,7 +287,7 @@ updateMap(showChanges = false){
             });
             return spans;
         }
-        this.data.messages.forEach(message => {
+        CachedData.messages[this.attributes.messageGroup].forEach(message => {
             const square = message.square ? (CachedData.parties.find(p => p.id == message.square) || DefaultParty) : null;
             const oldSquare = message.old_square ? (CachedData.parties.find(p => p.id == message.old_square) || DefaultParty) : null;
             const children = childrenFun ? [...injectLinks(message.text), ...childrenFun(message)] : injectLinks(message.text);
@@ -295,7 +348,14 @@ class Map{
             regionElts.forEach(regionElt => {
                 regionElt.setAttribute('fill', fill.color);
                 regionElt.setAttribute('style', fill.opacity !== undefined ? "opacity:" + fill.opacity : "");
-                regionElt.addEventListener('mousemove', (event) => {
+                
+                regionElt.removeEventListener('mouseover', this.mouseover);
+                regionElt.addEventListener('mouseover', this.mouseover = (event) => {
+                    const popup = this.containerInstance.structure.hoverPopup;
+                    hoverFun(true, popup, region.id);
+                });
+                regionElt.removeEventListener('mousemove', this.mousemove);
+                regionElt.addEventListener('mousemove', this.mousemove = (event) => {
                     const popup = this.containerInstance.structure.hoverPopup;
                     const coordinates = [event.clientX, event.clientY];
                     const width = popup.offsetWidth;
@@ -306,14 +366,15 @@ class Map{
                     popup.style.left = coordinates[0] + offsets[0] + 20 + "px";
                     popup.style.top = coordinates[1] + offsets[1] + 20 + "px";
                     popup.classList.remove('hidden');
-                    hoverFun(true, popup, region.id);
                 });
-                regionElt.addEventListener('mouseout', () => {
+                regionElt.removeEventListener('mouseout', this.mouseout);
+                regionElt.addEventListener('mouseout', this.mouseout = () => {
                     const popup = this.containerInstance.structure.hoverPopup;
                     popup.classList.add('hidden');
                     hoverFun(false, popup);
                 });
-                regionElt.addEventListener('click', () => {
+                regionElt.removeEventListener('click', this.click);
+                regionElt.addEventListener('click', this.click = () => {
                     clickFun(region.id);
                 });
             });
@@ -548,26 +609,26 @@ class RegionSearchHandler extends SearchHandler{
 }
 class Toggle{
     static register(id, fun){
-        const elts = document.querySelectorAll('.Toggle[data-id="' + id + '"]');
-        for(const elt of elts){
-            let state = false;
-            const inner = elt.querySelector('.Toggle__inner');
-            const outer = elt.querySelector('.Toggle__outer');
-            if(inner && outer) outer.addEventListener('click', () => {
+        const toggles = document.querySelectorAll('.Toggle[data-id="' + id + '"]');
+        let state = false;
+        for(const toggle of toggles){
+            const inner = (elt) => elt.querySelector('.Toggle__inner');
+            const outer = (elt) => elt.querySelector('.Toggle__outer');
+            if(inner(toggle) && outer(toggle)) outer(toggle).addEventListener('click', () => {
                 state = !state;
-                inner.classList.toggle('Toggle__toggled');
+                toggles.forEach( t => inner(t).classList.toggle('Toggle__toggled') );
                 fun(state);
             });
-            const off = elt.querySelector('.Toggle__off');
+            const off = toggle.querySelector('.Toggle__off');
             if(off) off.addEventListener('click', () => {
                 state = false;
-                inner.classList.remove('Toggle__toggled');
+                toggles.forEach( t => inner(t).classList.remove('Toggle__toggled') );
                 fun(false);
             });
-            const on = elt.querySelector('.Toggle__on');
+            const on = toggle.querySelector('.Toggle__on');
             if(on) on.addEventListener('click', () => {
                 state = true;
-                inner.classList.add('Toggle__toggled');
+                toggles.forEach( t => inner(t).classList.add('Toggle__toggled') );
                 fun(true);
             });
             
@@ -577,13 +638,15 @@ class Toggle{
 
 class CachedData extends CachedDataSkeleton{
     static fetchParties(){
-        return this.downloadProperty("parties", Endpoint + "/parties/uk", (data) => {
-            data.forEach( party => party.displayId = partyIdToDisplayId(party.id) );
+        return this.downloadProperty(["parties"], Endpoint + "/parties/uk", { 
+            applyTransform: (data) => {
+                data.forEach( party => party.displayId = partyIdToDisplayId(party.id) );
+            }
         });
     }
-    static fetchRegions(){
-        return this.downloadProperty("regions", Endpoint + "/regions/uk");
-    }
+    static fetchRegions(){ return this.downloadProperty(["regions"], Endpoint + "/regions/uk") }
+    static fetchResults(election){ return this.downloadProperty(["results", election], Endpoint + "/results/uk/" + election) }
+    static fetchMessages(group, path = Endpoint + "/messages/uk/" + group){ return super.fetchMessages(group, path) }
 }
 const partyIdToDisplayId = (partyId) => {
     let displayId = partyId.toUpperCase();
@@ -611,9 +674,45 @@ class UKElectionResultContainer extends ElectionResultContainer{
     constructor(elt){
         super(elt, UKGeneral);
     }
+    winFormula(results){
+        switch(this.winFormulaName){
+            case "con-ref-combined": {
+                CachedData.parties.push({
+                    id: "custom_conref",
+                    displayId: "BLUE",
+                    color: "#089CD7"
+                });
+                let regionResults = [];
+                results.forEach(result => {
+                    if(!(result.id in regionResults)) regionResults[result.id] = {results: [], con: 0, ref: 0};
+                    if(["con","ref"].includes(result.party)){
+                        regionResults[result.id][result.party] = result.votes;
+                    }
+                    else regionResults[result.id].results.push(result);
+                });
+                regionResults = regionResults.map( regionResult => {
+                    const results = regionResult.results;
+                    results.push({ id: regionResult.results[0].id, party: "custom_conref", votes: regionResult.con + regionResult.ref });
+                    return results;
+                });
+                const winners = [];
+                Object.values(regionResults).forEach( regionResult => {
+                    winners.push(
+                        regionResult.reduce( (max, result) => {
+                            return result.votes > max.votes ? result : max;
+                        })
+                    );
+                });
+                
+                return winners;
+            }
+            default:
+                return super.winFormula(results);
+        }
+    }
     addSummary(){
         const summaries = []; // {party : Party, count : number}[]
-        this.winFormula(this.data.results).forEach( result => {
+        this.winFormula(CachedData.results[this.data.election]).forEach( result => {
             
             const regionUpdates = this.data.updates.filter( update => update.id == result.id );
             const winner = regionUpdates.length > 0 ? regionUpdates[regionUpdates.length - 1].party : result.party;
@@ -643,16 +742,20 @@ class UKElectionResultContainer extends ElectionResultContainer{
             if(!active) return;
             popup.innerHTML = "";
             const region = CachedData.regions.find( region => region.id == id );
-            const regionResults = this.data.results.filter( result => result.id == id ).sort( (a,b) => b.votes - a.votes );
+            const regionResults = CachedData.results[this.data.election]
+                .filter( result => result.id == id )
+                .sort( (a,b) => b.votes - a.votes );
             const regionUpdates = this.data.updates.filter( update => update.id == region.id );
             // Title
             if(!region) return popup.appendChild( new Elt({tag: 'h3', innerHTML: "Missing data"}) );
             popup.appendChild( new Elt({tag: 'h3', innerHTML: region.title}) );
             // Winning candidate
-            const winner = this.winFormula(regionResults)[0]?.candidate;
-            if(winner) popup.appendChild( new Elt({tag: 'h4', innerHTML: winner}) );
+            const winner = this.winFormula(regionResults)[0];
+            let innerHTML = winner?.candidate;
+            if(this.winFormulaName === "second-place") innerHTML += " in second place";
+            if(winner) popup.appendChild( new Elt({tag: 'h4', innerHTML: innerHTML}) );
             // Party progression blocs
-            const partyProgression = [CachedData.parties.find( party => party.id === this.winFormula(regionResults)[0]?.party ) || DefaultParty];
+            const partyProgression = [CachedData.parties.find( party => party.id === winner?.party ) || DefaultParty];
             regionUpdates.forEach( update => {
                 partyProgression.push( CachedData.parties.find( party => party.id == update.party ) || DefaultParty );
             });

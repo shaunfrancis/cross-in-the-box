@@ -1,13 +1,17 @@
 class CachedData extends CachedDataSkeleton{
     static fetchParties(){
-        return this.downloadProperty("parties", Endpoint + "/parties/uk", (data) => {
-            data.forEach( party => party.displayId = partyIdToDisplayId(party.id) );
+        return this.downloadProperty(["parties"], Endpoint + "/parties/uk", { 
+            applyTransform: (data) => {
+                data.forEach( party => party.displayId = partyIdToDisplayId(party.id) );
+            }
         });
     }
 
-    static fetchRegions(){
-        return this.downloadProperty("regions", Endpoint + "/regions/uk");
-    }
+    static fetchRegions(){ return this.downloadProperty(["regions"], Endpoint + "/regions/uk") }
+
+    static fetchResults(election){ return this.downloadProperty(["results", election], Endpoint + "/results/uk/" + election) }
+
+    static fetchMessages(group, path = Endpoint + "/messages/uk/" + group){ return super.fetchMessages(group, path) }
 }
 
 const partyIdToDisplayId = (partyId) => {

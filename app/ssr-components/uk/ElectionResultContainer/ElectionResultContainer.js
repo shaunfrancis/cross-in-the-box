@@ -55,7 +55,9 @@ class UKElectionResultContainer extends ElectionResultContainer{
             popup.innerHTML = "";
 
             const region = CachedData.regions.find( region => region.id == id );
-            const regionResults = this.data.results.filter( result => result.id == id ).sort( (a,b) => b.votes - a.votes );
+            const regionResults = CachedData.results[this.data.election]
+                .filter( result => result.id == id )
+                .sort( (a,b) => b.votes - a.votes );
             const regionUpdates = this.data.updates.filter( update => update.id == region.id );
 
             // Title

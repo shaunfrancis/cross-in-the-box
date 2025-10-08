@@ -43,7 +43,7 @@ class ElectionResultContainer{
                         await instance.downloadData(instance.data, instance.attributes);
                         instance.addSummary();
                         instance.updateMap();
-                        if(instance.data.messages) instance.addMessages();
+                        if(CachedData.messages[instance.attributes.messageGroup]) instance.addMessages();
                     }
                 }
             });
@@ -92,6 +92,7 @@ class ElectionResultContainer{
 
         if(CachedData.parties.length === 0) await CachedData.fetchParties();
         if(CachedData.regions.length === 0) await CachedData.fetchRegions();
+        if(!CachedData.results[election]) await CachedData.fetchResults(election);
 
         if(showChanges){
             this.data.updates = await fetch(Endpoint + "/updates/uk/" + election)
@@ -100,19 +101,7 @@ class ElectionResultContainer{
             this.data.updates.sort( (a,b) => a.date.valueOf() - b.date.valueOf() );
         }
 
-        this.data.results =  await fetch(Endpoint + '/results/uk/' + election).then( res => res.json() );
-        CachedData.results[election] = this.data.results;
-
-        if(messageGroup){ 
-            //const newMessages = await getMessages(parties, latestMessageDate, '/messages/uk/' + messageGroup, regionUrlFun, timeFun);
-            this.data.messages = await fetch(Endpoint + '/messages/uk/' + messageGroup)
-                .then( res => res.text() )
-                .then( res => parseJSONWithDates(res, 'date'));
-            this.data.messages.sort( (a,b) => {
-                return (a.pinned != b.pinned) ? (a.pinned || Infinity) - (b.pinned || Infinity) : 
-                    (a.date.valueOf() != b.date.valueOf()) ? b.date.valueOf() - a.date.valueOf() : b.id - a.id;
-            });
-        }
+        if(messageGroup && !CachedData.messages[messageGroup]) await CachedData.fetchMessages(messageGroup);
     }
 
     winFormula(results){
@@ -123,7 +112,7 @@ class ElectionResultContainer{
 
 updateMap(showChanges = false){
         const newFills = []; // {id: string, color: string, opacity?: number}[]
-        this.winFormula(this.data.results).forEach( result => {
+        this.winFormula(CachedData.results[this.data.election]).forEach( result => {
             const regionUpdates = this.data.updates.filter( u => u.id == result.id );
             if(regionUpdates.length > 0){
                 const latestUpdate = regionUpdates[regionUpdates.length - 1];
@@ -171,7 +160,7 @@ updateMap(showChanges = false){
             return spans;
         }
 
-        this.data.messages.forEach(message => {
+        CachedData.messages[this.attributes.messageGroup].forEach(message => {
             const square = message.square ? (CachedData.parties.find(p => p.id == message.square) || DefaultParty) : null;
             const oldSquare = message.old_square ? (CachedData.parties.find(p => p.id == message.old_square) || DefaultParty) : null;
 

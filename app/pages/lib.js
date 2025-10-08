@@ -1,39 +1,83 @@
 const Endpoint = "/api";
 
 class CachedDataSkeleton{
+    static promises = {};
 
-    static parties = [];
-    static fetchParties(){ return new Promise( res => res([]) ); }
-    static regions = [];
-    static fetchRegions(){ return new Promise( res => res([]) ); }
-
-    static _results = {};
-    static get results(){
-        return this._results;
+    // fallback methods
+    static fetchArray(){ return new Promise( res => res([]) ); }
+    static fetchObject(key){
+        return new Promise( res => {
+            const obj = {};
+            obj[key] = [];
+            res(obj);
+        } );
     }
 
-    static downloadProperty(key, path, applyTransform = (_) => _){
-        return new Promise( async resolve => {
-            // check if parties already exists
-            if(this[key].length !== 0) return resolve(this[key]);
+    static parties = [];
+    static fetchParties(){ return this.fetchArray(); }
 
-            // look in localStorage first
+    static regions = [];
+    static fetchRegions(){ return this.fetchArray(); }
+
+    static results = {};
+    static fetchResults(_){ return this.fetchObject(_); }
+
+    static messages = {};
+    static fetchMessages(group, path){
+        return this.downloadProperty(["messages", group], path, {
+            applyParse: async (response) => {
+                const text = await response.text();
+                const json = parseJSONWithDates(text, 'date');
+                return json;
+            },
+            applyTransform: (data) => {
+                data.sort( (a,b) => {
+                    return (a.pinned != b.pinned) ? (a.pinned || Infinity) - (b.pinned || Infinity) : 
+                        (a.date.valueOf() != b.date.valueOf()) ? b.date.valueOf() - a.date.valueOf() : b.id - a.id;
+                });
+            }
+        });
+    }
+
+    static downloadProperty(propertyArray, path, { applyParse, applyTransform = (_) => _ } = {} ){
+        return new Promise( async resolve => {
+            
+            const propertyValue = propertyArray.reduce( (obj, key) => {
+                if(!obj) return null;
+                else return obj[key];
+            }, this);
+            
+            // check if value already exists
+            if(propertyValue && propertyValue.length !== 0) return resolve(property);
+
+            // look in localStorage first (indexedDB?)
             // (implement later!!)
 
             // now download
-            const promiseKey = key + "Promise";
-            if(!this[promiseKey]){
-                this[promiseKey] = fetch(path).then( async res => {
-                    const data = await res.json();
-                    delete this[promiseKey];
+            const promiseKey = propertyArray.join("|");
+            let existingPromise = this.promises[promiseKey];
+            if(!existingPromise){
+                existingPromise = fetch(path).then( async res => {
+                    let data;
+                    if(applyParse) data = await applyParse(res);
+                    else data = await res.json();
+                    this.promises[promiseKey]
                     return data;
                 });
+                this.promises[promiseKey] = existingPromise;
             }
 
-            const data = await this[promiseKey];
+            const data = await existingPromise;
             applyTransform(data);
-            this[key] = data;
-            // (set in localStorage here)
+
+            let parent = this;
+            for(let i = 0; i < propertyArray.length - 1; i++){
+                if(!parent[propertyArray[i]]) parent[propertyArray[i]] = {};
+                parent = parent[propertyArray[i]];
+            }
+            parent[propertyArray[propertyArray.length - 1]] = data;
+
+            // (set in localStorage (indexedDB?) here)
 
             resolve(data);
         });
