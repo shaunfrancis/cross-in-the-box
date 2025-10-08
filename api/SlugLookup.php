@@ -12,7 +12,7 @@ class SlugLookupService extends APIService{
         // First, lowercase the title
         // Then, replace , ( ) ' with empty string
         // Then replace spaces and em dashes with hyphen
-        $sql = "SELECT id, title FROM $tables->regions WHERE 
+        $sql = "SELECT id, title, current FROM $tables->regions WHERE 
             REGEXP_REPLACE(
                 REGEXP_REPLACE(LOWER(title), '[,()\\']', ''),
                 '[ —]',
@@ -29,7 +29,10 @@ class SlugLookupService extends APIService{
             $regions = self::fetch( $sql, $params );
 
             if(count($regions) == 0) return self::fail(404, "Not found");
-            else return $regions[0];
+            else{
+                $currentRegion = array_find($regions, fn($region) => $region['current'] == 1);
+                return $currentRegion ?? $regions[0];
+            }
         }
         catch(\Exception $error){ return self::fail(500, "Internal server error"); }
     }

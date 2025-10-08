@@ -1,0 +1,6 @@
+.RegionPortrait > img{
+    background:var(--default-color);
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    object-position: top;
+}

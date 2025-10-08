@@ -1,6 +1,6 @@
 <?php
-namespace API;
-class LiveCloseCountedDataService extends APIService{
+namespace API\USA;
+class LiveCloseCountedDataService extends \API\APIService{
 
     static function call(array $request){
         if(count($request) != 2) return self::fail(404, "Not found");

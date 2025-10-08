@@ -1,6 +1,6 @@
 <?php
-namespace API;
-class PortraitService extends APIService{
+namespace API\UK;
+class PortraitService extends \API\APIService{
 
     static function call(array $request){
         $tables = parent::setup($request[0]);
@@ -16,11 +16,18 @@ class PortraitService extends APIService{
 
             if(count($portrait_results) == 0){
                 return array( "hasPortrait" => FALSE );
-                return;
             }
 
             $portrait_id = $portrait_results[0]['portrait'];
-            return array( "hasPortrait" => TRUE, "id" => $portrait_id );
+
+
+            $src = sprintf("https://members-api.parliament.uk/api/Members/%s/Portrait?cropType=ThreeTwo&webVersion=false", $portrait_id);
+            $attribution = sprintf("https://members.parliament.uk/member/%s/portrait", $portrait_id);
+
+            $headers = @get_headers($src);
+            if(empty($headers) || !preg_grep('~^HTTP/\d+\.\d+\s+2\d{2}~', $headers)) return array( "hasPortrait" => FALSE );
+
+            return array( "hasPortrait" => TRUE, "src" => $src, "attribution" => $attribution );
         }
         catch(\Exception $error){ return self::fail(500, "Internal server error"); }
     }

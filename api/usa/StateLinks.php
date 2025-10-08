@@ -1,6 +1,6 @@
 <?php
-namespace API;
-class StateLinksService extends APIService{
+namespace API\USA;
+class StateLinksService extends \API\APIService{
 
     static function call(array $request){
         if(count($request) != 3) return self::fail(404, "Not found");
