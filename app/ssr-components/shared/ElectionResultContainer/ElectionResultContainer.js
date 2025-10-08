@@ -7,6 +7,8 @@ class ElectionResultContainer{
 
     constructor(elt, MapClass){
         this.structure = this.hydrate(elt);
+        this.winFormulaName = this.structure.container.getAttribute('data-win-formula');
+
         this.data = {
             election: this.structure.container.getAttribute('data-election'),
             updates: [],
@@ -29,6 +31,7 @@ class ElectionResultContainer{
             // clean up HTML
             container.removeAttribute('data-type');
             container.removeAttribute('data-src');
+            container.removeAttribute('data-win-formula');
             return instance;
         });
 
@@ -105,12 +108,35 @@ class ElectionResultContainer{
     }
 
     winFormula(results){
-        return results.filter(result => result.elected);
+        switch(this.winFormulaName){
+            case "second-place": { // parties in second place
+                const regionResults = [];
+                results.forEach(result => {
+                    if(!(result.id in regionResults)){
+                        regionResults[result.id] = { largest: result, secondLargest: {votes: -Infinity}, count: 1 }
+                    }
+                    else{
+                        if(result.votes > regionResults[result.id].largest.votes){
+                            regionResults[result.id].secondLargest = regionResults[result.id].largest;
+                            regionResults[result.id].largest = result;
+                        }
+                        else if(result.votes > regionResults[result.id].secondLargest.votes){
+                            regionResults[result.id].secondLargest = result;
+                        }
+                        regionResults[result.id].count++;
+                    }
+                });
+                return regionResults.filter( regionResult => regionResult.count > 1).map( regionResult => regionResult.secondLargest );
+            }
+
+            default: // any elected
+                return results.filter(result => result.elected);
+        }
     }
 
     addSummary(){}
 
-updateMap(showChanges = false){
+    updateMap(showChanges = false){
         const newFills = []; // {id: string, color: string, opacity?: number}[]
         this.winFormula(CachedData.results[this.data.election]).forEach( result => {
             const regionUpdates = this.data.updates.filter( u => u.id == result.id );

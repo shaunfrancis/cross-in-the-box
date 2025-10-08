@@ -10,12 +10,14 @@ class ElectionResultContainer extends \Base\Component{
         array $dimensions,                      // [w: string, h: string, minW: string, minH: string]
         ?array $messages = [],                  // [group: string, open: bool?]
         ?bool $showChanges = FALSE,
-        ?string $dedicatedPage = NULL  
+        ?string $dedicatedPage = NULL,
+        ?string $winFormulaName = "default"
     ): void { ?>
 
         <div
             class="ElectionResultContainer"
             data-election="<?= $election; ?>"
+            data-win-formula="<?= $winFormulaName; ?>"
             <?php if($showChanges) : ?>data-show-changes="true"<?php endif; ?>
             style="height: min(<?= $dimensions['h']; ?>, calc(100vw - 30px)); min-height: <?= $dimensions['minH']; ?>;"
         >

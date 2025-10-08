@@ -17,9 +17,49 @@ class UKElectionResultContainer extends ElectionResultContainer{
         super(elt, UKGeneral);
     }
 
+    winFormula(results){
+        switch(this.winFormulaName){
+            case "con-ref-combined": {
+                CachedData.parties.push({
+                    id: "custom_conref",
+                    displayId: "BLUE",
+                    color: "#089CD7"
+                });
+
+                let regionResults = [];
+                results.forEach(result => {
+                    if(!(result.id in regionResults)) regionResults[result.id] = {results: [], con: 0, ref: 0};
+                    if(["con","ref"].includes(result.party)){
+                        regionResults[result.id][result.party] = result.votes;
+                    }
+                    else regionResults[result.id].results.push(result);
+                });
+                regionResults = regionResults.map( regionResult => {
+                    const results = regionResult.results;
+                    results.push({ id: regionResult.results[0].id, party: "custom_conref", votes: regionResult.con + regionResult.ref });
+                    return results;
+                });
+
+                const winners = [];
+                Object.values(regionResults).forEach( regionResult => {
+                    winners.push(
+                        regionResult.reduce( (max, result) => {
+                            return result.votes > max.votes ? result : max;
+                        })
+                    );
+                });
+                
+                return winners;
+            }
+
+            default:
+                return super.winFormula(results);
+        }
+    }
+
     addSummary(){
         const summaries = []; // {party : Party, count : number}[]
-        this.winFormula(this.data.results).forEach( result => {
+        this.winFormula(CachedData.results[this.data.election]).forEach( result => {
             
             const regionUpdates = this.data.updates.filter( update => update.id == result.id );
             const winner = regionUpdates.length > 0 ? regionUpdates[regionUpdates.length - 1].party : result.party;
@@ -65,11 +105,14 @@ class UKElectionResultContainer extends ElectionResultContainer{
             popup.appendChild( new Elt({tag: 'h3', innerHTML: region.title}) );
 
             // Winning candidate
-            const winner = this.winFormula(regionResults)[0]?.candidate;
-            if(winner) popup.appendChild( new Elt({tag: 'h4', innerHTML: winner}) );
+            const winner = this.winFormula(regionResults)[0];
+            let innerHTML = winner?.candidate;
+            if(this.winFormulaName === "second-place") innerHTML += " in second place";
+
+            if(winner) popup.appendChild( new Elt({tag: 'h4', innerHTML: innerHTML}) );
 
             // Party progression blocs
-            const partyProgression = [CachedData.parties.find( party => party.id === this.winFormula(regionResults)[0]?.party ) || DefaultParty];
+            const partyProgression = [CachedData.parties.find( party => party.id === winner?.party ) || DefaultParty];
             regionUpdates.forEach( update => {
                 partyProgression.push( CachedData.parties.find( party => party.id == update.party ) || DefaultParty );
             });

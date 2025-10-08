@@ -16,7 +16,7 @@ class Header extends \Base\Component{
                 />
             </a>
 
-            <h1><a href="/" class="unstyled"><?= $countryName; ?></a></h1>
+            <h1><a href="/<?= $countryAbbrev; ?>" class="unstyled"><?= $countryName; ?></a></h1>
 
             <nav>
                 <ul>

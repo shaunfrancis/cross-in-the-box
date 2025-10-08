@@ -47,8 +47,15 @@ class Map{
             regionElts.forEach(regionElt => {
                 regionElt.setAttribute('fill', fill.color);
                 regionElt.setAttribute('style', fill.opacity !== undefined ? "opacity:" + fill.opacity : "");
+                
+                regionElt.removeEventListener('mouseover', this.mouseover);
+                regionElt.addEventListener('mouseover', this.mouseover = (event) => {
+                    const popup = this.containerInstance.structure.hoverPopup;
+                    hoverFun(true, popup, region.id);
+                });
 
-                regionElt.addEventListener('mousemove', (event) => {
+                regionElt.removeEventListener('mousemove', this.mousemove);
+                regionElt.addEventListener('mousemove', this.mousemove = (event) => {
                     const popup = this.containerInstance.structure.hoverPopup;
                     const coordinates = [event.clientX, event.clientY];
                     const width = popup.offsetWidth;
@@ -61,15 +68,17 @@ class Map{
                     popup.style.left = coordinates[0] + offsets[0] + 20 + "px";
                     popup.style.top = coordinates[1] + offsets[1] + 20 + "px";
                     popup.classList.remove('hidden');
-
-                    hoverFun(true, popup, region.id);
                 });
-                regionElt.addEventListener('mouseout', () => {
+
+                regionElt.removeEventListener('mouseout', this.mouseout);
+                regionElt.addEventListener('mouseout', this.mouseout = () => {
                     const popup = this.containerInstance.structure.hoverPopup;
                     popup.classList.add('hidden');
                     hoverFun(false, popup);
                 });
-                regionElt.addEventListener('click', () => {
+
+                regionElt.removeEventListener('click', this.click);
+                regionElt.addEventListener('click', this.click = () => {
                     clickFun(region.id);
                 });
             });

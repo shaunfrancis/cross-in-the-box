@@ -68,18 +68,51 @@
         <!--<UKPollingSection parties={parties} />-->
     </section>
     
-    <!--<section ref={heroNavItems[3].ref}>
-        <div className="section-heading">
+    <section>
+        <div class="section-heading">
             <h1>Analysis</h1>
-            <Toggle 
-                from={"/images/uk-cartographic-icon.svg"} 
-                to={"/images/uk-geographic-icon.svg"} 
-                fun={(state) => { updateGeographicState(state) }}
-                value={geographic}
-            />
+            <?= Toggle::show(
+                $id = "map-type",
+                $from = "/images/uk-cartographic-icon.svg",
+                $to = "/images/uk-geographic-icon.svg",
+            ) ?>
         </div>
-        <UKAnalysisSection regions={regions} parties={parties} geographic={geographic} />
-    </section>-->
+
+        <?= ElectionResultsSection::open(); ?>
+            <?= \UK\ElectionResultContainer::show(
+                election: "2024",
+                title: ["2024", "parties in", "second place"],
+                winFormulaName: "second-place"
+            ); ?>
+            <?= \UK\ElectionResultContainer::show(
+                election: "2024",
+                title: ["2024", "results with", "Con and Ref combined"],
+                winFormulaName: "con-ref-combined"
+            ); ?>
+            <?= \UK\ElectionResultContainer::show(
+                election: "2019",
+                title: ["2019", "parties in", "second place"],
+                winFormulaName: "second-place"
+            ); ?>
+            <?= \UK\ElectionResultContainer::show(
+                election: "2017",
+                title: ["2017", "parties in", "second place"],
+                winFormulaName: "second-place"
+            ); ?>
+            <?= \UK\ElectionResultContainer::show(
+                election: "2015",
+                title: ["2015", "parties in", "second place"],
+                winFormulaName: "second-place"
+            ); ?>
+            <?= \UK\ElectionResultContainer::show(
+                election: "2010",
+                title: ["2010", "parties in", "second place"],
+                winFormulaName: "second-place"
+            ); ?>
+        <?= ElectionResultsSection::close(); ?>
+
+        <!-- <UKAnalysisSection regions={regions} parties={parties} geographic={geographic} /> -->
+    </section>
             
     <!--<UKMapDefs />-->
 

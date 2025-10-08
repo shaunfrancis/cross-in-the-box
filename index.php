@@ -134,6 +134,7 @@
         while($path !== $directory){
             $path = $directory;
             if(isSanitaryPath($directory, $target)){
+                if($directory === "/") $directory = "";
                 return $directory;
             }
             $directory = dirname($directory);
