@@ -8,13 +8,13 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 class UKRegionSearchSection extends RegionSearchSection{
-    constructor(elt){
-        super(elt);
+    constructor(elt, path = Endpoint + "/search/uk/"){
+        super(elt, path);
         this.structure.search.input.addEventListener('input', async (event) => {
             const query = event.target.value;
             const searchResults = await this.search(query);
             if(searchResults) this.addResults(searchResults, query, {
-                resultsHref: (region) => '/uk/general-elections/constituency/' + constituencyToSlug(region.title),
+                resultsHref: (region) => '/uk/general-elections/constituency/' + regionToSlug(region.title),
                 abolishedLabel: "Abolished constituency",
                 winnerLabel: "MP"
             });

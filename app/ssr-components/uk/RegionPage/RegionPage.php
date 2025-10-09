@@ -7,7 +7,7 @@ class RegionPage extends \Shared\RegionPage{
         
         parent::renderSuccessorLinks($event, $data, 
             "This constituency was abolished following a boundary review. It was succeeded by:",
-            fn($title) => "/uk/general-elections/constituency/" . constituencyToSlug($title)
+            fn($title) => "/uk/general-elections/constituency/" . regionToSlug($title)
         );
 
     }

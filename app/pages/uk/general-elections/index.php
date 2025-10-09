@@ -2,7 +2,7 @@
     namespace Shared;
     $heroNavItems = [
         [ 'title' => "Election results", 'src' => "/images/uk-nav-results.svg", 'id' => "election-results" ],
-        [ 'title' => "Find a constituency", 'src' => "/images/nav-region.svg", 'id' => "find-a-constituency" ],
+        [ 'title' => "Find a constituency", 'src' => "/images/nav-region.svg", 'id' => "find-a-constituency", 'focus' => ".RegionSearchSection__search-input" ],
         [ 'title' => "Opinion polling", 'src' => "/images/nav-polling.svg", 'id' => "opinion-polling" ]
     ];
 ?>

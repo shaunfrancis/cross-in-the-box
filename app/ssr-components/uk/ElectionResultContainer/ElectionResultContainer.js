@@ -87,7 +87,7 @@ class UKElectionResultContainer extends ElectionResultContainer{
 
         data.clickFun = (id) => {
             let region = CachedData.regions.find( r => r.id == id );
-            if(region) window.location.href = '/uk/general-elections/constituency/' + constituencyToSlug(region.title);
+            if(region) window.location.href = '/uk/general-elections/constituency/' + regionToSlug(region.title);
         }
 
         data.hoverFun = (active, popup, id) => {
@@ -126,19 +126,13 @@ class UKElectionResultContainer extends ElectionResultContainer{
     }
 
     addMessages(){
-        const dateFun = (date) => {
-            let time = date.getHours().toString().padStart(2,'0') + ":" + date.getMinutes().toString().padStart(2,'0');
-            const dayWord = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][date.getDay()];
-            const dateString = dayWord + " " + dateToLongDate(date) + ", " + time;
-            return dateString;
-        };
         const urlFun = (slug, type) => {
             let url = "/uk/";
             switch(type){
                 case "general": url += "general-elections/"; break;
                 default: url += "general-elections/"
             }
-            url += 'constituency/' + constituencyToSlug(slug);
+            url += 'constituency/' + regionToSlug(slug);
             return url;
         }
 
@@ -166,6 +160,6 @@ class UKElectionResultContainer extends ElectionResultContainer{
             return messageResults;
         }
 
-        super.addMessages({ dateFun: dateFun, urlFun: urlFun, childrenFun: childrenFun });
+        super.addMessages({ urlFun: urlFun, childrenFun: childrenFun });
     }
 }

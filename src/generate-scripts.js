@@ -29,7 +29,25 @@ files.forEach( ({dir, path}) => {
 
 // Bundle shared.js into each [country].js file
 const sharedFile = writtenFiles.find( file => file === "src/built/shared.js" );
-writtenFiles.filter(file => file != sharedFile).forEach( (file, index) => {
+writtenFiles.filter(file => file != sharedFile).forEach( file => {
     fs.writeFileSync(file, fs.readFileSync(sharedFile) + "\n" + fs.readFileSync(file));
 });
 fs.rmSync(sharedFile);
+
+// Strip out duplicate import statements before esbuild
+writtenFiles.forEach( file => {
+    if(file === sharedFile) return;
+
+    const lines = fs.readFileSync(file).toString('utf8').split("\n");
+    const imports = [];
+    let output = "";
+    lines.forEach( line => {
+        line = line.trim();
+        if(line.match(/^import /)){
+            if(imports.includes(line)) return;
+            else imports.push(line);
+        }
+        output += line + "\n";
+    });
+    fs.writeFileSync(file, output);
+});

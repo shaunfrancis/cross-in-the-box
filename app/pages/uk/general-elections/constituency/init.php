@@ -18,7 +18,7 @@ if(empty($region) || !empty($region['error'])){
 $data = API\RegionService::call(["uk", $region['id']]);
 
 usort($data['events'], function($a, $b){
-    return DateTime::createFromFormat('Y-m-d H:i:s', $a['date']) < DateTime::createFromFormat('Y-m-d H:i:s', $b['date']); 
+    return DateTime::createFromFormat('Y-m-d H:i:s', $a['date']) < DateTime::createFromFormat('Y-m-d H:i:s', $b['date']) ? 1 : -1;
 });
 
 // check if constituency was renamed (but not replaced);
@@ -28,7 +28,7 @@ if(!empty($data['events'][0]['region']['title']) && $data['events'][0]['region']
     $region['title'] = $data['events'][0]['region']['title'];
     $region['id'] = $data['events'][0]['region']['id'];
 
-    $newSlug = UK\constituencyToSlug($region['title']);
+    $newSlug = UK\regionToSlug($region['title']);
     $_headInjections[] = sprintf('<link rel="canonical" href="https://crossinthebox.com/uk/general-elections/constituency/%s" />', $newSlug);
     $_headInjections[] = sprintf('<script>history.replaceState(null,"","%s");</script>', $newSlug);
 }

@@ -159,10 +159,22 @@ class ElectionResultContainer{
     }
 
     addMessages({
-        dateFun = (date) => date, 
+        dateFun,
+        timezoneArgs = {},
         urlFun = (slug, type) => "#",
         childrenFun
     }){ 
+
+        if(!dateFun) dateFun = (date) => {
+            if(timezoneArgs.localeStringArgs) date = new Date(date.toLocaleString(...timezoneArgs.localeStringArgs));
+            let time = date.getHours().toString().padStart(2,'0') + ":" + date.getMinutes().toString().padStart(2,'0');
+            const dayWord = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][date.getDay()];
+            let dateString = dayWord + " " + dateToLongDate(date) + ", " + time;
+
+            if(timezoneArgs.localeLabel) dateString += ` <span style="font-size:0.8em">${timezoneArgs.localeLabel}</span>`;
+
+            return dateString;
+        };
         
         const injectLinks = (text) => {
             const spans = [];

@@ -2,7 +2,7 @@
 /* Collection of reusable helper functions */
 
 /* Duplicated in uk/lib.js */
-function constituencyToSlug(string $title){
+function regionToSlug(string $title){
     return preg_replace(
         '/ô/', "o", preg_replace(
             '/,|\)|\(/', "", preg_replace(

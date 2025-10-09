@@ -1,7 +1,9 @@
+import Elt from 'components/shared/_Elt/_Elt';
+
 class RegionSearchSection{
-    constructor(elt){
+    constructor(elt, path){
         this.structure = this.hydrate(elt);
-        this.handler = new RegionSearchHandler(Endpoint + "/search/uk/");
+        this.handler = new RegionSearchHandler(path);
     }
 
     hydrate(elt){

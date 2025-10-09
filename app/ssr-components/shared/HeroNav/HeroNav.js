@@ -4,5 +4,10 @@ window.addEventListener('DOMContentLoaded', () => {
         if(section) item.addEventListener('click', () => {
             section.scrollIntoView({behavior: "smooth"});
         });
+
+        const focusSelector = item.getAttribute('data-focus');
+        if(focusSelector) item.addEventListener('click', () => { 
+            document.querySelector(focusSelector)?.focus();
+        });
     }
 });
