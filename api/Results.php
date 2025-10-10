@@ -16,9 +16,21 @@ class ResultsService extends APIService{
         
         try{
             if(isset($parameters["compact"]) && $parameters["compact"] == "true"){
-                $election_sql = "SELECT region_id as id, election_subid as s, party as p, votes as v, elected as e FROM $tables->results WHERE election_id = :election";
+                $election_sql = "
+                    SELECT results.region_id as id, results.election_subid as s, results.party as p, results.votes as v, 
+                    candidates.elected as e 
+                    FROM $tables->results as results
+                    JOIN $tables->candidates as candidates ON results.id = candidates.result_id
+                    WHERE election_id = :election
+                ";
             }
-            else $election_sql = "SELECT region_id as id, election_subid as subid, party, candidate, votes, elected FROM $tables->results WHERE election_id = :election";
+            else $election_sql = "
+                SELECT results.region_id as id, results.election_subid as subid, results.party, results.votes, 
+                candidates.candidate, candidates.position as candidate_position, candidates.elected
+                FROM $tables->results as results
+                JOIN $tables->candidates as candidates ON results.id = candidates.result_id
+                WHERE election_id = :election
+            ";
 
             $election_results = self::fetch(
                 $election_sql,
@@ -27,6 +39,7 @@ class ResultsService extends APIService{
 
             foreach($election_results as &$result){
                 if(!isset($result['subid'])) unset($result['subid']);
+                if(!isset($result['candidate_position'])) unset($result['candidate_position']);
                 if(!isset($result['s'])) unset($result['s']);
             }
 

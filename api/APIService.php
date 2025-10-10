@@ -7,6 +7,7 @@ class APIService{
     static function setup(string $country){
         return (object)[
             'boundary_changes' => $country . "_boundary_changes",
+            'candidates' => $country . "_candidates",
             'elections' => $country . "_elections",
             'message_links' => $country . "_message_links",
             'messages' => $country . "_messages",

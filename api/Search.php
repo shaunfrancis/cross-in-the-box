@@ -70,7 +70,7 @@ class SearchService extends APIService{
             });
 
 
-            if($request[0] == "uk"){
+            if($request[0] == "uk" && (empty($type) || $type == "general")){
                 require_once './functions/uk_postcode_search.php';
                 $region_titles = uk_postcode_search($query);
 
@@ -87,15 +87,17 @@ class SearchService extends APIService{
 
             $type_fragment = isset($type) ? " AND regions.type = ?" : "";
             $candidates_sql = "SELECT * FROM (
-                SELECT regions.id, regions.title, results.candidate, results.party, results.votes, results.elected, elections.title as election, elections.date, parties.title as party_title, parties.color, parties.textColor
+                SELECT results.party, results.votes,
+                candidates.candidate, candidates.elected,
+                regions.id, regions.title,
+                elections.title as election, elections.date,
+                parties.title as party_title, parties.color, parties.textColor
                 FROM $tables->results as results
-                JOIN $tables->regions as regions
-                ON regions.id = results.region_id
-                JOIN $tables->elections as elections
-                ON elections.id = results.election_id
-                JOIN $tables->parties as parties
-                ON parties.id = results.party
-                WHERE (" . str_repeat("LOWER(results.candidate) LIKE ? OR ", count($words) - 1) . "LOWER(results.candidate) LIKE ?)" . $type_fragment . "
+                JOIN $tables->candidates as candidates ON candidates.result_id = results.id
+                JOIN $tables->regions as regions ON regions.id = results.region_id
+                JOIN $tables->elections as elections ON elections.id = results.election_id
+                JOIN $tables->parties as parties ON parties.id = results.party
+                WHERE (" . str_repeat("LOWER(candidates.candidate) LIKE ? OR ", count($words) - 1) . "LOWER(candidates.candidate) LIKE ?)" . $type_fragment . "
                 ORDER BY elections.date DESC
                 LIMIT 18446744073709551615
             ) as res

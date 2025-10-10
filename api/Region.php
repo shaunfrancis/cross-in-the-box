@@ -56,10 +56,15 @@ class RegionService extends APIService{
                 }
             }
             $results = self::fetch(
-                "SELECT res.region_id, reg.title as region_title, res.election_id as election, res.election_subid as subid, e.date as election_date, e.title as election_title, res.party, res.candidate, res.votes, res.elected 
-                FROM $tables->results as res
-                JOIN $tables->elections as e ON e.id = res.election_id
-                JOIN $tables->regions as reg ON reg.id = res.region_id
+                "SELECT 
+                results.region_id, results.election_id as election, results.election_subid as subid, results.party, results.votes,
+                candidates.candidate, candidates.position as candidate_position, candidates.elected,
+                elections.date as election_date, elections.title as election_title, 
+                regions.title as region_title
+                FROM $tables->results as results
+                JOIN $tables->candidates as candidates ON candidates.result_id = results.id
+                JOIN $tables->elections as elections ON elections.id = results.election_id
+                JOIN $tables->regions as regions ON regions.id = results.region_id
                 WHERE region_id IN (" . str_repeat("?,", count($direct_regions) - 1) . "?)",
                 $direct_regions
             );
@@ -95,6 +100,7 @@ class RegionService extends APIService{
             $events = array();
             foreach($results as $result){
                 if(is_null($result['subid'])) unset($result['subid']);
+                if(is_null($result['candidate_position'])) unset($result['candidate_position']);
 
                 $matching_event = false;
                 foreach($events as &$event){
