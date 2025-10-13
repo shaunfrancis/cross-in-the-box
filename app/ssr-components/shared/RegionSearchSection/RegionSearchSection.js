@@ -1,7 +1,7 @@
 import Elt from 'components/shared/_Elt/_Elt';
 
 class RegionSearchSection{
-    constructor(elt, path, pathSuffix = null){
+    constructor(elt, path, pathSuffix = ""){
         this.structure = this.hydrate(elt);
         this.handler = new RegionSearchHandler(path, pathSuffix);
     }

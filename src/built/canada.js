@@ -234,11 +234,13 @@ regionResults[result.id].count++;
 return regionResults.filter( regionResult => regionResult.count > 1).map( regionResult => regionResult.secondLargest );
 }
 default: // any elected
-return results.filter( result => result.candidates.some( candidate => candidate.elected ) );
+const winners = results.filter( result => result.candidates.some( candidate => candidate.elected ) );
+winners.forEach( result => result.candidates = result.candidates.filter( candidate => candidate.elected ) );
+return winners;
 }
 }
-regionSelector(id, regionCount = 0){
-if(regionCount <= 1) return `[name="${id}"]`;
+regionSelector(id, regionCount = NULL){
+if(!regionCount) return `[name="${id}"]`;
 else return `[name="${id}"] > *:nth-child(${regionCount})`;
 }
 addSummary(){}
@@ -254,18 +256,22 @@ const electedCounts = {a: electedCount(a), b: electedCount(b)};
 return electedCounts.b != electedCounts.a ? electedCounts.b - electedCounts.a : b.votes - a.votes;
 });
 const regionCounts = {};
-this.winFormula(CachedData.results[this.data.election]).forEach( result => {
-result.candidates.forEach( candidate => {
-if(!candidate.elected) return;
-if(!regionCounts[result.id]) regionCounts[result.id] = 1;
-else regionCounts[result.id]++;
+const winners = this.winFormula(CachedData.results[this.data.election]);
+winners.forEach( result => {
+if(!regionCounts[result.id]) regionCounts[result.id] = {total: result.candidates?.length ?? 1};
+else regionCounts[result.id].total += result.candidates?.length ?? 1;
+});
+winners.forEach( result => {
+for(let i = 0; i < (result.candidates?.length ?? 1); i++){
+regionCounts[result.id].current = (regionCounts[result.id].current || 0) + 1;
+const selector = regionCounts[result.id].total === 1 ? null : regionCounts[result.id].current;
 const regionUpdates = this.data.updates.filter( u => u.id == result.id );
 if(regionUpdates.length > 0){
 const latestUpdate = regionUpdates[regionUpdates.length - 1];
 const party = CachedData.parties.find( p => p.id == latestUpdate.party ) || DefaultParty;
 if(party) newFills.push({
 id: latestUpdate.id,
-selector: this.regionSelector(latestUpdate.id, regionCounts[result.id]),
+selector: this.regionSelector(latestUpdate.id, selector),
 color: party.color || "var(--default-color)"
 });
 }
@@ -273,12 +279,12 @@ else{
 const party = CachedData.parties.find( p => p.id == result.party ) || DefaultParty;
 if(party) newFills.push({
 id: result.id,
-selector: this.regionSelector(result.id, regionCounts[result.id]),
+selector: this.regionSelector(result.id, selector),
 color: party.color || "var(--default-color)",
 opacity: showChanges ? 0.2 : undefined
 });
 }
-});
+};
 });
 
 this.fillMap({ regions: CachedData.regions, fills: newFills });
@@ -480,7 +486,7 @@ container.classList.remove('pre-hydration');
 });
 import Elt from 'components/shared/_Elt/_Elt';
 class RegionSearchSection{
-constructor(elt, path, pathSuffix = null){
+constructor(elt, path, pathSuffix = ""){
 this.structure = this.hydrate(elt);
 this.handler = new RegionSearchHandler(path, pathSuffix);
 }

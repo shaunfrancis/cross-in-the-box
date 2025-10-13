@@ -17,9 +17,9 @@ class UKScotlandElectionResultContainer extends UKElectionResultContainer{
 
             if(!summaries.find( summary => summary.party.id == winner)){
                 const party = CachedData.parties.find( party => party.id === result.party) || DefaultParty;
-                summaries.push({ party: party, count: 1 });
+                summaries.push({ party: party, count: result.candidates.length });
             }
-            else summaries.find( summary => summary.party.id == winner ).count++;
+            else summaries.find( summary => summary.party.id == winner ).count += result.candidates.length;
 
         });
         summaries.sort( (a,b) => {
