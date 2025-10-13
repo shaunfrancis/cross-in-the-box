@@ -20,10 +20,10 @@ class ScotlandRegionPage extends RegionPage{
     }
 
     static function renderElectionEvent($event){
-        $multiCandidateData = \Shared\combineMultiCandidateResults($event['data']['results']);
-        if(!$multiCandidateData['isMultipleCandidates']) return parent::renderElectionEvent($event);
+        $results = $event['data']['results'];
+        $hasMultipleCandidates = array_find($results, fn($result) => count($result['candidates']) > 1);
+        if(!$hasMultipleCandidates) return parent::renderElectionEvent($event);
 
-        $results = $multiCandidateData['results'];
         usort($results, function($a, $b){ return $b['votes'] - $a['votes']; });
         ?>
 

@@ -45,47 +45,54 @@ function getResultsBySubElection(array $results){
     return $subElections;
 }
 
-/* Duplicated in shared/lib.js */
-function combineMultiCandidateResults(array $results){ // : {results: $combinedResults, isMultipleCandidates: bool}
+function combineCandidates(array $results){
     $combinedResults = []; // {...Result, candidate: {name: string, position: int}[] }
-    $isMultipleCandidates = FALSE;
 
+    $resultsByRegion = [];
     foreach($results as $result){
-        $party = $result['party'];
+        $resultsByRegion[$result['id']][] = $result;
+    }
 
-        if($party == "ind"){ // do not combine independents which cannot have multiple candidates
-            $result['candidate'] = [['candidate' => $result['candidate'], 'elected' => $result['elected']]];
-            unset($result['candidate_position']);
-            unset($result['elected']);
-            $combinedResults[] = $result;
-        }
+    foreach($resultsByRegion as $regionResults){
+        $combinedRegionResults = [];
+        foreach($regionResults as $result){
+            $party = $result['party'];
 
-        else{
-            $candidateArray = [
-                'candidate' => $result['candidate'], 
-                'position' => $result['candidate_position'] ?? 0,
-                'elected' => $result['elected'],
-            ];
-
-            $resultExists = FALSE;
-            foreach($combinedResults as &$combinedResult){
-                if($combinedResult['party'] == $result['party']){
-                    $isMultipleCandidates = TRUE;
-                    $resultExists = TRUE;
-                    $combinedResult['candidate'][] = $candidateArray;
-                    break;
-                }
-            }
-            if(!$resultExists){
-                $result['candidate'] = [$candidateArray];
+            if($party == "ind"){ // do not combine independents which cannot have multiple candidates
+                $result['candidates'] = [['name' => $result['candidate'], 'elected' => $result['elected']]];
+                unset($result['candidate']);
                 unset($result['candidate_position']);
                 unset($result['elected']);
-                $combinedResults[] = $result;
+                $combinedRegionResults[] = $result;
+            }
+
+            else{
+                $candidateArray = [
+                    'name' => $result['candidate'], 
+                    'position' => $result['candidate_position'] ?? 0,
+                    'elected' => $result['elected'],
+                ];
+
+                $resultExists = FALSE;
+                foreach($combinedRegionResults as &$combinedResult){
+                    if($combinedResult['party'] == $result['party']){
+                        $resultExists = TRUE;
+                        $combinedResult['candidates'][] = $candidateArray;
+                        break;
+                    }
+                }
+                if(!$resultExists){
+                    $result['candidates'] = [$candidateArray];
+                    unset($result['candidate']);
+                    unset($result['candidate_position']);
+                    unset($result['elected']);
+                    $combinedRegionResults[] = $result;
+                }
             }
         }
+
+        array_push($combinedResults, ...$combinedRegionResults);
     }
-    return array(
-        'results' => $combinedResults,
-        'isMultipleCandidates' => $isMultipleCandidates,
-    );
+
+    return $combinedResults;
 }   

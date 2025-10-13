@@ -44,25 +44,24 @@ class UKScotlandElectionResultContainer extends UKElectionResultContainer{
             if(!active) return;
             popup.innerHTML = "";
 
-
             const region = CachedData.regions.find( region => region.id == id );
             const regionResults = CachedData.results[this.data.election]
                 .filter( result => result.id == id )
                 .sort( (a,b) => b.votes - a.votes );
             const regionUpdates = this.data.updates.filter( update => update.id == region.id );
-            const combinedResultData = combineMultiCandidateResults(regionResults);
+            const hasMultipleCandidates = regionResults.some( result => result.candidates.length > 1 );
 
             // Title
             if(!region) return popup.appendChild( new Elt({tag: 'h3', innerHTML: "Missing data"}) );
             popup.appendChild( new Elt({tag: 'h3', innerHTML: region.title}) );
 
-            if(combinedResultData.isMultipleCandidates){
-                popup.appendChild( PopupBarGraph.render({ results: combinedResultData.results, parties: CachedData.parties }) );
+            if(hasMultipleCandidates){
+                popup.appendChild( PopupBarGraph.render({ results: regionResults, parties: CachedData.parties }) );
             }
             else{
                 // Winning candidate
                 const winner = this.winFormula(regionResults)[0];
-                let innerHTML = winner?.candidate;
+                let innerHTML = winner?.candidates[0].name;
                 if(winner) popup.appendChild( new Elt({tag: 'h4', innerHTML: innerHTML}) );
 
                 // Party progression blocs
@@ -76,18 +75,6 @@ class UKScotlandElectionResultContainer extends UKElectionResultContainer{
                 popup.appendChild( PopupBarGraph.render({ results: regionResults, parties: CachedData.parties }) );
             }
         };
-
-        // data.regionSelector = (id) => {
-        //     const regionResults = CachedData.results[this.data.election]
-        //         .filter( result => result.id == id )
-        //         .sort( (a,b) => b.votes - a.votes );
-        //     const combinedResultData = combineMultiCandidateResults(regionResults);
-
-        //     if(!combinedResultData.isMultipleCandidates) return `[name="${id}"]`;
-        //     else{
-        //         return `[name="${id}"]:nth-child(2)`;
-        //     }
-        // };
 
         super.fillMap(data);
     }

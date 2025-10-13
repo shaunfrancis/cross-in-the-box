@@ -101,7 +101,7 @@ class RegionPage extends \Base\Component{
             else if($b['elected']) return INF;
             else{
                 $surname = function($result){
-                    $names = explode(" ", $result['candidate']);
+                    $names = explode(" ", $result['candidates'][0]['name']);
                     return end($names);
                 };
                 return strcmp($surname($a), $surname($b));

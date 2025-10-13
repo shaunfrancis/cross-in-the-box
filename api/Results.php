@@ -43,6 +43,8 @@ class ResultsService extends APIService{
                 if(!isset($result['s'])) unset($result['s']);
             }
 
+            $election_results = \Shared\combineCandidates($election_results);
+
             return $election_results;
         }
         catch(\Exception $error){ return self::fail(500, "Internal server error"); }

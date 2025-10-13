@@ -10,6 +10,7 @@
         foreach( glob(sprintf('%s/{%s}[!_]*.php', __DIR__, "," . implode("/,", $accepted_countries)), GLOB_BRACE) as $file ){
             require_once($file);
         }
+        require_once(__DIR__ . '/../app/lib/shared.php');
     });
 
     APIService::$apiMode = TRUE; //enables http_response_code() setting

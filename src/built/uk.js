@@ -118,47 +118,6 @@ let longDate = date.getDate().toString() + ordinalIndicator + " " + month;
 if(includeYear) longDate += " " + date.getFullYear();
 return longDate;
 }
-/* Duplicated in lib/shared.php */
-const combineMultiCandidateResults = (results) => { // : {results: $combinedResults, isMultipleCandidates: bool}
-results = structuredClone(results);
-const combinedResults = []; // {...Result, candidate: {name: string, position: int}[] }
-let isMultipleCandidates = false;
-results.forEach( result => {
-const party = result.party;
-if(party == "ind"){ // do not combine independents which cannot have multiple candidates
-result.candidate = [{candidate: result.candidate, elected: result.elected}];
-delete result.candidate_position;
-delete result.elected;
-combinedResults.push(result);
-}
-else{
-const candidateArray = {
-candidate: result.candidate,
-position: result.candidate_position || 0,
-elected: result.elected,
-};
-let resultExists = false;
-combinedResults.forEach( combinedResult => {
-if(resultExists) return;
-if(combinedResult.party == result.party){
-isMultipleCandidates = true;
-resultExists = true;
-combinedResult.candidate.push(candidateArray);
-}
-});
-if(!resultExists){
-result.candidate = [candidateArray];
-delete result.candidate_position;
-delete result.elected;
-combinedResults.push(result);
-}
-}
-});
-return {
-results: combinedResults,
-isMultipleCandidates: isMultipleCandidates,
-};
-}
 import Message from "components/shared/Message/Message";
 class ElectionResultContainer{
 static observer;
@@ -275,10 +234,7 @@ regionResults[result.id].count++;
 return regionResults.filter( regionResult => regionResult.count > 1).map( regionResult => regionResult.secondLargest );
 }
 default: // any elected
-return results.filter(
-result => result.elected ||
-(Array.isArray(result.candidate) && result.candidate.some( candidate => candidate.elected ))
-);
+return results.filter( result => result.candidates.some( candidate => candidate.elected ) );
 }
 }
 regionSelector(id, regionCount = 0){
@@ -289,24 +245,17 @@ addSummary(){}
 updateMap(showChanges = false){
 const newFills = []; // {id: string, color: string, opacity?: number}[]
 
-// Combine candidate results
-const results = [];
-CachedData.results[this.data.election].map( result => result.id ).forEach( region => {
-if(results.find( result => result.id === region )) return;
-const regionResults = CachedData.results[this.data.election].filter( result => result.id === region );
-results.push( ...combineMultiCandidateResults(regionResults).results );
-});
 // Order by number of elected candidates (this is just for an approximate visual L->R on the map and has no real importance)
-results.sort( (a,b) => {
-const electedCount = (r) => r.candidate.reduce( (count, candidate) => {
+CachedData.results[this.data.election].sort( (a,b) => {
+const electedCount = (r) => r.candidates.reduce( (count, candidate) => {
 return count + candidate.elected;
 }, 0 );
 const electedCounts = {a: electedCount(a), b: electedCount(b)};
 return electedCounts.b != electedCounts.a ? electedCounts.b - electedCounts.a : b.votes - a.votes;
 });
 const regionCounts = {};
-this.winFormula(results).forEach( result => {
-result.candidate.forEach( candidate => {
+this.winFormula(CachedData.results[this.data.election]).forEach( result => {
+result.candidates.forEach( candidate => {
 if(!candidate.elected) return;
 if(!regionCounts[result.id]) regionCounts[result.id] = 1;
 else regionCounts[result.id]++;
@@ -878,7 +827,7 @@ if(!region) return popup.appendChild( new Elt({tag: 'h3', innerHTML: "Missing da
 popup.appendChild( new Elt({tag: 'h3', innerHTML: region.title}) );
 // Winning candidate
 const winner = this.winFormula(regionResults)[0];
-let innerHTML = winner?.candidate;
+let innerHTML = winner?.candidates[0].name;
 if(this.winFormulaName === "second-place") innerHTML += " in second place";
 if(winner) popup.appendChild( new Elt({tag: 'h4', innerHTML: innerHTML}) );
 // Party progression blocs
@@ -959,17 +908,17 @@ const regionResults = CachedData.results[this.data.election]
 .filter( result => result.id == id )
 .sort( (a,b) => b.votes - a.votes );
 const regionUpdates = this.data.updates.filter( update => update.id == region.id );
-const combinedResultData = combineMultiCandidateResults(regionResults);
+const hasMultipleCandidates = regionResults.some( result => result.candidates.length > 1 );
 // Title
 if(!region) return popup.appendChild( new Elt({tag: 'h3', innerHTML: "Missing data"}) );
 popup.appendChild( new Elt({tag: 'h3', innerHTML: region.title}) );
-if(combinedResultData.isMultipleCandidates){
-popup.appendChild( PopupBarGraph.render({ results: combinedResultData.results, parties: CachedData.parties }) );
+if(hasMultipleCandidates){
+popup.appendChild( PopupBarGraph.render({ results: regionResults, parties: CachedData.parties }) );
 }
 else{
 // Winning candidate
 const winner = this.winFormula(regionResults)[0];
-let innerHTML = winner?.candidate;
+let innerHTML = winner?.candidates[0].name;
 if(winner) popup.appendChild( new Elt({tag: 'h4', innerHTML: innerHTML}) );
 // Party progression blocs
 const partyProgression = [CachedData.parties.find( party => party.id === winner?.party ) || DefaultParty];
@@ -981,16 +930,6 @@ if(partyProgression.length > 1) popup.appendChild( PartyProgressionBlocs.render(
 popup.appendChild( PopupBarGraph.render({ results: regionResults, parties: CachedData.parties }) );
 }
 };
-// data.regionSelector = (id) => {
-//     const regionResults = CachedData.results[this.data.election]
-//         .filter( result => result.id == id )
-//         .sort( (a,b) => b.votes - a.votes );
-//     const combinedResultData = combineMultiCandidateResults(regionResults);
-//     if(!combinedResultData.isMultipleCandidates) return `[name="${id}"]`;
-//     else{
-//         return `[name="${id}"]:nth-child(2)`;
-//     }
-// };
 super.fillMap(data);
 }
 addMessages(){

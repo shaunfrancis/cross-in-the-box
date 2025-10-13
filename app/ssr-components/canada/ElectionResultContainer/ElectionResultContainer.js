@@ -66,7 +66,7 @@ class CanadaElectionResultContainer extends ElectionResultContainer{
 
             // Winning candidate
             const winner = this.winFormula(regionResults)[0];
-            let innerHTML = winner?.candidate;
+            let innerHTML = winner?.candidates[0].name;
             if(this.winFormulaName === "second-place") innerHTML += " in second place";
 
             if(winner) popup.appendChild( new Elt({tag: 'h4', innerHTML: innerHTML}) );

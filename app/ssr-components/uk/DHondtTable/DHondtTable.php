@@ -19,7 +19,7 @@ class DHondtTable extends \Base\Component{
                 default => 1
             };
 
-            foreach($result['candidate'] as &$candidate){
+            foreach($result['candidates'] as &$candidate){
                 $rounds += $candidate['elected'];
             }
         }
@@ -28,7 +28,7 @@ class DHondtTable extends \Base\Component{
             $maxVotes = ['votes' => -INF];
             foreach($results as &$result){
                 $remainingCandidates = $result['rounds'][array_key_last($result['rounds'] ?? [''])]['remainingCandidates']
-                    ?? count($result['candidate']);
+                    ?? count($result['candidates']);
                 if($remainingCandidates === 0){
                     $result['rounds'][] = ['votes' => NULL, 'remainingCandidates' => 0];
                     continue;

@@ -132,6 +132,7 @@ class RegionService extends APIService{
                     $events[] = $new_event;
                 }
             }
+            foreach($events as &$eventRef) $eventRef['data']['results'] = \Shared\combineCandidates($eventRef['data']['results']);
 
             foreach($updates as $update){
                 $new_event = array(

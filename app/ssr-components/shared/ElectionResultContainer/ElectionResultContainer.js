@@ -130,10 +130,7 @@ class ElectionResultContainer{
             }
 
             default: // any elected
-                return results.filter(
-                    result => result.elected || 
-                    (Array.isArray(result.candidate) && result.candidate.some( candidate => candidate.elected ))
-                );
+                return results.filter( result => result.candidates.some( candidate => candidate.elected ) );
         }
     }
 
@@ -147,16 +144,9 @@ class ElectionResultContainer{
     updateMap(showChanges = false){
         const newFills = []; // {id: string, color: string, opacity?: number}[]
         
-        // Combine candidate results
-        const results = [];
-        CachedData.results[this.data.election].map( result => result.id ).forEach( region => {
-            if(results.find( result => result.id === region )) return;
-            const regionResults = CachedData.results[this.data.election].filter( result => result.id === region );
-            results.push( ...combineMultiCandidateResults(regionResults).results );
-        });
         // Order by number of elected candidates (this is just for an approximate visual L->R on the map and has no real importance)
-        results.sort( (a,b) => {
-            const electedCount = (r) => r.candidate.reduce( (count, candidate) => {
+        CachedData.results[this.data.election].sort( (a,b) => {
+            const electedCount = (r) => r.candidates.reduce( (count, candidate) => {
                 return count + candidate.elected;
             }, 0 );
             const electedCounts = {a: electedCount(a), b: electedCount(b)};
@@ -164,8 +154,8 @@ class ElectionResultContainer{
         });
 
         const regionCounts = {};
-        this.winFormula(results).forEach( result => {
-            result.candidate.forEach( candidate => {
+        this.winFormula(CachedData.results[this.data.election]).forEach( result => {
+            result.candidates.forEach( candidate => {
                 if(!candidate.elected) return;
 
                 if(!regionCounts[result.id]) regionCounts[result.id] = 1;

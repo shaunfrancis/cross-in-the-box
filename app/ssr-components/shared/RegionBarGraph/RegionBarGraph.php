@@ -75,8 +75,8 @@ class RegionBarGraph extends \Base\Component{
                     <span><?= $result['party']; ?></span>
                     <div class="RegionBarGraph__hover"></div>
                 </div>
-                <div class="RegionBarGraph__candidate RegionBarGraph__bloc" title="<?= $result['candidate']; ?>">
-                    <?= $result['candidate']; ?>
+                <div class="RegionBarGraph__candidate RegionBarGraph__bloc" title="<?= $result['candidates'][0]['name']; ?>">
+                    <?= $result['candidates'][0]['name']; ?>
                 </div>
                 <div class="RegionBarGraph__votes RegionBarGraph__bloc tnum">
                     <?= $votesValue; ?>
