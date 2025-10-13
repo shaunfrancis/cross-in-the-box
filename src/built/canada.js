@@ -118,6 +118,47 @@ let longDate = date.getDate().toString() + ordinalIndicator + " " + month;
 if(includeYear) longDate += " " + date.getFullYear();
 return longDate;
 }
+/* Duplicated in lib/shared.php */
+const combineMultiCandidateResults = (results) => { // : {results: $combinedResults, isMultipleCandidates: bool}
+results = structuredClone(results);
+const combinedResults = []; // {...Result, candidate: {name: string, position: int}[] }
+let isMultipleCandidates = false;
+results.forEach( result => {
+const party = result.party;
+if(party == "ind"){ // do not combine independents which cannot have multiple candidates
+result.candidate = [{candidate: result.candidate, elected: result.elected}];
+delete result.candidate_position;
+delete result.elected;
+combinedResults.push(result);
+}
+else{
+const candidateArray = {
+candidate: result.candidate,
+position: result.candidate_position || 0,
+elected: result.elected,
+};
+let resultExists = false;
+combinedResults.forEach( combinedResult => {
+if(resultExists) return;
+if(combinedResult.party == result.party){
+isMultipleCandidates = true;
+resultExists = true;
+combinedResult.candidate.push(candidateArray);
+}
+});
+if(!resultExists){
+result.candidate = [candidateArray];
+delete result.candidate_position;
+delete result.elected;
+combinedResults.push(result);
+}
+}
+});
+return {
+results: combinedResults,
+isMultipleCandidates: isMultipleCandidates,
+};
+}
 import Message from "components/shared/Message/Message";
 class ElectionResultContainer{
 static observer;
@@ -234,27 +275,61 @@ regionResults[result.id].count++;
 return regionResults.filter( regionResult => regionResult.count > 1).map( regionResult => regionResult.secondLargest );
 }
 default: // any elected
-return results.filter(result => result.elected);
+return results.filter(
+result => result.elected ||
+(Array.isArray(result.candidate) && result.candidate.some( candidate => candidate.elected ))
+);
 }
+}
+regionSelector(id, regionCount = 0){
+if(regionCount <= 1) return `[name="${id}"]`;
+else return `[name="${id}"] > *:nth-child(${regionCount})`;
 }
 addSummary(){}
 updateMap(showChanges = false){
 const newFills = []; // {id: string, color: string, opacity?: number}[]
-this.winFormula(CachedData.results[this.data.election]).forEach( result => {
+
+// Combine candidate results
+const results = [];
+CachedData.results[this.data.election].map( result => result.id ).forEach( region => {
+if(results.find( result => result.id === region )) return;
+const regionResults = CachedData.results[this.data.election].filter( result => result.id === region );
+results.push( ...combineMultiCandidateResults(regionResults).results );
+});
+// Order by number of elected candidates (this is just for an approximate visual L->R on the map and has no real importance)
+results.sort( (a,b) => {
+const electedCount = (r) => r.candidate.reduce( (count, candidate) => {
+return count + candidate.elected;
+}, 0 );
+const electedCounts = {a: electedCount(a), b: electedCount(b)};
+return electedCounts.b != electedCounts.a ? electedCounts.b - electedCounts.a : b.votes - a.votes;
+});
+const regionCounts = {};
+this.winFormula(results).forEach( result => {
+result.candidate.forEach( candidate => {
+if(!candidate.elected) return;
+if(!regionCounts[result.id]) regionCounts[result.id] = 1;
+else regionCounts[result.id]++;
 const regionUpdates = this.data.updates.filter( u => u.id == result.id );
 if(regionUpdates.length > 0){
 const latestUpdate = regionUpdates[regionUpdates.length - 1];
 const party = CachedData.parties.find( p => p.id == latestUpdate.party ) || DefaultParty;
-if(party) newFills.push({ id: latestUpdate.id, color: party.color || "var(--default-color)" });
+if(party) newFills.push({
+id: latestUpdate.id,
+selector: this.regionSelector(latestUpdate.id, regionCounts[result.id]),
+color: party.color || "var(--default-color)"
+});
 }
 else{
 const party = CachedData.parties.find( p => p.id == result.party ) || DefaultParty;
 if(party) newFills.push({
 id: result.id,
+selector: this.regionSelector(result.id, regionCounts[result.id]),
 color: party.color || "var(--default-color)",
 opacity: showChanges ? 0.2 : undefined
 });
 }
+});
 });
 
 this.fillMap({ regions: CachedData.regions, fills: newFills });
@@ -342,8 +417,6 @@ get visible(){ return this.structure.container.checkVisibility() }
 fill({
 regions,                                    // list of regions to loop through
 // Region[]
-regionSelector = (id) => `[name="${id}"]`,  // querySelector for regions on map; defaults to name attribute
-// (any, ...) => string
 fills = [],                                 // list of fills to apply to given region ids
 // ?{id : string, color : string, opacity? : number}[]
 hoverFun = (active, popup, id) => {},       // optional function to execute on hover of regions
@@ -353,9 +426,10 @@ clickFun = (id) => {}                       // optional function to execute on c
 }){
 this.currentFill = this.containerInstance.currentFillData;
 regions.map( region => {
-let fill = fills.find(f => f.id == region.id);
-if(!fill) fill = {id: region.id, color: "#EEE"};
-const regionElts = this.structure.container.querySelectorAll( regionSelector(region.id) );
+let regionFills = fills.filter(f => f.id == region.id);
+if(regionFills.length === 0) regionFills = [{id: region.id, selector: `[name="${region.id}"]`, color: "#EEE"}];
+regionFills.forEach( fill => {
+const regionElts = this.structure.container.querySelectorAll(fill.selector);
 if(regionElts.length === 0) return;
 regionElts.forEach(regionElt => {
 regionElt.setAttribute('fill', fill.color);
@@ -388,6 +462,7 @@ hoverFun(false, popup);
 regionElt.removeEventListener('click', this.click);
 regionElt.addEventListener('click', this.click = () => {
 clickFun(region.id);
+});
 });
 });
 });

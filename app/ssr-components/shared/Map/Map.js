@@ -23,9 +23,6 @@ class Map{
         regions,                                    // list of regions to loop through
                                                     // Region[]
 
-        regionSelector = (id) => `[name="${id}"]`,  // querySelector for regions on map; defaults to name attribute
-                                                    // (any, ...) => string
-
         fills = [],                                 // list of fills to apply to given region ids
                                                     // ?{id : string, color : string, opacity? : number}[]
 
@@ -38,48 +35,50 @@ class Map{
         this.currentFill = this.containerInstance.currentFillData;
 
         regions.map( region => {
-            let fill = fills.find(f => f.id == region.id);
-            if(!fill) fill = {id: region.id, color: "#EEE"};
+            let regionFills = fills.filter(f => f.id == region.id);
+            if(regionFills.length === 0) regionFills = [{id: region.id, selector: `[name="${region.id}"]`, color: "#EEE"}];
+            regionFills.forEach( fill => {
 
-            const regionElts = this.structure.container.querySelectorAll( regionSelector(region.id) );
-            if(regionElts.length === 0) return;
+                const regionElts = this.structure.container.querySelectorAll(fill.selector);
+                if(regionElts.length === 0) return;
 
-            regionElts.forEach(regionElt => {
-                regionElt.setAttribute('fill', fill.color);
-                regionElt.setAttribute('style', fill.opacity !== undefined ? "opacity:" + fill.opacity : "");
-                
-                regionElt.removeEventListener('mouseover', this.mouseover);
-                regionElt.addEventListener('mouseover', this.mouseover = (event) => {
-                    const popup = this.containerInstance.structure.hoverPopup;
-                    hoverFun(true, popup, region.id);
-                });
+                regionElts.forEach(regionElt => {
+                    regionElt.setAttribute('fill', fill.color);
+                    regionElt.setAttribute('style', fill.opacity !== undefined ? "opacity:" + fill.opacity : "");
+                    
+                    regionElt.removeEventListener('mouseover', this.mouseover);
+                    regionElt.addEventListener('mouseover', this.mouseover = (event) => {
+                        const popup = this.containerInstance.structure.hoverPopup;
+                        hoverFun(true, popup, region.id);
+                    });
 
-                regionElt.removeEventListener('mousemove', this.mousemove);
-                regionElt.addEventListener('mousemove', this.mousemove = (event) => {
-                    const popup = this.containerInstance.structure.hoverPopup;
-                    const coordinates = [event.clientX, event.clientY];
-                    const width = popup.offsetWidth;
-                    const height = popup.offsetHeight;
+                    regionElt.removeEventListener('mousemove', this.mousemove);
+                    regionElt.addEventListener('mousemove', this.mousemove = (event) => {
+                        const popup = this.containerInstance.structure.hoverPopup;
+                        const coordinates = [event.clientX, event.clientY];
+                        const width = popup.offsetWidth;
+                        const height = popup.offsetHeight;
 
-                    const offsets = [0,0];
-                    if(coordinates[0] + 20 + width > window.innerWidth) offsets[0] = -(width + 40);
-                    if(coordinates[1] + 20 + height > window.innerHeight) offsets[1] = window.innerHeight - height - 20 - coordinates[1];
+                        const offsets = [0,0];
+                        if(coordinates[0] + 20 + width > window.innerWidth) offsets[0] = -(width + 40);
+                        if(coordinates[1] + 20 + height > window.innerHeight) offsets[1] = window.innerHeight - height - 20 - coordinates[1];
 
-                    popup.style.left = coordinates[0] + offsets[0] + 20 + "px";
-                    popup.style.top = coordinates[1] + offsets[1] + 20 + "px";
-                    popup.classList.remove('hidden');
-                });
+                        popup.style.left = coordinates[0] + offsets[0] + 20 + "px";
+                        popup.style.top = coordinates[1] + offsets[1] + 20 + "px";
+                        popup.classList.remove('hidden');
+                    });
 
-                regionElt.removeEventListener('mouseout', this.mouseout);
-                regionElt.addEventListener('mouseout', this.mouseout = () => {
-                    const popup = this.containerInstance.structure.hoverPopup;
-                    popup.classList.add('hidden');
-                    hoverFun(false, popup);
-                });
+                    regionElt.removeEventListener('mouseout', this.mouseout);
+                    regionElt.addEventListener('mouseout', this.mouseout = () => {
+                        const popup = this.containerInstance.structure.hoverPopup;
+                        popup.classList.add('hidden');
+                        hoverFun(false, popup);
+                    });
 
-                regionElt.removeEventListener('click', this.click);
-                regionElt.addEventListener('click', this.click = () => {
-                    clickFun(region.id);
+                    regionElt.removeEventListener('click', this.click);
+                    regionElt.addEventListener('click', this.click = () => {
+                        clickFun(region.id);
+                    });
                 });
             });
         });

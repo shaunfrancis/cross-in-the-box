@@ -130,29 +130,67 @@ class ElectionResultContainer{
             }
 
             default: // any elected
-                return results.filter(result => result.elected);
+                return results.filter(
+                    result => result.elected || 
+                    (Array.isArray(result.candidate) && result.candidate.some( candidate => candidate.elected ))
+                );
         }
+    }
+
+    regionSelector(id, regionCount = 0){
+        if(regionCount <= 1) return `[name="${id}"]`;
+        else return `[name="${id}"] > *:nth-child(${regionCount})`;
     }
 
     addSummary(){}
 
     updateMap(showChanges = false){
         const newFills = []; // {id: string, color: string, opacity?: number}[]
-        this.winFormula(CachedData.results[this.data.election]).forEach( result => {
-            const regionUpdates = this.data.updates.filter( u => u.id == result.id );
-            if(regionUpdates.length > 0){
-                const latestUpdate = regionUpdates[regionUpdates.length - 1];
-                const party = CachedData.parties.find( p => p.id == latestUpdate.party ) || DefaultParty;
-                if(party) newFills.push({ id: latestUpdate.id, color: party.color || "var(--default-color)" });
-            }
-            else{
-                const party = CachedData.parties.find( p => p.id == result.party ) || DefaultParty;
-                if(party) newFills.push({ 
-                    id: result.id, 
-                    color: party.color || "var(--default-color)", 
-                    opacity: showChanges ? 0.2 : undefined 
-                });
-            }
+        
+        // Combine candidate results
+        const results = [];
+        CachedData.results[this.data.election].map( result => result.id ).forEach( region => {
+            if(results.find( result => result.id === region )) return;
+            const regionResults = CachedData.results[this.data.election].filter( result => result.id === region );
+            results.push( ...combineMultiCandidateResults(regionResults).results );
+        });
+        // Order by number of elected candidates (this is just for an approximate visual L->R on the map and has no real importance)
+        results.sort( (a,b) => {
+            const electedCount = (r) => r.candidate.reduce( (count, candidate) => {
+                return count + candidate.elected;
+            }, 0 );
+            const electedCounts = {a: electedCount(a), b: electedCount(b)};
+            return electedCounts.b != electedCounts.a ? electedCounts.b - electedCounts.a : b.votes - a.votes;
+        });
+
+        const regionCounts = {};
+        this.winFormula(results).forEach( result => {
+            result.candidate.forEach( candidate => {
+                if(!candidate.elected) return;
+
+                if(!regionCounts[result.id]) regionCounts[result.id] = 1;
+                else regionCounts[result.id]++;
+
+                const regionUpdates = this.data.updates.filter( u => u.id == result.id );
+                if(regionUpdates.length > 0){
+                    const latestUpdate = regionUpdates[regionUpdates.length - 1];
+                    const party = CachedData.parties.find( p => p.id == latestUpdate.party ) || DefaultParty;
+                    if(party) newFills.push({
+                        id: latestUpdate.id, 
+                        selector: this.regionSelector(latestUpdate.id, regionCounts[result.id]),
+                        color: party.color || "var(--default-color)" 
+                    });
+                }
+                else{
+                    const party = CachedData.parties.find( p => p.id == result.party ) || DefaultParty;
+                    if(party) newFills.push({ 
+                        id: result.id, 
+                        selector: this.regionSelector(result.id, regionCounts[result.id]),
+                        color: party.color || "var(--default-color)", 
+                        opacity: showChanges ? 0.2 : undefined 
+                    });
+                }
+            });
         });
         
         this.fillMap({ regions: CachedData.regions, fills: newFills });

@@ -22,30 +22,30 @@
             ) ?>
         </div>
         <?= ElectionResultsSection::open(); ?>
-            <?= \UK\ElectionResultContainer::show(
+            <?= \UK\GeneralElectionResultContainer::show(
                 $election = "2024",
                 $title = ["2024", "General", "Election"],
                 $messages = ['group' => "2024", 'open' => TRUE]
             ); ?>
 
-            <?= \UK\ElectionResultContainer::show(
+            <?= \UK\GeneralElectionResultContainer::show(
                 $election = "2019",
                 $title = ["2019", "General", "Election"],
                 $messages = ['group' => "2019"]
             ); ?>
 
-            <?= \UK\ElectionResultContainer::show(
+            <?= \UK\GeneralElectionResultContainer::show(
                 $election = "2017",
                 $title = ["2017", "General", "Election"],
                 $messages = ['group' => "2017"]
             ); ?>
 
-            <?= \UK\ElectionResultContainer::show(
+            <?= \UK\GeneralElectionResultContainer::show(
                 $election = "2015",
                 $title = ["2015", "General", "Election"],
             ); ?>
 
-            <?= \UK\ElectionResultContainer::show(
+            <?= \UK\GeneralElectionResultContainer::show(
                 $election = "2010",
                 $title = ["2010", "General", "Election"],
             ); ?>
@@ -79,32 +79,32 @@
         </div>
 
         <?= ElectionResultsSection::open(); ?>
-            <?= \UK\ElectionResultContainer::show(
+            <?= \UK\GeneralElectionResultContainer::show(
                 election: "2024",
                 title: ["2024", "parties in", "second place"],
                 winFormulaName: "second-place"
             ); ?>
-            <?= \UK\ElectionResultContainer::show(
+            <?= \UK\GeneralElectionResultContainer::show(
                 election: "2024",
                 title: ["2024", "results with", "Con and Ref combined"],
                 winFormulaName: "con-ref-combined"
             ); ?>
-            <?= \UK\ElectionResultContainer::show(
+            <?= \UK\GeneralElectionResultContainer::show(
                 election: "2019",
                 title: ["2019", "parties in", "second place"],
                 winFormulaName: "second-place"
             ); ?>
-            <?= \UK\ElectionResultContainer::show(
+            <?= \UK\GeneralElectionResultContainer::show(
                 election: "2017",
                 title: ["2017", "parties in", "second place"],
                 winFormulaName: "second-place"
             ); ?>
-            <?= \UK\ElectionResultContainer::show(
+            <?= \UK\GeneralElectionResultContainer::show(
                 election: "2015",
                 title: ["2015", "parties in", "second place"],
                 winFormulaName: "second-place"
             ); ?>
-            <?= \UK\ElectionResultContainer::show(
+            <?= \UK\GeneralElectionResultContainer::show(
                 election: "2010",
                 title: ["2010", "parties in", "second place"],
                 winFormulaName: "second-place"

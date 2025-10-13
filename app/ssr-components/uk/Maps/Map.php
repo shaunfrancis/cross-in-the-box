@@ -14,3 +14,10 @@ class General2010 extends \Shared\Map{
         'geographic' => 'public/maps/UK-2010-geographic.svg',
     );
 }
+
+
+class Scotland2011 extends \Shared\Map{
+    static $types = array(
+        'cartographic' => 'public/maps/UK-S2011.svg',
+    );
+}

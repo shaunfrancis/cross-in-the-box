@@ -45,4 +45,47 @@ function getResultsBySubElection(array $results){
     return $subElections;
 }
 
-    
+/* Duplicated in shared/lib.js */
+function combineMultiCandidateResults(array $results){ // : {results: $combinedResults, isMultipleCandidates: bool}
+    $combinedResults = []; // {...Result, candidate: {name: string, position: int}[] }
+    $isMultipleCandidates = FALSE;
+
+    foreach($results as $result){
+        $party = $result['party'];
+
+        if($party == "ind"){ // do not combine independents which cannot have multiple candidates
+            $result['candidate'] = [['candidate' => $result['candidate'], 'elected' => $result['elected']]];
+            unset($result['candidate_position']);
+            unset($result['elected']);
+            $combinedResults[] = $result;
+        }
+
+        else{
+            $candidateArray = [
+                'candidate' => $result['candidate'], 
+                'position' => $result['candidate_position'] ?? 0,
+                'elected' => $result['elected'],
+            ];
+
+            $resultExists = FALSE;
+            foreach($combinedResults as &$combinedResult){
+                if($combinedResult['party'] == $result['party']){
+                    $isMultipleCandidates = TRUE;
+                    $resultExists = TRUE;
+                    $combinedResult['candidate'][] = $candidateArray;
+                    break;
+                }
+            }
+            if(!$resultExists){
+                $result['candidate'] = [$candidateArray];
+                unset($result['candidate_position']);
+                unset($result['elected']);
+                $combinedResults[] = $result;
+            }
+        }
+    }
+    return array(
+        'results' => $combinedResults,
+        'isMultipleCandidates' => $isMultipleCandidates,
+    );
+}   
