@@ -43,6 +43,19 @@
     z-index:-1;
 }
 
+.RegionPage main article.block{
+    padding:30px;
+    background:#fff;
+    box-shadow:1px 1px 0 1px var(--box-shadow-color);
+}
+
+@media screen and (max-width:768px){
+    .RegionPage main article.block{
+        padding:30px 15px;
+    }
+}
+
+
 @media screen and (max-width:1024px){
     .RegionPage{
         flex-direction:column-reverse;

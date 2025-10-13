@@ -34,7 +34,6 @@ return (a.pinned != b.pinned) ? (a.pinned || Infinity) - (b.pinned || Infinity) 
 }
 static downloadProperty(propertyArray, path, { applyParse, applyTransform = (_) => _ } = {} ){
 return new Promise( async resolve => {
-
 const propertyValue = propertyArray.reduce( (obj, key) => {
 if(!obj) return null;
 else return obj[key];
@@ -79,7 +78,7 @@ color: "var(--default-color)"
 class SearchHandler{
 constructor(url, suffix = ""){
 this.url = url;
-this.suffix = suffix;
+this.suffix = suffix.charAt(0) != "/" ? "/" + suffix : suffix;
 this.previousQuery = "";
 }
 async permission(query){
@@ -128,13 +127,15 @@ this.structure = this.hydrate(elt);
 this.winFormulaName = this.structure.container.getAttribute('data-win-formula');
 this.data = {
 election: this.structure.container.getAttribute('data-election'),
+regionsType: this.structure.container.getAttribute('data-regions-type'),
 updates: [],
-results: []
 };
 this.attributes = {
 messageGroup: this.structure.messages.container?.getAttribute('data-group'),
 showChanges: this.structure.container.getAttribute('data-show-changes')
 };
+this.structure.container.removeAttribute('data-election');
+this.structure.container.removeAttribute('data-regions-type');
 Toggle.register('map-type', (bool) => {
 const map = this.maps.find(map =>
 map.type === (bool ? "geographic" : "cartographic")
@@ -142,11 +143,9 @@ map.type === (bool ? "geographic" : "cartographic")
 if(map) map.show();
 });
 this.maps = (this.structure.maps.types).map(container => {
-const instance = new MapClass(container, this, { election: this.data.election, type: container.getAttribute('data-type'), src: container.getAttribute('data-src') });
-// clean up HTML
-container.removeAttribute('data-type');
+const instance = new MapClass(container, this, { election: this.data.election, type: container.getAttribute('data-map-type'), src: container.getAttribute('data-src') });
+container.removeAttribute('data-map-type');
 container.removeAttribute('data-src');
-container.removeAttribute('data-win-formula');
 return instance;
 });
 this.constructor.elementMaps.set(this.structure.container, this);
@@ -201,9 +200,9 @@ types: [...elt.querySelectorAll('.ElectionResultContainer__map-container > div')
 }
 }
 }
-async downloadData({ election }, { messageGroup, showChanges }){
+async downloadData({ election, regionsType = null }, { messageGroup, showChanges }){
 if(CachedData.parties.length === 0) await CachedData.fetchParties();
-if(CachedData.regions.length === 0) await CachedData.fetchRegions();
+if(CachedData.regions.length === 0) await CachedData.fetchRegions(regionsType);
 if(!CachedData.results[election]) await CachedData.fetchResults(election);
 if(showChanges){
 this.data.updates = await fetch(Endpoint + "/updates/uk/" + election)
@@ -355,7 +354,7 @@ clickFun = (id) => {}                       // optional function to execute on c
 this.currentFill = this.containerInstance.currentFillData;
 regions.map( region => {
 let fill = fills.find(f => f.id == region.id);
-if(!fill) fill = {id: region.id, color: "transparent"};
+if(!fill) fill = {id: region.id, color: "#EEE"};
 const regionElts = this.structure.container.querySelectorAll( regionSelector(region.id) );
 if(regionElts.length === 0) return;
 regionElts.forEach(regionElt => {
@@ -457,9 +456,9 @@ container.classList.remove('pre-hydration');
 });
 import Elt from 'components/shared/_Elt/_Elt';
 class RegionSearchSection{
-constructor(elt, path){
+constructor(elt, path, pathSuffix = null){
 this.structure = this.hydrate(elt);
-this.handler = new RegionSearchHandler(path);
+this.handler = new RegionSearchHandler(path, pathSuffix);
 }
 hydrate(elt){
 const input = elt.querySelector('.RegionSearchSection__search-input');

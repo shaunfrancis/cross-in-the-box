@@ -11,13 +11,15 @@ class ElectionResultContainer{
 
         this.data = {
             election: this.structure.container.getAttribute('data-election'),
+            regionsType: this.structure.container.getAttribute('data-regions-type'),
             updates: [],
-            results: []
         };
         this.attributes = {
             messageGroup: this.structure.messages.container?.getAttribute('data-group'),
             showChanges: this.structure.container.getAttribute('data-show-changes')
         };
+        this.structure.container.removeAttribute('data-election');
+        this.structure.container.removeAttribute('data-regions-type');
 
         Toggle.register('map-type', (bool) => {
             const map = this.maps.find(map => 
@@ -27,11 +29,9 @@ class ElectionResultContainer{
         });
 
         this.maps = (this.structure.maps.types).map(container => {
-            const instance = new MapClass(container, this, { election: this.data.election, type: container.getAttribute('data-type'), src: container.getAttribute('data-src') });
-            // clean up HTML
-            container.removeAttribute('data-type');
+            const instance = new MapClass(container, this, { election: this.data.election, type: container.getAttribute('data-map-type'), src: container.getAttribute('data-src') });
+            container.removeAttribute('data-map-type');
             container.removeAttribute('data-src');
-            container.removeAttribute('data-win-formula');
             return instance;
         });
 
@@ -91,10 +91,10 @@ class ElectionResultContainer{
         }
     }
 
-    async downloadData({ election }, { messageGroup, showChanges }){
+    async downloadData({ election, regionsType = null }, { messageGroup, showChanges }){
 
         if(CachedData.parties.length === 0) await CachedData.fetchParties();
-        if(CachedData.regions.length === 0) await CachedData.fetchRegions();
+        if(CachedData.regions.length === 0) await CachedData.fetchRegions(regionsType);
         if(!CachedData.results[election]) await CachedData.fetchResults(election);
 
         if(showChanges){

@@ -41,7 +41,7 @@ class CachedDataSkeleton{
 
     static downloadProperty(propertyArray, path, { applyParse, applyTransform = (_) => _ } = {} ){
         return new Promise( async resolve => {
-            
+
             const propertyValue = propertyArray.reduce( (obj, key) => {
                 if(!obj) return null;
                 else return obj[key];
@@ -94,7 +94,7 @@ const DefaultParty = window.DefaultParty = {
 class SearchHandler{
     constructor(url, suffix = ""){
         this.url = url;
-        this.suffix = suffix;
+        this.suffix = suffix.charAt(0) != "/" ? "/" + suffix : suffix;
         this.previousQuery = "";
     }
 

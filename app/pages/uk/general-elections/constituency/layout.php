@@ -17,7 +17,7 @@
 <?= RegionLayout::openSidebar(); ?>
     <section class="shaded purple">
         <h1>Find a constituency</h1>
-        <?= \UK\RegionSearchSection::show(); ?>
+        <?= \UK\RegionSearchSection::show("general"); ?>
     </section>
     <?php if(empty($_error)) : ?>
         <?= \UK\RegionPortrait::show($region['id']); ?>

@@ -22,7 +22,6 @@ class RegionBarGraph extends \Base\Component{
             }
         }*/
     ?>
-        <article class="RegionBarGraph pre-hydration">
             <h2><?= $title[0]; ?> <?= ($title[1] ?? "") . (substr($title[1] ?? "", -1) === "-" ? "" : " ") . ($title[2] ?? ""); ?></h2>
 
             <?php
@@ -39,12 +38,10 @@ class RegionBarGraph extends \Base\Component{
                 }
             ?>
 
-        </article>
-
     <?php }
 
     static function renderGraph(array $results, string $subElectionType, string $title = NULL){ ?>
-        <div class="RegionBarGraph__container">
+        <div class="RegionBarGraph pre-hydration">
             <?php if($title): ?><h3><?= $title; ?></h3><?php endif; ?>
             <?php switch($subElectionType){
                 case "separate":

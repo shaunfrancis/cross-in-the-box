@@ -8,7 +8,7 @@ if(empty($_params['path'][0])){
 }
 
 $slug = UK\slugToLookupSlug($_params['path'][0]);
-$region = API\SlugLookupService::call(["uk", $slug]);
+$region = API\SlugLookupService::call(["uk", $slug, "general"]);
 
 if(empty($region) || !empty($region['error'])){
     $region['title'] = "Constituency not found";

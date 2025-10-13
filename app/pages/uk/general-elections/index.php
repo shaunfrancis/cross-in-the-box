@@ -54,7 +54,7 @@
 
     <section id="find-a-constituency" class="shaded purple">
         <h1>Find a constituency</h1>
-        <?= \UK\RegionSearchSection::show(); ?>
+        <?= \UK\RegionSearchSection::show("general"); ?>
         <!--<UKConstituencySearchSection searchInputRef={searchInputRef} />-->
     </section>
             

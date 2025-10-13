@@ -11,13 +11,15 @@ class ElectionResultContainer extends \Base\Component{
         ?array $messages = [],                  // [group: string, open: bool?]
         ?bool $showChanges = FALSE,
         ?string $dedicatedPage = NULL,
-        ?string $winFormulaName = "default"
+        ?string $winFormulaName = "default",
+        ?string $regionsType = "default"
     ): void { ?>
 
         <div
             class="ElectionResultContainer"
             data-election="<?= $election; ?>"
             data-win-formula="<?= $winFormulaName; ?>"
+            data-regions-type="<?= $regionsType; ?>"
             <?php if($showChanges) : ?>data-show-changes="true"<?php endif; ?>
             style="height: min(<?= $dimensions['h']; ?>, calc(100vw - 30px)); min-height: <?= $dimensions['minH']; ?>;"
         >

@@ -39,7 +39,7 @@ class Map{
 
         regions.map( region => {
             let fill = fills.find(f => f.id == region.id);
-            if(!fill) fill = {id: region.id, color: "transparent"};
+            if(!fill) fill = {id: region.id, color: "#EEE"};
 
             const regionElts = this.structure.container.querySelectorAll( regionSelector(region.id) );
             if(regionElts.length === 0) return;

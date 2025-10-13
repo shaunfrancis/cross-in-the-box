@@ -34,7 +34,6 @@ return (a.pinned != b.pinned) ? (a.pinned || Infinity) - (b.pinned || Infinity) 
 }
 static downloadProperty(propertyArray, path, { applyParse, applyTransform = (_) => _ } = {} ){
 return new Promise( async resolve => {
-
 const propertyValue = propertyArray.reduce( (obj, key) => {
 if(!obj) return null;
 else return obj[key];
@@ -79,7 +78,7 @@ color: "var(--default-color)"
 class SearchHandler{
 constructor(url, suffix = ""){
 this.url = url;
-this.suffix = suffix;
+this.suffix = suffix.charAt(0) != "/" ? "/" + suffix : suffix;
 this.previousQuery = "";
 }
 async permission(query){
@@ -128,13 +127,15 @@ this.structure = this.hydrate(elt);
 this.winFormulaName = this.structure.container.getAttribute('data-win-formula');
 this.data = {
 election: this.structure.container.getAttribute('data-election'),
+regionsType: this.structure.container.getAttribute('data-regions-type'),
 updates: [],
-results: []
 };
 this.attributes = {
 messageGroup: this.structure.messages.container?.getAttribute('data-group'),
 showChanges: this.structure.container.getAttribute('data-show-changes')
 };
+this.structure.container.removeAttribute('data-election');
+this.structure.container.removeAttribute('data-regions-type');
 Toggle.register('map-type', (bool) => {
 const map = this.maps.find(map =>
 map.type === (bool ? "geographic" : "cartographic")
@@ -142,11 +143,9 @@ map.type === (bool ? "geographic" : "cartographic")
 if(map) map.show();
 });
 this.maps = (this.structure.maps.types).map(container => {
-const instance = new MapClass(container, this, { election: this.data.election, type: container.getAttribute('data-type'), src: container.getAttribute('data-src') });
-// clean up HTML
-container.removeAttribute('data-type');
+const instance = new MapClass(container, this, { election: this.data.election, type: container.getAttribute('data-map-type'), src: container.getAttribute('data-src') });
+container.removeAttribute('data-map-type');
 container.removeAttribute('data-src');
-container.removeAttribute('data-win-formula');
 return instance;
 });
 this.constructor.elementMaps.set(this.structure.container, this);
@@ -201,9 +200,9 @@ types: [...elt.querySelectorAll('.ElectionResultContainer__map-container > div')
 }
 }
 }
-async downloadData({ election }, { messageGroup, showChanges }){
+async downloadData({ election, regionsType = null }, { messageGroup, showChanges }){
 if(CachedData.parties.length === 0) await CachedData.fetchParties();
-if(CachedData.regions.length === 0) await CachedData.fetchRegions();
+if(CachedData.regions.length === 0) await CachedData.fetchRegions(regionsType);
 if(!CachedData.results[election]) await CachedData.fetchResults(election);
 if(showChanges){
 this.data.updates = await fetch(Endpoint + "/updates/uk/" + election)
@@ -355,7 +354,7 @@ clickFun = (id) => {}                       // optional function to execute on c
 this.currentFill = this.containerInstance.currentFillData;
 regions.map( region => {
 let fill = fills.find(f => f.id == region.id);
-if(!fill) fill = {id: region.id, color: "transparent"};
+if(!fill) fill = {id: region.id, color: "#EEE"};
 const regionElts = this.structure.container.querySelectorAll( regionSelector(region.id) );
 if(regionElts.length === 0) return;
 regionElts.forEach(regionElt => {
@@ -457,9 +456,9 @@ container.classList.remove('pre-hydration');
 });
 import Elt from 'components/shared/_Elt/_Elt';
 class RegionSearchSection{
-constructor(elt, path){
+constructor(elt, path, pathSuffix = null){
 this.structure = this.hydrate(elt);
-this.handler = new RegionSearchHandler(path);
+this.handler = new RegionSearchHandler(path, pathSuffix);
 }
 hydrate(elt){
 const input = elt.querySelector('.RegionSearchSection__search-input');
@@ -658,7 +657,7 @@ data.forEach( party => party.displayId = partyIdToDisplayId(party.id) );
 }
 });
 }
-static fetchRegions(){ return this.downloadProperty(["regions"], Endpoint + "/regions/uk") }
+static fetchRegions(type = null){ return this.downloadProperty( ["regions"], Endpoint + "/regions/uk/" + (type || "") ) }
 static fetchResults(election){ return this.downloadProperty(["results", election], Endpoint + "/results/uk/" + election) }
 static fetchMessages(group, path = Endpoint + "/messages/uk/" + group){ return super.fetchMessages(group, path) }
 }
@@ -672,18 +671,58 @@ return displayId;
 const regionToSlug = (title) => {
 return title.toLowerCase().replace(/ /g, "-").replace(/,|\)|\(/g, "").replace(/ô/g, "o");
 };
-import ElectionSummaryBlocs from 'components/shared/ElectionSummaryBlocs/ElectionSummaryBlocs';
-import PartyProgressionBlocs from 'components/shared/PartyProgressionBlocs/PartyProgressionBlocs';
-import PopupBarGraph from 'components/shared/PopupBarGraph/PopupBarGraph';
+window.addEventListener('DOMContentLoaded', async () => {
+if(CachedData.parties.length === 0) await CachedData.fetchParties();
+for(const container of document.querySelectorAll('.DHondtTable')){
+for(const row of container.querySelectorAll('.DHondtTable__row')){
+const partyId = row.getAttribute('data-party');
+const partyBloc = row.querySelector('.DHondtTable__party');
+if(!partyBloc) continue;
+const blocs = [partyBloc, ...row.querySelectorAll('.DHondtTable__elected')];
+
+let party = CachedData.parties.find( p => p.id === partyId );
+if(!party) party = DefaultParty;
+blocs.forEach( bloc => {
+bloc.style.background = party.color || "var(--default-color)";
+if(party.textColor) bloc.style.color = party.textColor;
+});
+
+if(partyBloc) partyBloc.querySelector('span').innerHTML = party.displayId;
+row.querySelector('.DHondtTable__hover').innerHTML = party.title;
+}
+container.classList.remove('pre-hydration');
+}
+});
 window.addEventListener('DOMContentLoaded', () => {
 const instances = [];
 for(const elt of document.querySelectorAll('.ElectionResultContainer')){
-instances.push(
-new UKElectionResultContainer(elt)
-);
+switch(elt.getAttribute('data-regions-type')){
+case "scotland":
+instances.push(new UKScotlandElectionResultContainer(elt));
+break;
+case "general": default:
+instances.push(new UKGeneralElectionResultContainer(elt));
+}
 }
 });
 class UKElectionResultContainer extends ElectionResultContainer{
+addMessages(options){
+const urlFun = (slug, type) => {
+let url = "/uk/";
+switch(type){
+case "general": url += "general-elections/"; break;
+default: url += "general-elections/"
+}
+url += 'constituency/' + regionToSlug(slug);
+return url;
+}
+super.addMessages({ urlFun: urlFun, ...options });
+}
+}
+import ElectionSummaryBlocs from 'components/shared/ElectionSummaryBlocs/ElectionSummaryBlocs';
+import PartyProgressionBlocs from 'components/shared/PartyProgressionBlocs/PartyProgressionBlocs';
+import PopupBarGraph from 'components/shared/PopupBarGraph/PopupBarGraph';
+class UKGeneralElectionResultContainer extends UKElectionResultContainer{
 constructor(elt){
 super(elt, UKGeneral);
 }
@@ -779,15 +818,6 @@ popup.appendChild( PopupBarGraph.render({ results: regionResults, parties: Cache
 super.fillMap(data);
 }
 addMessages(){
-const urlFun = (slug, type) => {
-let url = "/uk/";
-switch(type){
-case "general": url += "general-elections/"; break;
-default: url += "general-elections/"
-}
-url += 'constituency/' + regionToSlug(slug);
-return url;
-}
 const childrenFun = (message) => {
 let messageResults = [];
 if(message.results) switch(message.result_type){
@@ -811,7 +841,93 @@ title: hardcodeTitle ?? message.link_title
 }
 return messageResults;
 }
-super.addMessages({ urlFun: urlFun, childrenFun: childrenFun });
+super.addMessages({ childrenFun: childrenFun });
+}
+}
+class UKScotlandElectionResultContainer extends UKElectionResultContainer{
+constructor(elt){
+super(elt, UKScotland);
+}
+addSummary(){
+const summaries = []; // {party : Party, count : number}[]
+this.winFormula(CachedData.results[this.data.election]).forEach( result => {
+
+const regionUpdates = this.data.updates.filter( update => update.id == result.id );
+const winner = regionUpdates.length > 0 ? regionUpdates[regionUpdates.length - 1].party : result.party;
+if(!summaries.find( summary => summary.party.id == winner)){
+const party = CachedData.parties.find( party => party.id === result.party) || DefaultParty;
+summaries.push({ party: party, count: 1 });
+}
+else summaries.find( summary => summary.party.id == winner ).count++;
+});
+summaries.sort( (a,b) => {
+const getCount = (x) => {
+return (["vacant","ind"].includes(x.party.id)) ? -Infinity : x.count;
+}
+return getCount(b) - getCount(a) || a.party.id.localeCompare(b.party.id);
+} );
+
+this.structure.summary.container.appendChild(
+ElectionSummaryBlocs.render({ data: summaries, rowLength: 5 })
+);
+}
+fillMap(data){
+data.clickFun = (id) => {
+let region = CachedData.regions.find( r => r.id == id );
+if(region) window.location.href = '/uk/scottish-parliament/constituency/' + regionToSlug(region.title);
+}
+data.hoverFun = (active, popup, id) => {
+if(!active) return;
+popup.innerHTML = "";
+const region = CachedData.regions.find( region => region.id == id );
+const regionResults = CachedData.results[this.data.election]
+.filter( result => result.id == id )
+.sort( (a,b) => b.votes - a.votes );
+const regionUpdates = this.data.updates.filter( update => update.id == region.id );
+// Title
+if(!region) return popup.appendChild( new Elt({tag: 'h3', innerHTML: "Missing data"}) );
+popup.appendChild( new Elt({tag: 'h3', innerHTML: region.title}) );
+// Winning candidate
+const winner = this.winFormula(regionResults)[0];
+let innerHTML = winner?.candidate;
+if(this.winFormulaName === "second-place") innerHTML += " in second place";
+if(winner) popup.appendChild( new Elt({tag: 'h4', innerHTML: innerHTML}) );
+// Party progression blocs
+const partyProgression = [CachedData.parties.find( party => party.id === winner?.party ) || DefaultParty];
+regionUpdates.forEach( update => {
+partyProgression.push( CachedData.parties.find( party => party.id == update.party ) || DefaultParty );
+});
+if(partyProgression.length > 1) popup.appendChild( PartyProgressionBlocs.render({ parties: partyProgression }) );
+// Bar graph
+popup.appendChild( PopupBarGraph.render({ results: regionResults, parties: CachedData.parties }) );
+};
+super.fillMap(data);
+}
+addMessages(){
+const childrenFun = (message) => {
+let messageResults = [];
+if(message.results) switch(message.result_type){
+case 1: //exit poll
+messageResults.push( PopupBarGraph.render({
+results: message.results.sort( (a,b) => b.votes - a.votes ),
+parties: CachedData.parties,
+goal: 326/650,
+format: "n",
+title: message.link_title
+}) );
+break;
+default:
+let hardcodeTitle = null;
+if(message.date.getFullYear() == 2024 && !message.link_title) hardcodeTitle = "Partial results";
+messageResults.push( PopupBarGraph.render({
+results: message.results.sort( (a,b) => b.votes - a.votes ),
+parties: CachedData.parties,
+title: hardcodeTitle ?? message.link_title
+}) );
+}
+return messageResults;
+}
+super.addMessages({ childrenFun: childrenFun });
 }
 }
 class UKGeneral extends Map{
@@ -834,17 +950,26 @@ break;
 }
 }
 }
+class UKScotland extends Map{
+constructor(container, containerInstance, {election, type, src}){
+super(container, containerInstance, {election, type, src});
+}
+}
 window.addEventListener('DOMContentLoaded', () => {
 const instances = [];
 for(const elt of document.querySelectorAll('.RegionSearchSection')){
-instances.push(
-new UKRegionSearchSection(elt)
-);
+switch(elt.getAttribute('data-type')){
+case "scotland":
+instances.push( new ScotlandRegionSearchSection(elt) );
+break;
+case "general": default:
+instances.push( new GeneralRegionSearchSection(elt) );
+}
 }
 });
-class UKRegionSearchSection extends RegionSearchSection{
+class GeneralRegionSearchSection extends RegionSearchSection{
 constructor(elt, path = Endpoint + "/search/uk/"){
-super(elt, path);
+super(elt, path, "general");
 this.structure.search.input.addEventListener('input', async (event) => {
 const query = event.target.value;
 const searchResults = await this.search(query);
@@ -852,6 +977,20 @@ if(searchResults) this.addResults(searchResults, query, {
 resultsHref: (region) => '/uk/general-elections/constituency/' + regionToSlug(region.title),
 abolishedLabel: "Abolished constituency",
 winnerLabel: "MP"
+});
+});
+}
+}
+class ScotlandRegionSearchSection extends RegionSearchSection{
+constructor(elt, path = Endpoint + "/search/uk/"){
+super(elt, path, "scotland");
+this.structure.search.input.addEventListener('input', async (event) => {
+const query = event.target.value;
+const searchResults = await this.search(query);
+if(searchResults) this.addResults(searchResults, query, {
+resultsHref: (region) => '/uk/scottish-parliament/constituency/' + regionToSlug(region.title),
+abolishedLabel: "Abolished constituency",
+winnerLabel: "MSP"
 });
 });
 }

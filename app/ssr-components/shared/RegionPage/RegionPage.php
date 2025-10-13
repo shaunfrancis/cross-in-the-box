@@ -107,11 +107,14 @@ class RegionPage extends \Base\Component{
                 return strcmp($surname($a), $surname($b));
             }
         });
-        echo RegionBarGraph::show(
-            $event['data']['title'],
-            $event['data']['results']
-        );
-    }
+        ?>
+        <article class="block">
+            <?= RegionBarGraph::show(
+                $event['data']['title'],
+                $event['data']['results']
+            ); ?>
+        </article>
+    <?php }
 
     static function renderUpdateEvent($event){ ?>
         <article class="RegionPage__update-note">

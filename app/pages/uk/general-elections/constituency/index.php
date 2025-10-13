@@ -1,2 +1,2 @@
 <?php namespace Shared;
-    echo \UK\RegionPage::show($data);
+    echo \UK\GeneralRegionPage::show($data);
