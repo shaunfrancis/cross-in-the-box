@@ -24,10 +24,10 @@ class RegionPage extends \Base\Component{
 
                 switch($event['type']){
                     case "election":
-                        static::renderElectionEvent($event);
+                        static::renderElectionEvent($event, $data['attributes']);
                         break;
                     case "update":
-                        static::renderUpdateEvent($event);
+                        static::renderUpdateEvent($event, $data['attributes']);
                         break;
                 }
 
@@ -94,7 +94,7 @@ class RegionPage extends \Base\Component{
         <?php endif;
     }
 
-    static function renderElectionEvent($event){
+    static function renderElectionEvent($event, $attributes = NULL){
         usort($event['data']['results'], function($a, $b){
             if($a['votes'] != $b['votes']) return $b['votes'] - $a['votes'];
             else if($a['elected']) return -INF;
@@ -116,7 +116,7 @@ class RegionPage extends \Base\Component{
         </article>
     <?php }
 
-    static function renderUpdateEvent($event){ ?>
+    static function renderUpdateEvent($event, $attributes = NULL){ ?>
         <article class="RegionPage__update-note">
 
             <div class="RegionPage__party-bloc" data-party="<?= $event['data']['party']; ?>">

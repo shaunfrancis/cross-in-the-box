@@ -5,18 +5,15 @@ class DHondtTable extends \Base\Component{
     
     static function render(
         array $results,
+        ?array $divisors = NULL
     ){ 
         $totalVotes = 0;
         $rounds = 0;
         foreach($results as &$result){
             $totalVotes += $result['votes'];
 
-            // this needs to be automated
-            $result['initialDivisor'] = match($result['party']){
-                'snp' => 7,
-                'con' => 4,
-                default => 1
-            };
+            if(!empty($divisors[$result['party']])) $result['initialDivisor'] = $divisors[$result['party']] + 1;
+            else $result['initialDivisor'] = 1;
 
             foreach($result['candidates'] as &$candidate){
                 $rounds += $candidate['elected'];
@@ -87,7 +84,7 @@ class DHondtTable extends \Base\Component{
                         </td>
 
                         <?php foreach($result['rounds'] as $round): ?>
-                            <td class="DHondtTable__bloc bloc tnum<?= $round['elected'] ? " DHondtTable__elected" : ""; ?>">
+                            <td class="DHondtTable__bloc bloc tnum<?= !empty($round['elected']) ? " DHondtTable__elected" : ""; ?>">
                                 <?= !empty($round['votes']) ? number_format($round['votes'], 0, ".", " ") : ''; ?>
                             </td>
                         <?php endforeach; ?>

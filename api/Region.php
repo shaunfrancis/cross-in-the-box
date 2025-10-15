@@ -91,6 +91,17 @@ class RegionService extends APIService{
                 if(!isset($party['textColor'])) unset($party['textColor']);
             }
 
+            //get attributes
+            $attributes = self::fetch(
+                "SELECT region_id, label, value, applies_to
+                FROM $tables->attributes
+                WHERE region_id IN (" . str_repeat("?,", count($direct_regions) - 1) . "?)",
+                $direct_regions
+            );
+            foreach($attributes as &$attribute){
+                if(empty($attribute['applies_to'])) unset($attribute['applies_to']);
+            }
+
             /*Format events:
                 "type" => string,
                 "date" => string,
@@ -151,7 +162,7 @@ class RegionService extends APIService{
                 $events[] = $new_event;
             }
 
-            return array( "events" => $events, "parties" => $parties, "tree" => $tree_results );
+            return array( "events" => $events, "parties" => $parties, "tree" => $tree_results, "attributes" => $attributes );
         }
         catch(\Exception $error){ return self::fail(500, "Internal server error"); }
     }

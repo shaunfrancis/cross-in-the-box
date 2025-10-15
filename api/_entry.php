@@ -33,6 +33,9 @@
         "polls" => PollsService::call($request),            // polls/{country}
                                                             // get opinion polls by country ID
 
+        "relationship" => RelationshipService::call($request),  // relationship/{country}/{relationship}
+                                                                // get results for regions within a relationship ID
+
         "region" => RegionService::call($request),          // region/{country}/{region}
                                                             // get results for a region by country and region ID
             

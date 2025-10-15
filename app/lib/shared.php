@@ -50,7 +50,7 @@ function combineCandidates(array $results){
 
     $resultsByRegion = [];
     foreach($results as $result){
-        $resultsByRegion[$result['id']][] = $result;
+        $resultsByRegion[$result['id'] ?? 0][] = $result;
     }
 
     foreach($resultsByRegion as $regionResults){
