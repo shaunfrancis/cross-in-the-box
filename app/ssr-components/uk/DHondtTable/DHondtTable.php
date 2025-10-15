@@ -3,8 +3,7 @@ namespace UK;
 
 class DHondtTable extends \Base\Component{
     
-    static function render( 
-        array $title,
+    static function render(
         array $results,
     ){ 
         $totalVotes = 0;
@@ -15,7 +14,7 @@ class DHondtTable extends \Base\Component{
             // this needs to be automated
             $result['initialDivisor'] = match($result['party']){
                 'snp' => 7,
-                'ld' => 3,
+                'con' => 4,
                 default => 1
             };
 
@@ -55,15 +54,14 @@ class DHondtTable extends \Base\Component{
         }
         
     ?>
-        <h2><?= $title[0]; ?> <?= ($title[1] ?? "") . (substr($title[1] ?? "", -1) === "-" ? "" : " ") . ($title[2] ?? ""); ?></h2>
         <table class="DHondtTable pre-hydration" style="--max-rounds:<?= $rounds; ?>"> 
 
             <thead>
                 <tr class="DHondtTable__header DHondtTable__row">
-                    <th class="DHondtTable__bloc">Party</th>
-                    <th class="DHondtTable__bloc">Votes</th>
+                    <th class="DHondtTable__bloc bloc">Party</th>
+                    <th class="DHondtTable__bloc bloc">Votes</th>
                     <?php for($i = 1; $i <= $rounds; $i++): ?>
-                        <th class="DHondtTable__bloc">Round <?= $i; ?></th>
+                        <th class="DHondtTable__bloc bloc">Round <?= $i; ?></th>
                     <?php endfor; ?>
                 </tr>
             </thead>
@@ -71,21 +69,25 @@ class DHondtTable extends \Base\Component{
                 <?php foreach($results as $result): ?>
                     <tr class="DHondtTable__row" data-party="<?= $result['party']; ?>">
 
-                        <td class="DHondtTable__party DHondtTable__bloc">
+                        <td class="DHondtTable__party DHondtTable__bloc bloc">
                             <span><?= $result['party']; ?></span>
-                            <div class="DHondtTable__hover"></div>
+                            <div class="DHondtTable__hover">
+                                <?php if($result['party'] === "ind"):?>
+                                    Independent (<?= $result['candidates'][0]['name']; ?>)
+                                <?php endif; ?>
+                            </div>
                         </td>
 
-                        <td class="DHondtTable__percentage DHondtTable__bloc tnum">
+                        <td class="DHondtTable__percentage DHondtTable__bloc bloc tnum">
                             <?= number_format(100 * $result['votes'] / $totalVotes, 2, '.', ''); ?>%
                         </td>
 
-                        <td class="DHondtTable__bloc tnum">
+                        <td class="DHondtTable__bloc bloc tnum">
                             <?= number_format($result['votes'], 0, ".", " "); ?>
                         </td>
 
                         <?php foreach($result['rounds'] as $round): ?>
-                            <td class="DHondtTable__bloc tnum<?= $round['elected'] ? " DHondtTable__elected" : ""; ?>">
+                            <td class="DHondtTable__bloc bloc tnum<?= $round['elected'] ? " DHondtTable__elected" : ""; ?>">
                                 <?= !empty($round['votes']) ? number_format($round['votes'], 0, ".", " ") : ''; ?>
                             </td>
                         <?php endforeach; ?>

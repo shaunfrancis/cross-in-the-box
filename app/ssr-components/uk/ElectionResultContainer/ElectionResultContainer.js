@@ -16,8 +16,9 @@ class UKElectionResultContainer extends ElectionResultContainer{
         const urlFun = (slug, type) => {
             let url = "/uk/";
             switch(type){
-                case "general": url += "general-elections/"; break;
-                default: url += "general-elections/"
+                case "scottish-parliament": url += "scottish-parliament/"; break;
+                case "senedd-cymru": url += "senedd-cymru/"; break;
+                case "general": default: url += "general-elections/"
             }
             url += 'constituency/' + regionToSlug(slug);
             return url;

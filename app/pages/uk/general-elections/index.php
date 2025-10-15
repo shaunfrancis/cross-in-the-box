@@ -16,38 +16,38 @@
         <div class="section-heading">
             <h1>Election results</h1>
             <?= Toggle::show(
-                $id = "map-type",
-                $from = "/images/uk-cartographic-icon.svg",
-                $to = "/images/uk-geographic-icon.svg",
+                id: "map-type",
+                from: "/images/uk-cartographic-icon.svg",
+                to: "/images/uk-geographic-icon.svg",
             ) ?>
         </div>
         <?= ElectionResultsSection::open(); ?>
             <?= \UK\GeneralElectionResultContainer::show(
-                $election = "2024",
-                $title = ["2024", "General", "Election"],
-                $messages = ['group' => "2024", 'open' => TRUE]
+                election: "2024",
+                title: ["2024", "General", "Election"],
+                messages: ['group' => "2024", 'open' => TRUE]
             ); ?>
 
             <?= \UK\GeneralElectionResultContainer::show(
-                $election = "2019",
-                $title = ["2019", "General", "Election"],
-                $messages = ['group' => "2019"]
+                election: "2019",
+                title: ["2019", "General", "Election"],
+                messages: ['group' => "2019"]
             ); ?>
 
             <?= \UK\GeneralElectionResultContainer::show(
-                $election = "2017",
-                $title = ["2017", "General", "Election"],
-                $messages = ['group' => "2017"]
+                election: "2017",
+                title: ["2017", "General", "Election"],
+                messages: ['group' => "2017"]
             ); ?>
 
             <?= \UK\GeneralElectionResultContainer::show(
-                $election = "2015",
-                $title = ["2015", "General", "Election"],
+                election: "2015",
+                title: ["2015", "General", "Election"],
             ); ?>
 
             <?= \UK\GeneralElectionResultContainer::show(
-                $election = "2010",
-                $title = ["2010", "General", "Election"],
+                election: "2010",
+                title: ["2010", "General", "Election"],
             ); ?>
         <?= ElectionResultsSection::close(); ?>
     </section>
@@ -72,9 +72,9 @@
         <div class="section-heading">
             <h1>Analysis</h1>
             <?= Toggle::show(
-                $id = "map-type",
-                $from = "/images/uk-cartographic-icon.svg",
-                $to = "/images/uk-geographic-icon.svg",
+                id: "map-type",
+                from: "/images/uk-cartographic-icon.svg",
+                to: "/images/uk-geographic-icon.svg",
             ) ?>
         </div>
 

@@ -48,11 +48,6 @@
 }
 
 .DHondtTable__bloc{
-    border-radius:2px;
-    padding:4px 15px;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
     cursor:default;
     text-align:right;
     color:#000;

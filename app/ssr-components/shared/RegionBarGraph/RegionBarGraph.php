@@ -5,7 +5,6 @@ include_once './app/lib/shared.php';
 class RegionBarGraph extends \Base\Component{
     
     static function render(
-        array $title,                           // string[]
         array $results,                         // Result[]
         array $subtitles = [],                  // [subElectionId: string][]
         string $subElectionType = "separate",   // "separate" | "rounds"
@@ -22,8 +21,6 @@ class RegionBarGraph extends \Base\Component{
             }
         }*/
     ?>
-            <h2><?= $title[0]; ?> <?= ($title[1] ?? "") . (substr($title[1] ?? "", -1) === "-" ? "" : " ") . ($title[2] ?? ""); ?></h2>
-
             <?php
                 switch($subElectionType){
                     case "separate":
@@ -71,18 +68,18 @@ class RegionBarGraph extends \Base\Component{
             ?>
 
             <div class="RegionBarGraph__row" data-party="<?= $result['party']; ?>">
-                <div class="RegionBarGraph__party RegionBarGraph__bloc">
+                <div class="RegionBarGraph__party RegionBarGraph__bloc bloc">
                     <span><?= $result['party']; ?></span>
                     <div class="RegionBarGraph__hover"></div>
                 </div>
-                <div class="RegionBarGraph__candidate RegionBarGraph__bloc" title="<?= $result['candidates'][0]['name']; ?>">
+                <div class="RegionBarGraph__candidate RegionBarGraph__bloc bloc" title="<?= $result['candidates'][0]['name']; ?>">
                     <?= $result['candidates'][0]['name']; ?>
                 </div>
-                <div class="RegionBarGraph__votes RegionBarGraph__bloc tnum">
+                <div class="RegionBarGraph__votes RegionBarGraph__bloc bloc tnum">
                     <?= $votesValue; ?>
                 </div>
 
-                 <div class="RegionBarGraph__percentage RegionBarGraph__bloc tnum">
+                 <div class="RegionBarGraph__percentage RegionBarGraph__bloc bloc tnum">
                     <?php if($totalVotes > 0) echo $percentage . "%"; ?>
                 </div>
                 

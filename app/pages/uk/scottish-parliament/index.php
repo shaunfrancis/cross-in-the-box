@@ -22,18 +22,19 @@
         </div>
         <?= ElectionResultsSection::open(); ?>
             <?= \UK\ScotlandElectionResultContainer::show(
-                $election = "S2021",
-                $title = ["2021", "Scottish Parliament", "Election"]
+                election: "S2021",
+                title: ["2021", "Scottish Parliament", "Election"],
+                messages: ['group' => "SW2021", 'open' => TRUE]
             ); ?>
 
             <?= \UK\ScotlandElectionResultContainer::show(
-                $election = "S2016",
-                $title = ["2016", "Scottish Parliament", "Election"]
+                election: "S2016",
+                title: ["2016", "Scottish Parliament", "Election"]
             ); ?>
 
             <?= \UK\ScotlandElectionResultContainer::show(
-                $election = "S2011",
-                $title = ["2011", "Scottish Parliament", "Election"]
+                election: "S2011",
+                title: ["2011", "Scottish Parliament", "Election"]
             ); ?>
         <?= ElectionResultsSection::close(); ?>
     </section>

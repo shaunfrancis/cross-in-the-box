@@ -15,30 +15,30 @@
         <div class="section-heading">
             <h1>Election results</h1>
             <?= Toggle::show(
-                $id = "map-type",
-                $from = "/images/canada-cartographic-icon.svg",
-                $to = "/images/canada-geographic-icon.svg",
+                id: "map-type",
+                from: "/images/canada-cartographic-icon.svg",
+                to: "/images/canada-geographic-icon.svg",
             ) ?>
         </div>
         <?= ElectionResultsSection::open(); ?>
             <?= \Canada\ElectionResultContainer::show(
-                $election = "2025",
-                $title = ["2025", "Federal", "Election"]
+                election: "2025",
+                title: ["2025", "Federal", "Election"]
             ); ?>
 
             <?= \Canada\ElectionResultContainer::show(
-                $election = "2021",
-                $title = ["2021", "Federal", "Election"]
+                election: "2021",
+                title: ["2021", "Federal", "Election"]
             ); ?>
 
             <?= \Canada\ElectionResultContainer::show(
-                $election = "2019",
-                $title = ["2019", "Federal", "Election"]
+                election: "2019",
+                title: ["2019", "Federal", "Election"]
             ); ?>
 
             <?= \Canada\ElectionResultContainer::show(
-                $election = "2015",
-                $title = ["2015", "Federal", "Election"]
+                election: "2015",
+                title: ["2015", "Federal", "Election"]
             ); ?>
         <?= ElectionResultsSection::close(); ?>
     </section>

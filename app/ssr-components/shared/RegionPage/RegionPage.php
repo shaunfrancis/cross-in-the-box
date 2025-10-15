@@ -109,8 +109,8 @@ class RegionPage extends \Base\Component{
         });
         ?>
         <article class="block">
+            <h2><?= str_replace("- ", "-", implode(" ", $event['data']['title'])); ?></h2>
             <?= RegionBarGraph::show(
-                $event['data']['title'],
                 $event['data']['results']
             ); ?>
         </article>

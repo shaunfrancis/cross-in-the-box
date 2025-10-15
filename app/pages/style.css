@@ -167,6 +167,15 @@ button:not(.unstyled):active{
     box-shadow:none;
     transform:translate(1px,1px);
 }
+.bloc{
+    background:var(--default-color);
+    color:#fff;
+    border-radius:2px;
+    padding:4px 15px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
 
 @media screen and (max-width:768px){
     :root{
