@@ -28,10 +28,10 @@ class ScotlandRegionPage extends RegionPage{
         ?>
 
         <article class="block">
-            <?= DHondtTable::render(
-                $event['data']['title'],
-                $results
-            ); ?>
+            <h2><?= str_replace("- ", "-", implode(" ", $event['data']['title'])); ?></h2>
+            <?= \Shared\CandidatesMasonryList::render($results); ?>
+            <h3>Votes</h3>
+            <?= DHondtTable::render($results); ?>
         </article>
 
     <?php }
