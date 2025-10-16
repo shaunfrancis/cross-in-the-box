@@ -1,9 +1,3 @@
-/* .DHondtTable{
-    padding:30px;
-    background:#fff;
-    box-shadow:1px 1px 0 1px var(--box-shadow-color);
-} */
-
 .DHondtTable.pre-hydration{
     & .DHondtTable__party{
         background:var(--default-color);

@@ -32,7 +32,7 @@ class ScotlandRegionPage extends RegionPage{
                 ["uk", $constituency_relationship['value']],
                 ['election' => $event['data']['id']]
             );
-            
+
             $divisors = [];
             foreach($constituency_results as $result){
                 if($result['election'] != $event['data']['id'] || !$result['elected'] || $result['party'] == "ind") continue;
@@ -46,7 +46,7 @@ class ScotlandRegionPage extends RegionPage{
             <h2><?= str_replace("- ", "-", implode(" ", $event['data']['title'])); ?></h2>
             <?= \Shared\CandidatesMasonryList::render($results); ?>
             <h3>Votes</h3>
-            <?= DHondtTable::render($results, $divisors); ?>
+            <?= \Shared\DHondtTable::render($results, $divisors); ?>
         </article>
 
     <?php }

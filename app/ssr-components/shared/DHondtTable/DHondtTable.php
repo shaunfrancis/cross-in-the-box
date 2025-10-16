@@ -1,5 +1,5 @@
 <?php
-namespace UK;
+namespace Shared;
 
 class DHondtTable extends \Base\Component{
     
