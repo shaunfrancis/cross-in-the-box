@@ -28,7 +28,11 @@ class ScotlandRegionPage extends RegionPage{
 
         $constituency_relationship = array_find($attributes ?? [], fn($attribute) => $attribute['label'] === "constituency_relationship");
         if(!empty($constituency_relationship)){
-            $constituency_results = \API\RelationshipService::call(["uk", $constituency_relationship['value']]);
+            $constituency_results = \API\RelationshipService::call(
+                ["uk", $constituency_relationship['value']],
+                ['election' => $event['data']['id']]
+            );
+            
             $divisors = [];
             foreach($constituency_results as $result){
                 if($result['election'] != $event['data']['id'] || !$result['elected'] || $result['party'] == "ind") continue;

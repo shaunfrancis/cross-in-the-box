@@ -2,7 +2,7 @@
 namespace API;
 class RegionsService extends APIService{
 
-    static function call(array $request){
+    static function call(array $request, ?array $params = []){
         $tables = parent::setup($request[0]);
         if(count($request) != 1 && count($request) != 2) return self::fail(404, "Not found");
         if(count($request) == 2) $type = $request[1];

@@ -1,13 +1,13 @@
 <?php
 namespace API;
 class MessagesService extends APIService{
-
-    static function call(array $request){
+    
+    static function call(array $request, ?array $params = []){
         $tables = parent::setup($request[0]);
-        if(count($request) != 2 && count($request) != 3) return self::fail(404, "Not found");
+
+        if(count($request) != 2) return self::fail(404, "Not found");
 
         $group = $request[1];
-        if(isset($request[2])) $parameters = self::parse_parameters($request[2]);
 
         /* result_types
             0: percentage table
@@ -22,9 +22,9 @@ class MessagesService extends APIService{
         ON results.election_id = links.election_id AND results.region_id = links.region_id
         WHERE messages.group_id = :group";
 
-        if(isset($parameters["since"])){
+        if(!empty($params["since"])){
             $messages_sql .= " AND messages.update_date >= :since";
-            $messages_params = [':group' => $group, ':since' => $parameters["since"]];
+            $messages_params = [':group' => $group, ':since' => $params["since"]];
         }
         else $messages_params = [':group' => $group];
         

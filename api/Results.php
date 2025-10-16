@@ -2,20 +2,17 @@
 namespace API;
 class ResultsService extends APIService{
 
-    static function call(array $request){
+    static function call(array $request, ?array $params = []){
         $tables = parent::setup($request[0]);
-        /* PARAMS:
-            compact? = false : boolean   When true does not return candidate names and shortens column names
-        */
 
-        if(count($request) != 2 && count($request) != 3) return self::fail(404, "Not found");
+        $compact = !empty($params["compact"]) && $params["compact"] == "true";
+
+        if(count($request) != 2) return self::fail(404, "Not found");
 
         $election = $request[1];
         
-        if(isset($request[2])) $parameters = self::parse_parameters($request[2]);
-        
         try{
-            if(isset($parameters["compact"]) && $parameters["compact"] == "true"){
+            if($compact){
                 $election_sql = "
                     SELECT results.region_id as id, results.election_subid as s, results.party as p, results.votes as v, 
                     candidates.elected as e 
@@ -43,7 +40,7 @@ class ResultsService extends APIService{
                 if(!isset($result['s'])) unset($result['s']);
             }
 
-            $election_results = \Shared\combineCandidates($election_results);
+            if(!$compact) $election_results = \Shared\combineCandidates($election_results);
 
             return $election_results;
         }

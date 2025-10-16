@@ -2,7 +2,7 @@
 namespace API\USA;
 class LiveCloseCountedDataService extends \API\APIService{
 
-    static function call(array $request){
+    static function call(array $request, ?array $params = []){
         if(count($request) != 2) return self::fail(404, "Not found");
         
         try{

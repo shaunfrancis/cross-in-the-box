@@ -2,7 +2,7 @@
 namespace API;
 class RelationshipService extends APIService{
 
-    static function call(array $request){
+    static function call(array $request, ?array $params = []){
         $tables = parent::setup($request[0]);
 
         if(count($request) != 2) return self::fail(404, "Not found");
@@ -18,8 +18,7 @@ class RelationshipService extends APIService{
             if(count($regions) < 1) return self::fail(404, "Not found");
             else{
                 $regions = array_map(fn($region) => $region['region_id'], $regions);
-                $results = self::fetch(
-                    "SELECT 
+                $results_sql = "SELECT 
                     results.region_id, results.election_id as election, results.election_subid as subid, results.party, results.votes,
                     candidates.candidate, candidates.position as candidate_position, candidates.elected,
                     elections.date as election_date, elections.title as election_title, 
@@ -28,9 +27,15 @@ class RelationshipService extends APIService{
                     JOIN $tables->candidates as candidates ON candidates.result_id = results.id
                     JOIN $tables->elections as elections ON elections.id = results.election_id
                     JOIN $tables->regions as regions ON regions.id = results.region_id
-                    WHERE region_id IN (" . str_repeat("?,", count($regions) - 1) . "?)",
-                    $regions
-                );
+                    WHERE region_id IN (" . str_repeat("?,", count($regions) - 1) . "?)";
+                $results_vars = $regions;
+
+                if(!empty($params['election'])){
+                    $results_sql .= " AND elections.id = ?";
+                    $results_vars[] = $params['election'];
+                }
+
+                $results = self::fetch( $results_sql, $results_vars );
                 return $results;
             }
         }
