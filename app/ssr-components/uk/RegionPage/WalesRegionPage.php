@@ -2,12 +2,12 @@
 namespace UK;
 include_once './app/lib/shared.php';
 
-class ScotlandRegionPage extends RegionPage{
+class WalesRegionPage extends RegionPage{
     static function renderSuccessorLinks(array $event, array $data, string $abolishedLabel = "", ?callable $regionLink = NULL){
         
         parent::renderSuccessorLinks($event, $data, 
             "This constituency was abolished following a boundary review. It was succeeded by:",
-            fn($title) => "/uk/scottish-parliament/constituency/" . regionToSlug($title)
+            fn($title) => "/uk/senedd-cymru/constituency/" . regionToSlug($title)
         );
 
     }

@@ -5,6 +5,9 @@ window.addEventListener('DOMContentLoaded', () => {
             case "scotland":
                 instances.push(new UKScotlandElectionResultContainer(elt));
                 break;
+            case "wales":
+                instances.push(new UKWalesElectionResultContainer(elt));
+                break;
             case "general": default: 
                 instances.push(new UKGeneralElectionResultContainer(elt));
         }

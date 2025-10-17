@@ -136,6 +136,28 @@ if(party.textColor) elt.style.color = party.textColor;
 container.classList.remove('pre-hydration');
 }
 });
+window.addEventListener('DOMContentLoaded', async () => {
+if(CachedData.parties.length === 0) await CachedData.fetchParties();
+for(const container of document.querySelectorAll('.DHondtTable')){
+for(const row of container.querySelectorAll('.DHondtTable__row')){
+const partyId = row.getAttribute('data-party');
+const partyBloc = row.querySelector('.DHondtTable__party');
+if(!partyBloc) continue;
+const blocs = [partyBloc, ...row.querySelectorAll('.DHondtTable__elected')];
+
+let party = CachedData.parties.find( p => p.id === partyId );
+if(!party) party = DefaultParty;
+blocs.forEach( bloc => {
+bloc.style.background = party.color || "var(--default-color)";
+if(party.textColor) bloc.style.color = party.textColor;
+});
+
+if(partyBloc) partyBloc.querySelector('span').innerHTML = party.displayId;
+if(party.id != "ind") row.querySelector('.DHondtTable__hover').innerHTML = party.title;
+}
+container.classList.remove('pre-hydration');
+}
+});
 import Message from "components/shared/Message/Message";
 class ElectionResultContainer{
 static observer;
@@ -719,34 +741,15 @@ return displayId;
 const regionToSlug = (title) => {
 return title.toLowerCase().replace(/ /g, "-").replace(/,|\)|\(/g, "").replace(/ô/g, "o");
 };
-window.addEventListener('DOMContentLoaded', async () => {
-if(CachedData.parties.length === 0) await CachedData.fetchParties();
-for(const container of document.querySelectorAll('.DHondtTable')){
-for(const row of container.querySelectorAll('.DHondtTable__row')){
-const partyId = row.getAttribute('data-party');
-const partyBloc = row.querySelector('.DHondtTable__party');
-if(!partyBloc) continue;
-const blocs = [partyBloc, ...row.querySelectorAll('.DHondtTable__elected')];
-
-let party = CachedData.parties.find( p => p.id === partyId );
-if(!party) party = DefaultParty;
-blocs.forEach( bloc => {
-bloc.style.background = party.color || "var(--default-color)";
-if(party.textColor) bloc.style.color = party.textColor;
-});
-
-if(partyBloc) partyBloc.querySelector('span').innerHTML = party.displayId;
-if(party.id != "ind") row.querySelector('.DHondtTable__hover').innerHTML = party.title;
-}
-container.classList.remove('pre-hydration');
-}
-});
 window.addEventListener('DOMContentLoaded', () => {
 const instances = [];
 for(const elt of document.querySelectorAll('.ElectionResultContainer')){
 switch(elt.getAttribute('data-regions-type')){
 case "scotland":
 instances.push(new UKScotlandElectionResultContainer(elt));
+break;
+case "wales":
+instances.push(new UKWalesElectionResultContainer(elt));
 break;
 case "general": default:
 instances.push(new UKGeneralElectionResultContainer(elt));
@@ -965,18 +968,105 @@ case 1: //exit poll
 messageResults.push( PopupBarGraph.render({
 results: message.results.sort( (a,b) => b.votes - a.votes ),
 parties: CachedData.parties,
-goal: 326/650,
+goal: 65/129,
 format: "n",
 title: message.link_title
 }) );
 break;
 default:
-let hardcodeTitle = null;
-if(message.date.getFullYear() == 2024 && !message.link_title) hardcodeTitle = "Partial results";
 messageResults.push( PopupBarGraph.render({
 results: message.results.sort( (a,b) => b.votes - a.votes ),
 parties: CachedData.parties,
-title: hardcodeTitle ?? message.link_title
+title: message.link_title
+}) );
+}
+return messageResults;
+}
+super.addMessages({ childrenFun: childrenFun });
+}
+}
+class UKWalesElectionResultContainer extends UKElectionResultContainer{
+constructor(elt){
+super(elt, UKWales);
+}
+addSummary(){
+const summaries = []; // {party : Party, count : number}[]
+this.winFormula(CachedData.results[this.data.election]).forEach( result => {
+
+const regionUpdates = this.data.updates.filter( update => update.id == result.id );
+const winner = regionUpdates.length > 0 ? regionUpdates[regionUpdates.length - 1].party : result.party;
+if(!summaries.find( summary => summary.party.id == winner)){
+const party = CachedData.parties.find( party => party.id === result.party) || DefaultParty;
+summaries.push({ party: party, count: result.candidates.length });
+}
+else summaries.find( summary => summary.party.id == winner ).count += result.candidates.length;
+});
+summaries.sort( (a,b) => {
+const getCount = (x) => {
+return (["vacant","ind"].includes(x.party.id)) ? -Infinity : x.count;
+}
+return getCount(b) - getCount(a) || a.party.id.localeCompare(b.party.id);
+} );
+
+this.structure.summary.container.appendChild(
+ElectionSummaryBlocs.render({ data: summaries, rowLength: 5 })
+);
+}
+fillMap(data){
+data.clickFun = (id) => {
+let region = CachedData.regions.find( r => r.id == id );
+if(region) window.location.href = '/uk/senedd-cymru/constituency/' + regionToSlug(region.title);
+}
+data.hoverFun = (active, popup, id) => {
+if(!active) return;
+popup.innerHTML = "";
+const region = CachedData.regions.find( region => region.id == id );
+const regionResults = CachedData.results[this.data.election]
+.filter( result => result.id == id )
+.sort( (a,b) => b.votes - a.votes );
+const regionUpdates = this.data.updates.filter( update => update.id == region.id );
+const hasMultipleCandidates = regionResults.some( result => result.candidates.length > 1 );
+// Title
+if(!region) return popup.appendChild( new Elt({tag: 'h3', innerHTML: "Missing data"}) );
+popup.appendChild( new Elt({tag: 'h3', innerHTML: region.title}) );
+if(hasMultipleCandidates){
+popup.appendChild( PopupBarGraph.render({ results: regionResults, parties: CachedData.parties }) );
+}
+else{
+// Winning candidate
+const winner = this.winFormula(regionResults)[0];
+let innerHTML = winner?.candidates[0].name;
+if(winner) popup.appendChild( new Elt({tag: 'h4', innerHTML: innerHTML}) );
+// Party progression blocs
+const partyProgression = [CachedData.parties.find( party => party.id === winner?.party ) || DefaultParty];
+regionUpdates.forEach( update => {
+partyProgression.push( CachedData.parties.find( party => party.id == update.party ) || DefaultParty );
+});
+if(partyProgression.length > 1) popup.appendChild( PartyProgressionBlocs.render({ parties: partyProgression }) );
+// Bar graph
+popup.appendChild( PopupBarGraph.render({ results: regionResults, parties: CachedData.parties }) );
+}
+};
+super.fillMap(data);
+}
+addMessages(){
+const childrenFun = (message) => {
+let messageResults = [];
+if(message.results) switch(message.result_type){
+case 1: //exit poll
+messageResults.push( PopupBarGraph.render({
+results: message.results.sort( (a,b) => b.votes - a.votes ),
+parties: CachedData.parties,
+goal: 31/60,
+format: "n",
+title: message.link_title
+}) );
+break;
+default:
+messageResults.push( PopupBarGraph.render({
+results: message.results.sort( (a,b) => b.votes - a.votes ),
+parties: CachedData.parties,
+title: message.link_title
 }) );
 }
 return messageResults;
@@ -1009,12 +1099,20 @@ constructor(container, containerInstance, {election, type, src}){
 super(container, containerInstance, {election, type, src});
 }
 }
+class UKWales extends Map{
+constructor(container, containerInstance, {election, type, src}){
+super(container, containerInstance, {election, type, src});
+}
+}
 window.addEventListener('DOMContentLoaded', () => {
 const instances = [];
 for(const elt of document.querySelectorAll('.RegionSearchSection')){
 switch(elt.getAttribute('data-type')){
 case "scotland":
 instances.push( new ScotlandRegionSearchSection(elt) );
+break;
+case "wales":
+instances.push( new WalesRegionSearchSection(elt) );
 break;
 case "general": default:
 instances.push( new GeneralRegionSearchSection(elt) );
@@ -1045,6 +1143,20 @@ if(searchResults) this.addResults(searchResults, query, {
 resultsHref: (region) => '/uk/scottish-parliament/constituency/' + regionToSlug(region.title),
 abolishedLabel: "Abolished constituency",
 winnerLabel: "MSP"
+});
+});
+}
+}
+class WalesRegionSearchSection extends RegionSearchSection{
+constructor(elt, path = Endpoint + "/search/uk/"){
+super(elt, path, "wales");
+this.structure.search.input.addEventListener('input', async (event) => {
+const query = event.target.value;
+const searchResults = await this.search(query);
+if(searchResults) this.addResults(searchResults, query, {
+resultsHref: (region) => '/uk/senedd-cymru/constituency/' + regionToSlug(region.title),
+abolishedLabel: "Abolished constituency",
+winnerLabel: "MS"
 });
 });
 }

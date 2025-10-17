@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 447.34644 250" stroke-width="1" stroke="#fff" fill="#EEE">
+    <style>#uk-W2007-svg rect{ cursor:pointer; transition: fill 1000ms, opacity 500ms }</style>
+    <g id="uk-W2007-svg">
+
+        <rect x="25.5" y="0.5" width="24" height="24" name="W2007001" />
+        <rect x="50.5" y="0.5" width="24" height="24" name="W2007002" />
+        <rect x="125.5" y="0.5" width="24" height="24" name="W2007006" />
+        <rect x="50.5" y="25.5" width="24" height="24" name="W2007003" />
+        <rect x="75.5" y="25.5" width="24" height="24" name="W2007005" />
+        <rect x="100.5" y="25.5" width="24" height="24" name="W2007007" />
+        <rect x="125.5" y="25.5" width="24" height="24" name="W2007008" />
+        <rect x="25.5" y="50.5" width="24" height="24" name="W2007010" />
+        <rect x="50.5" y="50.5" width="24" height="24" name="W2007012" />
+        <rect x="75.5" y="50.5" width="24" height="24" name="W2007011" />
+        <rect x="100.5" y="50.5" width="24" height="24" name="W2007013" />
+        <rect x="125.5" y="50.5" width="24" height="24" name="W2007004" />
+        <rect x="150.5" y="50.5" width="24" height="24" name="W2007009" />
+        <rect x="50.5" y="75.5" width="24" height="24" name="W2007015" />
+        <rect x="75.5" y="75.5" width="24" height="24" name="W2007016" />
+        <rect x="100.5" y="75.5" width="24" height="24" name="W2007014" />
+        <rect x="125.5" y="75.5" width="24" height="24" name="W2007025" />
+        <rect x="75.5" y="100.5" width="24" height="24" name="W2007022" />
+        <rect x="100.5" y="100.5" width="24" height="24" name="W2007024" />
+        <rect x="50.5" y="125.5" width="24" height="24" name="W2007030" />
+        <rect x="75.5" y="125.5" width="24" height="24" name="W2007023" />
+        <rect x="100.5" y="125.5" width="24" height="24" name="W2007027" />
+        <rect x="125.5" y="125.5" width="24" height="24" name="W2007026" />
+        <rect x="25.5" y="150.5" width="24" height="24" name="W2007017" />
+        <rect x="50.5" y="150.5" width="24" height="24" name="W2007020" />
+        <rect x="75.5" y="150.5" width="24" height="24" name="W2007021" />
+        <rect x="100.5" y="150.5" width="24" height="24" name="W2007028" />
+        <rect x="125.5" y="150.5" width="24" height="24" name="W2007039" />
+        <rect x="150.5" y="150.5" width="24" height="24" name="W2007040" />
+        <rect x="0.5" y="175.5" width="24" height="24" name="W2007018" />
+        <rect x="25.5" y="175.5" width="24" height="24" name="W2007019" />
+        <rect x="75.5" y="175.5" width="24" height="24" name="W2007032" />
+        <rect x="100.5" y="175.5" width="24" height="24" name="W2007031" />
+        <rect x="125.5" y="175.5" width="24" height="24" name="W2007029" />
+        <rect x="150.5" y="175.5" width="24" height="24" name="W2007036" />
+        <rect x="175.5" y="175.5" width="24" height="24" name="W2007037" />
+        <rect x="75.5" y="200.5" width="24" height="24" name="W2007033" />
+        <rect x="125.5" y="200.5" width="24" height="24" name="W2007035" />
+        <rect x="150.5" y="200.5" width="24" height="24" name="W2007038" />
+        <rect x="150.5" y="225.5" width="24" height="24" name="W2007034" />
+
+        <g name="W2007500" transform="translate(58.545008,91.582959)">
+            <rect x="229.30142" y="63.917038" width="24" height="24" />
+            <rect x="254.30142" y="63.917038" width="24" height="24" />
+            <rect x="229.30142" y="88.917046" width="24" height="24" />
+            <rect x="254.30142" y="88.917046" width="24" height="24" />
+        </g>
+
+        <g name="W2007400" transform="translate(168.54501,91.582959)">
+            <rect height="24" width="24" y="63.917038" x="229.30142" />
+            <rect height="24" width="24" y="63.917038" x="254.30142" />
+            <rect height="24" width="24" y="88.917046" x="229.30142" />
+            <rect height="24" width="24" y="88.917046" x="254.30142" />
+        </g>
+
+        <g name="W2007300" transform="translate(113.54501,91.582959)">
+            <rect height="24" width="24" y="63.917038" x="229.30142" />
+            <rect height="24" width="24" y="63.917038" x="254.30142" />
+            <rect height="24" width="24" y="88.917046" x="229.30142" />
+            <rect height="24" width="24" y="88.917046" x="254.30142" />
+        </g>
+
+        <g name="W2007200" transform="translate(77.094886,64.497027)">
+            <rect height="24" width="24" y="-18.997032" x="215.75111" />
+            <rect height="24" width="24" y="-18.997032" x="240.75111" />
+            <rect height="24" width="24" y="-18.997032" x="265.75113" /> 
+            <rect height="24" width="24" y="-18.997032" x="290.75113" />
+        </g>
+
+        <g name="W2007100" transform="translate(67.574673,68.579991)">
+            <rect x="275.27176" y="6.9200039" width="24" height="24" />
+            <rect x="275.27176" y="31.920004" width="24" height="24" />
+            <rect x="250.27176" y="56.920006" width="24" height="24" />
+            <rect x="275.27176" y="56.920006" width="24" height="24" />
+        </g>
+
+    </g>
+</svg>

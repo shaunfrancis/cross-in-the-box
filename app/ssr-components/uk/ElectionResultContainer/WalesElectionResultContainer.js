@@ -3,9 +3,9 @@ import ElectionSummaryBlocs from 'components/shared/ElectionSummaryBlocs/Electio
 import PartyProgressionBlocs from 'components/shared/PartyProgressionBlocs/PartyProgressionBlocs';
 import PopupBarGraph from 'components/shared/PopupBarGraph/PopupBarGraph';
 
-class UKScotlandElectionResultContainer extends UKElectionResultContainer{
+class UKWalesElectionResultContainer extends UKElectionResultContainer{
     constructor(elt){
-        super(elt, UKScotland);
+        super(elt, UKWales);
     }
 
     addSummary(){
@@ -37,7 +37,7 @@ class UKScotlandElectionResultContainer extends UKElectionResultContainer{
     fillMap(data){
         data.clickFun = (id) => {
             let region = CachedData.regions.find( r => r.id == id );
-            if(region) window.location.href = '/uk/scottish-parliament/constituency/' + regionToSlug(region.title);
+            if(region) window.location.href = '/uk/senedd-cymru/constituency/' + regionToSlug(region.title);
         }
 
         data.hoverFun = (active, popup, id) => {
@@ -87,7 +87,7 @@ class UKScotlandElectionResultContainer extends UKElectionResultContainer{
                     messageResults.push( PopupBarGraph.render({
                         results: message.results.sort( (a,b) => b.votes - a.votes ),
                         parties: CachedData.parties,
-                        goal: 65/129,
+                        goal: 31/60,
                         format: "n",
                         title: message.link_title
                     }) );

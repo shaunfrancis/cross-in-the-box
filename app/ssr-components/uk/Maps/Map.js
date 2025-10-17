@@ -27,3 +27,9 @@ class UKScotland extends Map{
         super(container, containerInstance, {election, type, src});
     }
 }
+
+class UKWales extends Map{
+    constructor(container, containerInstance, {election, type, src}){
+        super(container, containerInstance, {election, type, src});
+    }
+}
