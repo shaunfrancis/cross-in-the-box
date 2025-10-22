@@ -4,7 +4,7 @@ namespace Shared;
 class Header extends \Base\Component{
 
     static function render(string $countryName, ?string $countryAbbrev = NULL, ?array $links = []): void { 
-        global $request;
+        global $_request;
     ?>
     
         <header id="Header">
@@ -21,7 +21,7 @@ class Header extends \Base\Component{
             <nav>
                 <ul>
                     <?php foreach($links as $link) : ?>
-                        <li class="<?= str_starts_with('/' . implode('/', $request), $link['path']) ? "Header__selected" : ""; ?>">
+                        <li class="<?= str_starts_with('/' . implode('/', $_request), $link['path']) ? "Header__selected" : ""; ?>">
                             <a href="<?= $link['path']; ?>"><?= $link['title']; ?></a>
                         </li>
                     <?php endforeach; ?>

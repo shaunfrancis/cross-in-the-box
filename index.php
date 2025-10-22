@@ -1,18 +1,19 @@
 <?php
-    $request = array_values( array_filter( preg_split( '/\//', str_replace(['/elections/'], '', $_SERVER['REQUEST_URI']) ) ) );
+    $_request = array_values( array_filter( preg_split( '/\//', str_replace(['/elections/'], '', $_SERVER['REQUEST_URI']) ) ) );
     if(str_contains($_SERVER['REQUEST_URI'], '.') || str_contains($_SERVER['REQUEST_URI'], '%2e')){
         http_response_code(404);
         require 'app/pages/404.php';
         exit;
     }
+    $_initial_request = $_request;
 
-    $_country = $request[0] ?? NULL;
+    $_country = $_request[0] ?? NULL;
     $_params = [
         'path' => [],
     ];
-    if(str_contains(end($request), "?")){
-        $query_strings = preg_split( '/(\?|&)/', end($request) );
-        $request[count($request) - 1] = array_shift($query_strings);
+    if(str_contains(end($_request), "?")){
+        $query_strings = preg_split( '/(\?|&)/', end($_request) );
+        $_request[count($_request) - 1] = array_shift($query_strings);
         foreach($query_strings as $query){
             $query = explode('=', $query);
             if(preg_match('/[^a-zA-Z]/', $query[0])) continue;
@@ -31,7 +32,7 @@
     if(file_exists($country_lib)) require_once $country_lib;
 
     // Handle autoload of API services and SSR components
-    spl_autoload_register( function($class) use ($request) {
+    spl_autoload_register( function($class) use ($_request) {
         
         $classPath = explode("\\", $class);
         $lastIndex = array_key_last($classPath);
@@ -62,12 +63,12 @@
         }
     });
 
-    while(count($request) >= 0){
-        $path = implode('/', $request);
+    while(count($_request) >= 0){
+        $path = implode('/', $_request);
         if( isSanitaryPath($path) && file_exists(sprintf('app/pages/%s/index.php', $path)) ) renderPage($path, $_params);
         else{
-            array_unshift($_params['path'], end($request));
-            array_pop($request);
+            array_unshift($_params['path'], end($_request));
+            array_pop($_request);
         }
     }
 

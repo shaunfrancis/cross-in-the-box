@@ -43,7 +43,7 @@
     & > li{
         list-style-type:none;
         & img{
-            width:30px;
+            height:30px;
         }
     }
 }
