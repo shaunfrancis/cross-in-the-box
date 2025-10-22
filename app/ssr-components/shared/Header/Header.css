@@ -4,7 +4,7 @@
     line-height:1.8em;
     display:flex;
     align-items:center;
-    padding:0 50px;
+    padding:0 var(--left-gap);
     column-gap:50px;
     overflow:hidden;
 }
@@ -57,7 +57,7 @@
 @media screen and (max-width:768px){
     #Header{
         flex-wrap:wrap;
-        padding:5px 20px;
+        padding:5px var(--left-gap);
         column-gap:30px;
         justify-content:space-between;
     }

@@ -1,0 +1,127 @@
+#Footer{ /*wrap footer to prevent margin collapse*/
+    padding-top:50px;
+    color:#333;
+}
+
+#Footer__container{
+    background:#fff;
+    box-shadow:inset 1px 1px 0 1px var(--box-shadow-color);
+    display:grid;
+    grid-template-columns:230px 120px repeat(auto-fill, 200px);
+    grid-template-rows:80px auto;
+    align-items:start;
+    justify-content:space-between;
+    padding:50px var(--left-gap);
+    column-gap:50px;
+}
+
+#Footer__logo-container{
+    display:flex;
+    gap:15px;
+    align-items:flex-start;
+}
+
+#Footer__logo-container > a{
+    font-size:0;
+    & > img{
+        height:50px;
+    }
+}
+
+.Footer__logo-label{
+    margin-top:-6px;
+}
+.Footer__logo-label h1{ font-size:1.5em }
+.Footer__logo-label p{ margin:-5px 0 0 0 }
+
+#Footer__social-container{
+    display:flex;
+    align-items:center;
+    margin:0;
+    padding:0;
+    gap:15px;
+    & > li{
+        list-style-type:none;
+        & img{
+            width:30px;
+        }
+    }
+}
+
+/* Hardcode everything to 24px-tall rows for masonry hack with CSS grid */
+#Footer__sitemap{
+    --row-height:24px;
+    grid-column:3 / -1;
+    grid-row:1 / -1;
+    display:grid;
+    grid-template-columns:subgrid;
+    grid-template-rows:repeat(auto-fill, var(--row-height));
+    margin-top:calc(var(--row-height) * -1.5);
+    & h2{
+        font-weight:500;
+        & > .Footer__current-page{
+            font-weight:600;
+        }
+    }
+    & li{
+        font-weight:350;
+        & > .Footer__current-page{
+            font-weight:450;
+        }
+    }
+    & .Footer__current-page{
+        color:#000;
+    }
+}
+.Footer__top-level-section{
+    --row-span:1;
+    grid-row:span calc(3 + var(--row-span));
+    margin:0;
+    padding:0;
+    & > h2{
+        font-size:1.2em;
+        height:calc(var(--row-height) * 3);
+        line-height:calc(var(--row-height) * 4);
+    }
+    & > ul{
+        margin:0;
+        padding-left:var(--row-height);
+        & > li{
+            height:var(--row-height);
+            line-height:var(--row-height);
+            list-style-type:square;
+        }
+    }
+    & a:hover{
+        text-decoration:underline;
+    }
+}
+
+
+@media screen and (max-width:1100px){
+    #Footer__container{
+        grid-template-columns:230px repeat(auto-fill, 200px);
+    }
+
+    #Footer__social-container{
+        grid-column:1;
+        grid-row:2;
+    }
+
+    #Footer__sitemap{
+        grid-column:2 / -1;
+    }
+}
+
+
+@media screen and (max-width:768px){
+    #Footer__container{
+        grid-template-columns:200px repeat(auto-fill, 150px);
+        column-gap:25px;
+    }
+
+
+    #Footer__sitemap{
+        --row-height:16px;
+    }
+}

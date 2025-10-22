@@ -10,6 +10,7 @@
     -webkit-box-sizing:border-box;
     box-sizing:border-box;
     font-family: "Oswald", sans-serif;
+    text-underline-offset:2px;
 }
 
 @font-face{
@@ -138,7 +139,6 @@ main > section > .section-heading{
 a.interactive{
     cursor:pointer;
     text-decoration:underline;
-    text-underline-offset:2px;
     transition:background-color 100ms;
     padding:0 1px;
 }

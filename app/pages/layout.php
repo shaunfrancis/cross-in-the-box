@@ -13,5 +13,6 @@
 <body>
     <?= Header::show($_countryName ?? '', $_countryAbbrev ?? NULL, $_headerLinks ?? []); ?>
     <?= $_children ?? ""; ?>
+    <?= Footer::show(); ?>
 </body>
 </html>
