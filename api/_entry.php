@@ -6,6 +6,11 @@
     $request = array_filter( preg_split( '/\//', str_replace(['/elections/api/','/api/'], '', $_SERVER['REQUEST_URI']) ) );
     $resource = array_shift($request);
 
+    require_once(__DIR__ . '/../app/lib/shared.php');
+    foreach( glob(sprintf('%s/{%s}[!_]*.php', __DIR__, "," . implode("/,", $accepted_countries)), GLOB_BRACE) as $file ){
+        require_once($file);
+    }
+
     $parse_parameters = function($string){
         $parameters = [];
         
@@ -28,13 +33,6 @@
         $request[count($request) - 1] = $pieces[0];
         $params = $parse_parameters($pieces[1]);
     }
-
-    spl_autoload_register( function() use ($accepted_countries){
-        foreach( glob(sprintf('%s/{%s}[!_]*.php', __DIR__, "," . implode("/,", $accepted_countries)), GLOB_BRACE) as $file ){
-            require_once($file);
-        }
-        require_once(__DIR__ . '/../app/lib/shared.php');
-    });
 
     APIService::$apiMode = TRUE; //enables http_response_code() setting
 

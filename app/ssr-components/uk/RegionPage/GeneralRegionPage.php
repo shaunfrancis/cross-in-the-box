@@ -1,7 +1,7 @@
 <?php
-namespace UK;
+namespace UK\RegionPage;
 
-class GeneralRegionPage extends RegionPage{
+class General extends \UK\RegionPage{
     static function renderSuccessorLinks(array $event, array $data, string $abolishedLabel = "", ?callable $regionLink = NULL){
         
         parent::renderSuccessorLinks($event, $data, 
@@ -9,12 +9,5 @@ class GeneralRegionPage extends RegionPage{
             fn($title) => "/uk/general-elections/constituency/" . regionToSlug($title)
         );
 
-    }
-
-    static function renderTreeChangeNote(array $event, array $currentRegion, array $data, ?callable $renameLink = NULL, string $changesLabel = ""){
-        parent::renderTreeChangeNote($event, $currentRegion, $data,
-            fn($region) => "The constituency was renamed to " . $currentRegion['title'] . ".",
-            "Boundary changes occurred."
-        );
     }
 }

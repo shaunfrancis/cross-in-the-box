@@ -21,17 +21,44 @@
         }
     }
 
-    spl_autoload_register( function() use ($request) {
-        // Base component
-        require_once sprintf('%s/app/ssr-components/Component.php', __DIR__);
-        // SSR components
-        $search = sprintf('%s/app/ssr-components/{shared,%s}/*/*.php', __DIR__, $_country ?? "*");
-        foreach( glob($search, GLOB_BRACE) as $file ){
-            require_once($file);
+    // Load base API service
+    require_once sprintf('%s/api/APIService.php', __DIR__);
+    // Load base component
+    require_once sprintf('%s/app/ssr-components/Component.php', __DIR__);
+    // Load lib functions
+    require_once sprintf('%s/app/lib/shared.php', __DIR__);
+    $country_lib = sprintf('%s/app/lib/$s.php', __DIR__, $_country);
+    if(file_exists($country_lib)) require_once $country_lib;
+
+    // Handle autoload of API services and SSR components
+    spl_autoload_register( function($class) use ($request) {
+        
+        $classPath = explode("\\", $class);
+        $lastIndex = array_key_last($classPath);
+
+        if(str_starts_with($class, "API\\")){ // API services
+            $dirPath = __DIR__ . "/";
+            foreach($classPath as $index => $fragment){
+                $dirPath .= ($index == $lastIndex) ? str_replace("Service", "", $fragment) . ".php" : strtolower($fragment) . "/";
+            }
+            require_once $dirPath;
         }
-        // API services
-        foreach( glob(sprintf('%s/api/{*/,}/[!_]*.php', __DIR__), GLOB_BRACE) as $file ){
-            require_once($file);
+        else{ // SSR components
+            $firstNamespace = $classPath[0];
+            // $classPath[1] will either be class name or secondary (and so on...) namespace;
+            // either way, this will be the name of a directory inside /$firstNamespace -
+            // just load all classes inside this directory, there will only be a few
+            // (i.e. \UK\RegionPortrait is a class while \UK\ElectionResultContainer\Scotland will load all country containers)
+
+            // Request main file first, i.e. 
+            // as above ElectionResultContainer/ElectionResultContainer before ElectionResultContainer/ScotlandElectionResultContainer
+            $main_file = sprintf('%s/app/ssr-components/%s/%s/%s.php', __DIR__, strtolower($firstNamespace), $classPath[1], $classPath[1]);
+            if(file_exists($main_file)) require_once($main_file);
+
+            $search = sprintf('%s/app/ssr-components/%s/%s/*.php', __DIR__, strtolower($firstNamespace), $classPath[1]);
+            foreach( glob($search, GLOB_BRACE) as $file ){
+                require_once($file);
+            }
         }
     });
 

@@ -1,7 +1,7 @@
 <?php 
-namespace UK;
+namespace UK\ElectionResultContainer;
 
-class GeneralElectionResultContainer extends ElectionResultContainer{
+class General extends \UK\ElectionResultContainer{
     static function render (
         string $election,
         array $title,                               // [string, string, string]

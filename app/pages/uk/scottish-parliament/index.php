@@ -21,18 +21,18 @@
             ) ?>*/ ?>
         </div>
         <?= ElectionResultsSection::open(); ?>
-            <?= \UK\ScotlandElectionResultContainer::show(
+            <?= \UK\ElectionResultContainer\Scotland::show(
                 election: "S2021",
                 title: ["2021", "Scottish Parliament", "Election"],
                 messages: ['group' => "SW2021", 'open' => TRUE]
             ); ?>
 
-            <?= \UK\ScotlandElectionResultContainer::show(
+            <?= \UK\ElectionResultContainer\Scotland::show(
                 election: "S2016",
                 title: ["2016", "Scottish Parliament", "Election"]
             ); ?>
 
-            <?= \UK\ScotlandElectionResultContainer::show(
+            <?= \UK\ElectionResultContainer\Scotland::show(
                 election: "S2011",
                 title: ["2011", "Scottish Parliament", "Election"]
             ); ?>

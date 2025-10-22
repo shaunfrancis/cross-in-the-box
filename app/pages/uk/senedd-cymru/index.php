@@ -21,16 +21,16 @@
             ) ?>*/ ?>
         </div>
         <?= ElectionResultsSection::open(); ?>
-            <?= \UK\WalesElectionResultContainer::show(
+            <?= \UK\ElectionResultContainer\Wales::show(
                 election: "W2021",
                 title: ["2021", "Senedd Cymru", "Election"],
                 messages: ['group' => "SW2021", 'open' => TRUE]
             ); ?>
-            <?= \UK\WalesElectionResultContainer::show(
+            <?= \UK\ElectionResultContainer\Wales::show(
                 election: "W2016",
                 title: ["2016", "Welsh Assembly", "Election"]
             ); ?>
-            <?= \UK\WalesElectionResultContainer::show(
+            <?= \UK\ElectionResultContainer\Wales::show(
                 election: "W2011",
                 title: ["2011", "Welsh Assembly", "Election"]
             ); ?>

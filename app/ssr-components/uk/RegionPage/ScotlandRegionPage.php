@@ -1,8 +1,7 @@
 <?php
-namespace UK;
-include_once './app/lib/shared.php';
+namespace UK\RegionPage;
 
-class ScotlandRegionPage extends RegionPage{
+class Scotland extends \UK\RegionPage{
     static function renderSuccessorLinks(array $event, array $data, string $abolishedLabel = "", ?callable $regionLink = NULL){
         
         parent::renderSuccessorLinks($event, $data, 
@@ -10,13 +9,6 @@ class ScotlandRegionPage extends RegionPage{
             fn($title) => "/uk/scottish-parliament/constituency/" . regionToSlug($title)
         );
 
-    }
-
-    static function renderTreeChangeNote(array $event, array $currentRegion, array $data, ?callable $renameLink = NULL, string $changesLabel = ""){
-        parent::renderTreeChangeNote($event, $currentRegion, $data,
-            fn($region) => "The constituency was renamed to " . $currentRegion['title'] . ".",
-            "Boundary changes occurred."
-        );
     }
 
     static function renderElectionEvent($event, $attributes = NULL){
@@ -46,7 +38,7 @@ class ScotlandRegionPage extends RegionPage{
             <h2><?= str_replace("- ", "-", implode(" ", $event['data']['title'])); ?></h2>
             <?= \Shared\CandidatesMasonryList::render($results); ?>
             <h3>Votes</h3>
-            <?= \Shared\DHondtTable::render($results, $divisors); ?>
+            <?= \Shared\DHondtTable::render($results, $divisors ?? []); ?>
         </article>
 
     <?php }

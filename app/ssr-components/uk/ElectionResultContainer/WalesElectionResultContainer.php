@@ -1,7 +1,7 @@
 <?php 
-namespace UK;
+namespace UK\ElectionResultContainer;
 
-class WalesElectionResultContainer extends ElectionResultContainer{
+class Wales extends \UK\ElectionResultContainer{
     static function render (
         string $election,
         array $title,                               // [string, string, string]
