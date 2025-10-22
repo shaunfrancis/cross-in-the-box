@@ -204,6 +204,22 @@ details summary .has-marker:after{
     text-overflow:ellipsis;
 }
 
+.key-information{
+    display:flex;
+    gap:15px;
+    & > div{
+        display:flex;
+        gap:5px;
+    }
+    & dd{
+        margin:0;
+        font-weight:450;
+    }
+    & dt{
+        font-weight:350;
+    }
+}
+
 @media screen and (max-width:768px){
     :root{
         --left-gap:20px;

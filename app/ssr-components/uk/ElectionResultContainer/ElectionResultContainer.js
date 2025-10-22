@@ -8,6 +8,9 @@ window.addEventListener('DOMContentLoaded', () => {
             case "wales":
                 instances.push(new UKWalesElectionResultContainer(elt));
                 break;
+            case "ni":
+                instances.push(new UKNIElectionResultContainer(elt));
+                break;
             case "general": default: 
                 instances.push(new UKGeneralElectionResultContainer(elt));
         }
@@ -21,6 +24,7 @@ class UKElectionResultContainer extends ElectionResultContainer{
             switch(type){
                 case "scottish-parliament": url += "scottish-parliament/"; break;
                 case "senedd-cymru": url += "senedd-cymru/"; break;
+                case "northern-ireland-assembly": url += "northern-ireland-assembly/"; break;
                 case "general": default: url += "general-elections/"
             }
             url += 'constituency/' + regionToSlug(slug);

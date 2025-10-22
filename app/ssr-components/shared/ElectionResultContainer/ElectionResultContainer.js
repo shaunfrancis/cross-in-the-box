@@ -147,13 +147,29 @@ class ElectionResultContainer{
         const newFills = []; // {id: string, color: string, opacity?: number}[]
         
         // Order by number of elected candidates (this is just for an approximate visual L->R on the map and has no real importance)
-        CachedData.results[this.data.election].sort( (a,b) => {
-            const electedCount = (r) => r.candidates.reduce( (count, candidate) => {
-                return count + candidate.elected;
-            }, 0 );
-            const electedCounts = {a: electedCount(a), b: electedCount(b)};
-            return electedCounts.b != electedCounts.a ? electedCounts.b - electedCounts.a : b.votes - a.votes;
-        });
+        // CachedData.results[this.data.election].sort( (a,b) => {
+        //     const electedCount = (x) => {
+        //         return CachedData.results[this.data.election]
+        //             .filter(r => {
+        //                 return r.id == x.id && r.party == x.party;
+        //             })
+        //             .map(r => {
+        //                 return r.candidates.reduce( (count, candidate) => {
+        //                     return count + candidate.elected;
+        //                 }, 0 );
+        //             })
+        //             .reduce( (sum, count) => sum + count, 0 );
+        //     }
+        //     const votes = (x) => {
+        //         return CachedData.results[this.data.election]
+        //             .filter(r => r.id == x.id && r.party == x.party)
+        //             .map(r => r.votes)
+        //             .reduce( (sum, count) => sum + count, 0 );
+        //     }
+
+        //     const electedCounts = {a: electedCount(a), b: electedCount(b)};
+        //     return electedCounts.b != electedCounts.a ? electedCounts.b - electedCounts.a : votes(b) - votes(a);
+        // });
 
         const regionCounts = {};
         const winners = this.winFormula(CachedData.results[this.data.election]);

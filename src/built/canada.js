@@ -118,6 +118,48 @@ let longDate = date.getDate().toString() + ordinalIndicator + " " + month;
 if(includeYear) longDate += " " + date.getFullYear();
 return longDate;
 }
+/* Duplicated in lib/shared.php */
+const combineSubElections = (results) => { // {id: string, candidate: {name: string, position: int}, results: {votes: int, elected: bool} }[]
+results = structuredClone(results);
+let combinedResults = [];
+let resultsByRegion = {};
+results.forEach(result => {
+const key = result.id || 0;
+if(!(key in resultsByRegion)) resultsByRegion[key] = [];
+resultsByRegion[key].push(result);
+});
+Object.entries(resultsByRegion).forEach( ([regionId, regionResults]) => {
+let combinedRegionResults = [];
+regionResults.forEach(result => {
+const party = result.party;
+const candidate = result.candidates[0];
+const resultArray = {
+votes: result.votes,
+elected: candidate.elected
+};
+const existingResult = combinedRegionResults.find( combinedResult => {
+return combinedResult.party == party && combinedResult.candidates[0].name == candidate.name;
+} );
+if(existingResult){
+existingResult.results[result.subid] = resultArray;
+}
+else{
+delete result.candidates[0].elected;
+const newResultArray = {};
+newResultArray[result.subid || 0] = resultArray;
+combinedRegionResults.push({
+id: regionId,
+party: result.party,
+candidates: result.candidates,
+results: newResultArray
+});
+delete result.subid;
+}
+});
+combinedResults.push(...combinedRegionResults);
+} );
+return combinedResults;
+}
 window.addEventListener('DOMContentLoaded', async () => {
 if(CachedData.parties.length === 0) await CachedData.fetchParties();
 for(const container of document.querySelectorAll('.CandidatesMasonryList')){
@@ -288,13 +330,28 @@ updateMap(showChanges = false){
 const newFills = []; // {id: string, color: string, opacity?: number}[]
 
 // Order by number of elected candidates (this is just for an approximate visual L->R on the map and has no real importance)
-CachedData.results[this.data.election].sort( (a,b) => {
-const electedCount = (r) => r.candidates.reduce( (count, candidate) => {
-return count + candidate.elected;
-}, 0 );
-const electedCounts = {a: electedCount(a), b: electedCount(b)};
-return electedCounts.b != electedCounts.a ? electedCounts.b - electedCounts.a : b.votes - a.votes;
-});
+// CachedData.results[this.data.election].sort( (a,b) => {
+//     const electedCount = (x) => {
+//         return CachedData.results[this.data.election]
+//             .filter(r => {
+//                 return r.id == x.id && r.party == x.party;
+//             })
+//             .map(r => {
+//                 return r.candidates.reduce( (count, candidate) => {
+//                     return count + candidate.elected;
+//                 }, 0 );
+//             })
+//             .reduce( (sum, count) => sum + count, 0 );
+//     }
+//     const votes = (x) => {
+//         return CachedData.results[this.data.election]
+//             .filter(r => r.id == x.id && r.party == x.party)
+//             .map(r => r.votes)
+//             .reduce( (sum, count) => sum + count, 0 );
+//     }
+//     const electedCounts = {a: electedCount(a), b: electedCount(b)};
+//     return electedCounts.b != electedCounts.a ? electedCounts.b - electedCounts.a : votes(b) - votes(a);
+// });
 const regionCounts = {};
 const winners = this.winFormula(CachedData.results[this.data.election]);
 winners.forEach( result => {
@@ -690,6 +747,28 @@ return (precedence(b.candidate) + (b.elected ? 1000 : 0) - precedence(a.candidat
 return results;
 }
 }
+window.addEventListener('DOMContentLoaded', async () => {
+if(CachedData.parties.length === 0) await CachedData.fetchParties();
+for(const container of document.querySelectorAll('.STVTable')){
+for(const row of container.querySelectorAll('.STVTable__row')){
+const partyId = row.getAttribute('data-party');
+const partyBloc = row.querySelector('.STVTable__party');
+if(!partyBloc) continue;
+const blocs = [partyBloc, ...row.querySelectorAll('.STVTable__elected')];
+
+let party = CachedData.parties.find( p => p.id === partyId );
+if(!party) party = DefaultParty;
+blocs.forEach( bloc => {
+bloc.style.background = party.color || "var(--default-color)";
+if(party.textColor) bloc.style.color = party.textColor;
+});
+
+if(partyBloc) partyBloc.querySelector('span').innerHTML = party.displayId;
+row.querySelector('.STVTable__hover').innerHTML = party.title;
+}
+container.classList.remove('pre-hydration');
+}
+});
 class Toggle{
 static register(id, fun){
 const toggles = document.querySelectorAll('.Toggle[data-id="' + id + '"]');

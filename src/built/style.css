@@ -10,6 +10,7 @@
 @import '../../app/ssr-components/shared/RegionLayout/RegionLayout.css';
 @import '../../app/ssr-components/shared/RegionPage/RegionPage.css';
 @import '../../app/ssr-components/shared/RegionSearchSection/RegionSearchSection.css';
+@import '../../app/ssr-components/shared/STVTable/STVTable.css';
 @import '../../app/ssr-components/shared/Toggle/Toggle.css';
 @import '../../app/ssr-components/uk/RegionPortrait/RegionPortrait.css';
 @import '../../app/csr-components/shared/ElectionSummaryBlocs/ElectionSummaryBlocs.css';

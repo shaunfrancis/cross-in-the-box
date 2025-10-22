@@ -28,3 +28,10 @@ class Wales2007 extends \Shared\Map{
         'cartographic' => 'public/maps/UK-W2007.svg',
     );
 }
+
+
+class NI2017 extends \Shared\Map{
+    static $types = array(
+        'cartographic' => 'public/maps/UK-N2017.svg',
+    );
+}

@@ -118,6 +118,48 @@ let longDate = date.getDate().toString() + ordinalIndicator + " " + month;
 if(includeYear) longDate += " " + date.getFullYear();
 return longDate;
 }
+/* Duplicated in lib/shared.php */
+const combineSubElections = (results) => { // {id: string, candidate: {name: string, position: int}, results: {votes: int, elected: bool} }[]
+results = structuredClone(results);
+let combinedResults = [];
+let resultsByRegion = {};
+results.forEach(result => {
+const key = result.id || 0;
+if(!(key in resultsByRegion)) resultsByRegion[key] = [];
+resultsByRegion[key].push(result);
+});
+Object.entries(resultsByRegion).forEach( ([regionId, regionResults]) => {
+let combinedRegionResults = [];
+regionResults.forEach(result => {
+const party = result.party;
+const candidate = result.candidates[0];
+const resultArray = {
+votes: result.votes,
+elected: candidate.elected
+};
+const existingResult = combinedRegionResults.find( combinedResult => {
+return combinedResult.party == party && combinedResult.candidates[0].name == candidate.name;
+} );
+if(existingResult){
+existingResult.results[result.subid] = resultArray;
+}
+else{
+delete result.candidates[0].elected;
+const newResultArray = {};
+newResultArray[result.subid || 0] = resultArray;
+combinedRegionResults.push({
+id: regionId,
+party: result.party,
+candidates: result.candidates,
+results: newResultArray
+});
+delete result.subid;
+}
+});
+combinedResults.push(...combinedRegionResults);
+} );
+return combinedResults;
+}
 window.addEventListener('DOMContentLoaded', async () => {
 if(CachedData.parties.length === 0) await CachedData.fetchParties();
 for(const container of document.querySelectorAll('.CandidatesMasonryList')){
@@ -288,13 +330,28 @@ updateMap(showChanges = false){
 const newFills = []; // {id: string, color: string, opacity?: number}[]
 
 // Order by number of elected candidates (this is just for an approximate visual L->R on the map and has no real importance)
-CachedData.results[this.data.election].sort( (a,b) => {
-const electedCount = (r) => r.candidates.reduce( (count, candidate) => {
-return count + candidate.elected;
-}, 0 );
-const electedCounts = {a: electedCount(a), b: electedCount(b)};
-return electedCounts.b != electedCounts.a ? electedCounts.b - electedCounts.a : b.votes - a.votes;
-});
+// CachedData.results[this.data.election].sort( (a,b) => {
+//     const electedCount = (x) => {
+//         return CachedData.results[this.data.election]
+//             .filter(r => {
+//                 return r.id == x.id && r.party == x.party;
+//             })
+//             .map(r => {
+//                 return r.candidates.reduce( (count, candidate) => {
+//                     return count + candidate.elected;
+//                 }, 0 );
+//             })
+//             .reduce( (sum, count) => sum + count, 0 );
+//     }
+//     const votes = (x) => {
+//         return CachedData.results[this.data.election]
+//             .filter(r => r.id == x.id && r.party == x.party)
+//             .map(r => r.votes)
+//             .reduce( (sum, count) => sum + count, 0 );
+//     }
+//     const electedCounts = {a: electedCount(a), b: electedCount(b)};
+//     return electedCounts.b != electedCounts.a ? electedCounts.b - electedCounts.a : votes(b) - votes(a);
+// });
 const regionCounts = {};
 const winners = this.winFormula(CachedData.results[this.data.election]);
 winners.forEach( result => {
@@ -690,6 +747,28 @@ return (precedence(b.candidate) + (b.elected ? 1000 : 0) - precedence(a.candidat
 return results;
 }
 }
+window.addEventListener('DOMContentLoaded', async () => {
+if(CachedData.parties.length === 0) await CachedData.fetchParties();
+for(const container of document.querySelectorAll('.STVTable')){
+for(const row of container.querySelectorAll('.STVTable__row')){
+const partyId = row.getAttribute('data-party');
+const partyBloc = row.querySelector('.STVTable__party');
+if(!partyBloc) continue;
+const blocs = [partyBloc, ...row.querySelectorAll('.STVTable__elected')];
+
+let party = CachedData.parties.find( p => p.id === partyId );
+if(!party) party = DefaultParty;
+blocs.forEach( bloc => {
+bloc.style.background = party.color || "var(--default-color)";
+if(party.textColor) bloc.style.color = party.textColor;
+});
+
+if(partyBloc) partyBloc.querySelector('span').innerHTML = party.displayId;
+row.querySelector('.STVTable__hover').innerHTML = party.title;
+}
+container.classList.remove('pre-hydration');
+}
+});
 class Toggle{
 static register(id, fun){
 const toggles = document.querySelectorAll('.Toggle[data-id="' + id + '"]');
@@ -751,6 +830,9 @@ break;
 case "wales":
 instances.push(new UKWalesElectionResultContainer(elt));
 break;
+case "ni":
+instances.push(new UKNIElectionResultContainer(elt));
+break;
 case "general": default:
 instances.push(new UKGeneralElectionResultContainer(elt));
 }
@@ -763,6 +845,7 @@ let url = "/uk/";
 switch(type){
 case "scottish-parliament": url += "scottish-parliament/"; break;
 case "senedd-cymru": url += "senedd-cymru/"; break;
+case "northern-ireland-assembly": url += "northern-ireland-assembly/"; break;
 case "general": default: url += "general-elections/"
 }
 url += 'constituency/' + regionToSlug(slug);
@@ -889,6 +972,78 @@ messageResults.push( PopupBarGraph.render({
 results: message.results.sort( (a,b) => b.votes - a.votes ),
 parties: CachedData.parties,
 title: hardcodeTitle ?? message.link_title
+}) );
+}
+return messageResults;
+}
+super.addMessages({ childrenFun: childrenFun });
+}
+}
+class UKNIElectionResultContainer extends UKElectionResultContainer{
+constructor(elt){
+super(elt, UKNI);
+}
+addSummary(){
+const summaries = []; // {party : Party, count : number}[]
+this.winFormula(CachedData.results[this.data.election]).forEach( result => {
+
+const regionUpdates = this.data.updates.filter( update => update.id == result.id );
+const winner = regionUpdates.length > 0 ? regionUpdates[regionUpdates.length - 1].party : result.party;
+if(!summaries.find( summary => summary.party.id == winner)){
+const party = CachedData.parties.find( party => party.id === result.party) || DefaultParty;
+summaries.push({ party: party, count: result.candidates.length });
+}
+else summaries.find( summary => summary.party.id == winner ).count += result.candidates.length;
+});
+summaries.sort( (a,b) => {
+const getCount = (x) => {
+return (["vacant","ind"].includes(x.party.id)) ? -Infinity : x.count;
+}
+return getCount(b) - getCount(a) || a.party.id.localeCompare(b.party.id);
+} );
+
+this.structure.summary.container.appendChild(
+ElectionSummaryBlocs.render({ data: summaries, rowLength: 5 })
+);
+}
+fillMap(data){
+data.clickFun = (id) => {
+let region = CachedData.regions.find( r => r.id == id );
+if(region) window.location.href = '/uk/northern-ireland-assembly/constituency/' + regionToSlug(region.title);
+}
+data.hoverFun = (active, popup, id) => {
+if(!active) return;
+popup.innerHTML = "";
+//combineSubElections(CachedData.results[this.data.election])
+const region = CachedData.regions.find( region => region.id == id );
+const firstPreferenceResults = CachedData.results[this.data.election]
+.filter( result => result.id == id && result.subid == 1 )
+.sort( (a,b) => b.votes - a.votes );
+// Title
+if(!region) return popup.appendChild( new Elt({tag: 'h3', innerHTML: "Missing data"}) );
+popup.appendChild( new Elt({tag: 'h3', innerHTML: region.title}) );
+popup.appendChild( PopupBarGraph.render({ results: firstPreferenceResults, parties: CachedData.parties, title: "First preference votes:"}) );
+};
+super.fillMap(data);
+}
+addMessages(){
+const childrenFun = (message) => {
+let messageResults = [];
+if(message.results) switch(message.result_type){
+case 1: //exit poll
+messageResults.push( PopupBarGraph.render({
+results: message.results.sort( (a,b) => b.votes - a.votes ),
+parties: CachedData.parties,
+goal: 46/90,
+format: "n",
+title: message.link_title
+}) );
+break;
+default:
+messageResults.push( PopupBarGraph.render({
+results: message.results.sort( (a,b) => b.votes - a.votes ),
+parties: CachedData.parties,
+title: message.link_title
 }) );
 }
 return messageResults;
@@ -1104,6 +1259,11 @@ constructor(container, containerInstance, {election, type, src}){
 super(container, containerInstance, {election, type, src});
 }
 }
+class UKNI extends Map{
+constructor(container, containerInstance, {election, type, src}){
+super(container, containerInstance, {election, type, src});
+}
+}
 window.addEventListener('DOMContentLoaded', () => {
 const instances = [];
 for(const elt of document.querySelectorAll('.RegionSearchSection')){
@@ -1113,6 +1273,9 @@ instances.push( new ScotlandRegionSearchSection(elt) );
 break;
 case "wales":
 instances.push( new WalesRegionSearchSection(elt) );
+break;
+case "ni":
+instances.push( new NIRegionSearchSection(elt) );
 break;
 case "general": default:
 instances.push( new GeneralRegionSearchSection(elt) );
@@ -1157,6 +1320,20 @@ if(searchResults) this.addResults(searchResults, query, {
 resultsHref: (region) => '/uk/senedd-cymru/constituency/' + regionToSlug(region.title),
 abolishedLabel: "Abolished constituency",
 winnerLabel: "MS"
+});
+});
+}
+}
+class NIRegionSearchSection extends RegionSearchSection{
+constructor(elt, path = Endpoint + "/search/uk/"){
+super(elt, path, "ni");
+this.structure.search.input.addEventListener('input', async (event) => {
+const query = event.target.value;
+const searchResults = await this.search(query);
+if(searchResults) this.addResults(searchResults, query, {
+resultsHref: (region) => '/uk/northern-ireland-assembly/constituency/' + regionToSlug(region.title),
+abolishedLabel: "Abolished constituency",
+winnerLabel: "MLA"
 });
 });
 }
