@@ -58,7 +58,7 @@ class RegionService extends APIService{
             $results = self::fetch(
                 "SELECT 
                 results.region_id, results.election_id as election, results.election_subid as subid, results.party, results.votes,
-                candidates.candidate, candidates.position as candidate_position, candidates.elected,
+                candidates.result_id, candidates.candidate, candidates.position as candidate_position, candidates.elected,
                 elections.date as election_date, elections.title as election_title, 
                 regions.title as region_title
                 FROM $tables->results as results

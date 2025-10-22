@@ -23,7 +23,7 @@ class ResultsService extends APIService{
             }
             else $election_sql = "
                 SELECT results.region_id as id, results.election_subid as subid, results.party, results.votes, 
-                candidates.candidate, candidates.position as candidate_position, candidates.elected
+                candidates.result_id, candidates.candidate, candidates.position as candidate_position, candidates.elected
                 FROM $tables->results as results
                 JOIN $tables->candidates as candidates ON results.id = candidates.result_id
                 WHERE election_id = :election

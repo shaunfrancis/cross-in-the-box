@@ -44,14 +44,20 @@
 }
 
 .RegionPage main article.block{
-    padding:30px;
+    --lr-padding:30px;
+    padding:30px var(--lr-padding);
     background:#fff;
     box-shadow:1px 1px 0 1px var(--box-shadow-color);
+    & .block-scroller{
+        width:calc(100% + var(--lr-padding));
+        overflow-x:auto;
+        padding-bottom:30px;
+    }
 }
 
 @media screen and (max-width:768px){
     .RegionPage main article.block{
-        padding:30px 15px;
+        --lr-padding: 15px;
     }
 }
 

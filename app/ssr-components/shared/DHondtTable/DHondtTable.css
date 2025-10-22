@@ -14,7 +14,7 @@
 
 .DHondtTable{
     display:grid;
-    grid-template-columns:85px repeat(calc(var(--max-rounds) + 2), minmax(min-content, 1fr));
+    grid-template-columns:85px repeat(calc(var(--max-rounds) + 2), minmax(min-content, 1fr)) var(--lr-padding);
     gap:5px;
     margin-top:20px;
 }
@@ -39,6 +39,12 @@
     grid-column: 1 / -1;
     display:grid;
     grid-template-columns: subgrid;
+    & > tr > :is(td,th):is(:first-child){
+        position:sticky;
+        box-shadow: 5px 0 0 #fff;
+        left:0;
+        z-index:2;
+    }
 }
 
 .DHondtTable__bloc{

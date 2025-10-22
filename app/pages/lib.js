@@ -146,3 +146,53 @@ const dateToLongDate = (date, includeYear = date.getFullYear() !== (new Date()).
     if(includeYear) longDate += " " + date.getFullYear();
     return longDate;
 }
+
+/* Duplicated in lib/shared.php */
+const combineSubElections = (results) => { // {id: string, candidate: {name: string, position: int}, results: {votes: int, elected: bool} }[]
+    results = structuredClone(results);
+    let combinedResults = [];
+
+    let resultsByRegion = {};
+    results.forEach(result => {
+        const key = result.id || 0;
+        if(!(key in resultsByRegion)) resultsByRegion[key] = [];
+        resultsByRegion[key].push(result);
+    });
+
+    Object.entries(resultsByRegion).forEach( ([regionId, regionResults]) => {
+        let combinedRegionResults = [];
+        regionResults.forEach(result => {
+            const party = result.party;
+            const candidate = result.candidates[0];
+
+            const resultArray = {
+                votes: result.votes,
+                elected: candidate.elected
+            };
+
+            const existingResult = combinedRegionResults.find( combinedResult => {
+                return combinedResult.party == party && combinedResult.candidates[0].name == candidate.name;
+            } );
+
+            if(existingResult){
+                existingResult.results[result.subid] = resultArray;
+            }
+            else{
+                delete result.candidates[0].elected;
+                const newResultArray = {};
+                newResultArray[result.subid || 0] = resultArray;
+                combinedRegionResults.push({
+                    id: regionId,
+                    party: result.party,
+                    candidates: result.candidates,
+                    results: newResultArray
+                });
+                delete result.subid;
+            }
+        });
+
+        combinedResults.push(...combinedRegionResults);
+    } );
+
+    return combinedResults;
+}

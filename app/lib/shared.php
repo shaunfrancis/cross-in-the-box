@@ -22,8 +22,55 @@ function dateToLongDate($dateString, $includeYear = NULL){
     return $longDate;
 }
 
-function getResultsBySubElection(array $results){
-    $subElections = []; // {subid : number, results : AnonymousResult[]}[]
+// Combine multiple results for the same party into one result with multiple candidates
+// Automatically run on results API calls
+function combineCandidates(array $results){ // {...Result, candidates: {name: string, position: int}[] }[]
+    $combinedResults = [];
+
+    $resultsByRegion = [];
+    foreach($results as $result){
+        $resultsByRegion[$result['id'] ?? 0][] = $result;
+    }
+
+    foreach($resultsByRegion as $regionResults){
+        $combinedRegionResults = [];
+        foreach($regionResults as $result){
+            $party = $result['party'];
+
+            $candidateArray = [
+                'name' => $result['candidate'], 
+                'position' => $result['candidate_position'] ?? 0,
+                'elected' => $result['elected'],
+            ];
+
+            $resultExists = FALSE;
+            foreach($combinedRegionResults as &$combinedResult){
+                if($combinedResult['result_id'] == $result['result_id']){
+                    $resultExists = TRUE;
+                    $combinedResult['candidates'][] = $candidateArray;
+                    break;
+                }
+            }
+            if(!$resultExists){
+                $result['candidates'] = [$candidateArray];
+                unset($result['candidate']);
+                unset($result['candidate_position']);
+                unset($result['elected']);
+                $combinedRegionResults[] = $result;
+            }
+
+        }
+
+        array_push($combinedResults, ...$combinedRegionResults);
+    }
+    foreach($combinedResults as &$combinedResult) unset($combinedResult['result_id']);
+
+    return $combinedResults;
+}
+
+// Split a set of results into an array of [subid, results]
+function getResultsBySubElection(array $results){ // {subid : number, results : Result[]}[]
+    $subElections = [];
 
     $subids = array_unique(
         array_map(function($result){
@@ -45,49 +92,45 @@ function getResultsBySubElection(array $results){
     return $subElections;
 }
 
-function combineCandidates(array $results){
-    $combinedResults = []; // {...Result, candidate: {name: string, position: int}[] }
+/* Duplicated in shared/lib.js */
+// Combine all results for the same candidate name and party from different election subIds into one array for each candidate
+// This only works if there is only one candidate per result!
+function combineSubElections(array $results){ // {id: string, candidate: {name: string, position: int}, results: {votes: int, elected: bool} }[]
+    $combinedResults = [];
 
     $resultsByRegion = [];
     foreach($results as $result){
         $resultsByRegion[$result['id'] ?? 0][] = $result;
     }
 
-    foreach($resultsByRegion as $regionResults){
+    foreach($resultsByRegion as $regionId => $regionResults){
         $combinedRegionResults = [];
         foreach($regionResults as $result){
             $party = $result['party'];
+            $candidate = $result['candidates'][0];
 
-            if($party == "ind"){ // do not combine independents which cannot have multiple candidates
-                $result['candidates'] = [['name' => $result['candidate'], 'elected' => $result['elected']]];
-                unset($result['candidate']);
-                unset($result['candidate_position']);
-                unset($result['elected']);
-                $combinedRegionResults[] = $result;
+            $resultArray = array(
+                'votes' => $result['votes'],
+                'elected' => $candidate['elected'],
+            );
+
+            $resultExists = FALSE;
+            foreach($combinedRegionResults as &$combinedResult){
+                if($combinedResult['party'] == $result['party'] && $combinedResult['candidates'][0]['name'] == $candidate['name']){
+                    $resultExists = TRUE;
+                    $combinedResult['results'][$result['subid']] = $resultArray;
+                    break;
+                }
             }
-
-            else{
-                $candidateArray = [
-                    'name' => $result['candidate'], 
-                    'position' => $result['candidate_position'] ?? 0,
-                    'elected' => $result['elected'],
-                ];
-
-                $resultExists = FALSE;
-                foreach($combinedRegionResults as &$combinedResult){
-                    if($combinedResult['party'] == $result['party']){
-                        $resultExists = TRUE;
-                        $combinedResult['candidates'][] = $candidateArray;
-                        break;
-                    }
-                }
-                if(!$resultExists){
-                    $result['candidates'] = [$candidateArray];
-                    unset($result['candidate']);
-                    unset($result['candidate_position']);
-                    unset($result['elected']);
-                    $combinedRegionResults[] = $result;
-                }
+            if(!$resultExists){
+                unset($result['candidates'][0]['elected']);
+                $combinedRegionResults[] = array(
+                    'id' => $regionId,
+                    'party' => $result['party'],
+                    'candidates' => $result['candidates'],
+                    'results' => [($result['subid'] ?? 0) => $resultArray]
+                );
+                unset($result['subid']);
             }
         }
 
@@ -95,4 +138,4 @@ function combineCandidates(array $results){
     }
 
     return $combinedResults;
-}   
+}
