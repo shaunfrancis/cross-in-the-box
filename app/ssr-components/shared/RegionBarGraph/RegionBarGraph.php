@@ -37,7 +37,7 @@ class RegionBarGraph extends \Base\Component{
 
     <?php }
 
-    static function renderGraph(array $results, string $subElectionType, string $title = NULL){ ?>
+    static function renderGraph(array $results, string $subElectionType, ?string $title = NULL){ ?>
         <div class="RegionBarGraph pre-hydration">
             <?php if($title): ?><h3><?= $title; ?></h3><?php endif; ?>
             <?php switch($subElectionType){

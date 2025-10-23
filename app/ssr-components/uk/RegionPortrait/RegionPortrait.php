@@ -3,7 +3,7 @@ namespace UK;
 
 class RegionPortrait extends \Base\Component{
 
-    static function render(string $id = NULL): void { 
+    static function render(?string $id = NULL): void { 
         if(empty($id)) return;
 
         $portrait = \API\UK\PortraitService::call(["uk", NULL, $id]);

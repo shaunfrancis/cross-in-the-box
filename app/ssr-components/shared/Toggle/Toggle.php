@@ -3,7 +3,7 @@ namespace Shared;
 
 class Toggle extends \Base\Component{
 
-    static function render(string $id = "", string $from, string $to): void { ?>
+    static function render(string $from, string $to, string $id = ""): void { ?>
         <div class="Toggle"<?php if(!empty($id)) : ?> data-id="<?= $id; ?>"<?php endif; ?>>
 
             <button class="Toggle__off unstyled">
