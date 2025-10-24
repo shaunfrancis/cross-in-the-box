@@ -8,5 +8,11 @@
     "esbuild": "0.25.9",
     "parcel": "^2.15.4",
     "parcel-optimizer-css-url": "^2.0.2"
+  },
+  "dependencies": {
+    "3d-tiles-renderer": "^0.4.17",
+    "glob": "^11.0.3",
+    "three": "^0.180.0",
+    "three-geojson": "github:gkjohnson/three-geojson"
   }
 }

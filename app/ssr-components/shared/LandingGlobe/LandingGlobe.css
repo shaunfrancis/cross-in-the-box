@@ -1,0 +1,10 @@
+#LandingGlobe{
+    height:100vh;
+}
+
+#LandingGlobe > canvas{
+    position:absolute;
+    top:0;
+    z-index:0;
+    &.pointer{ cursor:pointer }
+}
