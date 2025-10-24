@@ -1,15 +1,24 @@
 const esbuild = require('esbuild');
 
 async function build(){
-    await esbuild.build({
-        entryPoints: ['src/built/*.js'],
+    const options = {
         bundle: true,
         minify: true,
-        outdir: 'compiled',
         alias: {
             components: './app/csr-components'
         },
+    };
+    await esbuild.build({
+        ...options,
+        entryPoints: ['src/built/*.js'],
+        outdir: 'compiled',
     });
+    await esbuild.build({
+        ...options,
+        entryPoints: ['src/built/bespoke/*.js'],
+        outdir: 'compiled/bespoke',
+    });
+
     console.log('\n✨ Built scripts\n');
 }
 build();

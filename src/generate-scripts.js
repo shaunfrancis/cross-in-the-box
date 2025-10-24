@@ -1,14 +1,17 @@
 const fs = require('fs');
 
 // find all js files to bundle
+const bespokeFiles = []; // unique files that should be built but not compiled into {country}.js
 const files = [...scanDirectory('app/pages'), ...scanDirectory('app/ssr-components')];
+
 function scanDirectory(dir, files = []){
     fs.readdirSync(dir).forEach(path => {
         if(fs.lstatSync(dir + '/' + path).isDirectory()){
             return scanDirectory(dir + '/' + path, files);
         }
         else if(path.endsWith(".js")){
-            files.push({dir: dir, path: path});
+            if(!path.endsWith(".bespoke.js")) files.push({dir: dir, path: path});
+            else bespokeFiles.push({dir: dir, path: path});
         }
     });
     return files;
@@ -50,4 +53,7 @@ writtenFiles.forEach( file => {
         output += line + "\n";
     });
     fs.writeFileSync(file, output);
+});
+bespokeFiles.forEach(file => {
+    fs.writeFileSync("src/built/bespoke/" + file.path, fs.readFileSync(file.dir + '/' + file.path));
 });
