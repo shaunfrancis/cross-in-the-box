@@ -23,7 +23,7 @@
         <!--<UKConstituencyMap region={region} />-->
         <section>
             <p>Election results are sourced from <a href="https://www.elections.ca">Elections Canada</a>.</p>
-            <p>Data missing or incorrect? <a href="mailto:hello@tennessine.co.uk?subject=Election%20data%20wrong%20or%20missing">Let us know.</a></p>
+            <p>Data missing or incorrect? <a href="mailto:hello@crossinthebox.com?subject=Election%20data%20wrong%20or%20missing">Let us know.</a></p>
         </section>
     <?php endif; ?>
 <?= RegionLayout::openMain(); ?>

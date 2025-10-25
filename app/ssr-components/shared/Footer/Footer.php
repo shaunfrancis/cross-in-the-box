@@ -24,13 +24,13 @@ class Footer extends \Base\Component{
                 </div>
 
                 <ul id="Footer__social-container">
-                    <li><a href="mailto:hello@tennessine.co.uk">
+                    <li><a href="mailto:hello@crossinthebox.com">
                         <img src="/public/images/email.svg" alt="Email" />
                     </a></li>
                     <li><a href="https://twitter.com/crossinthebox">
                         <img src="/public/images/x.svg" alt="Twitter/X" />
                     </a></li>
-                    <li><a href="https://instagram.com/TennessineWeb">
+                    <li><a href="https://instagram.com/cross.in.the.box">
                         <img src="/public/images/instagram.png" alt="Instagram" />
                     </a></li>
                 </ul>

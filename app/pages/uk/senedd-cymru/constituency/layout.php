@@ -23,7 +23,7 @@
         <section>
             <p>Results for the 2021 Senedd Cymru Election and all by-elections are sourced directly from the returning officer. Results for the 2016 and 2011 Welsh Assembly Elections are sourced from the <a href="https://www.electoralcommission.org.uk/who-we-are-and-what-we-do/elections-and-referendums/past-elections-and-referendums/senedd-elections">Electoral Commission</a>.</p>
             <p>Candidate names are sourced from <a href="https://www.bbc.co.uk/news/election/2016/wales/results">BBC News</a>.</p>
-            <p>Data missing or incorrect? <a href="mailto:hello@tennessine.co.uk?subject=Election%20data%20wrong%20or%20missing">Let us know.</a></p>
+            <p>Data missing or incorrect? <a href="mailto:hello@crossinthebox.com?subject=Election%20data%20wrong%20or%20missing">Let us know.</a></p>
         </section>
     <?php endif; ?>
 <?= RegionLayout::openMain(); ?>
