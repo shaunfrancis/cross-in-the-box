@@ -23,7 +23,7 @@ class ElectionResultContainer extends \Base\Component{
             <?php if($showChanges) : ?>data-show-changes="true"<?php endif; ?>
             style="height: min(<?= $dimensions['h']; ?>, calc(100vw - 30px)); min-height: <?= $dimensions['minH']; ?>;"
         >
-            <div class="ElectionResultContainer__hover-popup hidden"></div>
+            <div class="hover-popup hidden"></div>
             
             <?php if(!empty($messages['group'])) : ?>
                 <div

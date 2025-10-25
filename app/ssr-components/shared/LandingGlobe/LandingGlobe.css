@@ -1,10 +1,27 @@
+#Header:has(~ #LandingGlobe){ background:none; box-shadow:none; }
+
 #LandingGlobe{
     height:100vh;
+    display:flex;
+    justify-content:flex-end;
+    align-items:flex-start;
+    padding:0 var(--left-gap);
 }
 
 #LandingGlobe > canvas{
     position:absolute;
     top:0;
+    left:0;
     z-index:0;
+    transition:opacity 200ms;
     &.pointer{ cursor:pointer }
+}
+#LandingGlobe.loading > canvas{ opacity:0 }
+
+#LandingGlobe > main{
+    position:relative;
+    z-index:1;
+    background:#fff;
+    box-shadow:1px 1px 0 1px var(--box-shadow-color);
+    padding:20px;
 }

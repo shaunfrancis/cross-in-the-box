@@ -75,7 +75,7 @@ class ElectionResultContainer{
 
         return {
             container: elt,
-            hoverPopup: elt.querySelector('.ElectionResultContainer__hover-popup'),
+            hoverPopup: elt.querySelector('.hover-popup'),
             messages: {
                 container: messagesContainer,
                 innerContainer: messagesContainer?.querySelector('.ElectionResultContainer__messages-inner-container'),

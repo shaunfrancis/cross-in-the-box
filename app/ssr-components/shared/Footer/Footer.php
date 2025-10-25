@@ -93,7 +93,7 @@ class Footer extends \Base\Component{
                                     ]
                                 ],
                                 'usa' => [
-                                    'label' => "United States of America",
+                                    'label' => "United States",
                                     'href' => '/usa',
                                     'children' => [
                                         [

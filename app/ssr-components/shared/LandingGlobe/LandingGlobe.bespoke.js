@@ -19,31 +19,37 @@ import { WGS84_ELLIPSOID } from '3d-tiles-renderer';
 const highlightData = [
     {
         code: "GB",
+        name: "United Kingdom",
         color: 0xff85d1,
         href: "/uk",
     },
     {
         code: "FR",
+        name: "France",
         color: 0xffb552,
         href: "/france",
     },
     {
         code: "HU",
+        name: "Hungary",
         color: 0xFF0000,
         href: "/hungary",
     },
     {
         code: "VA",
+        name: "Vatican City",
         color: 0xffd700,
         href: "/vatican-city",
     },
     {
         code: "CA",
+        name: "Canada",
         color: 0x05beff,
         href: "/canada",
     },
     {
         code: "US",
+        name: "United States",
         color: 0x81d6a6,
         href: "/usa",
     },
@@ -51,6 +57,8 @@ const highlightData = [
 let highlightedCountries = new WeakMap();
 
 window.addEventListener('DOMContentLoaded', async () => {
+    const root = document.getElementById('LandingGlobe');
+
     // create dimensions
     // globe will extend horizontally from centre point to between 50% (>= 1024px) and 100% (<= 512px) of the viewport width
     const cameraPoints = {
@@ -71,8 +79,8 @@ window.addEventListener('DOMContentLoaded', async () => {
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(width, height);
     renderer.setClearColor(0xffffff, 0);
-    document.getElementById('LandingGlobe').appendChild(renderer.domElement);
-    document.getElementById('LandingGlobe').style.minHeight = height + "px";
+    root.appendChild(renderer.domElement);
+    root.style.minHeight = height - 80 + "px";
 
     // camera
     const camera = new OrthographicCamera(cameraPoints.left, cameraPoints.right, cameraPoints.top, cameraPoints.bottom);
@@ -98,7 +106,9 @@ window.addEventListener('DOMContentLoaded', async () => {
         new MeshStandardMaterial( {
             color: 0xffffff,
             opacity: 1,
-            flatShading: true
+            flatShading: true,
+            roughness: 0.75,
+            metalness: 0.25
         } ),
     );
     sphere.scale.copy(WGS84_ELLIPSOID.radius);
@@ -115,13 +125,15 @@ window.addEventListener('DOMContentLoaded', async () => {
     group.scale.setScalar(1.5 / Math.max(...size));
     group.position.multiplyScalar(group.scale.x);
 
-    // raycasting
+    // raycasting and mouse tracking
     const raycaster = new Raycaster();
     const pointer = new Vector2();
+    let cursorPosition = [0,0];
     window.addEventListener('pointermove', (event) => {
         const rect = renderer.domElement.getBoundingClientRect();
         pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
         pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+        cursorPosition = [event.clientX, event.clientY];
     });
 
     // animate
@@ -130,18 +142,50 @@ window.addEventListener('DOMContentLoaded', async () => {
         group.rotation.x += 0.00002;
         group.rotation.y += 0.0002;
 
+        handleHovers();
+
+        renderer.render(scene, camera);
+    }
+
+    // handle hovers
+    const popup = root.querySelector('.hover-popup');
+    let currentlyHoveredCountry = null;
+    window.addEventListener('click', () => {
+        if(currentlyHoveredCountry) window.location.href = currentlyHoveredCountry.href;
+    });
+
+    function handleHovers(){
         raycaster.setFromCamera(pointer, camera);
 
         const intersects = raycaster.intersectObjects(group.children).filter( intersect => highlightedCountries.get(intersect.object) );
-        if(intersects.length > 0) renderer.domElement.classList.add('pointer');
-        else renderer.domElement.classList.remove('pointer');
+        if(intersects.length == 0){
+            renderer.domElement.classList.remove('pointer');
+            popup.classList.add('hidden');
+            currentlyHoveredCountry = null;
+        }
+        else{
+            renderer.domElement.classList.add('pointer');
         
-        intersects.forEach( intersect => {
+            const intersect = intersects[0];
             const countryData = highlightedCountries.get(intersect.object);
-            // intersect.object.material.color.set( countryData.color );
-        });
 
-        renderer.render(scene, camera);
+            const coordinates = cursorPosition;
+            const width = popup.offsetWidth;
+            const height = popup.offsetHeight;
+
+            const offsets = [0,0];
+            if(coordinates[0] + 20 + width > window.innerWidth) offsets[0] = -(width + 40);
+            if(coordinates[1] + 20 + height > window.innerHeight) offsets[1] = window.innerHeight - height - 20 - coordinates[1];
+
+            popup.style.left = coordinates[0] + offsets[0] + 20 + "px";
+            popup.style.top = coordinates[1] + offsets[1] + 20 + "px";
+
+            if(countryData === currentlyHoveredCountry) return;
+            currentlyHoveredCountry = countryData;
+            // intersect.object.material.metalness = 1;
+            popup.innerHTML = "<h2>" + countryData.name + "</h2>";
+            popup.classList.remove('hidden');
+        }
     }
 
     // drag to rotate
@@ -186,10 +230,11 @@ window.addEventListener('DOMContentLoaded', async () => {
             resolution: 2.5,
             thickness,
         } );
-        mesh.material = new MeshStandardMaterial({ color: color });
+        mesh.material = new MeshStandardMaterial({ color: color, roughness:0.5 });
         group.add(mesh);
 
         if(highlightCountryData) highlightedCountries.set(mesh, highlightCountryData);
     } );
+    root.classList.remove('loading');
 
 });

@@ -3,6 +3,3 @@ $_headInjections[] = '<script src="/compiled/bespoke/LandingGlobe.bespoke.js"></
 ?>
 
 <?= LandingGlobe::show(); ?>
-
-<a href="uk">uk</a>
-<a href="canada">canada</a>
