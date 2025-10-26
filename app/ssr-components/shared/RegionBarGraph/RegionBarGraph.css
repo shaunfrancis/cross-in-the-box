@@ -3,14 +3,14 @@
 *   This ensures that all RegionBarGraphs have the same column widths on the page.
 *   RegionBarGraphs could otherwise differ because of different content widths.
 */
-    section:has(> article > .RegionBarGraph){
+    main section:has(> article > .RegionBarGraph){
         --max-rounds: 3;
         display:grid;
         grid-template-columns:30px 85px repeat(var(--max-rounds), minmax(20px, min-content)) 1fr 30px;
         row-gap:30px;
     }
 
-    section:has(> article > .RegionBarGraph) > *{
+    main section:has(> article > .RegionBarGraph) > *{
         grid-column: 1 / -1;
     }
 
@@ -139,7 +139,7 @@
 
 @media screen and (max-width:768px){
 
-    section:has(> article > .RegionBarGraph){
+    main section:has(> article > .RegionBarGraph){
         grid-template-columns:15px minmax(20px, 80px) repeat(var(--max-rounds), minmax(20px, min-content)) 1fr 15px;
     }
 

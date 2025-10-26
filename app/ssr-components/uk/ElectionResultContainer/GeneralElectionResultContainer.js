@@ -130,12 +130,10 @@ class UKGeneralElectionResultContainer extends UKElectionResultContainer{
                     }) );
                     break;
                 default:
-                    let hardcodeTitle = null;
-                    if(message.date.getFullYear() == 2024 && !message.link_title) hardcodeTitle = "Partial results";
                     messageResults.push( PopupBarGraph.render({
                         results: message.results.sort( (a,b) => b.votes - a.votes ),
                         parties: CachedData.parties,
-                        title: hardcodeTitle ?? message.link_title
+                        title: message.link_title
                     }) );
             }
             return messageResults;

@@ -7,7 +7,7 @@ class RegionPage extends \Shared\RegionPage{
         
         parent::renderSuccessorLinks($event, $data, 
             "This riding was abolished following a federal electoral redistribution. It was succeeded by:",
-            fn($title) => "/canada/federal-elections/riding/" . regionToSlug($title)
+            fn($title) => "/canada/federal-elections/riding/" . \Canada\regionToSlug($title)
         );
 
     }

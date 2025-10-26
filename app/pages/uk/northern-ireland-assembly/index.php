@@ -26,7 +26,7 @@
                 title: ["2022", "NI Assembly", "Election"]
             ); ?>
             <?= \UK\ElectionResultContainer\NI::show(
-                election: "W2021",
+                election: "N2017",
                 title: ["2017", "NI Assembly", "Election"]
             ); ?>
         <?= ElectionResultsSection::close(); ?>

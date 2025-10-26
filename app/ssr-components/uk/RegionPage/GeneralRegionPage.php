@@ -6,7 +6,7 @@ class General extends \UK\RegionPage{
         
         parent::renderSuccessorLinks($event, $data, 
             "This constituency was abolished following a boundary review. It was succeeded by:",
-            fn($title) => "/uk/general-elections/constituency/" . regionToSlug($title)
+            fn($title) => "/uk/general-elections/constituency/" . \UK\regionToSlug($title)
         );
 
     }

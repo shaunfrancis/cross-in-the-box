@@ -6,7 +6,7 @@ class NI extends \UK\RegionPage{
         
         parent::renderSuccessorLinks($event, $data, 
             "This constituency was abolished following a boundary review. It was succeeded by:",
-            fn($title) => "/uk/northern-ireland-assembly/constituency/" . regionToSlug($title)
+            fn($title) => "/uk/northern-ireland-assembly/constituency/" . \UK\regionToSlug($title)
         );
 
     }

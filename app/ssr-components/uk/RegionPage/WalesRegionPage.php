@@ -6,7 +6,7 @@ class Wales extends \UK\RegionPage{
         
         parent::renderSuccessorLinks($event, $data, 
             "This constituency was abolished following a boundary review. It was succeeded by:",
-            fn($title) => "/uk/senedd-cymru/constituency/" . regionToSlug($title)
+            fn($title) => "/uk/senedd-cymru/constituency/" . \UK\regionToSlug($title)
         );
 
     }

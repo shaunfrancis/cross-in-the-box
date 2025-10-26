@@ -55,7 +55,6 @@
     <section id="find-a-constituency" class="shaded purple">
         <h1>Find a constituency</h1>
         <?= \UK\RegionSearchSection::show("general"); ?>
-        <!--<UKConstituencySearchSection searchInputRef={searchInputRef} />-->
     </section>
             
     <section id="opinion-polling">
@@ -110,10 +109,6 @@
                 winFormulaName: "second-place"
             ); ?>
         <?= ElectionResultsSection::close(); ?>
-
-        <!-- <UKAnalysisSection regions={regions} parties={parties} geographic={geographic} /> -->
     </section>
-            
-    <!--<UKMapDefs />-->
 
 </main>

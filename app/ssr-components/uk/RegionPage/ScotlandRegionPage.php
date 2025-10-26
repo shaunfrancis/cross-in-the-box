@@ -6,7 +6,7 @@ class Scotland extends \UK\RegionPage{
         
         parent::renderSuccessorLinks($event, $data, 
             "This constituency was abolished following a boundary review. It was succeeded by:",
-            fn($title) => "/uk/scottish-parliament/constituency/" . regionToSlug($title)
+            fn($title) => "/uk/scottish-parliament/constituency/" . \UK\regionToSlug($title)
         );
 
     }

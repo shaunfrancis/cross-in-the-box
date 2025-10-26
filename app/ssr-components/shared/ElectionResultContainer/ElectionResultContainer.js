@@ -45,7 +45,7 @@ class ElectionResultContainer{
                         ElectionResultContainer.elementMaps.delete(entry.target);
                         await instance.downloadData(instance.data, instance.attributes);
                         instance.addSummary();
-                        instance.updateMap();
+                        instance.updateMap(instance.attributes.showChanges);
                         if(CachedData.messages[instance.attributes.messageGroup]) instance.addMessages();
                     }
                 }

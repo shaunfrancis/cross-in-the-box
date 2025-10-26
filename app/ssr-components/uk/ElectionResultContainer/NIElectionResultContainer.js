@@ -56,7 +56,7 @@ class UKNIElectionResultContainer extends UKElectionResultContainer{
             if(!region) return popup.appendChild( new Elt({tag: 'h3', innerHTML: "Missing data"}) );
             popup.appendChild( new Elt({tag: 'h3', innerHTML: region.title}) );
 
-            popup.appendChild( PopupBarGraph.render({ results: firstPreferenceResults, parties: CachedData.parties, title: "First preference votes:"}) );
+            popup.appendChild( PopupBarGraph.render({ results: firstPreferenceResults, parties: CachedData.parties, title: "First preference votes"}) );
         };
 
         super.fillMap(data);
