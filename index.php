@@ -63,6 +63,95 @@
         }
     });
 
+    // Sitemap
+    $_sitemap = [
+        'canada' => [
+            'label' => "Canada",
+            'href' => '/canada',
+            'children' => [
+                [
+                    'label' => "Federal Elections",
+                    'href' => '/canada/federal-elections'
+                ]
+            ]
+        ],
+        'france' => [
+            'label' => "France",
+            'href' => '/france',
+            'children' => [
+                [
+                    'label' => "Presidential Elections",
+                    'href' => '/france/presidential-elections'
+                ],
+            ]
+        ],
+        'hungary' => [
+            'label' => "Hungary",
+            'href' => '/hungary',
+            'children' => [
+                [
+                    'label' => "Parliamentary Elections",
+                    'href' => '/hungary/parliamentary-elections'
+                ]
+            ]
+        ],
+        'uk' => [
+            'label' => "United Kingdom",
+            'href' => '/uk',
+            'children' => [
+                [
+                    'label' => "General Elections",
+                    'href' => '/uk/general-elections'
+                ],
+                [
+                    'label' => "Scottish Parliament",
+                    'href' => '/uk/scottish-parliament'
+                ],
+                [
+                    'label' => "Senedd Cymru",
+                    'href' => '/uk/senedd-cymru'
+                ],
+                [
+                    'label' => "Northern Ireland Assembly",
+                    'href' => '/uk/northern-ireland-assembly'
+                ],
+            ]
+        ],
+        'usa' => [
+            'label' => "United States",
+            'href' => '/usa',
+            'children' => [
+                [
+                    'label' => "Presidential Elections",
+                    'href' => '/usa/presidential-elections'
+                ],
+                [
+                    'label' => "Senate Elections",
+                    'href' => '/usa/senate-elections'
+                ],
+                [
+                    'label' => "House Elections",
+                    'href' => '/usa/house-elections'
+                ],
+                [
+                    'label' => "Gubernatorial Elections",
+                    'href' => '/usa/gubernatorial-elections'
+                ],
+            ]
+        ],
+        'vatican' => [
+            'label' => "Vatican City",
+            'href' => '/vatican-city',
+            'children' => [
+                [
+                    'label' => "Papal Conclaves",
+                    'href' => '/vatican-city/papal-conclaves'
+                ]
+            ]
+        ],
+    ];
+
+    // Render page
     while(count($_request) >= 0){
         $path = implode('/', $_request);
         if( isSanitaryPath($path) && file_exists(sprintf('app/pages/%s/index.php', $path)) ) renderPage($path, $_params);
@@ -170,4 +259,5 @@
         }
         return NULL;
     }
+    
 ?>

@@ -1,7 +1,7 @@
 #Header:has(~ #LandingGlobe){ background:none; box-shadow:none; }
 
 #LandingGlobe{
-    height:100vh;
+    min-height:100vh;
     display:flex;
     justify-content:flex-end;
     align-items:flex-start;
@@ -21,7 +21,15 @@
 #LandingGlobe > main{
     position:relative;
     z-index:1;
-    background:#fff;
-    box-shadow:1px 1px 0 1px var(--box-shadow-color);
     padding:20px;
+    min-width:calc(50vw - 2*var(--left-gap));
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+    & > hgroup > p{
+        margin:0;
+    }
+    & ul{
+        margin:0;
+    }
 }

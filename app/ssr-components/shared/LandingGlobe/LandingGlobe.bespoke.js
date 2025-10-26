@@ -61,29 +61,45 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     // create dimensions
     // globe will extend horizontally from centre point to between 50% (>= 1024px) and 100% (<= 512px) of the viewport width
-    const cameraPoints = {
-        left: 0,
-        right: Math.min(1.5, Math.max(0.75, window.innerWidth/1024 * 1.5 )),
-        top: Math.min(0.75, 0.75 * window.innerHeight / window.innerWidth),
-        bottom: -0.75
-    };
-    const cameraDimensions = {
-        width: cameraPoints.right - cameraPoints.left,
-        height: cameraPoints.top - cameraPoints.bottom
-    };
-    const width = window.innerWidth;
-    const height = width * cameraDimensions.height / cameraDimensions.width;
+    let camera = null;
+    window.addEventListener('resize', createDimensions);
+    function createDimensions(){
+        const cameraPoints = {
+            left: 0,
+            right: Math.min(1.5, Math.max(0.75, window.innerWidth/1024 * 1.5 )),
+            top: Math.min(0.75, 0.75 * window.innerHeight / window.innerWidth),
+            bottom: -0.75
+        };
+        const cameraDimensions = {
+            width: cameraPoints.right - cameraPoints.left,
+            height: cameraPoints.top - cameraPoints.bottom
+        };
+        const width = window.innerWidth;
+        const height = width * cameraDimensions.height / cameraDimensions.width;
+        
+        if(camera){
+            camera.left = cameraPoints.left;
+            camera.right = cameraPoints.right;
+            camera.top = cameraPoints.top;
+            camera.bottom = cameraPoints.bottom;
+            camera.updateProjectionMatrix();
+        }
+
+        renderer.setSize(width, height);
+        root.style.minHeight = height - 80 + "px";
+
+        return cameraPoints;
+    }
 
     // renderer
     const renderer = new WebGLRenderer({ antialias: true });
     renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(width, height);
     renderer.setClearColor(0xffffff, 0);
     root.appendChild(renderer.domElement);
-    root.style.minHeight = height - 80 + "px";
 
     // camera
-    const camera = new OrthographicCamera(cameraPoints.left, cameraPoints.right, cameraPoints.top, cameraPoints.bottom);
+    const cameraPoints = createDimensions();
+    camera = new OrthographicCamera(cameraPoints.left, cameraPoints.right, cameraPoints.top, cameraPoints.bottom);
     camera.position.set(0, 0, 2);
     camera.lookAt(0, 0, 0);
 
@@ -105,15 +121,17 @@ window.addEventListener('DOMContentLoaded', async () => {
         new SphereGeometry( 1, 128, 64 ),
         new MeshStandardMaterial( {
             color: 0xffffff,
-            opacity: 1,
             flatShading: true,
             roughness: 0.75,
             metalness: 0.25
         } ),
     );
-    sphere.scale.copy(WGS84_ELLIPSOID.radius);
+    const radius = WGS84_ELLIPSOID.radius;
+    sphere.scale.set(radius.x, radius.z, radius.y); // swap Y/Z axes to match ellipsoid
     sphere.renderOrder = 1;
+    highlightedCountries.set(sphere, { code: "SPHERE" });
     group.add(sphere);
+    sphere.rotation.x = -Math.PI / 2;
 
     // scale and center
     const box = new Box3();
@@ -139,8 +157,9 @@ window.addEventListener('DOMContentLoaded', async () => {
     // animate
     renderer.setAnimationLoop(animate);
     function animate() {
-        group.rotation.x += 0.00002;
-        group.rotation.y += 0.0002;
+        // group.rotation.x += 0.00002;
+        // group.rotation.y += 0.0002;
+        group.rotation.z += 0.0002;
 
         handleHovers();
 
@@ -150,7 +169,19 @@ window.addEventListener('DOMContentLoaded', async () => {
     // handle hovers
     const popup = root.querySelector('.hover-popup');
     let currentlyHoveredCountry = null;
-    window.addEventListener('click', () => {
+    let mousedownTime = 0;
+    let didMove = false;
+    const checkForMovement = () => { didMove = true };
+    window.addEventListener('mousedown', () => {
+        mousedownTime = Date.now();
+        window.addEventListener('mousemove', checkForMovement);
+    });
+    window.addEventListener('mouseup', () => {
+        window.removeEventListener('mousemove', checkForMovement);
+        if(Date.now() - mousedownTime > 150 && didMove){
+            didMove = false;
+            return;
+        }
         if(currentlyHoveredCountry) window.location.href = currentlyHoveredCountry.href;
     });
 
@@ -158,16 +189,16 @@ window.addEventListener('DOMContentLoaded', async () => {
         raycaster.setFromCamera(pointer, camera);
 
         const intersects = raycaster.intersectObjects(group.children).filter( intersect => highlightedCountries.get(intersect.object) );
-        if(intersects.length == 0){
+        let countryData = null;
+        if(intersects.length > 0) countryData = highlightedCountries.get(intersects[0].object);
+
+        if(intersects.length == 0 || countryData.code === "SPHERE"){
             renderer.domElement.classList.remove('pointer');
             popup.classList.add('hidden');
             currentlyHoveredCountry = null;
         }
         else{
             renderer.domElement.classList.add('pointer');
-        
-            const intersect = intersects[0];
-            const countryData = highlightedCountries.get(intersect.object);
 
             const coordinates = cursorPosition;
             const width = popup.offsetWidth;
