@@ -19,6 +19,7 @@ class APIService{
             'relationships' => $country . "_relationships",
             'results' => $country . "_results",
             'regions' => $country . "_regions",
+            'update_links' => $country . "_update_links",
             'updates' => $country . "_updates"
         ];
     }
