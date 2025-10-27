@@ -22,6 +22,14 @@
             ) ?>
         </div>
         <?= ElectionResultsSection::open(); ?>
+
+            <?= \UK\ElectionResultContainer\General::show(
+                election: "2024",
+                title: ["Today"],
+                showChanges: TRUE,
+                messages: ['group' => "2024U", 'open' => TRUE]
+            ); ?>
+
             <?= \UK\ElectionResultContainer\General::show(
                 election: "2024",
                 title: ["2024", "General", "Election"],

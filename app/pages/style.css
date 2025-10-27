@@ -168,6 +168,8 @@ button:not(.unstyled):active{
     transform:translate(1px,1px);
 }
 
+li{ list-style-type:square }
+
 :is(details:open, details[open]) .closed-only{ display:none }
 :is(details:not(:open), details:not([open])) .open-only{ display:none }
 summary{ list-style-type: none; }

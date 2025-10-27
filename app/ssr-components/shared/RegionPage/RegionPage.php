@@ -97,8 +97,8 @@ class RegionPage extends \Base\Component{
     static function renderElectionEvent($event, $attributes = NULL){
         usort($event['data']['results'], function($a, $b){
             if($a['votes'] != $b['votes']) return $b['votes'] - $a['votes'];
-            else if($a['elected']) return -INF;
-            else if($b['elected']) return INF;
+            else if(!empty($a['elected'])) return -INF;
+            else if(!empty($b['elected'])) return INF;
             else{
                 $surname = function($result){
                     $names = explode(" ", $result['candidates'][0]['name']);

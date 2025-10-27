@@ -150,6 +150,14 @@
     min-height:35px;
 }
 
+.ElectionResultContainer .hover-popup :is(ul, p){
+    font-size:0.8em;
+    margin:0;
+    padding:0;
+    width:270px;
+    & > li{ margin-left:18px }
+}
+
 .flex-row{
     font-size:0.8em;
     display:flex;

@@ -89,7 +89,6 @@
         & > li{
             height:var(--row-height);
             line-height:var(--row-height);
-            list-style-type:square;
         }
     }
     & a:hover{

@@ -276,6 +276,7 @@ class ElectionResultContainer{
 
     addMessages({
         dateFun,
+        hideTime = this.attributes.showChanges,
         timezoneArgs = {},
         urlFun = (slug, type) => "#",
         childrenFun
@@ -285,7 +286,9 @@ class ElectionResultContainer{
             if(timezoneArgs.localeStringArgs) date = new Date(date.toLocaleString(...timezoneArgs.localeStringArgs));
             let time = date.getHours().toString().padStart(2,'0') + ":" + date.getMinutes().toString().padStart(2,'0');
             const dayWord = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][date.getDay()];
-            let dateString = dayWord + " " + dateToLongDate(date) + ", " + time;
+
+            let dateString = dayWord + " " + dateToLongDate(date);
+            if(!hideTime) dateString += ", " + time;
 
             if(timezoneArgs.localeLabel) dateString += ` <span style="font-size:0.8em">${timezoneArgs.localeLabel}</span>`;
 
@@ -294,23 +297,46 @@ class ElectionResultContainer{
         
         const injectLinks = (text) => {
             const spans = [];
-            text.split("#").forEach( (link, index) => {
-                if(link == "") return;
-        
-                if(index % 2){
-                    let [_, type, slug, displayText] = ["", "", link, link]; 
-                    if(link.includes("@")) [_ = "", type = "", slug = "", displayText = ""] = link.split("@");
-  
-                    const span = new Elt({
-                        tag: 'a',
-                        classList: ["interactive", "unstyled"],
-                        href: urlFun(slug, type),
-                        innerHTML: displayText
-                    });
-                    spans.push(span);
+            let currentUl = false;
+            let currentLi = false;
+            text.split(/\n/g).forEach( line => {
+                if(line.startsWith("- ")){
+                    if(!currentUl) currentUl = new Elt({ tag: 'ul' });
+                    currentLi = new Elt({ tag: 'li' });
+                    line = line.replace(/^- /, "");
                 }
-                else spans.push( new Elt({ tag: 'span', innerHTML: link }) );
+                else if(currentUl){
+                    spans.push(currentUl);
+                    currentUl = false;
+                    currentLi = false;
+                }
+
+                line.split("#").forEach( (link, index) => {
+                    if(link == "") return;
+            
+                    if(index % 2){
+                        let [_, type, slug, displayText] = ["", "", link, link]; 
+                        if(link.includes("@")) [_ = "", type = "", slug = "", displayText = ""] = link.split("@");
+    
+                        const span = new Elt({
+                            tag: 'a',
+                            classList: ["interactive", "unstyled"],
+                            href: urlFun(slug, type),
+                            innerHTML: displayText
+                        });
+                        if(currentLi) currentLi.appendChild(span);
+                        else spans.push(span);
+                    }
+                    else{
+                        const span = new Elt({ tag: 'span', innerHTML: link }) ;
+                        if(currentLi) currentLi.appendChild(span);
+                        else spans.push(span);
+                    }
+                });
+
+                if(currentLi) currentUl.appendChild(currentLi);
             });
+            if(currentUl) spans.push(currentUl);
             return spans;
         }
 
