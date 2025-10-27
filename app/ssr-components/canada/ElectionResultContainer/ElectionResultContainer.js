@@ -50,38 +50,6 @@ class CanadaElectionResultContainer extends ElectionResultContainer{
             if(region) window.location.href = '/canada/federal-elections/riding/' + regionToSlug(region.title);
         }
 
-        data.hoverFun = (active, popup, id) => {
-            if(!active) return;
-            popup.innerHTML = "";
-
-            const region = CachedData.regions.find( region => region.id == id );
-            const regionResults = CachedData.results[this.data.election]
-                .filter( result => result.id == id )
-                .sort( (a,b) => b.votes - a.votes );
-            const regionUpdates = this.data.updates.filter( update => update.id == region.id );
-
-            // Title
-            if(!region) return popup.appendChild( new Elt({tag: 'h3', innerHTML: "Missing data"}) );
-            popup.appendChild( new Elt({tag: 'h3', innerHTML: region.title}) );
-
-            // Winning candidate
-            const winner = this.winFormula(regionResults)[0];
-            let innerHTML = winner?.candidates[0].name;
-            if(this.winFormulaName === "second-place") innerHTML += " in second place";
-
-            if(winner) popup.appendChild( new Elt({tag: 'h4', innerHTML: innerHTML}) );
-
-            // Party progression blocs
-            const partyProgression = [CachedData.parties.find( party => party.id === winner?.party ) || DefaultParty];
-            regionUpdates.forEach( update => {
-                partyProgression.push( CachedData.parties.find( party => party.id == update.party ) || DefaultParty );
-            });
-            if(partyProgression.length > 1) popup.appendChild( PartyProgressionBlocs.render({ parties: partyProgression }) );
-
-            // Bar graph
-            popup.appendChild( PopupBarGraph.render({ results: regionResults, parties: CachedData.parties }) );
-        };
-
         super.fillMap(data);
     }
 

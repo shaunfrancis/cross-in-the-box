@@ -17,7 +17,7 @@ class UKNIElectionResultContainer extends UKElectionResultContainer{
             const winner = regionUpdates.length > 0 ? regionUpdates[regionUpdates.length - 1].party : result.party;
 
             if(!summaries.find( summary => summary.party.id == winner)){
-                const party = CachedData.parties.find( party => party.id === result.party) || DefaultParty;
+                const party = CachedData.parties.find( party => party.id === winner) || DefaultParty;
                 summaries.push({ party: party, count: result.candidates.length });
             }
             else summaries.find( summary => summary.party.id == winner ).count += result.candidates.length;
@@ -35,29 +35,23 @@ class UKNIElectionResultContainer extends UKElectionResultContainer{
         );
     }
 
+    get mapHoverFunComponents(){
+        return { ...super.mapHoverFunComponents, 
+            winningCandidate: () => {},
+            additionalContent: (id) => {
+                const firstPreferenceResults = CachedData.results[this.data.election]
+                    .filter( result => result.id == id && result.subid == 1 )
+                    .sort( (a,b) => b.votes - a.votes );
+
+                return [PopupBarGraph.render({ results: firstPreferenceResults, parties: CachedData.parties, title: "First preference votes"})];
+            }
+        }
+    }
     fillMap(data){
         data.clickFun = (id) => {
             let region = CachedData.regions.find( r => r.id == id );
             if(region) window.location.href = '/uk/northern-ireland-assembly/constituency/' + regionToSlug(region.title);
         }
-
-        data.hoverFun = (active, popup, id) => {
-            if(!active) return;
-            popup.innerHTML = "";
-
-            //combineSubElections(CachedData.results[this.data.election])
-
-            const region = CachedData.regions.find( region => region.id == id );
-            const firstPreferenceResults = CachedData.results[this.data.election]
-                .filter( result => result.id == id && result.subid == 1 )
-                .sort( (a,b) => b.votes - a.votes );
-
-            // Title
-            if(!region) return popup.appendChild( new Elt({tag: 'h3', innerHTML: "Missing data"}) );
-            popup.appendChild( new Elt({tag: 'h3', innerHTML: region.title}) );
-
-            popup.appendChild( PopupBarGraph.render({ results: firstPreferenceResults, parties: CachedData.parties, title: "First preference votes"}) );
-        };
 
         super.fillMap(data);
     }

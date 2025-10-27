@@ -58,9 +58,76 @@ class ElectionResultContainer{
     get visibleMap(){
         return this.maps.find(map => map.visible) || this.maps[0];
     }
+
+    get mapHoverFunComponents(){
+        return {
+            title: (id, region) => {
+                if(!region) return new Elt({tag: 'h3', innerHTML: "Missing data"});
+                else return new Elt({tag: 'h3', innerHTML: region.title});
+            },
+            winningCandidate: (id, regionResults, winner) => {
+                let innerHTML = winner?.candidates[0].name;
+                if(this.winFormulaName === "second-place") innerHTML += " in second place";
+                if(winner) return new Elt({tag: 'h4', innerHTML: innerHTML});
+            },
+            additionalContent: (id, regionResults, latestResultsUpdate) => {
+                const popupGraphData = { results: latestResultsUpdate?.results.data || regionResults, parties: CachedData.parties };
+                if(this.attributes.showChanges){
+                    if(latestResultsUpdate) popupGraphData.title = latestResultsUpdate.results.title.join(" ").replace("- ","-");
+                    
+                }
+                return [PopupBarGraph.render(popupGraphData)]
+            }
+        }
+    }
+
     fillMap(data){
+
+        const hoverFun = (active, popup, id) => {
+            if(!active) return;
+            popup.innerHTML = "";
+
+            const region = CachedData.regions.find( region => region.id == id );
+            const regionResults = CachedData.results[this.data.election]
+                .filter( result => result.id == id )
+                .sort( (a,b) => b.votes - a.votes );
+            const regionUpdates = this.data.updates.filter( update => update.id == region.id );
+            const latestResultsUpdate = regionUpdates.find( update => update.results )
+            latestResultsUpdate?.results.data.sort( (a,b) => b.votes - a.votes );
+
+            // Title
+            popup.appendChild( this.mapHoverFunComponents.title(id, region) );
+
+            // Winning candidate
+            const winner = this.winFormula(latestResultsUpdate?.results.data || regionResults)[0];
+            const initialWinner = !latestResultsUpdate ? winner : this.winFormula(regionResults)[0];
+            const winnerElt = this.mapHoverFunComponents.winningCandidate(id, regionResults, winner);
+            if(winnerElt) popup.appendChild(winnerElt);
+
+            // Party progression blocs
+            const partyProgression = [CachedData.parties.find( party => party.id === initialWinner?.party ) || DefaultParty];
+            regionUpdates.forEach( update => {
+                partyProgression.push( CachedData.parties.find( party => party.id == update.party ) || DefaultParty );
+            });
+            if(partyProgression.length > 1) popup.appendChild( PartyProgressionBlocs.render({ parties: partyProgression }) );
+
+            // Update notes
+            const updateNotes = regionUpdates.filter(update => update.note);
+            if(updateNotes.length === 1) popup.appendChild( new Elt({ tag: 'p', innerHTML: updateNotes[0].note }) );
+            else popup.appendChild( new Elt({
+                tag: 'ul',
+                children: updateNotes.map( update => {
+                    return new Elt({ tag: 'li', innerHTML: update.note });
+                })
+            }));
+
+            // Additional content
+            const additionalContent = this.mapHoverFunComponents.additionalContent(id, regionResults, latestResultsUpdate);
+            if(additionalContent) popup.append(...additionalContent);
+        };
+
         this.currentFillData = data;
-        this.visibleMap.fill(data);
+        this.visibleMap.fill({ hoverFun: hoverFun, ...data });
     }
 
     hydrate(elt){
