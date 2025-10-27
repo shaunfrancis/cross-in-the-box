@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 447.34644 250" stroke-width="1" stroke="#fff" fill="#EEE">
-    <style>#uk-W2007-svg rect{ cursor:pointer; transition: fill 1000ms, opacity 500ms }</style>
+    <style>#uk-W2007-svg rect{ cursor:pointer; transition: fill 1000ms, fill-opacity 500ms }</style>
     <g id="uk-W2007-svg">
 
         <rect x="25.5" y="0.5" width="24" height="24" name="W2007001" />

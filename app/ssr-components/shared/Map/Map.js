@@ -44,7 +44,7 @@ class Map{
 
                 regionElts.forEach(regionElt => {
                     regionElt.setAttribute('fill', fill.color);
-                    regionElt.setAttribute('style', fill.opacity !== undefined ? "opacity:" + fill.opacity : "");
+                    if(fill.opacity !== undefined) regionElt.setAttribute('fill-opacity', fill.opacity);
                     
                     regionElt.removeEventListener('mouseover', this.mouseover);
                     regionElt.addEventListener('mouseover', this.mouseover = (event) => {

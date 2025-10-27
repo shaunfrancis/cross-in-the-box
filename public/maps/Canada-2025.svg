@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 39 26" stroke-width="0.04" stroke="white" fill="#eee">
-    <style>#canada-2025-svg rect{ cursor:pointer; transition: fill 1000ms, opacity 500ms }</style>
+    <style>#canada-2025-svg rect{ cursor:pointer; transition: fill 1000ms, fill-opacity 500ms }</style>
     <g id="canada-2025-svg">
         <!--Yukon, NW Territories, Nunavut-->
         <rect x="0" y="4" width="1" height="1" name="202560001" />

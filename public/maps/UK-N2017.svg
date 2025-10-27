@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-11 -11 356 301" stroke-width="1" stroke="#fff" fill="#EEE">
-    <style>#uk-N2017-svg rect{ cursor:pointer; transition: fill 1000ms, opacity 500ms }</style>
+    <style>#uk-N2017-svg rect{ cursor:pointer; transition: fill 1000ms, fill-opacity 500ms }</style>
     <g id="uk-N2017-svg">
         <g name="N2017006" transform="translate(-5,-10)">
             <rect x="125" y="0" width="24" height="24" />

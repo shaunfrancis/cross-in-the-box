@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 550 450" width="100%" height="100%" stroke-width="2" stroke="#fff">
     <style>
         #usa-gubernatorial-1960-svg text{ stroke:none; fill: white; alignment-baseline: central; text-anchor: middle; font-family: 'Oswald', Helvetica, sans-serif; font-weight: bold; pointer-events: none }
-        #usa-gubernatorial-1960-svg rect{ cursor:pointer; transition: fill 1000ms, opacity 500ms }
+        #usa-gubernatorial-1960-svg rect{ cursor:pointer; transition: fill 1000ms, fill-opacity 500ms }
     </style>
     <g id="usa-gubernatorial-1960-svg" fill="#eee" font-size="18">
         <rect width="50" height="50" x="500" y="0" name="GME"></rect>

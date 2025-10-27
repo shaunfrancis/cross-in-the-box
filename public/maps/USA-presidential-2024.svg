@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1000 600" stroke-width="2" stroke="white" fill="#eee">
-    <style>#usa-presidential-2024-svg path{ cursor:pointer; transition: fill 1000ms, opacity 500ms }</style>
+    <style>#usa-presidential-2024-svg path{ cursor:pointer; transition: fill 1000ms, fill-opacity 500ms }</style>
     <g id="usa-presidential-2024-svg">
         <path d="M500 325l25 0l0 25l25 0l0 50l25 0l0 25l-50 0l0 25l-25 0l0 -100z" name="2024AL"/>
         <path d="M25 550l25 0l0 50l-50 0l0 -25l25 0l0 -25" name="2024AK"></path>

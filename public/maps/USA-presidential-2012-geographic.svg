@@ -1,6 +1,6 @@
 <svg viewBox="0 0 959 593" xmlns="http://www.w3.org/2000/svg"><style>
   .usa-presidential-2012-geo path, .usa-presidential-2012-geo ellipse, .usa-presidential-2012-dc{
-    cursor:pointer; transition: fill 1000ms, opacity 500ms;
+    cursor:pointer; transition: fill 1000ms, fill-opacity 500ms;
   }
   .usa-presidential-2012-geo-borders{stroke:#FFFFFF; stroke-width:1}
   .usa-presidential-2012-geo-borders:not(ellipse){pointer-events:none}
