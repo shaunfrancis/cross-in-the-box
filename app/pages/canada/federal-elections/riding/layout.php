@@ -1,5 +1,7 @@
 <?php 
     namespace Shared;
+    $_headInjections[] = '<script src="/compiled/bespoke/CanadaRidingMap.bespoke.js" defer></script>';
+    $_headInjections[] = '<link rel="stylesheet" type="text/css" href="/compiled/bespoke/CanadaRidingMap.bespoke.css" />';
     $heroNavItems = [
         [ 'title' => "Results and changes", 'src' => "/images/nav-region.svg", 'id' => "election-results" ],
     ];
@@ -20,7 +22,7 @@
         <?= \Canada\RegionSearchSection::show(); ?>
     </section>
     <?php if(empty($_error)) : ?>
-        <!--<UKConstituencyMap region={region} />-->
+        <?= \Canada\RidingMap::show($region['id']); ?>
         <section>
             <p>Election results are sourced from <a href="https://www.elections.ca">Elections Canada</a>.</p>
             <p>Data missing or incorrect? <a href="mailto:hello@crossinthebox.com?subject=Election%20data%20wrong%20or%20missing">Let us know.</a></p>
