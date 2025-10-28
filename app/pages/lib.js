@@ -2,6 +2,7 @@ const Endpoint = "/api";
 
 class CachedDataSkeleton{
     static promises = {};
+    static requestsCompleted = {};
 
     // fallback methods
     static fetchArray(){ return new Promise( res => res([]) ); }
@@ -48,23 +49,21 @@ class CachedDataSkeleton{
             }, this);
             
             // check if value already exists
-            if(propertyValue && propertyValue.length !== 0) return resolve(property);
+            if(this.requestsCompleted[path] && propertyValue) return resolve(propertyValue);
 
             // look in localStorage first (indexedDB?)
             // (implement later!!)
 
             // now download
-            const promiseKey = propertyArray.join("|");
-            let existingPromise = this.promises[promiseKey];
+            let existingPromise = this.promises[path];
             if(!existingPromise){
                 existingPromise = fetch(path).then( async res => {
                     let data;
                     if(applyParse) data = await applyParse(res);
                     else data = await res.json();
-                    this.promises[promiseKey]
                     return data;
                 });
-                this.promises[promiseKey] = existingPromise;
+                this.promises[path] = existingPromise;
             }
 
             const data = await existingPromise;
@@ -75,7 +74,15 @@ class CachedDataSkeleton{
                 if(!parent[propertyArray[i]]) parent[propertyArray[i]] = {};
                 parent = parent[propertyArray[i]];
             }
-            parent[propertyArray[propertyArray.length - 1]] = data;
+
+            const value = parent[propertyArray[propertyArray.length - 1]];
+            if(Array.isArray(value) && !this.requestsCompleted[path]){
+                value.push(...data);
+            }
+            else parent[propertyArray[propertyArray.length - 1]] = data;
+
+            // Mark as path request completed to prevent merging multiple copies in future
+            this.requestsCompleted[path] = true;
 
             // (set in localStorage (indexedDB?) here)
 

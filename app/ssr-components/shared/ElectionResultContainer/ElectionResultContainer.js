@@ -159,9 +159,13 @@ class ElectionResultContainer{
     }
 
     async downloadData({ election, regionsType = null }, { messageGroup, showChanges }){
+    
+        if(
+            CachedData.regions.length === 0 || 
+            (regionsType != null && CachedData.regions.filter( region => region.type == regionsType ).length == 0)
+        ) await CachedData.fetchRegions(regionsType);
 
         if(CachedData.parties.length === 0) await CachedData.fetchParties();
-        if(CachedData.regions.length === 0) await CachedData.fetchRegions(regionsType);
         if(!CachedData.results[election]) await CachedData.fetchResults(election);
 
         if(showChanges){

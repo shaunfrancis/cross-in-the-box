@@ -7,7 +7,11 @@ class CachedData extends CachedDataSkeleton{
         });
     }
 
-    static fetchRegions(type = null){ return this.downloadProperty( ["regions"], Endpoint + "/regions/uk/" + (type || "") ) }
+    static fetchRegions(type = null){
+        return this.downloadProperty( ["regions"], Endpoint + "/regions/uk/" + (type || ""), {
+            applyTransform: (data) => data.forEach( region => region.type = type )
+        } );
+    }
 
     static fetchResults(election){ return this.downloadProperty(["results", election], Endpoint + "/results/uk/" + election) }
 
