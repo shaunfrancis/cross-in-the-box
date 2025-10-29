@@ -33,6 +33,7 @@
 
     // Handle autoload of API services and SSR components
     spl_autoload_register( function($class) use ($_request) {
+        $camel_to_kebab = fn($camel) => ltrim(strtolower(preg_replace('/[A-Z]([A-Z](?![a-z]))*/', '-$0', $camel)), '-');
         
         $classPath = explode("\\", $class);
         $lastIndex = array_key_last($classPath);
@@ -53,10 +54,10 @@
 
             // Request main file first, i.e. 
             // as above ElectionResultContainer/ElectionResultContainer before ElectionResultContainer/ScotlandElectionResultContainer
-            $main_file = sprintf('%s/app/ssr-components/%s/%s/%s.php', __DIR__, strtolower($firstNamespace), $classPath[1], $classPath[1]);
+            $main_file = sprintf('%s/app/ssr-components/%s/%s/%s.php', __DIR__, $camel_to_kebab($firstNamespace), $classPath[1], $classPath[1]);
             if(file_exists($main_file)) require_once($main_file);
 
-            $search = sprintf('%s/app/ssr-components/%s/%s/*.php', __DIR__, strtolower($firstNamespace), $classPath[1]);
+            $search = sprintf('%s/app/ssr-components/%s/%s/*.php', __DIR__, $camel_to_kebab($firstNamespace), $classPath[1]);
             foreach( glob($search, GLOB_BRACE) as $file ){
                 require_once($file);
             }

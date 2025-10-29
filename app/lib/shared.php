@@ -78,7 +78,6 @@ function getResultsBySubElection(array $results){ // {subid : number, results : 
         }, $results)
     );
     sort($subids, SORT_NUMERIC);
-    $subids = array_reverse($subids);
 
     foreach($subids as $subid){
         $subElections[] = [
