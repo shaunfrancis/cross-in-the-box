@@ -33,7 +33,7 @@
             <?= \UK\ElectionResultContainer\General::show(
                 election: "2024",
                 title: ["2024", "General", "Election"],
-                messages: ['group' => "2024", 'open' => TRUE]
+                messages: ['group' => "2024"]
             ); ?>
 
             <?= \UK\ElectionResultContainer\General::show(
