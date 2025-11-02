@@ -58,12 +58,13 @@ class RegionBarGraph extends \Base\Component{
         }
 
         foreach($results as $result){
-            $percentage = number_format(100 * $result['votes'] / $totalVotes, 2, '.', '');
+            if($totalVotes > 0) $percentage = number_format(100 * $result['votes'] / $totalVotes, 2, '.', '');
+            $elected = !empty($result['candidates'][0]['elected']);
 
             $votesValue = "";
             if($totalVotes > 0) $votesValue = number_format($result['votes'], 0, '.', ' ');
-            else if($result['elected'] && count($results) === 1) $votesValue = "Unopposed";
-            else if($result['elected']) $votesValue = "Elected";
+            else if($elected && count($results) === 1) $votesValue = "Unopposed";
+            else if($elected) $votesValue = "Elected";
 
             ?>
 
@@ -86,7 +87,7 @@ class RegionBarGraph extends \Base\Component{
                 <div class="RegionBarGraph__bar-container">
                     <div 
                         class="RegionBarGraph__bar" 
-                        style="width: <?= $totalVotes > 0 ? ($percentage . "%") : ($result['elected'] ? "100%" : "0%"); ?>"
+                        style="width: <?= $totalVotes > 0 ? ($percentage . "%") : ($elected ? "100%" : "0%"); ?>"
                     >
                     </div>
                 </div>

@@ -126,8 +126,9 @@ class ElectionResultContainer{
             if(additionalContent) popup.append(...additionalContent);
         };
 
+        data = { hoverFun: hoverFun, ...data };
         this.currentFillData = data;
-        this.visibleMap.fill({ hoverFun: hoverFun, ...data });
+        this.visibleMap.fill(data);
     }
 
     hydrate(elt){

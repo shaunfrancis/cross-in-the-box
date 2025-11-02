@@ -1,7 +1,7 @@
 <?php 
     namespace Shared;
     $heroNavItems = [
-        [ 'title' => "Election results", 'src' => "/images/usa-nav-results.svg", 'id' => "election-results" ],
+        [ 'title' => "Election results", 'src' => "/images/usa-nav-presidential-results.svg", 'id' => "election-results" ],
         [ 'title' => "Find a state", 'src' => "/images/nav-region.svg", 'id' => "find-a-state", 'focus' => ".RegionSearchSection__search-input" ],
     ];
 ?>

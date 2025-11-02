@@ -124,7 +124,6 @@ window.addEventListener('DOMContentLoaded', () => {
             return () => map.setTarget(undefined);
         }
         catch(error){
-            console.log(error);
             constituencyMap.remove();
         }
 
