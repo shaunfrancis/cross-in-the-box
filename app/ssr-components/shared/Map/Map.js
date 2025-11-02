@@ -15,7 +15,10 @@ class Map{
         if(!this.downloaded){
             this.downloadParameters.src = this.structure.container.getAttribute('data-src');
         }
+        else this.init();
     }
+
+    init(){} // optional method to run on construction (if downloaded) or immediately following downloading
 
     get visible(){ return this.structure.container.checkVisibility() }
 
@@ -105,6 +108,7 @@ class Map{
         await fetch('/' + this.downloadParameters.src).then( response => response.text() ).then( svgText => {
             this.structure.container.innerHTML = svgText;
         });
+        this.init();
         if(this.containerInstance.currentFillData){
             this.fill(this.containerInstance.currentFillData);
         }

@@ -2,6 +2,9 @@ window.addEventListener('DOMContentLoaded', () => {
     const instances = [];
     for(const elt of document.querySelectorAll('.ElectionResultContainer')){
         switch(elt.getAttribute('data-regions-type')){
+            case "house":
+                instances.push(new USAHouseElectionResultContainer(elt));
+                break;
             case "presidential": default: 
                 instances.push(new USAPresidentialElectionResultContainer(elt));
         }

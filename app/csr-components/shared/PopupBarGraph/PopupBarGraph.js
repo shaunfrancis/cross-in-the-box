@@ -16,6 +16,7 @@ export default class PopupBarGraph{
         if(title) container.appendChild( new Elt({tag: 'div', classList: ["PopupBarGraph__title"], innerHTML: title}) );
 
         results.forEach( result => {
+            const elected = result.candidates ? result.candidates[0].elected : false;
             const percentage = totalVotes == 0 ? 0 : (100 * result.votes / totalVotes).toFixed(2);
             const party = parties.find( party => party.id == result.party ) || globalThis.DefaultParty;
             const bgColor = party.color || "var(--default-color)";
@@ -27,8 +28,8 @@ export default class PopupBarGraph{
                 case "n": default:
                     numberValue = result.votes.toString();
             }
-            else if(result.elected && results.length == 1) numberValue = "Unopposed";
-            else if(result.elected) numberValue = "Elected";
+            else if(elected && results.length == 1) numberValue = "Unopposed";
+            else if(elected) numberValue = "Elected";
 
             const row = container.appendChild( new Elt({ tag: "div", classList: ["PopupBarGraph__row"] }) );
 
@@ -37,7 +38,7 @@ export default class PopupBarGraph{
                 new Elt({
                     tag: 'div',
                     classList: ["PopupBarGraph__bar", "PopupBarGraph__bloc"],
-                    style: { background: bgColor, width: totalVotes > 0 ? percentage + "%" : (result.elected ? "100%" : "0%") },
+                    style: { background: bgColor, width: totalVotes > 0 ? percentage + "%" : (elected ? "100%" : "0%") },
                 }),
                 goal ? new Elt({tag:'div', classList:["PopupBarGraph__goal"], style:{left: 100*goal + "%"}}) : null,
             ].filter(Boolean));
