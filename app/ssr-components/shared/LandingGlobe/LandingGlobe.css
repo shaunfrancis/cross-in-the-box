@@ -13,7 +13,7 @@
     top:0;
     left:0;
     z-index:0;
-    transition:opacity 200ms;
+    transition:opacity 500ms;
     &.pointer{ cursor:pointer }
 }
 #LandingGlobe.loading > canvas{ opacity:0 }
@@ -26,10 +26,32 @@
     display:flex;
     flex-direction:column;
     gap:20px;
+    & > hgroup > img{
+        height:45px;
+        vertical-align:middle;
+    }
+    & > hgroup > h1{
+        margin-left:10px;
+        text-transform:uppercase;
+        display:inline-block;
+        vertical-align:middle;
+    }
     & > hgroup > p{
-        margin:0;
+        margin-top:-5px;
+        font-size:1.2em;
     }
     & ul{
         margin:0;
     }
+}
+
+#LandingGlobe__placeholder{
+    position:absolute;
+    z-index:-1;
+    top:0;
+    left:0;
+    transition:opacity 500ms;
+}
+#LandingGlobe:not(.loading) #LandingGlobe__placeholder{
+    opacity:0;
 }

@@ -7,7 +7,7 @@
     background:#fff;
     box-shadow:inset 1px 1px 0 1px var(--box-shadow-color);
     display:grid;
-    grid-template-columns:230px 120px repeat(auto-fill, 200px);
+    grid-template-columns:250px 120px repeat(auto-fill, 200px);
     grid-template-rows:80px auto;
     align-items:start;
     justify-content:space-between;
@@ -31,7 +31,10 @@
 .Footer__logo-label{
     margin-top:-6px;
 }
-.Footer__logo-label h1{ font-size:1.5em }
+.Footer__logo-label h1{
+    font-size:1.5em;
+    text-transform:uppercase;
+}
 .Footer__logo-label p{ margin:-5px 0 0 0 }
 
 #Footer__social-container{
