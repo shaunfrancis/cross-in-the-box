@@ -37,10 +37,11 @@ class LandingGlobe extends \Base\Component{
                 </hgroup>
                 
                 <?php foreach($_sitemap as $country): ?>
-                    <article>
+                    <article class="LandingGlobe__article" data-href="<?= $country['href']; ?>">
                         <h2>
-                            <a class="unstyled" href="<?= $country['href']; ?>">
-                                <?= $country['label']; ?>
+                            <a class="unstyled LandingGlobe__flag-title" href="<?= $country['href']; ?>">
+                                <img src="<?= $country['flag']; ?>" alt="" />
+                                <span><?= $country['label']; ?></span>
                             </a>
                         </h2>
                         <?php if(!empty($country['children'])) : ?>

@@ -69,6 +69,7 @@
         'canada' => [
             'label' => "Canada",
             'href' => '/canada',
+            'flag' => '/public/images/canada-flag.svg',
             'children' => [
                 [
                     'label' => "Federal Elections",
@@ -79,6 +80,7 @@
         'france' => [
             'label' => "France",
             'href' => '/france',
+            'flag' => '/public/images/france-flag.svg',
             'children' => [
                 [
                     'label' => "Presidential Elections",
@@ -89,6 +91,7 @@
         'hungary' => [
             'label' => "Hungary",
             'href' => '/hungary',
+            'flag' => '/public/images/hungary-flag.svg',
             'children' => [
                 [
                     'label' => "Parliamentary Elections",
@@ -99,6 +102,7 @@
         'uk' => [
             'label' => "United Kingdom",
             'href' => '/uk',
+            'flag' => '/public/images/uk-flag.svg',
             'children' => [
                 [
                     'label' => "General Elections",
@@ -121,6 +125,7 @@
         'usa' => [
             'label' => "United States",
             'href' => '/usa',
+            'flag' => '/public/images/usa-flag.svg',
             'children' => [
                 [
                     'label' => "Presidential Elections",
@@ -143,6 +148,7 @@
         'vatican' => [
             'label' => "Vatican City",
             'href' => '/vatican-city',
+            'flag' => '/public/images/vatican-flag.svg',
             'children' => [
                 [
                     'label' => "Papal Conclaves",
