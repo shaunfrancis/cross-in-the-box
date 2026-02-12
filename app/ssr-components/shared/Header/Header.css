@@ -20,7 +20,9 @@
 #Header__logo-container img{
     height:100%;
     padding:5px 0;
+    view-transition-name:logo;
 }
+::view-transition-group(logo){ animation:none; z-index: 1 }
 
 #Header h1{
     font-size:1.5em;

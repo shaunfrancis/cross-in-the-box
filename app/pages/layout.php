@@ -2,6 +2,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script>
+        window.addEventListener("pagereveal", (event) => {
+            if(!navigation.activation.from || !navigation.activation.entry) return;
+            if(new URL(navigation.activation.from.url).pathname === "/") document.documentElement.classList.add("from-globe");
+            if(new URL(navigation.activation.entry.url).pathname === "/") document.documentElement.classList.add("to-globe");
+        });
+    </script>
     <title><?php
         if(!empty($_error)) echo ($_error_title ?? $_error) . " | ";
         echo implode(" | ", $_title ?? []); ?><?= count($_title ?? []) > 0 ? " | " : ""; 

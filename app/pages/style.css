@@ -4,6 +4,33 @@
     --default-color: #AAA;
     --box-shadow-color: rgba(200,200,200,0.1);
     --left-gap:100px;
+    --view-transition:300ms;
+}
+
+@view-transition{
+    navigation: auto;
+}
+::view-transition-old(root), ::view-transition-new(root){ animation-duration: var(--view-transition) }
+
+@media screen and (min-width:768px){
+    @keyframes zoom-to {
+        from{ transform: scale(0.95); opacity:0 }
+        to{ transform: scale(1); opacity:1 }
+    }
+    .from-globe::view-transition-new(root){
+        transform-origin:left;
+        opacity:0;
+        animation: calc(var(--view-transition) / 2) ease-in calc(var(--view-transition) / 2) forwards zoom-to;
+    }
+    .to-globe::view-transition-old(root){
+        transform-origin:left;
+        animation: ease-in var(--view-transition) reverse forwards zoom-to;
+    }
+}
+@media (prefers-reduced-motion: reduce){
+    ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*){
+        animation: none !important;
+    }
 }
 
 *{
