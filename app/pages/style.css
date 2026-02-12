@@ -7,9 +7,7 @@
     --view-transition:300ms;
 }
 
-@view-transition{
-    navigation: auto;
-}
+@view-transition{ navigation: auto }
 ::view-transition-old(root), ::view-transition-new(root){ animation-duration: var(--view-transition) }
 
 @media screen and (min-width:768px){

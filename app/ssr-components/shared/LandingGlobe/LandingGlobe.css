@@ -4,7 +4,11 @@ body.is-panning *{
     user-select:none;
 }
 
-#Header:has(~ #LandingGlobe){ background:none; box-shadow:none; }
+#Header:has(~ #LandingGlobe){
+    background:none;
+    box-shadow:none;
+    pointer-events:none;
+}
 
 @keyframes zoom-in {
   0%{ transform: scale(1) }

@@ -1,4 +1,5 @@
 import Message from "components/shared/Message/Message";
+import PartyProgressionBlocs from "components/shared/PartyProgressionBlocs/PartyProgressionBlocs";
 
 class ElectionResultContainer{
 
