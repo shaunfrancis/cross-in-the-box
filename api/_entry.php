@@ -2,7 +2,7 @@
     namespace API;
     header("Access-Control-Allow-Origin: *");
 
-    $accepted_countries = array("canada", "uk", "usa", "vatican");
+    $accepted_countries = array("canada", "hungary", "uk", "usa", "vatican");
     $request = array_filter( preg_split( '/\//', str_replace(['/elections/api/','/api/'], '', $_SERVER['REQUEST_URI']) ) );
     $resource = array_shift($request);
 
