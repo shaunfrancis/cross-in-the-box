@@ -31,7 +31,7 @@ class RegionPage extends \Shared\RegionPage{
             <h2><?= str_replace("- ", "-", implode(" ", $event['data']['title'])); ?></h2>
             <?= \Shared\CandidatesMasonryList::render(results: $results, limit: 5); ?>
             <h3>Votes</h3>
-            <?= \Shared\RegionBarGraph::render($results); ?>
+            <?= \Shared\RegionBarGraph::render($results, withoutCandidateNames: true); ?>
         </article>
 
     <?php }

@@ -28,7 +28,7 @@
             ); ?>
 
             <?= \Hungary\ElectionResultContainer::show(
-                election: "2022",
+                election: "2018",
                 title: ["2018", "Parliamentary", "Election"],
             ); ?>
 

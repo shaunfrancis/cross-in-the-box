@@ -15,6 +15,7 @@ window.addEventListener('DOMContentLoaded', async () => {
             if(!party) party = DefaultParty;
 
             Object.values(blocs).forEach( elt => {
+                if(!elt) return;
                 elt.style.background = party.color || "var(--default-color)";
                 if(party.textColor) elt.style.color = party.textColor;
             });

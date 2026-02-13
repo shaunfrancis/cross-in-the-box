@@ -8,6 +8,7 @@ class RegionBarGraph extends \Base\Component{
         array $results,                         // Result[]
         array $subtitles = [],                  // [subElectionId: string][]
         string $subElectionType = "separate",   // "separate" | "rounds"
+        bool $withoutCandidateNames = FALSE,
     ){
         /*if(subElectionType == "rounds"){
             const resultsByCandidate = getResultsByCandidate(results);
@@ -26,32 +27,39 @@ class RegionBarGraph extends \Base\Component{
                     case "separate":
                         $subElections = getResultsBySubElection($results);
                         foreach($subElections as $subElection){
-                            self::renderGraph($subElection['results'], $subElectionType, $subtitles[$subElection['subid']] ?? NULL);
+                            self::renderGraph(
+                                results: $subElection['results'], 
+                                subElectionType: $subElectionType, 
+                                title: $subtitles[$subElection['subid']] ?? NULL,
+                                withoutCandidateNames: $withoutCandidateNames
+                            );
                         }
                         break;
                     case "rounds":
-                        self::renderGraph($results, "rounds");
+                        self::renderGraph(
+                            results: $results, subElectionType: "rounds", withoutCandidateNames: $withoutCandidateNames
+                        );
                         break;
                 }
             ?>
 
     <?php }
 
-    static function renderGraph(array $results, string $subElectionType, ?string $title = NULL){ ?>
-        <div class="RegionBarGraph pre-hydration">
+    static function renderGraph(array $results, string $subElectionType, ?string $title = NULL, ?bool $withoutCandidateNames = FALSE){ ?>
+        <div class="RegionBarGraph pre-hydration<?= !empty($withoutCandidateNames) ? " without-candidate-names" : ""; ?>">
             <?php if($title): ?><h3><?= $title; ?></h3><?php endif; ?>
             <?php switch($subElectionType){
                 case "separate":
-                    self::renderStandardGraphRows($results);
+                    self::renderStandardGraphRows($results, withoutCandidateNames: $withoutCandidateNames);
                     break;
                 case "rounds":
-                    self::renderRoundsGraphRows($results);
+                    self::renderRoundsGraphRows($results, withoutCandidateNames: $withoutCandidateNames);
                     break;
             } ?>
         </div>
     <?php }
 
-    static function renderStandardGraphRows(array $results){
+    static function renderStandardGraphRows(array $results, ?bool $withoutCandidateNames = FALSE){
         $totalVotes = 0;
         foreach($results as $result){
             $totalVotes += $result['votes'];
@@ -73,9 +81,14 @@ class RegionBarGraph extends \Base\Component{
                     <span><?= $result['party']; ?></span>
                     <div class="RegionBarGraph__hover"></div>
                 </div>
-                <div class="RegionBarGraph__candidate RegionBarGraph__bloc bloc" title="<?= $result['candidates'][0]['name']; ?>">
-                    <?= $result['candidates'][0]['name']; ?>
-                </div>
+                <?php if(!$withoutCandidateNames): ?>
+                    <div
+                        class="RegionBarGraph__candidate RegionBarGraph__bloc bloc" 
+                        title="<?= $result['candidates'][0]['name']; ?>"
+                    >
+                        <?= $result['candidates'][0]['name']; ?>
+                    </div>
+                <?php endif; ?>
                 <div class="RegionBarGraph__votes RegionBarGraph__bloc bloc tnum">
                     <?= $votesValue; ?>
                 </div>
@@ -96,7 +109,7 @@ class RegionBarGraph extends \Base\Component{
 
     }
 
-    static function renderRoundsGraphRows(array $results){
+    static function renderRoundsGraphRows(array $results, ?bool $withoutCandidateNames = FALSE){
         echo "todo";
 
         /*

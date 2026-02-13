@@ -9,6 +9,9 @@
         grid-template-columns:30px var(--party-width) repeat(var(--max-rounds), minmax(20px, min-content)) 1fr 30px;
         row-gap:30px;
     }
+    main section:has(> article > .RegionBarGraph.without-candidate-names){
+        grid-template-columns:30px var(--party-width) repeat( calc(var(--max-rounds) - 1), minmax(20px, min-content)) 1fr 30px;
+    }
 
     main section:has(> article > .RegionBarGraph) > *{
         grid-column: 1 / -1;
@@ -123,6 +126,10 @@
     grid-column:calc(var(--rounds) + 2) / -2;
     display:flex;
 }
+.RegionBarGraph.without-candidate-names .RegionBarGraph__bar-container{
+    grid-column:calc(var(--rounds) + 2 - 1) / -2;
+}
+
 
 .RegionBarGraph__bar{
     min-width:0;
@@ -141,6 +148,9 @@
 
     main section:has(> article > .RegionBarGraph){
         grid-template-columns:15px minmax(20px, 80px) repeat(var(--max-rounds), minmax(20px, min-content)) 1fr 15px;
+    }
+    main section:has(> article > .RegionBarGraph.without-candidate-names){
+        grid-template-columns:15px minmax(20px, 80px) repeat( calc(var(--max-rounds) - 1), minmax(20px, min-content)) 1fr 15px;
     }
 
     .RegionBarGraph__candidate, .RegionBarGraph__votes, .RegionBarGraph__percentage{
