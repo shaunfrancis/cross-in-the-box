@@ -218,38 +218,21 @@ class ElectionResultContainer{
 
     updateMap(showChanges = false){
         const newFills = []; // {id: string, color: string, opacity?: number}[]
-        
-        // Order by number of elected candidates (this is just for an approximate visual L->R on the map and has no real importance)
-        // CachedData.results[this.data.election].sort( (a,b) => {
-        //     const electedCount = (x) => {
-        //         return CachedData.results[this.data.election]
-        //             .filter(r => {
-        //                 return r.id == x.id && r.party == x.party;
-        //             })
-        //             .map(r => {
-        //                 return r.candidates.reduce( (count, candidate) => {
-        //                     return count + candidate.elected;
-        //                 }, 0 );
-        //             })
-        //             .reduce( (sum, count) => sum + count, 0 );
-        //     }
-        //     const votes = (x) => {
-        //         return CachedData.results[this.data.election]
-        //             .filter(r => r.id == x.id && r.party == x.party)
-        //             .map(r => r.votes)
-        //             .reduce( (sum, count) => sum + count, 0 );
-        //     }
-
-        //     const electedCounts = {a: electedCount(a), b: electedCount(b)};
-        //     return electedCounts.b != electedCounts.a ? electedCounts.b - electedCounts.a : votes(b) - votes(a);
-        // });
 
         const regionCounts = {};
+        let anyMultipleWinners = false;
         const winners = this.winFormula(CachedData.results[this.data.election]);
         winners.forEach( result => {
             if(!regionCounts[result.id]) regionCounts[result.id] = {total: result.candidates?.length ?? 1};
-            else regionCounts[result.id].total += result.candidates?.length ?? 1;
+            else{
+                anyMultipleWinners = true;
+                regionCounts[result.id].total += result.candidates?.length ?? 1;
+            }
         });
+
+        // Order by number of elected candidates for visual L->R on the map
+        if(anyMultipleWinners) winners.sort( (a,b) => b.candidates.length - a.candidates.length );
+
         winners.forEach( result => {
             for(let i = 0; i < (result.candidates?.length ?? 1); i++){
                 regionCounts[result.id].current = (regionCounts[result.id].current || 0) + 1;
