@@ -2,7 +2,7 @@
 namespace UK;
 
 class RegionSearchSection extends \Shared\RegionSearchSection{
-    static function render($type = NULL){
+    static function render(?string $type = NULL, ?string $partyWidth = NULL){
         parent::render($type);
     }
 }

@@ -1,3 +1,5 @@
+.RegionSearchSection{ --RegionSearchSection__party-width: 4em }
+
 .RegionSearchSection__search-container{
     width:100%;
     max-width:800px;
@@ -72,7 +74,7 @@
     font-size:calc(1em * 2 / 3);
     padding:0 2px;
     margin-right:0.625em;
-    width:4em;
+    width:var(--RegionSearchSection__party-width);
     text-align:center;
     overflow:hidden;
     white-space:nowrap;
