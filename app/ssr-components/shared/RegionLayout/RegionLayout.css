@@ -19,6 +19,7 @@
 }
 
 .RegionPage main{
+    --party-width: 85px;
     flex:1;
     padding:30px 30px 50px 50px;
     overflow:auto;

@@ -20,6 +20,8 @@ const partyIdToDisplayId = (partyId) => {
     if(["vacant"].includes(partyId)) displayId = partyId.charAt(0).toUpperCase() + partyId.slice(1);
     else if(displayId.startsWith("IND_")) displayId = displayId.substring(4);
 
+    displayId = displayId.replace(/-/g, '–');
+
     return displayId;
 }
 

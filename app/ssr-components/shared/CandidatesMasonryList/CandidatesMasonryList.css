@@ -33,10 +33,13 @@
 }
 
 .CandidatesMasonryList__title{
-    display:inline-block;
-    font-weight:450;
+    display:inline-flex;
+    margin-bottom:4px;
+    gap:10px;
     cursor:default;
     text-wrap:wrap;
+    font-weight:400;
+    & > span:first-child{ font-weight:500 }
 }
 
 .CandidatesMasonryList__table{
@@ -49,7 +52,7 @@
     & > colgroup > col:first-child{
         width:55px;
     }
-    & td{
+    & td.bloc{
         background:#EEE;
         color: #000;
         &.tnum{ text-align:right; }
@@ -64,6 +67,13 @@
     & tr:not(.CandidatesMasonryList__elected):has(~ tr.CandidatesMasonryList__elected) > td{ /* elected in constituency */
         opacity:0.5;
     }
+}
+
+.CandidatesMasonryList__limit-label{
+    padding:4px 15px;
+    background:none;
+    cursor:pointer;
+    font-weight:350;
 }
 
 

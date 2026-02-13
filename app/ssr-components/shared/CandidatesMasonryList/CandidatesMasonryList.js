@@ -8,7 +8,7 @@ window.addEventListener('DOMContentLoaded', async () => {
             if(!party) party = DefaultParty;
 
             const title = item.querySelector('.CandidatesMasonryList__title');
-            title.innerHTML = party.displayId;
+            title.querySelector('span:first-child').innerHTML = party.displayId;
             [ title, ...item.querySelectorAll('.CandidatesMasonryList__elected > td') ].forEach( elt => {
                 if(!elt) return;
                 elt.style.background = party.color || "var(--default-color)";

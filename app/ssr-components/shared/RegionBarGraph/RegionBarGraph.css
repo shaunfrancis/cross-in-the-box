@@ -6,7 +6,7 @@
     main section:has(> article > .RegionBarGraph){
         --max-rounds: 3;
         display:grid;
-        grid-template-columns:30px 85px repeat(var(--max-rounds), minmax(20px, min-content)) 1fr 30px;
+        grid-template-columns:30px var(--party-width) repeat(var(--max-rounds), minmax(20px, min-content)) 1fr 30px;
         row-gap:30px;
     }
 

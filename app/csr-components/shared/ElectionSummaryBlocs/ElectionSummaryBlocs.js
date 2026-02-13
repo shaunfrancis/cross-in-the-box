@@ -12,10 +12,12 @@ export default class ElectionSummaryBlocs{
     static render({ 
         data,                   // {party : Party, count : number, displayCount? : string}[]
         rowLength = Infinity,   // number?
+        blocWidth = null        // string?
     }){
         const container = new Elt({
             tag: 'div',
-            classList: ["ElectionSummaryBlocs"]
+            classList: ["ElectionSummaryBlocs"],
+            style: blocWidth ? {"--ElectionSummaryBlocs__bloc-width": blocWidth} : {}
         });
         this.activeContainers.push(container);
 

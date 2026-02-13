@@ -1,4 +1,5 @@
 .PopupBarGraph{
+    --PopupBarGraph__party-width: 65px;
     margin:10px 0 0 0;
 }
 
@@ -22,8 +23,9 @@
 }
 
 .PopupBarGraph__party{
-    width:65px;
+    width:var(--PopupBarGraph__party-width);
     text-align:center;
+    white-space:nowrap;
 }
 
 .PopupBarGraph__percentage{

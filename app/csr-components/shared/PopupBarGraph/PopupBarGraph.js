@@ -7,12 +7,17 @@ export default class PopupBarGraph{
         format = "%",   // "%" | "n"
         goal,           // number?
         title,          // string?
+        partyWidth,     // string?
     }){
         
         let totalVotes = 0;
         results.forEach( result => totalVotes += result.votes );
 
-        const container = new Elt({ tag: "div", classList: ["PopupBarGraph"] });
+        const container = new Elt({
+            tag: "div",
+            classList: ["PopupBarGraph"],
+            style: partyWidth ? {"--PopupBarGraph__party-width" : partyWidth} : {},
+        });
         if(title) container.appendChild( new Elt({tag: 'div', classList: ["PopupBarGraph__title"], innerHTML: title}) );
 
         results.forEach( result => {

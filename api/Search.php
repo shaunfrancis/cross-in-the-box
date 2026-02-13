@@ -66,7 +66,7 @@ class SearchService extends APIService{
                 $overlap = get_overlap($b['title'], $query) <=> get_overlap($a['title'], $query);
                 if( ($a['current'] <=> $b['current']) != 0) return $b['current'] <=> $a['current'];
                 else if($overlap != 0) return $overlap;
-                else return $b['title'] <=> $a['title'];
+                else return $a['title'] <=> $b['title'];
             });
 
 

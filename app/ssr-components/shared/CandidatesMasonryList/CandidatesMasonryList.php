@@ -5,6 +5,7 @@ class CandidatesMasonryList extends \Base\Component{
     
     static function render(
         array $results,
+        ?float $limit = INF,
     ){ ?>
 
         <details class="CandidatesMasonryList pre-hydration">
@@ -25,18 +26,29 @@ class CandidatesMasonryList extends \Base\Component{
                     ?>
                         <div
                             class="CandidatesMasonryList__item" 
-                            style="--row-span:<?= count($winners) + 2; ?>"
+                            style="--row-span:<?= min($limit, count($winners)) + 2; ?>"
                             data-party="<?= $result['party']; ?>" 
                         >
                             <h4 class="CandidatesMasonryList__title bloc">
-                                <?= $result['party']; ?>
+                                <span><?= $result['party']; ?></span>
+                                <span><?= count($winners); ?></span>
                             </h4>
                             <table class="CandidatesMasonryList__table">
                                 <tbody>
-                                    <?php foreach($winners as $index => $candidate): ?>
-                                        <tr>
-                                            <td title="<?= $candidate['name']; ?>" class="bloc"><?= $candidate['name']; ?></td>
-                                        </tr>
+                                    <?php 
+                                        $count = 0;
+                                        foreach($winners as $candidate): 
+                                            $count++;
+                                            if($count > $limit): ?>
+                                                <tr>
+                                                    <td class="CandidatesMasonryList__limit-label has-marker"><?= count($winners) - $limit; ?> more</td>
+                                                </tr>
+                                            <?php break; ?>
+                                            <?php else: ?>
+                                                <tr>
+                                                    <td title="<?= $candidate['name']; ?>" class="bloc"><?= $candidate['name']; ?></td>
+                                                </tr>
+                                            <?php endif;?>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
@@ -55,7 +67,12 @@ class CandidatesMasonryList extends \Base\Component{
                         data-party="<?= $result['party']; ?>" 
                     >
                         <h4 class="CandidatesMasonryList__title bloc">
-                            <?= $result['party']; ?>
+                            <span><?= $result['party']; ?></span>
+                            <?php
+                                $winners = count(array_filter($result['candidates'], fn($candidate) => $candidate['elected']));
+                                if($winners > 0): ?>
+                                    <span><?= $winners; ?></span>
+                            <?php endif; ?>
                         </h4>
                         <table class="CandidatesMasonryList__table">
                             <colgroup><col /><col /></colgroup>

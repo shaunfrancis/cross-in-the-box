@@ -23,10 +23,10 @@ class HungaryElectionResultContainer extends ElectionResultContainer{
             const winner = regionUpdates.length > 0 ? regionUpdates[regionUpdates.length - 1].party : result.party;
 
             if(!summaries.find( summary => summary.party.id == winner)){
-                const party = CachedData.parties.find( party => party.id === result.party) || DefaultParty;
-                summaries.push({ party: party, count: 1 });
+                const party = CachedData.parties.find( party => party.id === winner) || DefaultParty;
+                summaries.push({ party: party, count: result.candidates.length });
             }
-            else summaries.find( summary => summary.party.id == winner ).count++;
+            else summaries.find( summary => summary.party.id == winner ).count += result.candidates.length;
 
         });
         summaries.sort( (a,b) => {
@@ -37,8 +37,25 @@ class HungaryElectionResultContainer extends ElectionResultContainer{
             } );
         
         this.structure.summary.container.appendChild( 
-            ElectionSummaryBlocs.render({ data: summaries, rowLength: 5 })
+            ElectionSummaryBlocs.render({ data: summaries, rowLength: 5, blocWidth: "140px" })
         );
+    }
+
+    get mapHoverFunComponents(){
+        return { ...super.mapHoverFunComponents, 
+            winningCandidate: (id, regionResults, winner) => {
+                const hasMultipleCandidates = regionResults.some( result => result.candidates.length > 1 );
+                if(!hasMultipleCandidates) return super.mapHoverFunComponents.winningCandidate(id, regionResults, winner);
+            },
+            additionalContent: (id, regionResults, latestResultsUpdate) => {
+                const popupGraphData = { results: latestResultsUpdate?.results.data || regionResults, parties: CachedData.parties };
+                if(this.attributes.showChanges){
+                    if(latestResultsUpdate) popupGraphData.title = latestResultsUpdate.results.title.join(" ").replace("- ","-");
+                    
+                }
+                return [PopupBarGraph.render({...popupGraphData, partyWidth: "80px"})]
+            }
+        }
     }
 
     fillMap(data){
@@ -72,14 +89,16 @@ class HungaryElectionResultContainer extends ElectionResultContainer{
                         parties: CachedData.parties,
                         goal: goal,
                         format: "n",
-                        title: message.link_title
+                        title: message.link_title,
+                        partyWidth: "80px"
                     }) );
                     break;
                 default:
                     messageResults.push( PopupBarGraph.render({
                         results: message.results.sort( (a,b) => b.votes - a.votes ),
                         parties: CachedData.parties,
-                        title: message.link_title
+                        title: message.link_title,
+                        partyWidth: "80px"
                     }) );
             }
             return messageResults;

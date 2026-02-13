@@ -25,6 +25,6 @@
             <p>Data missing or incorrect? <a href="mailto:hello@crossinthebox.com?subject=Election%20data%20wrong%20or%20missing">Let us know.</a></p>
         </section>
     <?php endif; ?>
-<?= RegionLayout::openMain(); ?>
+<?= RegionLayout::openMain(partyWidth: "110px"); ?>
     <?= $_children; ?>
 <?= RegionLayout::close(); ?>

@@ -14,16 +14,17 @@
     <section id="election-results">
         <div class="section-heading">
             <h1>Election results</h1>
-            <?php/*= Toggle::show(
+            <?= Toggle::show(
                 id: "map-type",
                 from: "/images/hungary-cartographic-icon.svg",
                 to: "/images/hungary-geographic-icon.svg",
-            ) */?>
+            ); ?>
         </div>
         <?= ElectionResultsSection::open(); ?>
             <?= \Hungary\ElectionResultContainer::show(
                 election: "2022",
-                title: ["2022", "Parliamentary", "Election"]
+                title: ["2022", "Parliamentary", "Election"],
+                messages: ['group' => "2022", 'open' => TRUE]
             ); ?>
 
             <?= \Hungary\ElectionResultContainer::show(

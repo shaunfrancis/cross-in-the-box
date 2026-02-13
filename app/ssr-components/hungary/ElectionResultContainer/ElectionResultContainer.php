@@ -14,7 +14,7 @@ class ElectionResultContainer extends \Shared\ElectionResultContainer{
 
         $map = self::getMapClass($election);
 
-        $dimensions = ['w' => "calc( 1.8 * (100vh - 250px) )", 'h' => "calc(100vh - 250px)", 'minW' => "425px", 'minH' => "500px"];
+        $dimensions = ['w' => "calc( 1.65 * (100vh - 250px) )", 'h' => "calc(100vh - 250px)", 'minW' => "425px", 'minH' => "425px"];
         ?>
 
         <?= \Shared\ElectionResultContainer::open($election, $map, $title, $dimensions, $messages, $showChanges, $dedicatedPage, $winFormulaName, $regionsType); ?>

@@ -13,9 +13,9 @@ class RegionLayout extends \Base\Component{
 
     <?php }
 
-    static function openMain(): void { ?>
+    static function openMain(?string $partyWidth = NULL): void { ?>
             </aside>
-            <main>
+            <main<?= !empty($partyWidth) ? " style=\"--party-width:{$partyWidth}\"" : ""; ?>>
                 <?php //Children ?>
     <?php }
 
