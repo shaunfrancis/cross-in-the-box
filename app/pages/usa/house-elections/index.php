@@ -7,7 +7,7 @@
 ?>
 <main>
     <section id="hero">
-        <h1>US House Elections</h1>
+        <h1>House Elections</h1>
         <?= HeroNav::show($heroNavItems); ?>
     </section>
 

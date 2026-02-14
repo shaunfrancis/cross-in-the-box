@@ -116,7 +116,10 @@ section{
 }
 
 #hero h1{
-    display:block;
+    display:flex;
+    justify-content:center;
+    align-items:baseline;
+    gap:15px;
     font-size:3.5em;
     line-height:1.2em;
     padding-bottom:30px;

@@ -27,6 +27,17 @@
 #Header h1{
     font-size:1.5em;
     cursor:default;
+    & > a{
+        display:flex;
+        align-items:baseline;
+        gap:10px;
+    }
+}
+.Header__flag{
+    height:20px;
+    aspect-ratio:1;
+    object-fit:cover;
+    border-radius:2px;
 }
 
 #Header nav{ flex: 1 }
@@ -70,4 +81,7 @@
         justify-content:space-between;
         gap:0;
     }
+
+    #Header h1 > a{ gap:5px }
+    .Header__flag{ height:15px }
 }

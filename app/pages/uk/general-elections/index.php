@@ -8,7 +8,7 @@
 ?>
 <main>
     <section id="hero">
-        <h1>UK General Elections</h1>
+        <h1>General Elections</h1>
         <?= HeroNav::show($heroNavItems); ?>
     </section>
 

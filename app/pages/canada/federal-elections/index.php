@@ -7,7 +7,7 @@
 ?>
 <main>
     <section id="hero">
-        <h1>Canadian Federal Elections</h1>
+        <h1>Federal Elections</h1>
         <?= HeroNav::show($heroNavItems); ?>
     </section>
 

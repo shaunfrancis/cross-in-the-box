@@ -7,7 +7,7 @@
 ?>
 <main>
     <section id="hero">
-        <h1>Hungarian Parliamentary Elections</h1>
+        <h1>Parliamentary Elections</h1>
         <?= HeroNav::show($heroNavItems); ?>
     </section>
 

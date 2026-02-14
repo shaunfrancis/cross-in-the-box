@@ -19,7 +19,7 @@
     <?php foreach($_headInjections ?? [] as $content) echo $content; ?>
 </head>
 <body>
-    <?= Header::show($_countryName ?? '', $_countryAbbrev ?? NULL, $_headerLinks ?? []); ?>
+    <?= Header::show($_countryName ?? '', $_countryAbbrev ?? NULL, $_countryFlag ?? NULL, $_headerLinks ?? []); ?>
     <?= $_children ?? ""; ?>
     <?= Footer::show(); ?>
 </body>

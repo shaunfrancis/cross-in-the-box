@@ -9,7 +9,7 @@
 
 <section id="hero">
     <a href="/canada/federal-elections/" class="breadcrumb">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z"/></svg><span>Canadian Federal Elections</span>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z"/></svg><span>Federal Elections</span>
     </a>
 
     <h1><?= $region['title']; ?></h1>
