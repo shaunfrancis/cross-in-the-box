@@ -12,8 +12,7 @@ class ElectionResultContainer{
 
         this.data = {
             election: this.structure.container.getAttribute('data-election'),
-            regionsType: this.structure.container.getAttribute('data-regions-type'),
-            updates: [],
+            regionsType: this.structure.container.getAttribute('data-regions-type')
         };
         this.attributes = {
             messageGroup: this.structure.messages.container?.getAttribute('data-group'),
@@ -92,7 +91,7 @@ class ElectionResultContainer{
             const regionResults = CachedData.results[this.data.election]
                 .filter( result => result.id == id )
                 .sort( (a,b) => b.votes - a.votes );
-            const regionUpdates = this.data.updates.filter( update => update.id == region.id );
+            const regionUpdates = CachedData.updates[this.data.election].filter( update => update.id == region.id );
             const latestResultsUpdate = regionUpdates.find( update => update.results )
             latestResultsUpdate?.results.data.sort( (a,b) => b.votes - a.votes );
 
@@ -170,12 +169,7 @@ class ElectionResultContainer{
         if(CachedData.parties.length === 0) await CachedData.fetchParties();
         if(!CachedData.results[election]) await CachedData.fetchResults(election);
 
-        if(showChanges){
-            this.data.updates = await fetch(Endpoint + "/updates/uk/" + election)
-                .then( res => res.text() )
-                .then( res => parseJSONWithDates(res, "date") );
-            this.data.updates.sort( (a,b) => a.date.valueOf() - b.date.valueOf() );
-        }
+        if(showChanges && !CachedData._updates[election]) await CachedData.fetchUpdates(election);
 
         if(messageGroup && !CachedData.messages[messageGroup]) await CachedData.fetchMessages(messageGroup);
     }
@@ -238,7 +232,7 @@ class ElectionResultContainer{
                 regionCounts[result.id].current = (regionCounts[result.id].current || 0) + 1;
                 const selector = regionCounts[result.id].total === 1 ? null : regionCounts[result.id].current;
 
-                const regionUpdates = this.data.updates.filter( u => u.id == result.id );
+                const regionUpdates = CachedData.updates[this.data.election].filter( u => u.id == result.id );
                 if(regionUpdates.length > 0){
                     const latestUpdate = regionUpdates[regionUpdates.length - 1];
                     const party = CachedData.parties.find( p => p.id == latestUpdate.party ) || DefaultParty;

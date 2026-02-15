@@ -7,7 +7,11 @@ class CachedData extends CachedDataSkeleton{
         } );
     }
 
+    static fetchElection(election, path = Endpoint + "/elections/vatican/" + election){ return super.fetchElection(election, path) }
+
     static fetchResults(election){ return this.downloadProperty(["results", election], Endpoint + "/results/vatican/" + election) }
+
+    static fetchUpdates(election, path = Endpoint + "/updates/vatican/" + election){ return super.fetchUpdates(election, path) }
 
     static fetchMessages(group, path = Endpoint + "/messages/vatican/" + group){ return super.fetchMessages(group, path) }
 }

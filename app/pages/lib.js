@@ -20,8 +20,39 @@ class CachedDataSkeleton{
     static regions = [];
     static fetchRegions(){ return this.fetchArray(); }
 
+    static elections = {};
+    static fetchElection(election, path){
+        return this.downloadProperty(["elections", election], path, {
+            applyParse: async (response) => {
+                const text = await response.text();
+                const json = parseJSONWithDates(text, 'date');
+                return json;
+            }
+        });
+    }
+
     static results = {};
     static fetchResults(_){ return this.fetchObject(_); }
+
+    // updates proxies _updates to show empty array for any missing key
+    // because updates may not always be required or downloaded but will always be assumed to exist
+    static _updates = {};
+    static updates = new Proxy(this._updates, {
+        get(target, prop){
+            if(!(prop in target)) return [];
+            else return target[prop];
+        }
+    });
+    static fetchUpdates(election, path){
+        return this.downloadProperty(["_updates", election], path, {
+            applyParse: async (response) => {
+                const text = await response.text();
+                const json = parseJSONWithDates(text, 'date');
+                return json;
+            },
+            applyTransform: (data) => { data.sort( (a,b) => a.date.valueOf() - b.date.valueOf() ) }
+        });
+    }
 
     static messages = {};
     static fetchMessages(group, path){

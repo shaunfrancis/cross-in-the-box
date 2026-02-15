@@ -9,7 +9,11 @@ class CachedData extends CachedDataSkeleton{
 
     static fetchRegions(){ return this.downloadProperty(["regions"], Endpoint + "/regions/canada") }
 
+    static fetchElection(election, path = Endpoint + "/elections/canada/" + election){ return super.fetchElection(election, path) }
+
     static fetchResults(election){ return this.downloadProperty(["results", election], Endpoint + "/results/canada/" + election) }
+
+    static fetchUpdates(election, path = Endpoint + "/updates/canada/" + election){ return super.fetchUpdates(election, path) }
 
     static fetchMessages(group, path = Endpoint + "/messages/canada/" + group){ return super.fetchMessages(group, path) }
 }

@@ -10,7 +10,7 @@ class UKWalesElectionResultContainer extends UKElectionResultContainer{
         const summaries = []; // {party : Party, count : number}[]
         this.winFormula(CachedData.results[this.data.election]).forEach( result => {
             
-            const regionUpdates = this.data.updates.filter( update => update.id == result.id );
+            const regionUpdates = CachedData.updates[this.data.election].filter( update => update.id == result.id );
             const winner = regionUpdates.length > 0 ? regionUpdates[regionUpdates.length - 1].party : result.party;
 
             if(!summaries.find( summary => summary.party.id == winner)){
