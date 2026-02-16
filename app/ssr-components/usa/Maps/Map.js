@@ -4,6 +4,107 @@ class USAPresidential extends Map{
     }
 }
 
+class USASenate extends Map{
+    constructor(container, containerInstance, {election, type, src}){
+        super(container, containerInstance, {election, type, src});
+    }
+
+    async show(){
+        this.containerInstance.maps.forEach(map => { if(map !== this) map.hide() });
+        
+        if(!this.downloaded) await this.download();
+        this.structure.container.classList.remove('hidden');
+
+        // switching between Senate maps *always* requires new fill data to be created
+        if(this.containerInstance.currentFillData) this.containerInstance.updateMap();
+    }
+
+    fill({
+        regions,                                    // list of regions to loop through
+                                                    // Region[]
+
+        fills = [],                                 // list of fills to apply to given region ids
+                                                    // ?{id : string, color : string, opacity? : number}[]
+
+        hoverFun = (active, popup, id) => {},       // optional function to execute on hover of regions
+                                                    // ?(active : boolean, popup : HTMLDivElement, id?: string) => void
+
+        clickFun = (id) => {},                      // optional function to execute on click of regions
+                                                    // ?(id?: string) => void
+
+        loadFun = (container) => {}                 // option funcation to execute once every time fill() is called
+                                                    // ?(svg: HTMLElement) => void
+    }){
+        if(this.type === "cartographic") return super.fill({regions, fills, hoverFun, clickFun, loadFun});
+
+        if(this.eventController) this.eventController.abort();
+        this.eventController = new AbortController();
+        
+        this.currentFill = this.containerInstance.currentFillData;
+
+        loadFun(this.structure.container);
+
+        const classlessRegionIds = [...new Set(regions.map( region => region.id.substring(0, region.id.length - 1 ) ))];
+
+        classlessRegionIds.map( id => {
+            let regionFills = fills.filter(f => f.id.substring(0, f.id.length - 1) == id);
+            if(regionFills.length === 0){
+                regionFills = [
+                    {id: id, selector: `path[name="${id}"]`, color: "#EEE"}
+                ];
+            }
+            
+            // there could be multiple fills for the same classless id if both senate seats were up for election in the same cycle
+            // but these should have the same selector, opacity, and color (stripe gradients generated before this in fillMap)
+            const regionElts = this.structure.container.querySelectorAll(regionFills[0].selector);
+            if(regionElts.length === 0) return;
+
+            regionElts.forEach(regionElt => {
+                regionElt.setAttribute('fill', regionFills[0].color);
+                if(regionFills[0].opacity !== undefined) regionElt.setAttribute('fill-opacity', regionFills[0].opacity);
+                
+                regionElt.addEventListener('mouseover', (_) => {
+                    const popup = this.containerInstance.structure.hoverPopup;
+                    if(regionFills.length === 1) hoverFun(true, popup, regionFills[0].id);
+                    else{
+                        popup.innerHTML = "";
+                        regionFills.forEach( (fill, index) => {
+                            const container = popup.appendChild( document.createElement('div') );
+                            if(index > 0) container.style.marginTop = "20px";
+                            hoverFun(true, container, fill.id);
+                        });
+                    }
+                }, { signal: this.eventController.signal });
+
+                regionElt.addEventListener('mousemove', (event) => {
+                    const popup = this.containerInstance.structure.hoverPopup;
+                    const coordinates = [event.clientX, event.clientY];
+                    const width = popup.offsetWidth;
+                    const height = popup.offsetHeight;
+
+                    const offsets = [0,0];
+                    if(coordinates[0] + 20 + width > window.innerWidth) offsets[0] = -(width + 40);
+                    if(coordinates[1] + 20 + height > window.innerHeight) offsets[1] = window.innerHeight - height - 20 - coordinates[1];
+
+                    popup.style.left = coordinates[0] + offsets[0] + 20 + "px";
+                    popup.style.top = coordinates[1] + offsets[1] + 20 + "px";
+                    popup.classList.remove('hidden');
+                }, { signal: this.eventController.signal });
+
+                regionElt.addEventListener('mouseout', () => {
+                    const popup = this.containerInstance.structure.hoverPopup;
+                    popup.classList.add('hidden');
+                    hoverFun(false, popup);
+                }, { signal: this.eventController.signal });
+
+                regionElt.addEventListener('click', () => {
+                    clickFun(regionFills[0].id); // if there are two elections then clickFun just directs to first one
+                }, { signal: this.eventController.signal });
+            });
+        });
+    }
+}
+
 class USAHouse extends Map{
     constructor(container, containerInstance, {election, type, src}){
         super(container, containerInstance, {election, type, src});

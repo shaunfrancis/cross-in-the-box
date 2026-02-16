@@ -5,6 +5,9 @@ window.addEventListener('DOMContentLoaded', () => {
             case "house":
                 instances.push(new USAHouseElectionResultContainer(elt));
                 break;
+            case "senate":
+                instances.push(new USASenateElectionResultContainer(elt));
+                break;
             case "presidential": default: 
                 instances.push(new USAPresidentialElectionResultContainer(elt));
         }
