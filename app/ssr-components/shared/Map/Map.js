@@ -20,7 +20,7 @@ class Map{
 
     init(){} // optional method to run on construction (if downloaded) or immediately following downloading
 
-    get visible(){ return this.structure.container.checkVisibility() }
+    get visible(){ return this.structure.container.checkVisibility() && !this.structure.container.classList.contains('hidden') }
 
     fill({
         regions,                                    // list of regions to loop through
@@ -32,14 +32,23 @@ class Map{
         hoverFun = (active, popup, id) => {},       // optional function to execute on hover of regions
                                                     // ?(active : boolean, popup : HTMLDivElement, id?: string) => void
 
-        clickFun = (id) => {}                       // optional function to execute on click of regions
+        clickFun = (id) => {},                      // optional function to execute on click of regions
                                                     // ?(id?: string) => void
+
+        loadFun = (container) => {}                 // option funcation to execute once every time fill() is called
+                                                    // ?(svg: HTMLElement) => void
     }){
+        if(this.eventController) this.eventController.abort();
+        this.eventController = new AbortController();
+
         this.currentFill = this.containerInstance.currentFillData;
+
+        loadFun(this.structure.container);
 
         regions.map( region => {
             let regionFills = fills.filter(f => f.id == region.id);
             if(regionFills.length === 0) regionFills = [{id: region.id, selector: `[name="${region.id}"]`, color: "#EEE"}];
+
             regionFills.forEach( fill => {
 
                 const regionElts = this.structure.container.querySelectorAll(fill.selector);
@@ -49,14 +58,12 @@ class Map{
                     regionElt.setAttribute('fill', fill.color);
                     if(fill.opacity !== undefined) regionElt.setAttribute('fill-opacity', fill.opacity);
                     
-                    regionElt.removeEventListener('mouseover', this.mouseover);
-                    regionElt.addEventListener('mouseover', this.mouseover = (event) => {
+                    regionElt.addEventListener('mouseover', (_) => {
                         const popup = this.containerInstance.structure.hoverPopup;
                         hoverFun(true, popup, region.id);
-                    });
+                    }, { signal: this.eventController.signal });
 
-                    regionElt.removeEventListener('mousemove', this.mousemove);
-                    regionElt.addEventListener('mousemove', this.mousemove = (event) => {
+                    regionElt.addEventListener('mousemove', (event) => {
                         const popup = this.containerInstance.structure.hoverPopup;
                         const coordinates = [event.clientX, event.clientY];
                         const width = popup.offsetWidth;
@@ -69,19 +76,18 @@ class Map{
                         popup.style.left = coordinates[0] + offsets[0] + 20 + "px";
                         popup.style.top = coordinates[1] + offsets[1] + 20 + "px";
                         popup.classList.remove('hidden');
-                    });
+                    }, { signal: this.eventController.signal });
 
-                    regionElt.removeEventListener('mouseout', this.mouseout);
-                    regionElt.addEventListener('mouseout', this.mouseout = () => {
+                    regionElt.addEventListener('mouseout', () => {
                         const popup = this.containerInstance.structure.hoverPopup;
                         popup.classList.add('hidden');
                         hoverFun(false, popup);
-                    });
+                    }, { signal: this.eventController.signal });
 
                     regionElt.removeEventListener('click', this.click);
-                    regionElt.addEventListener('click', this.click = () => {
+                    regionElt.addEventListener('click', () => {
                         clickFun(region.id);
-                    });
+                    }, { signal: this.eventController.signal });
                 });
             });
         });

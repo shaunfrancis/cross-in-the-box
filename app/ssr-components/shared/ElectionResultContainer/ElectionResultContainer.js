@@ -74,7 +74,6 @@ class ElectionResultContainer{
                 const popupGraphData = { results: latestResultsUpdate?.results.data || regionResults, parties: CachedData.parties };
                 if(this.attributes.showChanges){
                     if(latestResultsUpdate) popupGraphData.title = latestResultsUpdate.results.title.join(" ").replace("- ","-");
-                    
                 }
                 return [PopupBarGraph.render(popupGraphData)]
             }
@@ -114,7 +113,7 @@ class ElectionResultContainer{
             // Update notes
             const updateNotes = regionUpdates.filter(update => update.note);
             if(updateNotes.length === 1) popup.appendChild( new Elt({ tag: 'p', innerHTML: updateNotes[0].note }) );
-            else popup.appendChild( new Elt({
+            else if(updateNotes.length > 1) popup.appendChild( new Elt({
                 tag: 'ul',
                 children: updateNotes.map( update => {
                     return new Elt({ tag: 'li', innerHTML: update.note });
@@ -203,7 +202,7 @@ class ElectionResultContainer{
         }
     }
 
-    regionSelector(id, regionCount = NULL){
+    regionSelector(id, regionCount = null){
         if(!regionCount) return `[name="${id}"]`;
         else return `[name="${id}"] > *:nth-child(${regionCount})`;
     }

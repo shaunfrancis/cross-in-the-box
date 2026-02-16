@@ -161,7 +161,7 @@
     & > li{ margin-left:18px }
 }
 
-.flex-row{
+.ElectionResultContainer__flex-row{
     font-size:0.8em;
     display:flex;
     margin-top:10px;

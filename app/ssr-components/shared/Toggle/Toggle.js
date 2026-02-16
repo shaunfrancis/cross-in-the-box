@@ -9,7 +9,10 @@ class Toggle{
 
             if(inner(toggle) && outer(toggle)) outer(toggle).addEventListener('click', () => {
                 state = !state;
-                toggles.forEach( t => inner(t).classList.toggle('Toggle__toggled') );
+                toggles.forEach( t => {
+                    if(state) inner(t).classList.add('Toggle__toggled');
+                    else inner(t).classList.remove('Toggle__toggled');
+                });
                 fun(state);
             });
 
