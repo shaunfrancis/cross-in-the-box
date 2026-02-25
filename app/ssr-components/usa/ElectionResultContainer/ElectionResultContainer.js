@@ -8,6 +8,9 @@ window.addEventListener('DOMContentLoaded', () => {
             case "senate":
                 instances.push(new USASenateElectionResultContainer(elt));
                 break;
+            case "gubernatorial":
+                instances.push(new USAGubernatorialElectionResultContainer(elt));
+                break;
             case "presidential": default: 
                 instances.push(new USAPresidentialElectionResultContainer(elt));
         }
@@ -21,7 +24,7 @@ class USAElectionResultContainer extends ElectionResultContainer{
             switch(type){
                 case "senate": url += "senate-elections/state/"; break;
                 case "house": url += "house-elections/district/"; break;
-                case "governor": url += "gubernatorial-elections/state/"; break;
+                case "gubernatorial": url += "gubernatorial-elections/state/"; break;
                 case "presidential": default: url += "presidential-elections/state/"
             }
             url += regionToSlug(slug);

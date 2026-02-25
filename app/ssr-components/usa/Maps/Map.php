@@ -89,3 +89,10 @@ class House2014 extends \Shared\Map{
         'geographic' => 'public/maps/USA-house-2012-geographic.svg',
     );
 }
+
+class Gubernatorial1960 extends \Shared\Map{
+    static $types = array(
+        'cartographic' => 'public/maps/USA-gubernatorial-1960.svg',
+        'geographic' => 'public/maps/USA-gubernatorial-1960-geographic.svg',
+    );
+}

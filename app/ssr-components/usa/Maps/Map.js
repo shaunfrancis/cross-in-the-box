@@ -143,3 +143,9 @@ class USAHouse extends Map{
         } );
     }
 }
+
+class USAGubernatorial extends Map{
+    constructor(container, containerInstance, {election, type, src}){
+        super(container, containerInstance, {election, type, src});
+    }
+}
