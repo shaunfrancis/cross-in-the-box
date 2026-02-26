@@ -5,7 +5,7 @@ class Senate extends \USA\ElectionResultContainer{
     static function render (
         string $election,
         array $title,                               // [string, string, string]
-        int $classNo,
+        ?array $dataAttrs = [],                     // [{name} => value: any]
         ?array $messages = [],                      // [group: string, open: bool?]
         ?bool $showChanges = FALSE,
         ?string $dedicatedPage = NULL,
@@ -13,12 +13,12 @@ class Senate extends \USA\ElectionResultContainer{
         ?string $regionsType = "senate"
     ){
 
-        $map = self::getMapClass($classNo);
+        $map = self::getMapClass($dataAttrs['class-no'] ?? 1);
 
         $dimensions = ['w' => "calc( 1.3 * (100vh - 100px) )", 'h' => "calc(100vh - 100px)", 'minW' => "425px", 'minH' => "500px"];
         ?>
 
-        <?= \Shared\ElectionResultContainer::open($election, $map, $title, $dimensions, $messages, $showChanges, $dedicatedPage, $winFormulaName, $regionsType); ?>
+        <?= \Shared\ElectionResultContainer::open($election, $map, $title, $dataAttrs, $dimensions, $messages, $showChanges, $dedicatedPage, $winFormulaName, $regionsType); ?>
         <?= \Shared\ElectionResultContainer::close(); ?>
     <?php }
 

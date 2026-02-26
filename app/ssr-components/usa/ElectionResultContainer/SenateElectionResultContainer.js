@@ -218,16 +218,16 @@ class USASenateElectionResultContainer extends USAElectionResultContainer{
             if(region) window.location.href = '/usa/senate-elections/state/' + regionToSlug(region.title);
         }
 
-        data.loadFun = (container) => {
-            const svg = container.querySelector('svg');
+        data.loadFun = (mapContainer, electionResultContainer) => {
+            const svg = mapContainer.querySelector('svg');
             if(!svg) return;
 
             // add stars for special elections on cartographic map
             if(this.visibleMap.type === "cartographic") data.fills
-                .filter( f => (f.opacity == 1 || !f.opacity) && f.id.slice(-1) != container.getAttribute('data-class-no') )
+                .filter( f => (f.opacity == 1 || !f.opacity) && f.id.slice(-1) != electionResultContainer.getAttribute('data-class-no') )
                 .forEach( special => {
-                    const rect = container.querySelector(`rect[name="${special.id}"]`),
-                    existingStar = container.querySelector(`path[name=${special.id}]`);
+                    const rect = mapContainer.querySelector(`rect[name="${special.id}"]`),
+                    existingStar = mapContainer.querySelector(`path[name=${special.id}]`);
                     if(!rect || existingStar) return;
 
                     const star = document.createElementNS('http://www.w3.org/2000/svg', 'path');
@@ -249,7 +249,7 @@ class USASenateElectionResultContainer extends USAElectionResultContainer{
                     stop.setAttributeNS(null, 'offset', (Math.floor(i/2) + 1) * 25 + "%");
                     linearGradient.appendChild(stop);
                 }
-                let defs = container.querySelector('defs') || svg.appendChild( document.createElementNS('http://www.w3.org/2000/svg', 'defs') );
+                let defs = mapContainer.querySelector('defs') || svg.appendChild( document.createElementNS('http://www.w3.org/2000/svg', 'defs') );
                 defs.appendChild(linearGradient);
             });
         }

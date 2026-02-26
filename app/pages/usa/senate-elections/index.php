@@ -24,40 +24,40 @@
 
             <?= \USA\ElectionResultContainer\Senate::show(
                 election: "S2024",
-                classNo: 1,
+                dataAttrs: ['class-no' => 1],
                 title: ["2024", "Senate", "Election"],
                 messages: ['group' => "2024", 'open' => TRUE]
             ); ?>
 
             <?= \USA\ElectionResultContainer\Senate::show(
                 election: "S2022",
-                classNo: 3,
+                dataAttrs: ['class-no' => 3],
                 title: ["2022", "Senate", "Election"]
             ); ?>
 
             <?= \USA\ElectionResultContainer\Senate::show(
                 election: "S2020",
-                classNo: 2,
+                dataAttrs: ['class-no' => 2],
                 title: ["2020", "Senate", "Election"],
                 messages: ['group' => "2020"]
             ); ?>
 
             <?= \USA\ElectionResultContainer\Senate::show(
                 election: "S2018",
-                classNo: 1,
+                dataAttrs: ['class-no' => 1],
                 title: ["2018", "Senate", "Election"],
                 messages: ['group' => "2018"]
             ); ?>
 
             <?= \USA\ElectionResultContainer\Senate::show(
                 election: "S2016",
-                classNo: 3,
+                dataAttrs: ['class-no' => 3],
                 title: ["2016", "Senate", "Election"]
             ); ?>
 
             <?= \USA\ElectionResultContainer\Senate::show(
                 election: "S2014",
-                classNo: 2,
+                dataAttrs: ['class-no' => 2],
                 title: ["2014", "Senate", "Election"]
             ); ?>
 

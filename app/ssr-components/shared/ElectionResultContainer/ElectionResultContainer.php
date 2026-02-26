@@ -7,6 +7,7 @@ class ElectionResultContainer extends \Base\Component{
         string $election,
         string $map,                            // Map subclass as a string
         array $title,                           // [string, string, string]
+        ?array $dataAttrs,                      // [{name} => value: any]
         array $dimensions,                      // [w: string, h: string, minW: string, minH: string]
         ?array $messages = [],                  // [group: string, open: bool?]
         ?bool $showChanges = FALSE,
@@ -21,6 +22,7 @@ class ElectionResultContainer extends \Base\Component{
             data-win-formula="<?= $winFormulaName; ?>"
             data-regions-type="<?= $regionsType; ?>"
             <?php if($showChanges) : ?>data-show-changes="true"<?php endif; ?>
+            <?php foreach($dataAttrs as $name => $value) : ?>data-<?= $name; ?>="<?= $value; ?>"<?php endforeach; ?>
             style="height: min(<?= $dimensions['h']; ?>, calc(100vw - 30px)); min-height: <?= $dimensions['minH']; ?>;"
         >
             <div class="hover-popup hidden"></div>

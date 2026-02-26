@@ -35,15 +35,16 @@ class Map{
         clickFun = (id) => {},                      // optional function to execute on click of regions
                                                     // ?(id?: string) => void
 
-        loadFun = (container) => {}                 // option funcation to execute once every time fill() is called
-                                                    // ?(svg: HTMLElement) => void
+        loadFun = (mapContainer, electionResultContainer) => {}                 
+                                                    // option function to execute once every time fill() is called
+                                                    // ?(mapContainer: HTMLElement, electionResultContainer: HTMLElement) => void
     }){
         if(this.eventController) this.eventController.abort();
         this.eventController = new AbortController();
 
         this.currentFill = this.containerInstance.currentFillData;
 
-        loadFun(this.structure.container);
+        loadFun(this.structure.container, this.containerInstance.structure.container);
 
         regions.map( region => {
             let regionFills = fills.filter(f => f.id == region.id);

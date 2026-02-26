@@ -5,6 +5,7 @@ class House extends \USA\ElectionResultContainer{
     static function render (
         string $election,
         array $title,                               // [string, string, string]
+        ?array $dataAttrs = [],                     // [{name} => value: any]
         ?array $messages = [],                      // [group: string, open: bool?]
         ?bool $showChanges = FALSE,
         ?string $dedicatedPage = NULL,
@@ -17,7 +18,7 @@ class House extends \USA\ElectionResultContainer{
         $dimensions = ['w' => "calc( 1.2 * (100vh - 100px) )", 'h' => "calc(100vh - 100px)", 'minW' => "425px", 'minH' => "500px"];
         ?>
 
-        <?= \Shared\ElectionResultContainer::open($election, $map, $title, $dimensions, $messages, $showChanges, $dedicatedPage, $winFormulaName, $regionsType); ?>
+        <?= \Shared\ElectionResultContainer::open($election, $map, $title, $dataAttrs, $dimensions, $messages, $showChanges, $dedicatedPage, $winFormulaName, $regionsType); ?>
         <?= \Shared\ElectionResultContainer::close(); ?>
     <?php }
 

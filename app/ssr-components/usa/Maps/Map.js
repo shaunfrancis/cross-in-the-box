@@ -32,8 +32,9 @@ class USASenate extends Map{
         clickFun = (id) => {},                      // optional function to execute on click of regions
                                                     // ?(id?: string) => void
 
-        loadFun = (container) => {}                 // option funcation to execute once every time fill() is called
-                                                    // ?(svg: HTMLElement) => void
+        loadFun = (mapContainer, electionResultContainer) => {}                 
+                                                    // option function to execute once every time fill() is called
+                                                    // ?(mapContainer: HTMLElement, electionResultContainer: HTMLElement) => void
     }){
         if(this.type === "cartographic") return super.fill({regions, fills, hoverFun, clickFun, loadFun});
 
@@ -42,7 +43,7 @@ class USASenate extends Map{
         
         this.currentFill = this.containerInstance.currentFillData;
 
-        loadFun(this.structure.container);
+        loadFun(this.structure.container, this.containerInstance.structure.container);
 
         const classlessRegionIds = [...new Set(regions.map( region => region.id.substring(0, region.id.length - 1 ) ))];
 
