@@ -61,7 +61,7 @@
 }
 
 .RegionBarGraph__heading > .RegionBarGraph__bloc{ 
-    background: #eee;
+    background: var(--light-default-color);
     color:#555;
     cursor:default;
     font-weight:normal;

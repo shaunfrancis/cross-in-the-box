@@ -38,7 +38,7 @@
     line-height:25px;
     transition:200ms;
     &.ConclaveResultContainer__loading{
-        background:#eee;
+        background:var(--light-default-color);
         color:transparent;
     }
     &.ConclaveResultContainer__awaiting{
@@ -87,7 +87,7 @@
 }
 
 .ConclaveResultContainer__odd-day{
-    background:#eee;
+    background:var(--light-default-color);
 }
 
 @media screen and (max-width: 920px){

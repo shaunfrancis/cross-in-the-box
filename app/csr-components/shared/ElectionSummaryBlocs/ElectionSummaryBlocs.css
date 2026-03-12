@@ -59,7 +59,7 @@
 }
     .ElectionSummaryBlocs.hidden-rows-visible .other-bloc{
         color:rgba(255,255,255,0);
-        background:#EEE;
+        background:var(--light-default-color);
     }
 
 .ElectionSummaryBlocs__party{

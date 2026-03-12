@@ -48,7 +48,7 @@ class Map{
 
         regions.map( region => {
             let regionFills = fills.filter(f => f.id == region.id);
-            if(regionFills.length === 0) regionFills = [{id: region.id, selector: `[name="${region.id}"]`, color: "#EEE"}];
+            if(regionFills.length === 0) regionFills = [{id: region.id, selector: `[name="${region.id}"]`, color: "var(--light-default-color)"}];
 
             regionFills.forEach( fill => {
 

@@ -2,6 +2,7 @@
 
 :root{
     --default-color: #AAA;
+    --light-default-color: #EEE;
     --box-shadow-color: rgba(200,200,200,0.1);
     --left-gap:100px;
     --view-transition:300ms;

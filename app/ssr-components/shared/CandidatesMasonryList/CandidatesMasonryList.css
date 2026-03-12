@@ -53,7 +53,7 @@
         width:55px;
     }
     & td.bloc{
-        background:#EEE;
+        background:var(--light-default-color);
         color: #000;
         &.tnum{ text-align:right; }
     }

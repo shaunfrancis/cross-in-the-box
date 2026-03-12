@@ -22,7 +22,7 @@
 .STVTable__header{
     & > .STVTable__bloc{
         color:#000;
-        background:#EEE;
+        background:var(--light-default-color);
         font-weight:450;
         text-align:center;
         &:nth-child(n+3){
@@ -56,7 +56,7 @@
     cursor:default;
     text-align:right;
     color:#000;
-    background:#EEE;
+    background:var(--light-default-color);
     &.STVTable__elected{
         color:#fff;
     }

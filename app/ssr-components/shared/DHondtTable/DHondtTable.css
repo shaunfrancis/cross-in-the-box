@@ -22,7 +22,7 @@
 .DHondtTable__header{
     & > .DHondtTable__bloc{
         color:#000;
-        background:#EEE;
+        background:var(--light-default-color);
         font-weight:450;
         text-align:center;
         &:nth-child(2){
@@ -56,7 +56,7 @@
         font-weight:450;
     }
 }
-.DHondtTable__row:nth-child(2n) .DHondtTable__bloc{ background:#EEE }
+.DHondtTable__row:nth-child(2n) .DHondtTable__bloc{ background:var(--light-default-color) }
 .DHondtTable__row:not(.DHondtTable__header):nth-child(2n+1) .DHondtTable__bloc{ background:rgb(248,248,248) }
 
 .DHondtTable__party{

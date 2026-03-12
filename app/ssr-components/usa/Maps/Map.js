@@ -51,7 +51,7 @@ class USASenate extends Map{
             let regionFills = fills.filter(f => f.id.substring(0, f.id.length - 1) == id);
             if(regionFills.length === 0){
                 regionFills = [
-                    {id: id, selector: `path[name="${id}"]`, color: "#EEE"}
+                    {id: id, selector: `path[name="${id}"]`, color: "var(--light-default-color)"}
                 ];
             }
             
