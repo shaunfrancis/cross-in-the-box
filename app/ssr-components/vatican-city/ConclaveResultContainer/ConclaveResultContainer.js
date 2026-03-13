@@ -1,3 +1,5 @@
+import HoverPopup from 'components/shared/HoverPopup/HoverPopup';
+
 let seedrandom = require('seedrandom');
 window.addEventListener('DOMContentLoaded', () => {
     [...document.querySelectorAll('.ConclaveResultContainer__result-container')].forEach( container => {
@@ -38,27 +40,13 @@ window.addEventListener('DOMContentLoaded', () => {
             rect.setAttributeNS(null, 'y', y.toString());
             rect.setAttributeNS(null, 'width', size);
             rect.setAttributeNS(null, 'height', size);
-            rect.addEventListener('mousemove', (event) => { hoverFun(true, event, elected) } );
-            rect.addEventListener('mouseout', () => { hoverFun(false) } );
             smokeGroup.appendChild(rect);
         };
 
-        const smokeMouseCapture = map.querySelector('path[name="smoke-mouse-capture"]');
-        const popup = container.querySelector('.hover-popup');
-        smokeMouseCapture.addEventListener('mousemove', (event) => {
-            const coordinates = [event.clientX, event.clientY];
-            const width = popup.offsetWidth;
-            const height = popup.offsetHeight;
-
-            const offsets = [0,0];
-            if(coordinates[0] + 20 + width > window.innerWidth) offsets[0] = -(width + 40);
-            if(coordinates[1] + 20 + height > window.innerHeight) offsets[1] = window.innerHeight - height - 20 - coordinates[1];
-
-            popup.style.left = coordinates[0] + offsets[0] + 20 + "px";
-            popup.style.top = coordinates[1] + offsets[1] + 20 + "px";
-            popup.classList.remove('hidden');
-        });
-        smokeMouseCapture.addEventListener('mouseout', () => { popup.classList.add('hidden') });
+        HoverPopup.attach({
+            container: container.querySelector('.hover-popup'),
+            trigger: map.querySelector('path[name="smoke-mouse-capture"]')
+        })
 
     });
 });

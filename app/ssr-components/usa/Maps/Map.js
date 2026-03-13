@@ -1,3 +1,5 @@
+import HoverPopup from 'components/shared/HoverPopup/HoverPopup';
+
 class USAPresidential extends Map{
     constructor(container, containerInstance, {election, type, src}){
         super(container, containerInstance, {election, type, src});
@@ -63,40 +65,23 @@ class USASenate extends Map{
             regionElts.forEach(regionElt => {
                 regionElt.setAttribute('fill', regionFills[0].color);
                 if(regionFills[0].opacity !== undefined) regionElt.setAttribute('fill-opacity', regionFills[0].opacity);
-                
-                regionElt.addEventListener('mouseover', (_) => {
-                    const popup = this.containerInstance.structure.hoverPopup;
-                    if(regionFills.length === 1) hoverFun(true, popup, regionFills[0].id);
-                    else{
-                        popup.innerHTML = "";
-                        regionFills.forEach( (fill, index) => {
-                            const container = popup.appendChild( document.createElement('div') );
-                            if(index > 0) container.style.marginTop = "20px";
-                            hoverFun(true, container, fill.id);
-                        });
+
+                HoverPopup.attach({
+                    container: this.containerInstance.structure.hoverPopup,
+                    trigger: regionElt,
+                    signal: this.eventController.signal,
+                    content: (popup) => {
+                        if(regionFills.length === 1) hoverFun(true, popup, regionFills[0].id);
+                        else{
+                            popup.innerHTML = "";
+                            regionFills.forEach( (fill, index) => {
+                                const container = popup.appendChild( document.createElement('div') );
+                                if(index > 0) container.style.marginTop = "20px";
+                                hoverFun(true, container, fill.id);
+                            });
+                        }
                     }
-                }, { signal: this.eventController.signal });
-
-                regionElt.addEventListener('mousemove', (event) => {
-                    const popup = this.containerInstance.structure.hoverPopup;
-                    const coordinates = [event.clientX, event.clientY];
-                    const width = popup.offsetWidth;
-                    const height = popup.offsetHeight;
-
-                    const offsets = [0,0];
-                    if(coordinates[0] + 20 + width > window.innerWidth) offsets[0] = -(width + 40);
-                    if(coordinates[1] + 20 + height > window.innerHeight) offsets[1] = window.innerHeight - height - 20 - coordinates[1];
-
-                    popup.style.left = coordinates[0] + offsets[0] + 20 + "px";
-                    popup.style.top = coordinates[1] + offsets[1] + 20 + "px";
-                    popup.classList.remove('hidden');
-                }, { signal: this.eventController.signal });
-
-                regionElt.addEventListener('mouseout', () => {
-                    const popup = this.containerInstance.structure.hoverPopup;
-                    popup.classList.add('hidden');
-                    hoverFun(false, popup);
-                }, { signal: this.eventController.signal });
+                });
 
                 regionElt.addEventListener('click', () => {
                     clickFun(regionFills[0].id); // if there are two elections then clickFun just directs to first one

@@ -1,3 +1,5 @@
+import HoverPopup from 'components/shared/HoverPopup/HoverPopup';
+
 class Map{
     static instances = [];
     
@@ -59,31 +61,12 @@ class Map{
                     regionElt.setAttribute('fill', fill.color);
                     if(fill.opacity !== undefined) regionElt.setAttribute('fill-opacity', fill.opacity);
                     
-                    regionElt.addEventListener('mouseover', (_) => {
-                        const popup = this.containerInstance.structure.hoverPopup;
-                        hoverFun(true, popup, region.id);
-                    }, { signal: this.eventController.signal });
-
-                    regionElt.addEventListener('mousemove', (event) => {
-                        const popup = this.containerInstance.structure.hoverPopup;
-                        const coordinates = [event.clientX, event.clientY];
-                        const width = popup.offsetWidth;
-                        const height = popup.offsetHeight;
-
-                        const offsets = [0,0];
-                        if(coordinates[0] + 20 + width > window.innerWidth) offsets[0] = -(width + 40);
-                        if(coordinates[1] + 20 + height > window.innerHeight) offsets[1] = window.innerHeight - height - 20 - coordinates[1];
-
-                        popup.style.left = coordinates[0] + offsets[0] + 20 + "px";
-                        popup.style.top = coordinates[1] + offsets[1] + 20 + "px";
-                        popup.classList.remove('hidden');
-                    }, { signal: this.eventController.signal });
-
-                    regionElt.addEventListener('mouseout', () => {
-                        const popup = this.containerInstance.structure.hoverPopup;
-                        popup.classList.add('hidden');
-                        hoverFun(false, popup);
-                    }, { signal: this.eventController.signal });
+                    HoverPopup.attach({
+                        container: this.containerInstance.structure.hoverPopup,
+                        trigger: regionElt,
+                        signal: this.eventController.signal,
+                        content: (popup) => { hoverFun(true, popup, region.id) }
+                    });
 
                     regionElt.removeEventListener('click', this.click);
                     regionElt.addEventListener('click', () => {
