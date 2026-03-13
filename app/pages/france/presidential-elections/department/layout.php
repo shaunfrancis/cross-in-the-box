@@ -21,7 +21,7 @@
     </section>
     <?php if(empty($_error)) : ?>
         <section>
-            <p>Election results are sourced from <a href="#"></a>.</p>
+            <p>Results are sourced from <a href="https://www.elections.interieur.gouv.fr" target="_blank">Ministère de l'Intérieur</a>, the French interior ministry.</p>
             <p>Data missing or incorrect? <a href="mailto:hello@crossinthebox.com?subject=Election%20data%20wrong%20or%20missing">Let us know.</a></p>
         </section>
     <?php endif; ?>

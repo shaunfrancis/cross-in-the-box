@@ -1,4 +1,4 @@
-import ElectionSummaryBlocs from 'components/shared/ElectionSummaryBlocs/ElectionSummaryBlocs';
+import ElectionSummaryBar from 'components/shared/ElectionSummaryBar/ElectionSummaryBar';
 import PopupBarGraph from 'components/shared/PopupBarGraph/PopupBarGraph';
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -13,51 +13,55 @@ window.addEventListener('DOMContentLoaded', () => {
 class FranceElectionResultContainer extends ElectionResultContainer{
     constructor(elt){
         super(elt, FrancePresidential);
+        this.data.round = this.structure.container.getAttribute('data-round');
+    }
+
+     winFormula(results){
+        return super.winFormula(results.filter(result => result.subid == this.data.round));
     }
 
     addSummary(){
         const summaries = []; // {party : Party, count : number}[]
-        this.winFormula(CachedData.results[this.data.election]).forEach( result => {
-            
-            const regionUpdates = CachedData.updates[this.data.election].filter( update => update.id == result.id );
-            const winner = regionUpdates.length > 0 ? regionUpdates[regionUpdates.length - 1].party : result.party;
-
-            if(!summaries.find( summary => summary.party.id == winner)){
-                const party = CachedData.parties.find( party => party.id === winner) || DefaultParty;
-                summaries.push({ party: party, count: result.candidates.length });
-            }
-            else summaries.find( summary => summary.party.id == winner ).count += result.candidates.length;
-
+        let totalVotes = 0;
+        CachedData.results[this.data.election].filter(result => result.subid == this.data.round).forEach( result => {
+            const party = CachedData.parties.find( party => party.id === result.party) || DefaultParty;
+            const existingSummary = summaries.find( summary => summary.party === party);
+            if(!existingSummary) summaries.push({
+                candidate: result.candidates[0].name,
+                displayCandidate: result.candidates[0].name.split(" ").slice(1).join(" "),
+                party: party,
+                count: result.votes
+            });
+            else existingSummary.count += result.votes;
+            totalVotes += result.votes;
         });
-        summaries.sort( (a,b) => {
-            const getCount = (x) => {
-                return (["vacant","ind"].includes(x.party.id)) ? -Infinity : x.count;
-            }
-            return getCount(b) - getCount(a) || a.party.id.localeCompare(b.party.id);
-            } );
+        summaries.forEach( summary => {
+            summary.displayCount = (100 * (summary.count / totalVotes)).toFixed(2) + "%";
+        });
+        summaries.sort( (a,b) => b.count - a.count );
         
         this.structure.summary.container.appendChild( 
-            ElectionSummaryBlocs.render({ data: summaries, rowLength: 5, blocWidth: "140px" })
+            ElectionSummaryBar.render({ data: summaries, prioritisePartyDisplay: true })
         );
     }
 
     get mapHoverFunComponents(){
         return { ...super.mapHoverFunComponents, 
             winningCandidate: (id, regionResults, winner) => {
-                const hasMultipleCandidates = regionResults.some( result => result.candidates.length > 1 );
-                if(!hasMultipleCandidates) return super.mapHoverFunComponents.winningCandidate(id, regionResults, winner);
+                return super.mapHoverFunComponents.winningCandidate(
+                    id, regionResults.filter(result => result.subid == this.data.round), winner
+                );
             },
-            additionalContent: (id, regionResults, latestResultsUpdate) => {
-                const popupGraphData = { results: latestResultsUpdate?.results.data || regionResults, parties: CachedData.parties };
-                if(this.attributes.showChanges){
-                    if(latestResultsUpdate) popupGraphData.title = latestResultsUpdate.results.title.join(" ").replace("- ","-");
-                    
-                }
-                return [PopupBarGraph.render({...popupGraphData, partyWidth: "80px"})]
+
+            additionalContent: (id) => {
+                const roundResults = CachedData.results[this.data.election]
+                    .filter( result => result.id == id && result.subid == this.data.round )
+                    .sort( (a,b) => b.votes - a.votes );
+
+                return [PopupBarGraph.render({ results: roundResults, parties: CachedData.parties})];
             }
         }
     }
-
     fillMap(data){
 
         data.clickFun = (id) => {

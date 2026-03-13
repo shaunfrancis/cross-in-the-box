@@ -18,4 +18,28 @@ class RegionPage extends \Shared\RegionPage{
             "Boundary changes occurred."
         );
     }
+
+    static function renderElectionEvent($event, $attributes = NULL){
+        usort($event['data']['results'], function($a, $b){
+            if($a['votes'] != $b['votes']) return $b['votes'] - $a['votes'];
+            else if(!empty($a['elected'])) return -INF;
+            else if(!empty($b['elected'])) return INF;
+            else{
+                $surname = function($result){
+                    $names = explode(" ", $result['candidates'][0]['name']);
+                    return end($names);
+                };
+                return strcmp($surname($a), $surname($b));
+            }
+        });
+        ?>
+        <article class="block">
+            <h2><?= str_replace("- ", "-", implode(" ", $event['data']['title'])); ?></h2>
+            <?= \Shared\RegionBarGraph::show(
+                results: $event['data']['results'],
+                subtitles: [1 => "First round", 2 => "Second round"],
+                subElectionSort: fn($a, $b) => $b['subid'] - $a['subid']
+            ); ?>
+        </article>
+    <?php }
 }

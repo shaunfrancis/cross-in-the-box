@@ -23,8 +23,63 @@
         <?= ElectionResultsSection::open(); ?>
             <?= \France\ElectionResultContainer::show(
                 election: "2022",
-                title: ["2022", "Presidential", "Election"]
+                dataAttrs: ['round' => 2],
+                title: ["2022", "Second", "Round"],
+                messages: ['group' => "2022-2", 'open' => TRUE]
             ); ?>
+            <?= \France\ElectionResultContainer::show(
+                election: "2022",
+                dataAttrs: ['round' => 1],
+                title: ["2022", "First", "Round"],
+                messages: ['group' => "2022-1"]
+            ); ?>
+
+            <?= \France\ElectionResultContainer::show(
+                election: "2017",
+                dataAttrs: ['round' => 2],
+                title: ["2017", "Second", "Round"],
+                messages: ['group' => "2017-2"]
+            ); ?>
+            <?= \France\ElectionResultContainer::show(
+                election: "2017",
+                dataAttrs: ['round' => 1],
+                title: ["2017", "First", "Round"],
+                messages: ['group' => "2017-1"]
+            ); ?>
+
+            <?= \France\ElectionResultContainer::show(
+                election: "2012",
+                dataAttrs: ['round' => 2],
+                title: ["2012", "Second", "Round"]
+            ); ?>
+            <?= \France\ElectionResultContainer::show(
+                election: "2012",
+                dataAttrs: ['round' => 1],
+                title: ["2012", "First", "Round"]
+            ); ?>
+
+            <?= \France\ElectionResultContainer::show(
+                election: "2007",
+                dataAttrs: ['round' => 2],
+                title: ["2007", "Second", "Round"]
+            ); ?>
+            <?= \France\ElectionResultContainer::show(
+                election: "2007",
+                dataAttrs: ['round' => 1],
+                title: ["2007", "First", "Round"]
+            ); ?>
+
+            <?= \France\ElectionResultContainer::show(
+                election: "2002",
+                dataAttrs: ['round' => 2],
+                title: ["2002", "Second", "Round"]
+            ); ?>
+            <?= \France\ElectionResultContainer::show(
+                election: "2002",
+                dataAttrs: ['round' => 1],
+                title: ["2002", "First", "Round"]
+            ); ?>
+
         <?= ElectionResultsSection::close(); ?>
     </section>
 
