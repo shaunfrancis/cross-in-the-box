@@ -14,7 +14,7 @@ class SlugLookupService extends APIService{
         // Then replace spaces and em dashes with hyphen
         $sql = "SELECT id, title, current FROM $tables->regions WHERE 
             REGEXP_REPLACE(
-                REGEXP_REPLACE(LOWER(title), '[,()\\']', ''),
+                REGEXP_REPLACE(LOWER(title), '[,.()\\']', ''),
                 '[ —]',
                 '-'
             ) = :slug";

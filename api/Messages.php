@@ -19,7 +19,7 @@ class MessagesService extends APIService{
         LEFT JOIN $tables->message_links as links
         ON links.message_id = messages.id
         LEFT JOIN $tables->results as results
-        ON results.election_id = links.election_id AND results.region_id = links.region_id
+        ON results.election_id = links.election_id AND results.region_id = links.region_id AND (links.election_subid IS NULL OR results.election_subid = links.election_subid)
         WHERE messages.group_id = :group";
 
         if(!empty($params["since"])){

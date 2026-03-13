@@ -31,7 +31,7 @@ const partyIdToDisplayId = (partyId) => {
 const regionToSlug = (title) => {
     return title.toLowerCase()
         .replace(/ |—/g, "-")
-        .replace(/,|'|\)|\(/g, "")
+        .replace(/,|\.|'|\)|\(/g, "")
         .replace(/œ/g, "oe")
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, '');

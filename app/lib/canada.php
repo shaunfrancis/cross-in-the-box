@@ -7,7 +7,7 @@ function regionToSlug(string $title){
         '/[\x{0300}-\x{036f}]/u', "", \Normalizer::normalize(
             preg_replace(
                 '/œ/', "oe", preg_replace(
-                    '/,|\'|\)|\(/', "", preg_replace(
+                    '/,|\.|\'|\)|\(/', "", preg_replace(
                         '/ |—/', "-", strtolower($title)
                     )
                 )

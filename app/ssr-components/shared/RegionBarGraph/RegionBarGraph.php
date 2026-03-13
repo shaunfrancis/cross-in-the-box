@@ -9,6 +9,7 @@ class RegionBarGraph extends \Base\Component{
         array $subtitles = [],                  // [subElectionId: string][]
         string $subElectionType = "separate",   // "separate" | "rounds"
         bool $withoutCandidateNames = FALSE,
+        ?callable $subElectionSort = null,      // ([subid: any], [subid: any]) => number
     ){
         /*if(subElectionType == "rounds"){
             const resultsByCandidate = getResultsByCandidate(results);
@@ -26,6 +27,7 @@ class RegionBarGraph extends \Base\Component{
                 switch($subElectionType){
                     case "separate":
                         $subElections = getResultsBySubElection($results);
+                        if(!empty($subElectionSort)) usort($subElections, $subElectionSort);
                         foreach($subElections as $subElection){
                             self::renderGraph(
                                 results: $subElection['results'], 
