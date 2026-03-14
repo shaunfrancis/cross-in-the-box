@@ -10,6 +10,7 @@ export default class ElectionSummaryBar{
         prioritisePartyDisplay = false, // boolean?
     }){
         const popup = new Elt({ tag: 'div', classList: ["ElectionSummaryBar__hover-popup", "hover-popup", "hidden"] });
+        document.body.appendChild(popup); // ensure always on top
 
         const segments = [];
         let sumBelowThreshold = 0;
@@ -107,8 +108,8 @@ export default class ElectionSummaryBar{
         return new Elt({
             tag: 'div',
             classList: ["ElectionSummaryBar"],
-            children: [...segments, popup]
-        })
+            children: segments
+        });
 
     }
 

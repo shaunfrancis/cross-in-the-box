@@ -22,11 +22,15 @@
 .ElectionSummaryBar__summary-segment:first-child{ border-top-left-radius:2px; border-bottom-left-radius:2px }
 .ElectionSummaryBar__summary-segment:last-child{ border-top-right-radius:2px; border-bottom-right-radius:2px }
 
-@container segment (width < 65px){
+@container segment (width < 95px){
     .ElectionSummaryBar__summary-segment-party.prioritise + .ElectionSummaryBar__summary-segment-count{ display:none }
+}
+@container segment (width < 65px){
     .ElectionSummaryBar__summary-segment-party:not(.prioritise){ display:none }
 }
-@container segment (width < 28px){ .ElectionSummaryBar__summary-segment-count{ display:none } }
+@container segment (width < 28px){ 
+    .ElectionSummaryBar__summary-segment-party, .ElectionSummaryBar__summary-segment-count{ display:none }
+}
 
 .ElectionSummaryBar__summary-segment.outstanding{
     background-image:linear-gradient(135deg, #eee 22.22%, #ddd 22.22%, #ddd 50%, #eee 50%, #eee 72.22%, #ddd 72.22%, #ddd 100%);
@@ -45,16 +49,13 @@
     font-weight:400;
 }
 
-.ElectionSummaryBar__hover-section:not(:last-child){
-    margin-bottom:16px;
-    &:after{
-        content:"";
-        display:block;
-        margin:10px 0 8px 0;
-        width:100%;
-        height:1px;
-        background:#EEE;
-    }
+.ElectionSummaryBar__hover-section:not(:last-child):after{
+    content:"";
+    display:block;
+    margin:10px 0;
+    width:100%;
+    height:1px;
+    background:var(--light-default-color);
 }
 
 .ElectionSummaryBar__hover-party{
@@ -62,6 +63,7 @@
     gap:5px;
     align-items:center;
     font-weight:300;
+    width:max-content;
     & > .square{
         width:16px;
         height:16px;
