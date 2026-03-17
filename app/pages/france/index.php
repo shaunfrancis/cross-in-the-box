@@ -24,7 +24,13 @@
 
             <?= \France\ElectionResultContainer::show(
                 election: "2022",
-                title: ["2022", "Presidential", "Election"],
+                dataAttrs: ['round' => 2],
+                title: ["2022", "Second", "Round"]
+            ); ?>
+            <?= \France\ElectionResultContainer::show(
+                election: "2022",
+                dataAttrs: ['round' => 1],
+                title: ["2022", "First", "Round"]
             ); ?>
 
         <?= ElectionResultsSection::close(); ?>

@@ -36,9 +36,17 @@ class Scotland extends \UK\RegionPage{
 
         <article class="block">
             <h2><?= str_replace("- ", "-", implode(" ", $event['data']['title'])); ?></h2>
-            <?= \Shared\CandidatesMasonryList::render($results); ?>
-            <h3>Votes</h3>
-            <?= \Shared\DHondtTable::render($results, $divisors ?? []); ?>
+            <?php switch($event['data']['id']):
+                case "S2011": // full list candidate data is not available for S2011 ?>
+                    <?= \Shared\ElectedCandidatesMasonryList::render($results); ?>
+                    <h3>Votes</h3>
+                    <?= \Shared\DHondtTable::render($results, $divisors ?? []); ?>
+                    <?php break; ?>
+                <?php default: ?>
+                    <?= \Shared\CandidatesMasonryList::render($results); ?>
+                    <h3>Votes</h3>
+                    <?= \Shared\DHondtTable::render($results, $divisors ?? []); ?>
+            <?php endswitch; ?>
         </article>
 
     <?php }

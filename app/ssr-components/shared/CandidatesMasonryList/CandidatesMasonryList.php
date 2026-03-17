@@ -77,9 +77,12 @@ class CandidatesMasonryList extends \Base\Component{
                         <table class="CandidatesMasonryList__table">
                             <colgroup><col /><col /></colgroup>
                             <tbody>
-                                <?php foreach($result['candidates'] as $index => $candidate): ?>
+                                <?php 
+                                    usort($result['candidates'], fn ($a, $b) => $a['position'] <=> $b['position']);
+                                    foreach($result['candidates'] as $index => $candidate): 
+                                ?>
                                     <tr<?= $candidate['elected'] ? ' class="CandidatesMasonryList__elected"' : ''; ?>>
-                                        <td class="bloc tnum"><?= $index + 1; ?></td>
+                                        <td class="bloc tnum"><?= $candidate['position'] ?? $index + 1; ?></td>
                                         <td title="<?= $candidate['name']; ?>" class="bloc"><?= $candidate['name']; ?></td>
                                     </tr>
                                 <?php endforeach; ?>

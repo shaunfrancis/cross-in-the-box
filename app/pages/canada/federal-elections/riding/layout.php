@@ -24,7 +24,7 @@
     <?php if(empty($_error)) : ?>
         <?= \Canada\RidingMap::show($region['id']); ?>
         <section>
-            <p>Election results are sourced from <a href="https://www.elections.ca">Elections Canada</a>.</p>
+            <p>Election results are sourced from <a href="https://www.elections.ca" target="_blank">Elections Canada</a>.</p>
             <p>Data missing or incorrect? <a href="mailto:hello@crossinthebox.com?subject=Election%20data%20wrong%20or%20missing">Let us know.</a></p>
         </section>
     <?php endif; ?>

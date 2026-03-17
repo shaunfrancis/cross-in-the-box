@@ -21,7 +21,7 @@
     </section>
     <?php if(empty($_error)) : ?>
         <section>
-            <p>Results for the 2022 Northern Ireland Assembly election are sourced from <a href="https://www.eoni.org.uk/results-data/ni-assembly-election-2022-results/">The Electoral Office for Northern Ireland</a>.</p>
+            <p>Results for the 2022 Northern Ireland Assembly election are sourced from <a href="https://www.eoni.org.uk/results-data/ni-assembly-election-2022-results/" target="_blank">The Electoral Office for Northern Ireland</a>.</p>
             <p>Data missing or incorrect? <a href="mailto:hello@crossinthebox.com?subject=Election%20data%20wrong%20or%20missing">Let us know.</a></p>
         </section>
     <?php endif; ?>

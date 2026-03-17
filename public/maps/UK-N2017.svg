@@ -3,15 +3,15 @@
     <g id="uk-N2017-svg">
         <g name="N2017006" transform="translate(-5,-10)">
             <rect x="125" y="0" width="24" height="24" />
-            <rect x="100" y="25" width="24" height="24" />
             <rect x="125" y="25" width="24" height="24" />
+            <rect x="100" y="25" width="24" height="24" />
             <rect x="100" y="50" width="24" height="24" />
             <rect x="125" y="50" width="24" height="24" />
         </g>
 
         <g name="N2017012" transform="translate(0,-10)">
-            <rect x="150" y="0" width="24" height="24" />
             <rect x="150" y="25" width="24" height="24" />
+            <rect x="150" y="0" width="24" height="24" />
             <rect x="175" y="0" width="24" height="24" />
             <rect x="200" y="0" width="24" height="24" />
             <rect x="225" y="0" width="24" height="24" />
@@ -20,31 +20,31 @@
         <g name="N2017014" transform="translate(5,-5)">
             <rect x="175" y="25" width="24" height="24" />
             <rect x="200" y="25" width="24" height="24" />
-            <rect x="175" y="50" width="24" height="24" />
             <rect x="200" y="50" width="24" height="24" />
+            <rect x="175" y="50" width="24" height="24" />
             <rect x="175" y="75" width="24" height="24" />
         </g>
 
         <g name="N2017005" transform="translate(15,-5)">
             <rect x="225" y="25" width="24" height="24" />
             <rect x="250" y="25" width="24" height="24" />
-            <rect x="225" y="50" width="24" height="24" />
             <rect x="250" y="50" width="24" height="24" />
+            <rect x="225" y="50" width="24" height="24" />
             <rect x="250" y="75" width="24" height="24" />
         </g>
 
         <g name="N2017002" transform="translate(10,0)">
             <rect x="175" y="100" width="24" height="24" />
-            <rect x="200" y="75" width="24" height="24" />
             <rect x="200" y="100" width="24" height="24" />
+            <rect x="200" y="75" width="24" height="24" />
             <rect x="225" y="75" width="24" height="24" />
             <rect x="225" y="100" width="24" height="24" />
         </g>
 
         <g name="N2017004" transform="translate(10,5)">
             <rect x="175" y="125" width="24" height="24" />
-            <rect x="150" y="150" width="24" height="24" />
             <rect x="175" y="150" width="24" height="24" />
+            <rect x="150" y="150" width="24" height="24" />
             <rect x="150" y="175" width="24" height="24" />
             <rect x="175" y="175" width="24" height="24" />
         </g>
@@ -61,14 +61,14 @@
             <rect x="250" y="125" width="24" height="24" />
             <rect x="275" y="125" width="24" height="24" />
             <rect x="275" y="150" width="24" height="24" />
-            <rect x="300" y="125" width="24" height="24" />
             <rect x="300" y="150" width="24" height="24" />
+            <rect x="300" y="125" width="24" height="24" />
         </g>
 
         <g name="N2017003" transform="translate(15,10)">
-            <rect x="200" y="175" width="24" height="24" />
             <rect x="175" y="200" width="24" height="24" />
             <rect x="200" y="200" width="24" height="24" />
+            <rect x="200" y="175" width="24" height="24" />
             <rect x="225" y="175" width="24" height="24" />
             <rect x="225" y="200" width="24" height="24" />
         </g>
@@ -82,8 +82,8 @@
         </g>
 
         <g name="N2017015" transform="translate(10,15)">
-            <rect x="175" y="225" width="24" height="24" />
             <rect x="175" y="250" width="24" height="24" />
+            <rect x="175" y="225" width="24" height="24" />
             <rect x="200" y="225" width="24" height="24" />
             <rect x="225" y="225" width="24" height="24" />
             <rect x="250" y="225" width="24" height="24" />
@@ -93,8 +93,8 @@
             <rect x="125" y="175" width="24" height="24" />
             <rect x="125" y="200" width="24" height="24" />
             <rect x="150" y="200" width="24" height="24" />
-            <rect x="125" y="225" width="24" height="24" />
             <rect x="150" y="225" width="24" height="24" />
+            <rect x="125" y="225" width="24" height="24" />
         </g>
 
         <g name="N2017017" transform="translate(0,5)">
@@ -109,22 +109,22 @@
             <rect x="50" y="200" width="24" height="24" />
             <rect x="50" y="225" width="24" height="24" />
             <rect x="75" y="225" width="24" height="24" />
-            <rect x="50" y="250" width="24" height="24" />
             <rect x="75" y="250" width="24" height="24" />
+            <rect x="50" y="250" width="24" height="24" />
         </g>
 
         <g name="N2017007" transform="translate(-10,5)">
             <rect x="0" y="175" width="24" height="24" />
             <rect x="0" y="200" width="24" height="24" />
-            <rect x="25" y="175" width="24" height="24" />
             <rect x="25" y="200" width="24" height="24" />
+            <rect x="25" y="175" width="24" height="24" />
             <rect x="50" y="175" width="24" height="24" />
         </g>
 
         <g name="N2017018" transform="translate(-5,0)">
             <rect x="50" y="100" width="24" height="24" />
-            <rect x="25" y="125" width="24" height="24" />
             <rect x="50" y="125" width="24" height="24" />
+            <rect x="25" y="125" width="24" height="24" />
             <rect x="25" y="150" width="24" height="24" />
             <rect x="50" y="150" width="24" height="24" />
         </g>
@@ -132,15 +132,15 @@
         <g name="N2017010" transform="translate(0,0)">
             <rect x="75" y="100" width="24" height="24" />
             <rect x="100" y="100" width="24" height="24" />
-            <rect x="75" y="125" width="24" height="24" />
             <rect x="100" y="125" width="24" height="24" />
+            <rect x="75" y="125" width="24" height="24" />
             <rect x="75" y="150" width="24" height="24" />
         </g>
 
         <g name="N2017008" transform="translate(-10,-5)">
             <rect x="50" y="50" width="24" height="24" />
-            <rect x="75" y="50" width="24" height="24" />
             <rect x="50" y="75" width="24" height="24" />
+            <rect x="75" y="50" width="24" height="24" />
             <rect x="75" y="75" width="24" height="24" />
             <rect x="100" y="75" width="24" height="24" />
         </g>

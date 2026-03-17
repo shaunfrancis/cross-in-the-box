@@ -91,8 +91,9 @@ class ElectionResultContainer{
                 .filter( result => result.id == id )
                 .sort( (a,b) => b.votes - a.votes );
             const regionUpdates = CachedData.updates[this.data.election].filter( update => update.id == region.id );
-            const latestResultsUpdate = regionUpdates.find( update => update.results )
+            const latestResultsUpdate = this.attributes.showChanges && regionUpdates.find( update => update.results );
             latestResultsUpdate?.results.data.sort( (a,b) => b.votes - a.votes );
+
 
             // Title
             popup.appendChild( this.mapHoverFunComponents.title(id, region) );
@@ -103,22 +104,24 @@ class ElectionResultContainer{
             const winnerElt = this.mapHoverFunComponents.winningCandidate(id, regionResults, winner);
             if(winnerElt) popup.appendChild(winnerElt);
 
-            // Party progression blocs
-            const partyProgression = [CachedData.parties.find( party => party.id === initialWinner?.party ) || DefaultParty];
-            regionUpdates.forEach( update => {
-                partyProgression.push( CachedData.parties.find( party => party.id == update.party ) || DefaultParty );
-            });
-            if(partyProgression.length > 1) popup.appendChild( PartyProgressionBlocs.render({ parties: partyProgression }) );
+            if(this.attributes.showChanges){
+                // Party progression blocs
+                const partyProgression = [CachedData.parties.find( party => party.id === initialWinner?.party ) || DefaultParty];
+                regionUpdates.forEach( update => {
+                    partyProgression.push( CachedData.parties.find( party => party.id == update.party ) || DefaultParty );
+                });
+                if(partyProgression.length > 1) popup.appendChild( PartyProgressionBlocs.render({ parties: partyProgression }) );
 
-            // Update notes
-            const updateNotes = regionUpdates.filter(update => update.note);
-            if(updateNotes.length === 1) popup.appendChild( new Elt({ tag: 'p', innerHTML: updateNotes[0].note }) );
-            else if(updateNotes.length > 1) popup.appendChild( new Elt({
-                tag: 'ul',
-                children: updateNotes.map( update => {
-                    return new Elt({ tag: 'li', innerHTML: update.note });
-                })
-            }));
+                // Update notes
+                const updateNotes = regionUpdates.filter(update => update.note);
+                if(updateNotes.length === 1) popup.appendChild( new Elt({ tag: 'p', innerHTML: updateNotes[0].note }) );
+                else if(updateNotes.length > 1) popup.appendChild( new Elt({
+                    tag: 'ul',
+                    children: updateNotes.map( update => {
+                        return new Elt({ tag: 'li', innerHTML: update.note });
+                    })
+                }));
+            }
 
             // Additional content
             const additionalContent = this.mapHoverFunComponents.additionalContent(id, regionResults, latestResultsUpdate);
@@ -216,23 +219,38 @@ class ElectionResultContainer{
         let anyMultipleWinners = false;
         const winners = this.winFormula(CachedData.results[this.data.election]);
         winners.forEach( result => {
-            if(!regionCounts[result.id]) regionCounts[result.id] = {total: result.candidates?.length ?? 1};
+            if(!regionCounts[result.id]) regionCounts[result.id] = {
+                total: result.candidates?.length ?? 1,
+                partyCounts: { [result.party]: 1 }
+            };
             else{
                 anyMultipleWinners = true;
                 regionCounts[result.id].total += result.candidates?.length ?? 1;
+                regionCounts[result.id].partyCounts[result.party] = (regionCounts[result.id].partyCounts[result.party] ?? 0) + 1;
             }
         });
 
         // Order by number of elected candidates for visual L->R on the map
-        if(anyMultipleWinners) winners.sort( (a,b) => b.candidates.length - a.candidates.length );
+        if(anyMultipleWinners) winners.sort( (a,b) => {
+            if(a.id != b.id) return 0;
 
+            const candidateCountDifference = b.candidates.length - a.candidates.length;
+            if(candidateCountDifference !== 0) return candidateCountDifference;
+
+            const partyCount = (x) => regionCounts[x.id].partyCounts[x.party] || 0;
+            const partyCountDifference = partyCount(b) - partyCount(a);
+            if(partyCountDifference !== 0) return partyCountDifference;
+
+            return a.party.localeCompare(b.party);
+        });
+        
         winners.forEach( result => {
             for(let i = 0; i < (result.candidates?.length ?? 1); i++){
                 regionCounts[result.id].current = (regionCounts[result.id].current || 0) + 1;
                 const selector = regionCounts[result.id].total === 1 ? null : regionCounts[result.id].current;
 
                 const regionUpdates = CachedData.updates[this.data.election].filter( u => u.id == result.id );
-                if(regionUpdates.length > 0){
+                if(this.attributes.showChanges && regionUpdates.length > 0){
                     const latestUpdate = regionUpdates[regionUpdates.length - 1];
                     const party = CachedData.parties.find( p => p.id == latestUpdate.party ) || DefaultParty;
                     if(party) newFills.push({
