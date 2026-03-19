@@ -33,7 +33,8 @@
             <?= \UK\ElectionResultContainer\General::show(
                 election: "2024",
                 title: ["2024", "General", "Election"],
-                messages: ['group' => "2024"]
+                messages: ['group' => "2024"],
+                dedicatedPage: '/uk/general-elections/2024'
             ); ?>
 
             <?= \UK\ElectionResultContainer\General::show(
@@ -67,56 +68,9 @@
             
     <section id="opinion-polling">
         <h1>
-            <a href="polling" class="heading-link">
-                <span>Opinion polling</span>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8.122 24l-4.122-4 8-8-8-8 4.122-4 11.878 12z"/></svg>
-            </a>
+            <a href="polling" class="arrow-link">Opinion polling</a>
         </h1>
         <!--<UKPollingSection parties={parties} />-->
-    </section>
-    
-    <section>
-        <div class="section-heading">
-            <h1>Analysis</h1>
-            <?= Toggle::show(
-                id: "map-type",
-                from: "/images/uk-cartographic-icon.svg",
-                to: "/images/uk-geographic-icon.svg",
-            ) ?>
-        </div>
-
-        <?= ElectionResultsSection::open(); ?>
-            <?= \UK\ElectionResultContainer\General::show(
-                election: "2024",
-                title: ["2024", "parties in", "second place"],
-                winFormulaName: "second-place"
-            ); ?>
-            <?= \UK\ElectionResultContainer\General::show(
-                election: "2024",
-                title: ["2024", "results with", "Con and Ref combined"],
-                winFormulaName: "con-ref-combined"
-            ); ?>
-            <?= \UK\ElectionResultContainer\General::show(
-                election: "2019",
-                title: ["2019", "parties in", "second place"],
-                winFormulaName: "second-place"
-            ); ?>
-            <?= \UK\ElectionResultContainer\General::show(
-                election: "2017",
-                title: ["2017", "parties in", "second place"],
-                winFormulaName: "second-place"
-            ); ?>
-            <?= \UK\ElectionResultContainer\General::show(
-                election: "2015",
-                title: ["2015", "parties in", "second place"],
-                winFormulaName: "second-place"
-            ); ?>
-            <?= \UK\ElectionResultContainer\General::show(
-                election: "2010",
-                title: ["2010", "parties in", "second place"],
-                winFormulaName: "second-place"
-            ); ?>
-        <?= ElectionResultsSection::close(); ?>
     </section>
 
 </main>

@@ -48,7 +48,7 @@ class ElectionResultContainer extends \Base\Component{
 
                         <h2>
                             <?php if(!empty($dedicatedPage)) : ?>
-                                <a href="<?= $dedicatedPage; ?>" className="heading-link">
+                                <a href="<?= $dedicatedPage; ?>" class="arrow-link">
                             <?php endif; ?>
                                     <div class="ElectionResultContainer__title-text"><?= $title[0] ?? ''; ?></div>
                                     <div class="ElectionResultContainer__subtitle-text">
@@ -56,7 +56,6 @@ class ElectionResultContainer extends \Base\Component{
                                         <span><?= $title[2] ?? ''; ?></span>
                                     </div>
                             <?php if(!empty($dedicatedPage)) : ?>
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8.122 24l-4.122-4 8-8-8-8 4.122-4 11.878 12z"/></svg>
                                 </a>
                             <?php endif; ?>
                         </h2>

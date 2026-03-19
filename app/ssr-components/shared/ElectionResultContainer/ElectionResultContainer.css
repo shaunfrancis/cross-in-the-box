@@ -111,6 +111,27 @@
     align-items:center;
     align-items:last baseline;
     gap:5px;
+
+    &.arrow-link{
+        position:relative;
+        &:before{
+            content:"";
+            position:absolute;
+            width:calc(100% - 30px - 0.5rem);
+            height:100%;
+            top:1px;
+            z-index:-1;
+        }
+        &:after{
+            margin-left:calc(0.5rem - 5px);
+            width:30px;
+            align-self:center;
+        }
+        &:hover{
+            text-decoration:none;
+            &:before{ border-bottom:4px solid var(--link-color) }
+        }
+    }
 }
 
     .ElectionResultContainer__title-text{
@@ -215,8 +236,14 @@ button.ElectionResultContainer__messages-button{
         width:250px;
     }
 
-    .ElectionResultContainer__messages-button{
+    button.ElectionResultContainer__messages-button{
         width:25px;
+    }
+
+    .ElectionResultContainer__title h2, .ElectionResultContainer__title h2 a.arrow-link{
+        &:after{ width:25px }
+        &:before{ width:calc(100% - 25px - 0.5rem) }
+        &:hover:before{ border-bottom:2px solid var(--link-color) }
     }
 
     .ElectionResultContainer__live-title{

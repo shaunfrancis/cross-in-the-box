@@ -4,6 +4,7 @@
     --default-color: #AAA;
     --light-default-color: #EEE;
     --box-shadow-color: rgba(200,200,200,0.1);
+    --link-color: rgb(35,35,123);
     --left-gap:100px;
     --view-transition:300ms;
 }
@@ -58,6 +59,9 @@ body{
     margin:0;
     padding:0;
     background: rgb(240,241,243);
+    display:flex;
+    flex-direction:column;
+    min-height:100dvh;
 }
 
 h1, h2, h3, h4, h5, h6{ margin: unset }
@@ -129,17 +133,17 @@ section{
 
 .breadcrumb{ 
     text-decoration:none;
-    color:#000;
+    color:var(--link-color);
 }
-.breadcrumb:hover{
-    color:rgb(35, 35, 123);
-}
+.breadcrumb:hover span{ text-decoration:underline }
+.breadcrumb:hover svg{ transform:translateX(-15%) }
 
 .breadcrumb > *{ vertical-align:middle }
 
 .breadcrumb svg{
     width:15px;
     margin-right:5px;
+    transition:transform 100ms;
 }
 
 main > section.shaded{
@@ -154,19 +158,31 @@ main > section > h1{
 }
 section.shaded > h1{ margin-left: 0 }
 
-.heading-link{
+.arrow-link{
+    font-size:1.2rem;
     text-decoration:none;
-    color:#000;
+    color:var(--link-color);
+    &:after{
+        content: "";
+        display:inline-block;
+        margin-left:0.5rem;
+        aspect-ratio:1;
+        width:15px;
+        background:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0icmdiKDM1LCAzNSwgMTIzKSI+PHBhdGggZD0iTTguMTIyIDI0bC00LjEyMi00IDgtOC04LTggNC4xMjItNCAxMS44NzggMTJ6Ii8+PC9zdmc+");
+        transition:transform 100ms;
+    }
+    &:hover{
+        text-decoration:underline;
+        &:after{
+            transform:translateX(15%);
+        }
+    }
 }
-.heading-link:hover{
-    color:rgb(35, 35, 123);
-}
+:is(h1, h2, h3, h4, h5, h6) .arrow-link{ font-size:inherit }
+h1 .arrow-link:after{ width:30px }
 
-.heading-link > *{ vertical-align:baseline }
-
-.heading-link svg{
-    width:30px;
-    margin-left:10px;
+body:not(:has(#hero)) main > *:first-child{
+    margin-top:50px;
 }
 
 main > section > .section-heading{
@@ -307,9 +323,8 @@ details summary .has-marker:after{
         margin-left:var(--left-gap);
     }
 
-    .heading-link svg{
-        width:25px;
-    }
+    .arrow-link:after{ width:10px }
+    h1 .arrow-link:after{ width:25px }
 
     #hero{
         margin-bottom:20px;

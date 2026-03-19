@@ -26,7 +26,8 @@
                 election: "S2024",
                 dataAttrs: ['class-no' => 1],
                 title: ["2024", "Senate", "Election"],
-                messages: ['group' => "2024", 'open' => TRUE]
+                messages: ['group' => "2024", 'open' => TRUE],
+                dedicatedPage: '/usa/2024-elections'
             ); ?>
 
             <?= \USA\ElectionResultContainer\Senate::show(

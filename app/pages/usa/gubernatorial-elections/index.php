@@ -22,15 +22,16 @@
         </div>
         <?= ElectionResultsSection::open(); ?>
 
-            <!-- <?= \USA\ElectionResultContainer\Gubernatorial::show(
+            <?= \USA\ElectionResultContainer\Gubernatorial::show(
                 election: "G2025",
                 title: ["2025", "Gubernatorial", "Elections"]
-            ); ?> -->
+            ); ?>
 
             <?= \USA\ElectionResultContainer\Gubernatorial::show(
                 election: "G2024",
                 title: ["2024", "Gubernatorial", "Elections"],
-                messages: ['group' => "2024", 'open' => TRUE]
+                messages: ['group' => "2024"],
+                dedicatedPage: '/usa/2024-elections'
             ); ?>
 
             <?= \USA\ElectionResultContainer\Gubernatorial::show(

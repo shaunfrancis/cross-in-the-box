@@ -25,7 +25,8 @@
             <?= \USA\ElectionResultContainer\House::show(
                 election: "H2024",
                 title: ["2024", "House", "Election"],
-                messages: ['group' => "2024", 'open' => TRUE]
+                messages: ['group' => "2024", 'open' => TRUE],
+                dedicatedPage: '/usa/2024-elections'
             ); ?>
 
             <?= \USA\ElectionResultContainer\House::show(

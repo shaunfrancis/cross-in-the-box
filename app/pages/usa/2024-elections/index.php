@@ -7,7 +7,7 @@
 ?>
 <main>
     <section id="hero">
-        <h1>Presidential Elections</h1>
+        <h1>2024 Elections</h1>
         <?= HeroNav::show($heroNavItems); ?>
     </section>
 
@@ -24,26 +24,24 @@
 
             <?= \USA\ElectionResultContainer\Presidential::show(
                 election: "P2024",
-                title: ["2024", "Presidential", "Election"],
-                messages: ['group' => "2024", 'open' => TRUE],
-                dedicatedPage: '/usa/2024-elections'
+                title: ["President"],
+                messages: ['group' => "2024", 'open' => TRUE]
             ); ?>
 
-            <?= \USA\ElectionResultContainer\Presidential::show(
-                election: "P2020",
-                title: ["2020", "Presidential", "Election"],
-                messages: ['group' => "2020"]
+            <?= \USA\ElectionResultContainer\Senate::show(
+                election: "S2024",
+                dataAttrs: ['class-no' => 1],
+                title: ["Senate"]
             ); ?>
 
-            <?= \USA\ElectionResultContainer\Presidential::show(
-                election: "P2016",
-                title: ["2016", "Presidential", "Election"],
-                messages: ['group' => "P2016"]
+            <?= \USA\ElectionResultContainer\House::show(
+                election: "H2024",
+                title: ["House"]
             ); ?>
 
-            <?= \USA\ElectionResultContainer\Presidential::show(
-                election: "P2012",
-                title: ["2012", "Presidential", "Election"],
+            <?= \USA\ElectionResultContainer\Gubernatorial::show(
+                election: "G2024",
+                title: ["Governors"]
             ); ?>
 
         <?= ElectionResultsSection::close(); ?>
@@ -51,7 +49,7 @@
 
     <section id="find-a-state" class="shaded purple">
         <h1>Find a state</h1>
-        <?= \USA\RegionSearchSection::show("presidential"); ?>
+        <?= \USA\RegionSearchSection::show(); ?>
     </section>
 
 </main>
