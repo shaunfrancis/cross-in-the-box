@@ -20,6 +20,7 @@
         <?= \USA\RegionSearchSection::show("gubernatorial"); ?>
     </section>
     <?php if(empty($_error)) : ?>
+        <?= \USA\StateLinks::show($region['id']); ?>
         <section>
             <p>Candidates and results for each of the 50 states are sourced from their certified election results, usually found on the state's Secretary of State website.</p>
             <p>Data missing or incorrect? <a href="mailto:hello@crossinthebox.com?subject=Election%20data%20wrong%20or%20missing">Let us know.</a></p>

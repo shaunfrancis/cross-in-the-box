@@ -5,7 +5,7 @@ class StateLinksService extends \API\APIService{
     static function call(array $request, ?array $params = []){
         if(count($request) != 3) return self::fail(404, "Not found");
 
-        $baseId = $request[2];
+        $baseId = strtoupper($request[2]);
         
         try{
             $president = "2024" . $baseId . "%";
@@ -14,8 +14,14 @@ class StateLinksService extends \API\APIService{
             $governor = "G" . $baseId;
 
             $sql = "WITH data AS (
-                        SELECT usa_regions.title, usa_results.region_id, usa_results.elected, usa_parties.color, usa_parties.textColor, usa_regions.type, usa_elections.date, ROW_NUMBER() OVER (PARTITION BY usa_results.region_id ORDER BY usa_elections.date DESC, usa_results.elected DESC) as row
+                        SELECT usa_regions.title, usa_regions.type, 
+                        usa_results.region_id,
+                        usa_candidates.elected,
+                        usa_parties.color, usa_parties.textColor,
+                        usa_elections.date,
+                        ROW_NUMBER() OVER (PARTITION BY usa_results.region_id ORDER BY usa_elections.date DESC, usa_candidates.elected DESC) as row
                         FROM usa_results
+                        JOIN usa_candidates ON usa_results.id = usa_candidates.result_id
                         JOIN usa_regions ON usa_regions.id = usa_results.region_id
                         JOIN usa_elections ON usa_elections.id = usa_results.election_id
                         LEFT JOIN usa_parties ON usa_parties.id = usa_results.party

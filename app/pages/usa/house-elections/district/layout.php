@@ -20,6 +20,7 @@
         <?= \USA\RegionSearchSection::show("house"); ?>
     </section>
     <?php if(empty($_error)) : ?>
+        <?= \USA\StateLinks::show($region['id']); ?>
         <section>
             <p>Candidates and results for each of the 435 districts are sourced from <a href="https://www.fec.gov/introduction-campaign-finance/election-and-voting-information/" target="_blank">the Federal Election Commission</a>. Ranked Choice Voting results for Maine are obtained from the state's <a href="https://www.maine.gov/sos/cec/elec/results/index.html" target="_blank">Bureau of Corporations, Elections &amp; Commissions</a>.</p>
             <p>Data missing or incorrect? <a href="mailto:hello@crossinthebox.com?subject=Election%20data%20wrong%20or%20missing">Let us know.</a></p>
