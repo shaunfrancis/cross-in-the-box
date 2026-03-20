@@ -186,7 +186,7 @@ body:not(:has(#hero)) main > *:first-child{
 }
 
 main > section > .section-heading{
-    margin:50px var(--left-gap);
+    margin:50px var(--left-gap) 30px var(--left-gap);
     display:flex;
     flex-wrap:wrap;
     align-items:center;
@@ -194,13 +194,9 @@ main > section > .section-heading{
 }
 
 a.interactive{
-    cursor:pointer;
-    text-decoration:underline;
-    transition:background-color 100ms;
-    padding:0 1px;
-}
-a.interactive:hover{
-    background-color:rgb(230,230,230);
+    cursor: pointer;
+    color: var(--link-color);
+    &:hover{ text-decoration:underline }
 }
 
 button{
