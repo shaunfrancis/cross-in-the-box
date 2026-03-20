@@ -6,6 +6,15 @@ class USAHouseElectionResultContainer extends USAElectionResultContainer{
         super(elt, USAHouse);
     }
 
+    get mapHoverFunComponents(){
+        return { ...super.mapHoverFunComponents, 
+            additionalContent: (id, regionResults, latestResultsUpdate, election) => {
+                if(id === "2016NC09" && election === "H2018") return "This election was annulled due to fraud.";
+                return super.mapHoverFunComponents.additionalContent(id, regionResults, latestResultsUpdate);
+            }
+        }
+    }
+
     addSummary(){
         const summaries = []; // {candidate: string, party : Party, count : number}[]
         

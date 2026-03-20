@@ -70,7 +70,7 @@ class ElectionResultContainer{
                 if(this.winFormulaName === "second-place") innerHTML += " in second place";
                 if(winner) return new Elt({tag: 'h4', innerHTML: innerHTML});
             },
-            additionalContent: (id, regionResults, latestResultsUpdate) => {
+            additionalContent: (id, regionResults, latestResultsUpdate, election) => {
                 const popupGraphData = { results: latestResultsUpdate?.results.data || regionResults, parties: CachedData.parties };
                 if(this.attributes.showChanges){
                     if(latestResultsUpdate) popupGraphData.title = latestResultsUpdate.results.title.join(" ").replace("- ","-");
@@ -124,7 +124,7 @@ class ElectionResultContainer{
             }
 
             // Additional content
-            const additionalContent = this.mapHoverFunComponents.additionalContent(id, regionResults, latestResultsUpdate);
+            const additionalContent = this.mapHoverFunComponents.additionalContent(id, regionResults, latestResultsUpdate, this.data.election);
             if(additionalContent) popup.append(...additionalContent);
         };
 

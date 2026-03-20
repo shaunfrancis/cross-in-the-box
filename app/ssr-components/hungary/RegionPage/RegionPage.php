@@ -28,7 +28,13 @@ class RegionPage extends \Shared\RegionPage{
         ?>
 
         <article class="block">
-            <h2><?= str_replace("- ", "-", implode(" ", $event['data']['title'])); ?></h2>
+            <h2>
+                <?php if(!empty(static::$dedicatedPages[$event['data']['id']])): ?>
+                    <a href="<?= static::$dedicatedPages[$event['data']['id']]; ?>" class="arrow-link"><?= str_replace("- ", "-", implode(" ", $event['data']['title'])); ?></a>
+                <?php else: ?>
+                    <?= str_replace("- ", "-", implode(" ", $event['data']['title'])); ?>
+                <?php endif; ?>
+            </h2>
             <?= \Shared\CandidatesMasonryList::render(results: $results, limit: 5); ?>
             <h3>Votes</h3>
             <?= \Shared\RegionBarGraph::show($results, withoutCandidateNames: true); ?>

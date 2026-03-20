@@ -3,6 +3,8 @@ namespace Shared;
 include_once './app/lib/shared.php';
 
 class RegionPage extends \Base\Component{
+
+    static $dedicatedPages = [];
     
     static function render(
         array $data,    // region data obtained by call to RegionService
@@ -109,7 +111,13 @@ class RegionPage extends \Base\Component{
         });
         ?>
         <article class="block">
-            <h2><?= str_replace("- ", "-", implode(" ", $event['data']['title'])); ?></h2>
+            <h2>
+                <?php if(!empty(static::$dedicatedPages[$event['data']['id']])): ?>
+                    <a href="<?= static::$dedicatedPages[$event['data']['id']]; ?>" class="arrow-link"><?= str_replace("- ", "-", implode(" ", $event['data']['title'])); ?></a>
+                <?php else: ?>
+                    <?= str_replace("- ", "-", implode(" ", $event['data']['title'])); ?>
+                <?php endif; ?>
+            </h2>
             <?= RegionBarGraph::show(
                 $event['data']['results']
             ); ?>

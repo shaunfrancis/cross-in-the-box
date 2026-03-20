@@ -34,7 +34,13 @@ class RegionPage extends \Shared\RegionPage{
         });
         ?>
         <article class="block">
-            <h2><?= str_replace("- ", "-", implode(" ", $event['data']['title'])); ?></h2>
+            <h2>
+                <?php if(!empty(static::$dedicatedPages[$event['data']['id']])): ?>
+                    <a href="<?= static::$dedicatedPages[$event['data']['id']]; ?>" class="arrow-link"><?= str_replace("- ", "-", implode(" ", $event['data']['title'])); ?></a>
+                <?php else: ?>
+                    <?= str_replace("- ", "-", implode(" ", $event['data']['title'])); ?>
+                <?php endif; ?>
+            </h2>
             <?= \Shared\RegionBarGraph::show(
                 results: $event['data']['results'],
                 subtitles: [1 => "First round", 2 => "Second round"],

@@ -15,7 +15,13 @@ class NI extends \UK\RegionPage{
         $results = $event['data']['results'];  ?>
 
         <article class="block">
-            <h2><?= str_replace("- ", "-", implode(" ", $event['data']['title'])); ?></h2>
+            <h2>
+                <?php if(!empty(static::$dedicatedPages[$event['data']['id']])): ?>
+                    <a href="<?= static::$dedicatedPages[$event['data']['id']]; ?>" class="arrow-link"><?= str_replace("- ", "-", implode(" ", $event['data']['title'])); ?></a>
+                <?php else: ?>
+                    <?= str_replace("- ", "-", implode(" ", $event['data']['title'])); ?>
+                <?php endif; ?>
+            </h2>
             <?= \Shared\STVTable::render($results); ?>
         </article>
 

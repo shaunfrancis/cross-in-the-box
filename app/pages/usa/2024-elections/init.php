@@ -1,1 +1,1 @@
-<?php $_title[] = "2024 Elections"; ?>
+<?php $_title[] = "2024 elections"; ?>

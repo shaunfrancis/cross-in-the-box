@@ -3,11 +3,11 @@ namespace USA;
 
 class RegionPage extends \Shared\RegionPage{
 
-    // static function renderTreeChangeNote(array $event, array $currentRegion, array $data, ?callable $renameLink = NULL, string $changesLabel = ""){
-    //     parent::renderTreeChangeNote($event, $currentRegion, $data,
-    //         fn($region) => "The constituency was renamed to " . $currentRegion['title'] . ".",
-    //         "Boundary changes occurred."
-    //     );
-    // }
+    static $dedicatedPages = [
+        'P2024' => '/usa/2024-elections',
+        'S2024' => '/usa/2024-elections',
+        'H2024' => '/usa/2024-elections',
+        'G2024' => '/usa/2024-elections'
+    ];
     
 }

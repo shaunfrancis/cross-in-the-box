@@ -7,7 +7,7 @@
 ?>
 <main>
     <section id="hero">
-        <h1>2024 Elections</h1>
+        <h1>2024 elections</h1>
         <?= HeroNav::show($heroNavItems); ?>
     </section>
 

@@ -2,6 +2,10 @@
 namespace UK\RegionPage;
 
 class General extends \UK\RegionPage{
+    static $dedicatedPages = [
+        '2024' => '/uk/general-elections/2024'
+    ];
+
     static function renderSuccessorLinks(array $event, array $data, string $abolishedLabel = "", ?callable $regionLink = NULL){
         
         parent::renderSuccessorLinks($event, $data, 
