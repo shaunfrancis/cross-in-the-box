@@ -1,11 +1,21 @@
 <?php
     $_request = array_values( array_filter( preg_split( '/\//', str_replace(['/elections/'], '', $_SERVER['REQUEST_URI']) ) ) );
+    $_initial_request = $_request;
+    
+    // If invalid show 404
     if(str_contains($_SERVER['REQUEST_URI'], '.') || str_contains($_SERVER['REQUEST_URI'], '%2e')){
         http_response_code(404);
+
+        ob_start();
         require 'app/pages/404.php';
+        $_children = ob_get_clean();
+
+        require 'app/ssr-components/Component.php';
+        require 'app/ssr-components/shared/Header/Header.php';
+        require 'app/ssr-components/shared/Footer/Footer.php';
+        require 'app/pages/layout.php';
         exit;
     }
-    $_initial_request = $_request;
 
     $_country = $_request[0] ?? NULL;
     $_params = [
@@ -157,7 +167,7 @@
             ]
         ],
     ];
-
+    
     // Render page
     while(count($_request) >= 0){
         $path = implode('/', $_request);
