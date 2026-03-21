@@ -283,14 +283,34 @@ class ElectionResultContainer{
     }){ 
 
         if(!dateFun) dateFun = (date) => {
-            if(timezoneArgs.localeStringArgs) date = new Date(date.toLocaleString(...timezoneArgs.localeStringArgs));
-            let time = date.getHours().toString().padStart(2,'0') + ":" + date.getMinutes().toString().padStart(2,'0');
-            const dayWord = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][date.getDay()];
+            const formatter = Intl.DateTimeFormat("en-GB", {
+                timeZone: timezoneArgs.timeZone ? timezoneArgs.timeZone : "UTC",
+                weekday: "long",
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+                hour: !hideTime ? "2-digit" : undefined,
+                minute: !hideTime ? "2-digit" : undefined,
+                hour12: false,
+                timeZoneName: "short"
+            });
+            const parts = formatter.formatToParts(date);
+            const part = (key) => parts.find(p => p.type === key).value;
 
-            let dateString = dayWord + " " + dateToLongDate(date);
-            if(!hideTime) dateString += ", " + time;
+            let dateString = part("weekday");
 
-            if(timezoneArgs.localeLabel) dateString += ` <span style="font-size:0.8em">${timezoneArgs.localeLabel}</span>`;
+            let ordinalIndicator = "th";
+            if(![11,12,13].includes(part("day"))) switch(part("day") % 10){
+                case 1: ordinalIndicator = "st"; break;
+                case 2: ordinalIndicator = "nd"; break;
+                case 3: ordinalIndicator = "rd";
+            }
+
+            dateString += ` ${part("day")}${ordinalIndicator} ${part("month")}`;
+
+            if(date.getFullYear() !== (new Date()).getFullYear()) dateString += ` ${part("year")}`;
+
+            if(!hideTime) dateString += `, ${part("hour")}:${part("minute")} <span class="Message__timezone">${part("timeZoneName")}</span>`;
 
             return dateString;
         };

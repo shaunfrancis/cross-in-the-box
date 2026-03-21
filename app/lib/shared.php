@@ -1,7 +1,6 @@
 <?php namespace Shared;
 /* Collection of reusable helper functions */
 
-/* Duplicated in shared/lib.js */
 function dateToLongDate($dateString, $includeYear = NULL){
     $date = date_parse($dateString);
     if(!empty($date['errors'])) return $dateString;

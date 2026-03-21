@@ -31,6 +31,10 @@ class UKElectionResultContainer extends ElectionResultContainer{
             return url;
         }
 
-        super.addMessages({ urlFun: urlFun, ...options });
+        super.addMessages({
+            urlFun: urlFun,
+            timezoneArgs: { timeZone: "Europe/London" },
+            ...options
+        });
     }
 }

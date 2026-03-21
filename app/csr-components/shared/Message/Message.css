@@ -57,3 +57,8 @@
     width:14px;
     margin:0 5px;
 }
+
+.Message__timezone{
+    font-size:0.8em;
+    color:#333;
+}

@@ -170,22 +170,6 @@ const parseJSONWithDates = (text, keys) => {
 }
 
 /* Duplicated in lib/shared.php */
-const dateToLongDate = (date, includeYear = date.getFullYear() !== (new Date()).getFullYear()) => {
-    let ordinalIndicator = "th";
-    if(![11,12,13].includes(date.getDate())) switch(date.getDate() % 10){
-        case 1: ordinalIndicator = "st"; break;
-        case 2: ordinalIndicator = "nd"; break;
-        case 3: ordinalIndicator = "rd";
-    }
-
-    const month = ["January","February","March","April","May","June","July","August","September","October","November","December"][date.getMonth()];
-
-    let longDate = date.getDate().toString() + ordinalIndicator + " " + month;
-    if(includeYear) longDate += " " + date.getFullYear();
-    return longDate;
-}
-
-/* Duplicated in lib/shared.php */
 const combineSubElections = (results) => { // {id: string, candidate: {name: string, position: int}, results: {votes: int, elected: bool} }[]
     results = structuredClone(results);
     let combinedResults = [];

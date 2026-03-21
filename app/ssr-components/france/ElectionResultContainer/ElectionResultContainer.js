@@ -108,6 +108,10 @@ class FranceElectionResultContainer extends ElectionResultContainer{
             return messageResults;
         }
 
-        super.addMessages({ urlFun: urlFun, childrenFun: childrenFun });
+        super.addMessages({
+            urlFun: urlFun,
+            childrenFun: childrenFun,
+            timezoneArgs: { timeZone: "Europe/Paris" },
+        });
     }
 }
