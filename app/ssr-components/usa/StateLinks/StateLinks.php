@@ -7,11 +7,7 @@ class StateLinks extends \Base\Component{
         if(empty($id)) return;
 
         //get two-letter state abbreviation from ID
-        $baseId = substr(
-            preg_replace('/[0-9]/', '', 
-                preg_replace('/^(S|G|[0-9])/', '', $id)
-            ), 0, 2
-        );
+        $baseId = getBaseId($id);
         if($baseId === "DC") return;
 
         $links = \API\USA\StateLinksService::call(["usa", NULL, $baseId]);

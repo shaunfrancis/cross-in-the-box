@@ -11,23 +11,13 @@ class RegionBarGraph extends \Base\Component{
         bool $withoutCandidateNames = FALSE,
         ?callable $subElectionSort = null,      // ([subid: any], [subid: any]) => number
     ){
-        /*if(subElectionType == "rounds"){
-            const resultsByCandidate = getResultsByCandidate(results);
-            const roundCount = resultsByCandidate[0].results.length;
-
-            const parentContainer = document.querySelector('*:has(> .' + styles["container"] + ')');
-            if(parentContainer){
-                if( parseInt(getComputedStyle(parentContainer as HTMLElement).getPropertyValue('--max-rounds')) < roundCount + 2 ){
-                    (parentContainer as HTMLElement).style.setProperty("--max-rounds", (roundCount + 2).toString() );
-                }
-            }
-        }*/
+        $subElectionSort ??= fn($a, $b) => $b['subid'] - $a['subid'];
     ?>
             <?php
                 switch($subElectionType){
                     case "separate":
                         $subElections = getResultsBySubElection($results);
-                        if(!empty($subElectionSort)) usort($subElections, $subElectionSort);
+                        usort($subElections, $subElectionSort);
                         foreach($subElections as $subElection){
                             self::renderGraph(
                                 results: $subElection['results'], 
@@ -112,116 +102,93 @@ class RegionBarGraph extends \Base\Component{
     }
 
     static function renderRoundsGraphRows(array $results, ?bool $withoutCandidateNames = FALSE){
-        echo "todo";
 
-        /*
-            const roundsGraphRows = (givenResults : AnonymousResult[]) => {
-            const resultsByCandidate = getResultsByCandidate(results);
-            if(resultsByCandidate[0].results.length == 1) return standardGraphRows(givenResults);
-            const roundCount = resultsByCandidate[0].results.length;
+        $resultsByCandidate = combineSubElections($results);
+        $roundCount = count($resultsByCandidate[0]['results']);
+        if($roundCount === 1) return self::renderStandardGraphRows($results, $withoutCandidateNames);
 
-            let totalVotes : number[] = [];
-            resultsByCandidate.forEach( candidate => {
-                candidate.results.forEach( (result, index) => {
-                    if(!totalVotes[index]) totalVotes[index] = result.votes;
-                    else totalVotes[index] += result.votes;
-                });
-            });
+        $totalVotes = [];
+        foreach($resultsByCandidate as &$candidate){
+            ksort($candidate['results']);
+            foreach($candidate['results'] as $index => $result){
+                if(empty($totalVotes[$index])) $totalVotes[$index] = floatval($result['votes']);
+                else $totalVotes[$index] += floatval($result['votes']);
+            }
+        };
+        ?>
 
-            const rows : React.ReactNode[] = [(
-                <div key="heading" className={styles["bar-graph-row"] + " " + styles["bar-graph-heading"]}>
-                    <div className={styles["bar-graph-party"] + " " + styles["bar-graph-bloc"]}>
-                        Party
-                    </div>
-                    <div className={styles["bar-graph-candidate"] + " " + styles["bar-graph-bloc"]}>
-                        Candidate
-                    </div>
-                    {
-                        resultsByCandidate[0].results.map( (_, index) => (
-                            <div key={index} className={styles["bar-graph-votes"] + " " + styles["bar-graph-bloc"]}>
-                                Round {index + 1}
-                            </div>
-                        ))
-                    }
-                    <div className={styles["bar-graph-percentage"] + " " + styles["bar-graph-bloc"]}>
-                        Percentage
-                    </div>
+        <div class="RegionBarGraph__heading RegionBarGraph__row" data-max-rounds="<?= $roundCount + 2; ?>">
+            <div class="RegionBarGraph__party RegionBarGraph__bloc bloc">
+                Party
+            </div>
+            <div class="RegionBarGraph__candidate RegionBarGraph__bloc bloc">
+                Candidate
+            </div>
+            <?php for($i = 1; $i <= count($resultsByCandidate[0]['results']); $i++): ?>
+                <div class="RegionBarGraph__votes RegionBarGraph__bloc bloc">
+                    Round <?= $i; ?>
                 </div>
-            )];
+            <?php endfor; ?>
+            <div class="RegionBarGraph__percentage RegionBarGraph__bloc bloc">
+                Percentage
+            </div>
+        </div>
+        <script>
+            var parentContainer = document.querySelector('main section:has(> article > .RegionBarGraph)');
+            if(parentContainer && parseInt(getComputedStyle(parentContainer).getPropertyValue('--max-rounds')) < <?= $roundCount + 2 ?>){
+                parentContainer.style.setProperty("--max-rounds", <?= $roundCount + 2 ?>);
+            }
+        </script>
 
-            resultsByCandidate.forEach( (candidate, index) => {
-                const party = parties.find( p => p.id == candidate.party ) || DefaultParty;
-                const bgColor = party.color || "var(--default-color)";
+        <?php foreach($resultsByCandidate as $index => $result) : ?>
+            <?php
+                if(empty(end($totalVotes)) || end($totalVotes) == 0) $finalPercentage = 0;
+                else $finalPercentage = number_format(
+                    100 * (end($result['results'])['votes'] ?? 0) / end($totalVotes), 
+                    2, '.', ''
+                );
+            ?>
 
-                const finalPercentage = (100 * (candidate.results[roundCount - 1]?.votes / totalVotes[roundCount - 1] || 0)).toFixed(2);
+            <div class="RegionBarGraph__row" data-party="<?= $result['party']; ?>">
 
-                rows.push((
-                    <div key={index} className={styles["bar-graph-row"]}>
-
-                        <div 
-                            className={styles["bar-graph-party"] + " " + styles["bar-graph-bloc"]} 
-                            style={{background: bgColor, color: party.textColor}}
-                        >
-                            <span>{party.displayId || party.id}</span>
-                            <div className={styles["bar-detail-hover"]}>{party.title}</div>
-                        </div>
-
-                        <div 
-                            className={styles["bar-graph-candidate"] + " " + styles["bar-graph-bloc"]}
-                            style={{background: bgColor, color: party.textColor}}
-                        >
-                            {candidate.name}
-                        </div>
-
-                        {
-                            resultsByCandidate[0].results.map( (_, i) => {
-                                const stillIn = resultsByCandidate[index].results[i];
-                                return (
-                                    <div 
-                                        key={index + "-" + i}
-                                        className={styles["bar-graph-votes"] + " " + styles["bar-graph-bloc"]}
-                                        style={{background: bgColor, color: party.textColor, opacity: !stillIn ? 0.5 : undefined}}
-                                    >
-                                        {stillIn && addThousandsSpacing(resultsByCandidate[index].results[i].votes)}
-                                    </div>
-                                )
-                            })
-                        }
-                        
-                        <div 
-                            className={styles["bar-graph-percentage"] + " " + styles["bar-graph-bloc"]}
-                            style={{background: bgColor, color: party.textColor, opacity: candidate.results.length != roundCount ? 0.5 : undefined}}
-                        >
-                            {candidate.results.length == roundCount && finalPercentage + "%"}
-                        </div>
-
-                        <div 
-                            className={styles["bar-graph-bar-container"]}
-                            style={{'--rounds' : roundCount + 2} as React.CSSProperties}
-                        >
-                            {
-                                candidate.results.map( (result, index) => {
-                                    const percentage = 100 * (
-                                        result.votes / totalVotes[index] 
-                                        -(candidate.results[index-1]?.votes / totalVotes[index-1] || 0) );
-                                    return (
-                                        <div 
-                                            key={"bar-" + index}
-                                            className={styles["bar-graph-bar"]}
-                                            style={{background: bgColor, width: percentage + "%"}}
-                                        ></div>
-                                    )
-                                })
-                            }
-                        </div>
-                            
+                <div class="RegionBarGraph__party RegionBarGraph__bloc bloc">
+                    <span><?= $result['party']; ?></span>
+                    <div class="RegionBarGraph__hover"></div>
+                </div>
+                <?php if(!$withoutCandidateNames): ?>
+                    <div
+                        class="RegionBarGraph__candidate RegionBarGraph__bloc bloc" 
+                        title="<?= $result['candidates'][0]['name']; ?>"
+                    >
+                        <?= $result['candidates'][0]['name']; ?>
                     </div>
-                ));
-            });
+                <?php endif; ?>
 
-            return (<>{rows}</>);
-        }
-    } */
-    }
+                <?php for($i = 1; $i <= count($resultsByCandidate[0]['results']); $i++): ?>
+                    <?php $stillIn = !empty($result['results'][$i]); ?>
+                    <div class="RegionBarGraph__votes RegionBarGraph__bloc bloc tnum <?= !$stillIn ? ' RegionBarGraph__eliminated' : ''; ?>">
+                        <?php if($stillIn) echo number_format($result['results'][$i]['votes'], 0, '.', ' '); ?>
+                    </div>
+                <?php endfor; ?>
+                
+                <div class="RegionBarGraph__percentage RegionBarGraph__bloc bloc tnum<?= count($result['results']) !== $roundCount ? ' RegionBarGraph__eliminated' : ''; ?>">
+                    <?= count($result['results']) === $roundCount ? $finalPercentage . "%" : ""; ?>
+                </div>
+
+                <div class="RegionBarGraph__bar-container" style="--rounds:<?= $roundCount + 2; ?>">
+                    <?php 
+                        unset($previousPercentage);
+                        foreach($result['results'] as $i => $roundResult) :
+                            $percentage = 100 * ($roundResult['votes'] / $totalVotes[$i]);
+                        ?>
+                            <div class="RegionBarGraph__bar" style="width:<?= $percentage - ($previousPercentage ?? 0); ?>%"></div>
+                        <?php $previousPercentage = $percentage;
+                    endforeach; ?>
+                </div>
+                    
+            </div>
+
+   <?php endforeach;
+   }
 
 }

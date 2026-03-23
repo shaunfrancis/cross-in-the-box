@@ -28,10 +28,13 @@
     }
 
 .RegionBarGraph.pre-hydration{
-    & .RegionBarGraph__bloc, .RegionBarGraph__bar{
+    & .RegionBarGraph__heading > .RegionBarGraph__bloc{
+        background: var(--light-default-color);
+    }
+    & :not(.RegionBarGraph__heading) .RegionBarGraph__bloc:not(.RegionBarGraph__eliminated), .RegionBarGraph__bar{
         background:var(--default-color);
     }
-    & .RegionBarGraph__party{
+    & :not(.RegionBarGraph__heading) .RegionBarGraph__party{
         text-transform:uppercase;
         cursor:default;
         &:hover .RegionBarGraph__hover{
@@ -60,7 +63,7 @@
     grid-column-start:2;
 }
 
-.RegionBarGraph__heading > .RegionBarGraph__bloc{ 
+.RegionBarGraph__heading > .RegionBarGraph__bloc{
     background: var(--light-default-color);
     color:#555;
     cursor:default;
@@ -119,8 +122,10 @@
     padding:4px 10px 4px 25px;
 }
 
+.RegionBarGraph__eliminated{ background:var(--light-default-color) }
+
 .RegionBarGraph__bar-container{
-    background:rgb(227,227,227);
+    background:var(--light-default-color);
     border-radius:2px;
     overflow:hidden;
     grid-column:calc(var(--rounds) + 2) / -2;

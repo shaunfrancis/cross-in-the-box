@@ -96,7 +96,7 @@ class RegionPage extends \Base\Component{
         <?php endif;
     }
 
-    static function renderElectionEvent($event, $attributes = NULL){
+    static function renderElectionEvent($event, $attributes = NULL, $graphArgs = []){
         usort($event['data']['results'], function($a, $b){
             if($a['votes'] != $b['votes']) return $b['votes'] - $a['votes'];
             else if(!empty($a['elected'])) return -INF;
@@ -119,7 +119,9 @@ class RegionPage extends \Base\Component{
                 <?php endif; ?>
             </h2>
             <?= RegionBarGraph::show(
-                $event['data']['results']
+                results: $event['data']['results'],
+                subtitles: $graphArgs['subtitles'] ?? NULL,
+                subElectionType: $graphArgs['subElectionType'] ?? "separate"
             ); ?>
         </article>
     <?php }

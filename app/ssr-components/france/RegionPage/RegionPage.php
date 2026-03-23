@@ -19,33 +19,7 @@ class RegionPage extends \Shared\RegionPage{
         );
     }
 
-    static function renderElectionEvent($event, $attributes = NULL){
-        usort($event['data']['results'], function($a, $b){
-            if($a['votes'] != $b['votes']) return $b['votes'] - $a['votes'];
-            else if(!empty($a['elected'])) return -INF;
-            else if(!empty($b['elected'])) return INF;
-            else{
-                $surname = function($result){
-                    $names = explode(" ", $result['candidates'][0]['name']);
-                    return end($names);
-                };
-                return strcmp($surname($a), $surname($b));
-            }
-        });
-        ?>
-        <article class="block">
-            <h2>
-                <?php if(!empty(static::$dedicatedPages[$event['data']['id']])): ?>
-                    <a href="<?= static::$dedicatedPages[$event['data']['id']]; ?>" class="arrow-link"><?= str_replace("- ", "-", implode(" ", $event['data']['title'])); ?></a>
-                <?php else: ?>
-                    <?= str_replace("- ", "-", implode(" ", $event['data']['title'])); ?>
-                <?php endif; ?>
-            </h2>
-            <?= \Shared\RegionBarGraph::show(
-                results: $event['data']['results'],
-                subtitles: [1 => "First round", 2 => "Second round"],
-                subElectionSort: fn($a, $b) => $b['subid'] - $a['subid']
-            ); ?>
-        </article>
-    <?php }
+    static function renderElectionEvent($event, $attributes = NULL, $graphArgs = []){
+        parent::renderElectionEvent($event, $attributes, ['subtitles' => [1 => "First round", 2 => "Second round"], ...$graphArgs]);
+    }
 }

@@ -11,7 +11,7 @@ class Scotland extends \UK\RegionPage{
 
     }
 
-    static function renderElectionEvent($event, $attributes = NULL){
+    static function renderElectionEvent($event, $attributes = NULL, $graphArgs = []){
         $results = $event['data']['results'];
         $hasMultipleCandidates = array_find($results, fn($result) => count($result['candidates']) > 1);
         if(!$hasMultipleCandidates) return parent::renderElectionEvent($event, $attributes);

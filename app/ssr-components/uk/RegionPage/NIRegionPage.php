@@ -11,7 +11,7 @@ class NI extends \UK\RegionPage{
 
     }
 
-    static function renderElectionEvent($event, $attributes = NULL){
+    static function renderElectionEvent($event, $attributes = NULL, $graphArgs = []){
         $results = $event['data']['results'];  ?>
 
         <article class="block">

@@ -13,3 +13,12 @@ function regionToSlug(string $title){
 function slugToLookupSlug(string $slug){
     return $slug;
 };
+
+function getBaseId(string $id){
+    // get two-letter state abbreviation from any US region ID
+    return substr(
+        preg_replace('/[0-9]/', '', 
+            preg_replace('/^(S|G|[0-9])/', '', $id)
+        ), 0, 2
+    );
+}
