@@ -14,6 +14,7 @@ function slugToLookupSlug(string $slug){
     return $slug;
 };
 
+/* Duplicated in usa/lib.js */
 function getBaseId(string $id){
     // get two-letter state abbreviation from any US region ID
     return substr(

@@ -201,12 +201,7 @@ class USASenateElectionResultContainer extends USAElectionResultContainer{
                     return [];
                 }
 
-                const popupGraphData = { results: latestResultsUpdate?.results.data || regionResults, parties: CachedData.parties };
-                if(this.attributes.showChanges){
-                    if(latestResultsUpdate) popupGraphData.title = latestResultsUpdate.results.title.join(" ").replace("- ","-");
-                    
-                }
-                return [PopupBarGraph.render({...popupGraphData, partyWidth: "80px"})]
+                return super.mapHoverFunComponents.additionalContent(id, regionResults, latestResultsUpdate);
             }
         }
     }

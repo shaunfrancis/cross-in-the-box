@@ -33,3 +33,9 @@ const partyIdToDisplayId = (partyId) => {
 const regionToSlug = (title) => {
     return title.toLowerCase().replace(/ /g, "-").replace(/,|\)|\(/g, "");
 };
+
+/* Duplicated in lib/usa.php */
+const getBaseId = (id) => {
+    // get two-letter state abbreviation from any US region ID
+    return id.replace(/^(S|G|[0-9])/g, '').replace(/[0-9]/g, '').substr(0, 2);
+}

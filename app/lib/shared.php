@@ -67,6 +67,7 @@ function combineCandidates(array $results){ // {...Result, candidates: {name: st
     return $combinedResults;
 }
 
+/* Duplicated in shared/lib.js */
 // Split a set of results into an array of [subid, results]
 function getResultsBySubElection(array $results){ // {subid : number, results : Result[]}[]
     $subElections = [];

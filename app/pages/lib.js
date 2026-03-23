@@ -170,6 +170,29 @@ const parseJSONWithDates = (text, keys) => {
 }
 
 /* Duplicated in lib/shared.php */
+// Split a set of results into an array of [subid, results]
+const getResultsBySubElection = (results) => { // {subid : number, results : Result[]}[]
+    const subElections = [];
+
+    const subids = [];
+    results.forEach( result => {
+        if(!((subids.includes( parseInt(result.subid || 0)) ))){
+            subids.push(parseInt(result.subid || 0));
+        }
+    });
+    subids.sort();
+
+    subids.forEach( subid => {
+        subElections.push({
+            subid: subid,
+            results: results.filter( result => (result.subid || 0) == (subid || 0))
+        });
+    });
+
+    return subElections;
+}
+
+/* Duplicated in lib/shared.php */
 const combineSubElections = (results) => { // {id: string, candidate: {name: string, position: int}, results: {votes: int, elected: bool} }[]
     results = structuredClone(results);
     let combinedResults = [];
