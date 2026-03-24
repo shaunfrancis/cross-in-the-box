@@ -33,7 +33,7 @@ class USAElectionResultContainer extends ElectionResultContainer{
 
         super.addMessages({
             urlFun: urlFun,
-            timezoneArgs: { timeZone: "US/Eastern" },
+            timezoneArgs: { locale: "en-US", timeZone: "US/Eastern" },
             ...options
         });
     }

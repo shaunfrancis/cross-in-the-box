@@ -322,7 +322,7 @@ class ElectionResultContainer{
     }){ 
 
         if(!dateFun) dateFun = (date) => {
-            const formatter = Intl.DateTimeFormat("en-GB", {
+            const formatter = Intl.DateTimeFormat(timezoneArgs.locale || "en-GB", {
                 timeZone: timezoneArgs.timeZone ? timezoneArgs.timeZone : "UTC",
                 weekday: "long",
                 day: "numeric",

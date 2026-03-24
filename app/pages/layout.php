@@ -16,6 +16,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/compiled/style.css" />
     <?php if(!empty($_country)) : ?><script src="/compiled/<?= $_country; ?>.js"></script><?php endif; ?>
+
     <?php $faviconPath = !empty($_country) ? "/public/favicons/" . $_country : "/public/"; ?>
     <link rel="icon" type="image/png" href="<?= $faviconPath; ?>/favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="<?= $faviconPath; ?>/favicon-48x48.png" sizes="48x48" />
@@ -24,6 +25,7 @@
     <link rel="shortcut icon" href="<?= $faviconPath; ?>/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="<?= $faviconPath; ?>/apple-touch-icon.png" />
     <link rel="manifest" href="<?= $faviconPath; ?>/site.webmanifest" />
+    
     <?php foreach($_headInjections ?? [] as $content) echo $content; ?>
 </head>
 <body>

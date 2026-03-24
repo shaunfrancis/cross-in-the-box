@@ -120,7 +120,7 @@ class RegionPage extends \Base\Component{
             </h2>
             <?= RegionBarGraph::show(
                 results: $event['data']['results'],
-                subtitles: $graphArgs['subtitles'] ?? NULL,
+                subtitles: $graphArgs['subtitles'] ?? [],
                 subElectionType: $graphArgs['subElectionType'] ?? "separate"
             ); ?>
         </article>

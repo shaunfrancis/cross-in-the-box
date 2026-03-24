@@ -49,7 +49,7 @@ export default class ElectionSummaryBar{
                 content: () => {
                     popup.innerHTML = `
                         <h3>${row.displayCount || row.count}</h3>
-                        <h4>${row.candidate}</h4>
+                        ${row.candidate !== row.party.displayId ? `<h4>${row.candidate}</h4>` : ''}
                         <div class="ElectionSummaryBar__hover-party">
                             <div class="square" style="background:${row.party.color || "var(--default-color)"}"></div>
                             <span>${row.party.title}</span>
