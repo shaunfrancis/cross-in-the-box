@@ -113,24 +113,7 @@ class USASenateElectionResultContainer extends USAElectionResultContainer{
     }
 
     addSummary(){
-        const summaries = []; // {candidate: string, party : Party, count : number}[]
-        
-        this.winFormula(CachedData.results[this.data.election]).forEach( result => {
-            const regionUpdates = CachedData.updates[this.data.election].filter( update => update.id == result.id );
-            const winner = regionUpdates.length > 0 ? regionUpdates[regionUpdates.length - 1].party : result.party;
-
-            if(!summaries.find( summary => summary.party.id == winner)){
-                const party = CachedData.parties.find( party => party.id === winner) || DefaultParty;
-                summaries.push({ candidate: party.displayId, party: party, count: 1 });
-            }
-            else summaries.find( summary => summary.party.id == winner ).count++;
-        });
-
-
-        summaries.sort( (a,b) => {
-            return b.count - a.count || a.party.id.localeCompare(b.party.id);
-        } );
-        
+        const summaries = this.createSummaries();
         this.structure.summary.container.appendChild( 
             ElectionSummaryBar.render({ data: summaries, total: 100 })
         );

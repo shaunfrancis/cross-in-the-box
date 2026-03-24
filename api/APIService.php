@@ -13,6 +13,7 @@ class APIService{
             'message_links' => $country . "_message_links",
             'messages' => $country . "_messages",
             'parties' => $country . "_parties",
+            'party_links' => $country . "_party_links",
             'polls' => $country . "_polls",
             'poll_figures' => $country . "_poll_figures",
             'pollsters' => $country . "_pollsters",

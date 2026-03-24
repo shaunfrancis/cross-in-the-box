@@ -20,7 +20,7 @@ class FranceElectionResultContainer extends ElectionResultContainer{
         return super.winFormula(results.filter(result => result.subid == this.data.round));
     }
 
-    addSummary(){
+    createSummaries(){
         const summaries = []; // {party : Party, count : number}[]
         let totalVotes = 0;
         CachedData.results[this.data.election].filter(result => result.subid == this.data.round).forEach( result => {
@@ -39,7 +39,11 @@ class FranceElectionResultContainer extends ElectionResultContainer{
             summary.displayCount = (100 * (summary.count / totalVotes)).toFixed(2) + "%";
         });
         summaries.sort( (a,b) => b.count - a.count );
-        
+        return summaries;
+    }
+
+    addSummary(){
+        const summaries = this.createSummaries();
         this.structure.summary.container.appendChild( 
             ElectionSummaryBar.render({ data: summaries, prioritisePartyDisplay: true })
         );

@@ -2,7 +2,7 @@ class CachedData extends CachedDataSkeleton{
     static fetchParties(){
         return this.downloadProperty(["parties"], Endpoint + "/parties/hungary", { 
             applyTransform: (data) => {
-                data.forEach( party => party.displayId = partyIdToDisplayId(party.id) );
+                data.forEach( party => party.displayId = partyIdToDisplayId(party.displayId || party.id) );
             }
         });
     }

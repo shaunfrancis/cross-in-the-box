@@ -210,7 +210,46 @@ class ElectionResultContainer{
         else return `[name="${id}"] > *:nth-child(${regionCount})`;
     }
 
-    addSummary(){}
+    createSummaries({ preferCandidateNames = false } = {}){
+        const summaries = []; // {candidate: string, party : Party, count : number}[]
+                
+        this.winFormula(CachedData.results[this.data.election]).forEach( result => {
+            const regionUpdates = this.attributes.showChanges ? CachedData.updates[this.data.election].filter( update => update.id == result.id ) : [];
+
+            let winner = regionUpdates.length > 0 ? regionUpdates[regionUpdates.length - 1].party : result.party;
+            let party = CachedData.parties.find( p => p.id === winner) || DefaultParty;
+
+            if("linked_to" in party && "link_type" in party && party.link_type == 0){
+                party = CachedData.parties.find( p => p.id === party.linked_to ) || party;
+                winner = party.id;
+            }
+
+            if(!summaries.find( summary => summary.party.id == winner)){
+                summaries.push({
+                    candidate: preferCandidateNames ? result.candidates[0].name : party.displayId,
+                    party: party,
+                    count: result.candidates[0].elected
+                });
+            }
+            else summaries.find( summary => summary.party.id == winner ).count += result.candidates[0].elected;
+        });
+
+        summaries.sort( (a,b) => {
+            const getCount = (x) => {
+                return (["vacant","speaker","ind"].includes(x.party.id)) ? -Infinity : x.count;
+            }
+            return getCount(b) - getCount(a) || a.party.id.localeCompare(b.party.id);
+        } );
+
+        return summaries;
+    }
+
+    addSummary(){
+        const summaries = this.createSummaries();
+        this.structure.summary.container.appendChild( 
+            ElectionSummaryBlocs.render({ data: summaries, rowLength: 5 })
+        );
+    }
 
     updateMap(showChanges = false){
         const newFills = []; // {id: string, color: string, opacity?: number}[]

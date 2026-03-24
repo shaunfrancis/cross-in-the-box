@@ -126,7 +126,7 @@ class RegionSearchSection{
                             new Elt({
                                 tag: 'div',
                                 classList: ["RegionSearchSection__title-bloc"],
-                                style: {background: region.party.color || "var(--default-color)", color: region.party.textColor}, innerHTML: partyIdToDisplayId(region.party.id)
+                                style: {background: region.party.color || "var(--default-color)", color: region.party.textColor}, innerHTML: partyIdToDisplayId(region.party.displayId || region.party.id)
                             }),
                             ...highlightRelevance(query, region.candidate)
                         ]
