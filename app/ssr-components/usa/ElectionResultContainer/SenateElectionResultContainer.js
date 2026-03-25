@@ -1,6 +1,6 @@
 import Elt from 'components/shared/_Elt/_Elt';
-import ElectionSummaryBar from 'components/shared/ElectionSummaryBar/ElectionSummaryBar';
 import PopupBarGraph from 'components/shared/PopupBarGraph/PopupBarGraph';
+import ElectionSummaryStaggeredBars from 'components/shared/ElectionSummaryStaggeredBars/ElectionSummaryStaggeredBars';
 
 class USASenateElectionResultContainer extends USAElectionResultContainer{
     constructor(elt){
@@ -112,10 +112,51 @@ class USASenateElectionResultContainer extends USAElectionResultContainer{
         this.fillMap({ regions: CachedData.regions, fills: newFills, stripePatterns: stripePatterns });
     }
 
+    createSummaries(){
+        const summaries = {
+            currentData: [],
+            ghostData: []
+        };
+        const regionIds = [];
+
+        for(let electionIndex = 0; electionIndex <= 2; electionIndex++){
+            const summariesGroup = (electionIndex === 0) ? summaries.currentData : summaries.ghostData;
+            const senateElectionId = "S" + (parseInt(this.data.election.substring(1)) - 2*electionIndex);
+
+            this.winFormula(CachedData.results[senateElectionId]).forEach( result => {
+                if(regionIds.includes(result.id)) return; // result overwritten by a later election
+
+                const regionUpdates = (electionIndex !== 0 || this.attributes.showChanges) 
+                    ? CachedData.updates[senateElectionId].filter( update => update.id == result.id )
+                    : [];
+
+                let winner = regionUpdates.length > 0 ? regionUpdates[regionUpdates.length - 1].party : result.party;
+                let party = CachedData.parties.find( p => p.id === winner) || DefaultParty;
+
+                if("linked_to" in party && "link_type" in party && party.link_type == 0){
+                    party = CachedData.parties.find( p => p.id === party.linked_to ) || party;
+                    winner = party.id;
+                }
+
+                if(!summariesGroup.find( summary => summary.party.id == winner)){
+                    summariesGroup.push({
+                        candidate: party.displayId,
+                        party: party,
+                        count: result.candidates[0].elected
+                    });
+                }
+                else summariesGroup.find( summary => summary.party.id == winner ).count += result.candidates[0].elected;
+                regionIds.push(result.id);
+            });
+        }
+
+        return summaries;
+    }
+
     addSummary(){
         const summaries = this.createSummaries();
         this.structure.summary.container.appendChild( 
-            ElectionSummaryBar.render({ data: summaries, total: 100 })
+            ElectionSummaryStaggeredBars.render({ currentData: summaries.currentData, ghostData: summaries.ghostData, total: 100 })
         );
     }
 

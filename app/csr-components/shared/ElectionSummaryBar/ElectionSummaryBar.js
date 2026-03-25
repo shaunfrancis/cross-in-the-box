@@ -78,7 +78,7 @@ export default class ElectionSummaryBar{
                     dataBelowThreshold.forEach( row => {
                         popup.appendChild( new Elt({
                             tag: 'div',
-                            classList: ["ElectionSummaryBar__hover-section"],
+                            classList: ["hr-separated"],
                             innerHTML: `
                                 <h4>${row.displayCount || row.count} &bull; ${row.candidate}</h4>
                                 <div class="ElectionSummaryBar__hover-party">

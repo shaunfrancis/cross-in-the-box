@@ -173,6 +173,7 @@
     display:flex;
     justify-content:center;
 }
+[data-summary-container-height="large"] .ElectionResultContainer__summary-container{ min-height: 65px }
 
 .ElectionResultContainer .hover-popup :is(ul, p){
     font-size:0.8em;

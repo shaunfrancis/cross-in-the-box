@@ -297,6 +297,15 @@ details summary .has-marker:after{
     }
 }
 
+.hr-separated:not(:last-child):after{
+    content:"";
+    display:block;
+    margin:10px 0;
+    width:100%;
+    height:1px;
+    background:var(--light-default-color);
+}
+
 @media screen and (max-width:768px){
     :root{
         --left-gap:20px;

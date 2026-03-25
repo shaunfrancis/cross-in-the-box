@@ -16,6 +16,8 @@ class Senate extends \USA\ElectionResultContainer{
         $map = self::getMapClass($dataAttrs['class-no'] ?? 1);
 
         $dimensions = ['w' => "calc( 1.3 * (100vh - 100px) )", 'h' => "calc(100vh - 100px)", 'minW' => "425px", 'minH' => "500px"];
+
+        $dataAttrs['summary-container-height'] = "large"; // ElectionSummaryStaggeredBars takes up larger height
         ?>
 
         <?= \Shared\ElectionResultContainer::open($election, $map, $title, $dataAttrs, $dimensions, $messages, $showChanges, $dedicatedPage, $winFormulaName, $regionsType); ?>
