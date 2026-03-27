@@ -241,3 +241,52 @@ const combineSubElections = (results) => { // {id: string, candidate: {name: str
 
     return combinedResults;
 }
+
+/* Duplicated in lib/shared.php */
+// Combine all results for the same candidate name into one array for each party vote total
+const combineFusionResults = (results) => { // {id: string, candidates: {name: string, position: int}[], results: {party: string, votes: int, elected: bool} }[]
+    results = structuredClone(results);
+    results.sort( (a,b) => b.votes - a.votes );
+    let combinedResults = [];
+
+    let resultsByRegion = [];
+    results.forEach( result => {
+        const key = result.id || 0;
+        if(!(key in resultsByRegion)) resultsByRegion[key] = [];
+        resultsByRegion[key].push(result);
+    });
+
+    Object.entries(resultsByRegion).forEach( ([regionId, regionResults]) => {
+        let combinedRegionResults = [];
+        regionResults.forEach( result => {
+            const candidate = result.candidates[0];
+
+            const resultArray = {
+                party: result.party,
+                votes: result.votes,
+                elected: candidate.elected
+            };
+
+            const existingResult = combinedRegionResults.find(combinedResult => combinedResult.candidates[0].name == candidate.name);
+
+            if(existingResult){
+                existingResult.results.push(resultArray);
+                existingResult.votes += resultArray.votes;
+            }
+            else{
+                delete result.candidates[0].elected;
+                combinedRegionResults.push({
+                    id: regionId,
+                    candidates: result.candidates,
+                    results: [resultArray],
+                    votes: result.votes
+                });
+                delete result.subid;
+            }
+        });
+
+        combinedResults.push(...combinedRegionResults);
+    });
+
+    return combinedResults;
+}

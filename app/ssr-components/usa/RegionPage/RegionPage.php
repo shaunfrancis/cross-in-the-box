@@ -14,6 +14,9 @@ class RegionPage extends \Shared\RegionPage{
         $subtitles = [];
         $subElectionType = "separate";
         switch(getBaseId($event['region']['id'])){
+            case "NY": case "CT":
+                $subElectionType = "fusion";
+                break;
             case "AK": case "ME":
                 if($event['region']['id'] !== "GME") $subElectionType = "rounds";
                 break;
@@ -28,7 +31,8 @@ class RegionPage extends \Shared\RegionPage{
         parent::renderElectionEvent(
             $event,
             $attributes,
-            ['subtitles' => $subtitles, 'subElectionType' => $subElectionType, ...$graphArgs]);
+            ['subtitles' => $subtitles, 'subElectionType' => $subElectionType, ...$graphArgs]
+        );
     }
     
 }

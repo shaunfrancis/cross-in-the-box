@@ -28,7 +28,7 @@
     }
 
 .RegionBarGraph.pre-hydration{
-    & .RegionBarGraph__heading > .RegionBarGraph__bloc{
+    .RegionBarGraph__heading > .RegionBarGraph__bloc{
         background: var(--light-default-color);
     }
     & :not(.RegionBarGraph__heading) .RegionBarGraph__bloc:not(.RegionBarGraph__eliminated), .RegionBarGraph__bar{
@@ -61,6 +61,7 @@
     display:grid;
     grid-template-columns:subgrid;
     grid-column-start:2;
+    position:relative;
 }
 
 .RegionBarGraph__heading > .RegionBarGraph__bloc{
@@ -68,6 +69,41 @@
     color:#555;
     cursor:default;
     font-weight:normal;
+}
+
+.RegionBarGraph__fusion-total-row{
+    cursor:pointer;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    user-select:none;
+    & > :is(.bloc, .RegionBarGraph__bar-container){ cursor:pointer }
+
+    &:before{
+        content: "";
+        cursor:pointer;
+        position:absolute;
+        width:10px;
+        height:100%;
+        top:0;
+        left:-20px;
+        background-image:_url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000'%3E%3Cpath d='M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z'/%3E%3C/svg%3E");
+        background-repeat:no-repeat;
+        background-position:left;
+        transform:rotate(180deg);
+    }
+    &.open:before{ transform:rotate(90deg) }
+}
+.RegionBarGraph__fusion-hidden-row{
+    &:not(.visible){ display:none }
+    &:before{
+        content: "";
+        position:absolute;
+        width:2px;
+        height:100%;
+        top:0;
+        left:-16px;
+        background:var(--light-default-color);
+    }
 }
 
 .RegionBarGraph__bloc{
@@ -161,4 +197,7 @@
     .RegionBarGraph__candidate, .RegionBarGraph__votes, .RegionBarGraph__percentage{
         padding:4px 10px;
     }
+
+    .RegionBarGraph__fusion-total-row:before{ left:-15px }
+    .RegionBarGraph__fusion-hidden-row:before{ left:-11px }
 }

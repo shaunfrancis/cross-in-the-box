@@ -43,17 +43,29 @@ class USAElectionResultContainer extends ElectionResultContainer{
             additionalContent: (id, regionResults, latestResultsUpdate) => {
                 const results = latestResultsUpdate?.results.data || regionResults;
                 const params = {parties: CachedData.parties, partyWidth: "80px"};
+                const baseId = getBaseId(id);
 
                 const subElections = getResultsBySubElection(results);
                 if(subElections.length === 1){
+
                     const popupGraphData = { results: results, ...params };
                     if(this.attributes.showChanges && latestResultsUpdate){
                         popupGraphData.title = latestResultsUpdate.results.title.join(" ").replace("- ","-");
                     }
-                    return [PopupBarGraph.render(popupGraphData)]
+
+                    switch(baseId){
+                        case "NY": case "CT":
+                            const fusionResults = combineFusionResults(results);
+                            // lazy fusion voting - essentially ignore the issue and just show as DEM/REP
+                            fusionResults.forEach( result => result.party = result.results[0].party );
+                            fusionResults.sort( (a,b) => b.votes - a.votes );
+                            return [PopupBarGraph.render({...popupGraphData, results: fusionResults})];
+                        default:
+                            return [PopupBarGraph.render(popupGraphData)]
+                    }
                 }
 
-                else switch(getBaseId(id)){
+                else switch(baseId){
                     case "LA":
                         return [
                             PopupBarGraph.render({ title: "Runoff", results: subElections[1].results, ...params }),

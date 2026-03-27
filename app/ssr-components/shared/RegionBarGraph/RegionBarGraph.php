@@ -15,7 +15,18 @@ class RegionBarGraph extends \Base\Component{
     ?>
             <?php
                 switch($subElectionType){
+                    case "rounds":
+                        self::renderGraph(
+                            results: $results, subElectionType: "rounds", withoutCandidateNames: $withoutCandidateNames
+                        );
+                        break;
+                    case "fusion":
+                        $fusionResults = combineFusionResults($results);
+                        usort($fusionResults, fn($a, $b) => $b['votes'] - $a['votes']);
+                        self::renderGraph(results: $fusionResults, subElectionType: "fusion");
+                        break;
                     case "separate":
+                    default:
                         $subElections = getResultsBySubElection($results);
                         usort($subElections, $subElectionSort);
                         foreach($subElections as $subElection){
@@ -27,11 +38,6 @@ class RegionBarGraph extends \Base\Component{
                             );
                         }
                         break;
-                    case "rounds":
-                        self::renderGraph(
-                            results: $results, subElectionType: "rounds", withoutCandidateNames: $withoutCandidateNames
-                        );
-                        break;
                 }
             ?>
 
@@ -41,11 +47,15 @@ class RegionBarGraph extends \Base\Component{
         <div class="RegionBarGraph pre-hydration<?= !empty($withoutCandidateNames) ? " without-candidate-names" : ""; ?>">
             <?php if($title): ?><h3><?= $title; ?></h3><?php endif; ?>
             <?php switch($subElectionType){
-                case "separate":
-                    self::renderStandardGraphRows($results, withoutCandidateNames: $withoutCandidateNames);
-                    break;
                 case "rounds":
                     self::renderRoundsGraphRows($results, withoutCandidateNames: $withoutCandidateNames);
+                    break;
+                case "fusion":
+                    self::renderFusionGraphRows($results, withoutCandidateNames: $withoutCandidateNames);
+                    break;
+                case "separate":
+                default:
+                    self::renderStandardGraphRows($results, withoutCandidateNames: $withoutCandidateNames);
                     break;
             } ?>
         </div>
@@ -188,7 +198,100 @@ class RegionBarGraph extends \Base\Component{
                     
             </div>
 
-   <?php endforeach;
-   }
+    <?php endforeach;
+    }
+
+    static function renderFusionGraphRows(array $results, ?bool $withoutCandidateNames = FALSE){
+        $totalVotes = 0;
+        foreach($results as $candidate){
+            foreach($candidate['results'] as $result){
+                $totalVotes += $result['votes'];
+            }
+        }
+
+        foreach($results as $candidate){
+
+            $fusionCount = count($candidate['results']);
+            $isFusionCandidate = ($fusionCount > 1);
+            $anyPartyElected = 0;
+
+            foreach($candidate['results'] as &$result){
+                if($totalVotes > 0){
+                    $percentage = number_format(100 * $result['votes'] / $totalVotes, 2, '.', '');
+                    $result['percentage'] = $percentage;
+                }
+                if(!empty($result['elected'])) $anyPartyElected = $result['elected'];
+            }
+            unset($result);
+
+            for($i = $isFusionCandidate ? -1 : 0; $i < $fusionCount; $i++){
+                $isTotalRow = ($i === -1);
+                $result = !$isTotalRow ? $candidate['results'][$i] : ['votes' => $candidate['votes']];
+
+                if($totalVotes > 0){
+                    $percentage = $result['percentage'] ?? number_format(100 * $result['votes'] / $totalVotes, 2, '.', '');
+                }
+                $elected = $isFusionCandidate ? ($isTotalRow ? $anyPartyElected : FALSE) : !empty($result['elected']);
+
+                $votesValue = "";
+                if($totalVotes > 0) $votesValue = number_format($result['votes'], 0, '.', ' ');
+                else if($elected && count($results) === 1) $votesValue = "Unopposed";
+                else if($elected) $votesValue = "Elected";
+                ?>
+
+                <div
+                    class="RegionBarGraph__row
+                        <?php if($isTotalRow) : ?>RegionBarGraph__fusion-total-row<?php endif; ?>
+                        <?php if($isFusionCandidate && !$isTotalRow) : ?>RegionBarGraph__fusion-hidden-row<?php endif; ?>"
+                    data-party="<?= $isTotalRow ? $candidate['results'][0]['party'] : $result['party']; ?>"
+                    <?php if($isTotalRow) : ?>data-fusion-count="<?= $fusionCount; ?>"<?php endif; ?>
+                    data-fusion-group="<?= $candidate['candidates'][0]['name']; ?>"
+                >
+                    <div class="RegionBarGraph__party RegionBarGraph__bloc bloc">
+                        <span><?= $isTotalRow ? $candidate['results'][0]['party'] . ' + ' . $fusionCount : $result['party']; ?></span>
+                        <div class="RegionBarGraph__hover"></div>
+                    </div>
+                    <?php if(!$withoutCandidateNames): ?>
+                        <div
+                            class="RegionBarGraph__candidate RegionBarGraph__bloc bloc" 
+                            title="<?= $candidate['candidates'][0]['name']; ?>"
+                        >
+                            <?= $candidate['candidates'][0]['name']; ?>
+                        </div>
+                    <?php endif; ?>
+                    <div class="RegionBarGraph__votes RegionBarGraph__bloc bloc tnum">
+                        <?= $votesValue; ?>
+                    </div>
+
+                    <div class="RegionBarGraph__percentage RegionBarGraph__bloc bloc tnum">
+                        <?php if($totalVotes > 0) echo $percentage . "%"; ?>
+                    </div>
+                    
+                    <?php if(!$isTotalRow || $totalVotes == 0) : ?>
+                        <div class="RegionBarGraph__bar-container">
+                            <div 
+                                class="RegionBarGraph__bar" 
+                                style="width: <?= $totalVotes > 0 ? ($percentage . "%") : ($elected ? "100%" : "0%"); ?>"
+                            >
+                            </div>
+                        </div>
+                    <?php else : ?>
+                        <div class="RegionBarGraph__bar-container">
+                            <?php foreach($candidate['results'] as $individualResult) : ?>
+                                <?php if(empty($individualResult['percentage'])) continue; ?>
+                                <div 
+                                    class="RegionBarGraph__bar" 
+                                    style="width: <?= $individualResult['percentage']; ?>%"
+                                    data-party="<?= $individualResult['party']; ?>"
+                                >
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            <?php }
+        }
+
+    }
 
 }

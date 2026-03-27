@@ -94,7 +94,7 @@ function getResultsBySubElection(array $results){ // {subid : number, results : 
 /* Duplicated in shared/lib.js */
 // Combine all results for the same candidate name and party from different election subIds into one array for each candidate
 // This only works if there is only one candidate per result!
-function combineSubElections(array $results){ // {id: string, candidate: {name: string, position: int}, results: {votes: int, elected: bool} }[]
+function combineSubElections(array $results){ // {id: string, candidates: {name: string, position: int}[], results: {votes: int, elected: bool}, party: string }[]
     $combinedResults = [];
 
     $resultsByRegion = [];
@@ -128,6 +128,56 @@ function combineSubElections(array $results){ // {id: string, candidate: {name: 
                     'party' => $result['party'],
                     'candidates' => $result['candidates'],
                     'results' => [($result['subid'] ?? 0) => $resultArray]
+                );
+                unset($result['subid']);
+            }
+        }
+
+        array_push($combinedResults, ...$combinedRegionResults);
+    }
+
+    return $combinedResults;
+}
+
+/* Duplicated in shared/lib.js */
+// Combine all results for the same candidate name into one array for each party vote total
+function combineFusionResults(array $results){ // {id: string, candidates: {name: string, position: int}[], results: {party: string, votes: int, elected: bool} }[]
+
+    usort($results, fn($a, $b) => $b['votes'] - $a['votes'] );
+    $combinedResults = [];
+
+    $resultsByRegion = [];
+    foreach($results as $result){
+        $resultsByRegion[$result['id'] ?? 0][] = $result;
+    }
+
+    foreach($resultsByRegion as $regionId => $regionResults){
+        $combinedRegionResults = [];
+        foreach($regionResults as $result){
+            $candidate = $result['candidates'][0];
+
+            $resultArray = array(
+                'party' => $result['party'],
+                'votes' => $result['votes'],
+                'elected' => $candidate['elected'],
+            );
+
+            $resultExists = FALSE;
+            foreach($combinedRegionResults as &$combinedResult){
+                if($combinedResult['candidates'][0]['name'] == $candidate['name']){
+                    $resultExists = TRUE;
+                    $combinedResult['results'][] = $resultArray;
+                    $combinedResult['votes'] += $resultArray['votes'];
+                    break;
+                }
+            }
+            if(!$resultExists){
+                unset($result['candidates'][0]['elected']);
+                $combinedRegionResults[] = array(
+                    'id' => $regionId,
+                    'candidates' => $result['candidates'],
+                    'results' => [($result['subid'] ?? 0) => $resultArray],
+                    'votes' => $result['votes']
                 );
                 unset($result['subid']);
             }
