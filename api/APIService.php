@@ -27,15 +27,27 @@ class APIService{
 
     static function call(array $request, ?array $params = []){}
 
-    static function fetch($sql, $params = []){
-        $stmt = (DB::PDO()) -> prepare($sql);
-        $success = $stmt -> execute($params);
+    static function fetch($sql, $params = [], $ttl = 86400){
 
-        if($success){
-            $results = $stmt -> fetchAll(\PDO::FETCH_ASSOC);
+        $cache_path = __DIR__ . "/cache/" . md5($sql . serialize($params));
+
+        if(!empty($ttl) && file_exists($cache_path) && (filemtime($cache_path) + $ttl > time())){
+            $results = unserialize(file_get_contents($cache_path));
             return $results;
         }
-        return throw new \Exception();
+        else{
+            $stmt = (DB::PDO()) -> prepare($sql);
+            $success = $stmt -> execute($params);
+
+            if($success){
+                $results = $stmt -> fetchAll(\PDO::FETCH_ASSOC);
+
+                if(!empty($ttl)) file_put_contents($cache_path, serialize($results));
+
+                return $results;
+            }
+            return throw new \Exception();
+        }
     }
 
     static function fail($status, $error){

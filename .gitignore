@@ -4,6 +4,7 @@ node_modules
 .parcel-cache
 
 api/DB.php
+api/cache
 dev
 out
 
