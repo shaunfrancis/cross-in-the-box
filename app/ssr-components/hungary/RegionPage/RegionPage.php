@@ -6,7 +6,7 @@ class RegionPage extends \Shared\RegionPage{
     static function renderSuccessorLinks(array $event, array $data, string $abolishedLabel = "", ?callable $regionLink = NULL){
         
         parent::renderSuccessorLinks($event, $data, 
-            "This constituency was abolished following a electoral boundary changes. It was succeeded by:",
+            "This constituency was abolished following electoral boundary changes. It was succeeded by:",
             fn($title) => "/hungary/parliamentary-elections/constituency/" . \Hungary\regionToSlug($title)
         );
 

@@ -27,6 +27,8 @@ class ElectionResultContainer extends \Shared\ElectionResultContainer{
             case "2022": case "2018": case "2014":
                 $MapClass = '\Hungary\Maps\Parliamentary2014';
                 break;
+            case "2026": default:
+                $MapClass = '\Hungary\Maps\Parliamentary2026';
         }
         return $MapClass;
     }

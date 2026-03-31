@@ -22,9 +22,15 @@
         </div>
         <?= ElectionResultsSection::open(); ?>
             <?= \Hungary\ElectionResultContainer::show(
+                election: "2026",
+                title: ["2026", "Parliamentary", "Election"],
+                messages: ['group' => "2026", 'open' => TRUE]
+            ); ?>
+
+            <?= \Hungary\ElectionResultContainer::show(
                 election: "2022",
                 title: ["2022", "Parliamentary", "Election"],
-                messages: ['group' => "2022", 'open' => TRUE]
+                messages: ['group' => "2022"]
             ); ?>
 
             <?= \Hungary\ElectionResultContainer::show(

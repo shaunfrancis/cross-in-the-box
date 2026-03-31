@@ -25,6 +25,10 @@
         <?= ElectionResultsSection::open(); ?>
 
             <?= \Hungary\ElectionResultContainer::show(
+                election: "2026",
+                title: ["2026", "Parliamentary", "Election"],
+            ); ?>
+            <?= \Hungary\ElectionResultContainer::show(
                 election: "2022",
                 title: ["2022", "Parliamentary", "Election"],
             ); ?>

@@ -14,6 +14,9 @@ class HungaryParliamentary extends Map{
                 case "public/maps/Hungary-2014-geographic.svg":
                     attribution.innerHTML = 'Adapted from <a target="_blank" href="https://commons.wikimedia.org/wiki/File:2022_Hungarian_parliamentary_election_-_Template.svg">File:2022 Hungarian parliamentary election - Template.svg</a>. Licensed under the <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.en">Creative Commons Attribution-Share Alike 4.0 International</a> license.';
                     break;
+                case "public/maps/Hungary-2026-geographic.svg":
+                    attribution.innerHTML = 'Adapted from <a target="_blank" href="https://commons.wikimedia.org/wiki/File:2026_Hungarian_parliamentary_election.svg">File:2026 Hungarian parliamentary election.svg</a>. Licensed under the <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.en">Creative Commons Attribution-Share Alike 4.0 International</a> license.';
+                    break;
             }
         }
     }
