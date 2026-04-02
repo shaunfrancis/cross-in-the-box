@@ -68,9 +68,9 @@
             
     <section id="opinion-polling">
         <h1>
-            <a href="polling" class="arrow-link">Opinion polling</a>
+            <a href="general-elections/polling" class="arrow-link">Opinion polling</a>
         </h1>
-        <!--<UKPollingSection parties={parties} />-->
+        <?= PollingSection::show(); ?>
     </section>
 
 </main>

@@ -188,3 +188,39 @@ function combineFusionResults(array $results){ // {id: string, candidates: {name
 
     return $combinedResults;
 }
+
+// Get average polling figures
+function getPollAverages(array $polls, int $nDays = 30){ // {[party]: float, ...}
+    if(empty($polls)) return [];
+
+    $currentDate = $polls[0]['centre']->modify("+{$nDays} days");
+    if($currentDate > new \DateTime()) $currentDate = new \DateTimeImmutable();
+
+    $nDaysAgo = $currentDate->modify("-{$nDays} days");
+    
+    $polls = array_filter($polls, function($poll) use ($currentDate, $nDays, $nDaysAgo){
+        return $poll['centre'] >= $nDaysAgo && $poll['centre'] <= $currentDate;
+    });
+
+    foreach($polls as $poll){
+        $weight = $nDays - ($currentDate->getTimestamp() - $poll['centre']->getTimestamp()) / 86400;
+        foreach($poll['figures'] as $figure){
+
+            if(empty($averages[$figure['party']])) $averages[$figure['party']] = ['numerator' => 0, 'denominator' => 0];
+            $averages[$figure['party']]['numerator'] += $weight * $figure['figure'];
+            $averages[$figure['party']]['denominator'] += $weight;
+
+        }
+    }
+
+    $averages = array_map(function($average){
+        return empty($average['denominator']) ? 0 : $average['numerator'] / $average['denominator'];
+    }, $averages);
+
+    uksort($averages, function($a, $b) use ($averages){
+        if($a === 'other') return 1;
+        if($b === 'other') return -1;
+        return $averages[$b] <=> $averages[$a];
+    });
+    return $averages;
+}
