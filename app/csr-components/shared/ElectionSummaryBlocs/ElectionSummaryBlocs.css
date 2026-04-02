@@ -1,5 +1,6 @@
 .ElectionSummaryBlocs{
     --ElectionSummaryBlocs__bloc-width: 80px;
+    --ElectionSummaryBlocs__preferred-row-size: 99;
     margin:5px 0;
     display:flex;
     flex-direction:column;
@@ -14,19 +15,21 @@
 }
 
 .ElectionSummaryBlocs__row{
+    max-width:calc( ( var(--ElectionSummaryBlocs__bloc-width) + 5px) * var(--ElectionSummaryBlocs__preferred-row-size) );
     display:flex;
     gap:5px;
-    height:25px;
     flex-shrink:0;
     overflow:hidden;
+    flex-wrap:wrap;
+    justify-content:center;
 }
-    .hidden-row{
-        height:0;
-        transition:height 100ms;
+    .hidden-row > .ElectionSummaryBlocs__bloc{
+        max-height:0;
+        transition:max-height 100ms ease-in;
     }
 
-    .ElectionSummaryBlocs.hidden-rows-visible .hidden-row{
-        height:25px;
+    .ElectionSummaryBlocs.hidden-rows-visible .hidden-row > .ElectionSummaryBlocs__bloc{
+        max-height:30px;
     }
 
 .single-row{
@@ -42,14 +45,14 @@
 .ElectionSummaryBlocs__bloc{
     cursor:default;
     color:#fff;
-    flex:1;
-    min-width:var(--ElectionSummaryBlocs__bloc-width);
+    flex:0 0 var(--ElectionSummaryBlocs__bloc-width);
     padding:0 10px;
     border-radius:2px;
     display:flex;
     align-items:center;
     justify-content:center;
     gap:10px;
+    overflow:hidden;
 }
 
 .other-bloc{

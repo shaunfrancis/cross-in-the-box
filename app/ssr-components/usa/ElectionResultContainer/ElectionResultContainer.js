@@ -54,7 +54,7 @@ class USAElectionResultContainer extends ElectionResultContainer{
                     }
 
                     switch(baseId){
-                        case "NY": case "CT":
+                        case "NY": case "CT": case "SC":
                             const fusionResults = combineFusionResults(results);
                             // lazy fusion voting - essentially ignore the issue and just show as DEM/REP
                             fusionResults.forEach( result => result.party = result.results[0].party );

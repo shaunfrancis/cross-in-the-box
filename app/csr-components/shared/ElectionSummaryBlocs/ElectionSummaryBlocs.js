@@ -14,10 +14,14 @@ export default class ElectionSummaryBlocs{
         rowLength = Infinity,   // number?
         blocWidth = null        // string?
     }){
+        const styles = {};
+        if(blocWidth) styles["--ElectionSummaryBlocs__bloc-width"] = blocWidth;
+        if(rowLength != Infinity) styles["--ElectionSummaryBlocs__preferred-row-size"] = rowLength;
+
         const container = new Elt({
             tag: 'div',
             classList: ["ElectionSummaryBlocs"],
-            style: blocWidth ? {"--ElectionSummaryBlocs__bloc-width": blocWidth} : {}
+            style: styles
         });
         this.activeContainers.push(container);
 
@@ -29,16 +33,23 @@ export default class ElectionSummaryBlocs{
             });
         }
 
-        for(let i = 0; i < (shouldShowOther ? (data.length + 1) : data.length) / rowLength; i++){
+        for(let i = 0; i < (shouldShowOther ? 2 : 1); i++){
             const blocs = [];
-            for(let j = 0; j < rowLength; j++){
-                const position = (shouldShowOther && (i > 0 || j >= 4)) ? i*rowLength + j - 1 : i*rowLength + j;
+            for(let j = 0; j < (i == 0 ? rowLength : data.length - rowLength + 1); j++){
+                const position = (shouldShowOther && (i > 0 || j >= 4)) ? i*rowLength + j - 1 : j;
                 if(position >= data.length) break;
 
                 if(shouldShowOther && i == 0 && j == 4){
                     const bloc = new Elt({tag: 'div', classList: ["ElectionSummaryBlocs__bloc", "other-bloc"]});
-                    bloc.addEventListener('mouseover', () => { this.hover = true });
-                    bloc.addEventListener('mouseout', () => { this.hover = false });
+
+                    bloc.addEventListener('pointermove', () => { this.hover = true });
+                    bloc.addEventListener('pointerdown', () => { this.hover = true });
+                    bloc.addEventListener('pointerleave', event => {
+                        if(!event.pointerType || event.pointerType === 'mouse') this.hover = false;
+                    });
+                    window.addEventListener('touchstart', event => {
+                        if(!(event.target.closest(".ElectionSummaryBlocs__bloc.other-bloc"))) this.hover = false;
+                    });
                     
                     bloc.appendChild(
                         new Elt({tag: 'span', classList: ["ElectionSummaryBlocs__party"], innerHTML: "Other"})

@@ -1,10 +1,10 @@
 .Map__attribution{
-    color:rgb(102,102,102);
+    color:var(--dark-default-color);
     font-size:0.65em;
     text-align:center;
     margin:20px 30px 0 30px;
 }
 
 .Map__attribution a{
-    color:rgb(102,102,102);
+    color:var(--dark-default-color);
 }

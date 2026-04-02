@@ -30,9 +30,11 @@ class LandingGlobe extends \Base\Component{
 
             <div class="hover-popup hidden"></div>
             <main>
-                <hgroup>
-                    <img src="/public/images/logo-icon.png" alt="" />
-                    <h1>Cross In The Box</h1>
+                <hgroup class="LandingGlobe__heading">
+                    <div>
+                        <img src="/public/images/logo-icon.png" alt="" />
+                        <h1>Cross In The Box</h1>
+                    </div>
                     <p>Election results from around the globe</p>
                 </hgroup>
                 

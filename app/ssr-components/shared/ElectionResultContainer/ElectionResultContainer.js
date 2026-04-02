@@ -236,7 +236,7 @@ class ElectionResultContainer{
 
         summaries.sort( (a,b) => {
             const getCount = (x) => {
-                return (["vacant","speaker","ind"].includes(x.party.id)) ? -Infinity : x.count;
+                return (["VACANT","SPEAKER","IND"].includes(x.party.id.toUpperCase())) ? -Infinity : x.count;
             }
             return getCount(b) - getCount(a) || a.party.id.localeCompare(b.party.id);
         } );

@@ -1,4 +1,3 @@
-import ElectionSummaryBlocs from 'components/shared/ElectionSummaryBlocs/ElectionSummaryBlocs';
 import PopupBarGraph from 'components/shared/PopupBarGraph/PopupBarGraph';
 
 class UKScotlandElectionResultContainer extends UKElectionResultContainer{

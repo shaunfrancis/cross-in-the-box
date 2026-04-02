@@ -41,6 +41,7 @@
             opacity:0;
         }
     }
+    & .RegionBarGraph__fusion-total-row:before{ display:none }
 }
 
 .RegionBarGraph{

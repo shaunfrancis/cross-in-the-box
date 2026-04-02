@@ -14,7 +14,7 @@ class RegionPage extends \Shared\RegionPage{
         $subtitles = [];
         $subElectionType = "separate";
         switch(getBaseId($event['region']['id'])){
-            case "NY": case "CT":
+            case "NY": case "CT": case "SC":
                 $subElectionType = "fusion";
                 break;
             case "AK": case "ME":

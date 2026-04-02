@@ -234,7 +234,7 @@ class RegionBarGraph extends \Base\Component{
                 $elected = $isFusionCandidate ? ($isTotalRow ? $anyPartyElected : FALSE) : !empty($result['elected']);
 
                 $votesValue = "";
-                if($totalVotes > 0) $votesValue = number_format($result['votes'], 0, '.', ' ');
+                if($totalVotes > 0) $votesValue = number_format($result['votes'] ?? 0, 0, '.', ' ');
                 else if($elected && count($results) === 1) $votesValue = "Unopposed";
                 else if($elected) $votesValue = "Elected";
                 ?>
@@ -248,7 +248,7 @@ class RegionBarGraph extends \Base\Component{
                     data-fusion-group="<?= $candidate['candidates'][0]['name']; ?>"
                 >
                     <div class="RegionBarGraph__party RegionBarGraph__bloc bloc">
-                        <span><?= $isTotalRow ? $candidate['results'][0]['party'] . ' + ' . $fusionCount : $result['party']; ?></span>
+                        <span><?= $isTotalRow ? $candidate['results'][0]['party'] . ' + ' . ($fusionCount-1) : $result['party']; ?></span>
                         <div class="RegionBarGraph__hover"></div>
                     </div>
                     <?php if(!$withoutCandidateNames): ?>

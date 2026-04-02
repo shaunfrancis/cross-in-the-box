@@ -22,7 +22,8 @@
     <?php if(empty($_error)) : ?>
         <?= \USA\StateLinks::show($region['id']); ?>
         <section>
-            <p>Candidates and results for each of the 50 states and the District of Columbia are sourced from <a href="https://www.fec.gov/introduction-campaign-finance/election-and-voting-information/" target="_blank">the Federal Election Commission</a>. Results for Maine and Nebraska's congressional districts are sourced from their <a href="https://www.archives.gov/electoral-college/results" target="_blank">Certificates of Ascertainment of Electors</a>.</p>
+            <p>Data for the 2024 elections are sourced from the certified election results, usually found on the state's Secretary of State website.</p>
+            <p>Prior to 2024, data for each of the 50 states and the District of Columbia are sourced from <a href="https://www.fec.gov/introduction-campaign-finance/election-and-voting-information/" target="_blank">the Federal Election Commission</a>. Results for Maine and Nebraska's congressional districts are sourced from their <a href="https://www.archives.gov/electoral-college/results" target="_blank">Certificates of Ascertainment of Electors</a>.</p>
             <p>Data missing or incorrect? <a href="mailto:hello@crossinthebox.com?subject=Election%20data%20wrong%20or%20missing">Let us know.</a></p>
         </section>
     <?php endif; ?>

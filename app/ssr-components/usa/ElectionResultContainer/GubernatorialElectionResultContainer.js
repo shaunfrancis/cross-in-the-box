@@ -125,6 +125,56 @@ class USAGubernatorialElectionResultContainer extends USAElectionResultContainer
         );
     }
 
+    get mapHoverFunComponents(){
+        return { ...super.mapHoverFunComponents,
+            additionalContent: (id, regionResults, latestResultsUpdate) => {
+                if(regionResults.length === 0){
+                    const previouslyElectedHTML = (candidate, party, year) => {
+                        return [
+                            new Elt({tag: 'h4', innerHTML: candidate}),
+                            new Elt({tag: 'div', classList: ["ElectionResultContainer__flex-row"], children: [
+                                new Elt({
+                                    tag: 'div',
+                                    classList: ["ElectionResultContainer__bloc"],
+                                    style: {background: (party.color || "var(--default-color)"), color: party.textColor},
+                                    innerHTML: party.displayId
+                                }),
+                                new Elt({ tag: 'span', innerHTML: "elected in " + year }),
+                            ]}),
+                        ]
+                    }
+                    for(let electionIndex = 1; electionIndex <= 3; electionIndex++){
+                        const govYear = parseInt(this.data.election.substring(1)) - electionIndex;
+                        const govElectionId = "G" + govYear;
+                        
+                        const updates = CachedData.updates[govElectionId].filter( update => {
+                            return update.id == id && update.date <= CachedData.elections[this.data.election].date;
+                        });
+                        if(updates.length > 0){
+                            const latestUpdate = updates[updates.length - 1];
+                            const party = CachedData.parties.find( p => p.id == latestUpdate.party ) || DefaultParty;
+                            const winners = this.winFormula(latestUpdate.results.data);
+                            if(winners.length > 0) return previouslyElectedHTML(winners[0].candidates[0].name, party, latestUpdate.date.getFullYear());
+                        }
+                        else{
+                            const results = CachedData.results[govElectionId].filter( result => result.id === id );
+                            if(results.length > 0){
+                                const winners = this.winFormula(results);
+                                if(winners.length > 0){
+                                    const party = CachedData.parties.find( p => p.id == winners[0].party ) || DefaultParty;
+                                    return previouslyElectedHTML(winners[0].candidates[0].name, party, govYear);
+                                }
+                            }
+                        }
+                    }
+                    return [];
+                }
+
+                return super.mapHoverFunComponents.additionalContent(id, regionResults, latestResultsUpdate);
+            }
+        }
+    }
+
     fillMap(data){
 
         data.clickFun = (id) => {
