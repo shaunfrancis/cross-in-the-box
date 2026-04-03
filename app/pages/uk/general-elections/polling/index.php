@@ -16,6 +16,8 @@
     <?= \UK\PollGraph::show($polls); ?>
 </section>
 <section id="data" class="content-section white">
-    <?= PollTable::show($polls); ?>
+    <div class="block-scroller">
+        <?= PollTable::show($polls); ?>
+    </div>
     <span>Many of the polls on this page are sourced from <a href="https://en.wikipedia.org/wiki/Opinion_polling_for_the_next_United_Kingdom_general_election" target="_blank">Wikipedia</a> which allows the use of its content under the <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 License</a>.</span>
 </section>

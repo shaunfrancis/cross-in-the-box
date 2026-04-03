@@ -107,10 +107,12 @@ class CachedDataSkeleton{
             }
 
             const value = parent[propertyArray[propertyArray.length - 1]];
-            if(Array.isArray(value) && !this.requestsCompleted[path]){
-                value.push(...data);
+            if(!this.requestsCompleted[path]){
+                if(Array.isArray(value)){
+                    value.push(...data);
+                }
+                else parent[propertyArray[propertyArray.length - 1]] = data;
             }
-            else parent[propertyArray[propertyArray.length - 1]] = data;
 
             // Mark as path request completed to prevent merging multiple copies in future
             this.requestsCompleted[path] = true;

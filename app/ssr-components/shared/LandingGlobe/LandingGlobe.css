@@ -123,21 +123,25 @@ body.is-panning *{
     ::view-transition-old(globe), ::view-transition-new(globe){ transform-origin:center }
     
     #LandingGlobe{
+        padding:0;
         justify-content:center;
         view-transition-name:revert;
     }
-    
-    #Header:has(~ #LandingGlobe){
-        position:fixed;
-    }
 
     #LandingGlobe > main{
-        margin-top:20vh;
+        width:100vw;
+        margin:50svh 0 50px 0;
         z-index:10;
+        font-size:1.2em;
+        & hgroup.LandingGlobe__heading > div{
+            align-items:flex-start;
+        }
+        & hgroup.LandingGlobe__heading > p{
+            margin-top:10px;
+        }
     }
 
-    #LandingGlobe > canvas{
-        position:fixed;
-        pointer-events:none;
+    .LandingGlobe__article ul{
+        font-size:1.2em;
     }
 }

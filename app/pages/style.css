@@ -64,6 +64,7 @@ body{
     display:flex;
     flex-direction:column;
     min-height:100dvh;
+    overflow-x:hidden;
 }
 
 h1, h2, h3, h4, h5, h6{ margin: unset }
@@ -171,27 +172,32 @@ main > section > h1{
 section.shaded > h1{ margin-left: 0 }
 
 .arrow-link{
+    --arrow-link-width: 15px;
     font-size:1.2rem;
     text-decoration:none;
     color:var(--link-color);
     &:after{
-        content: "";
-        display:inline-block;
+        content: "\200B"; /* zero-width space to give inline elt its height */
+        background-position-y: 63%; /* magic baseline position */
+
+        background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0icmdiKDM1LCAzNSwgMTIzKSI+PHBhdGggZD0iTTguMTIyIDI0bC00LjEyMi00IDgtOC04LTggNC4xMjItNCAxMS44NzggMTJ6Ii8+PC9zdmc+");
+        background-repeat:no-repeat;
+        background-size:var(--arrow-link-width);
+        background-position-x:left;
+        transition:background-position-x 100ms;
+        
         margin-left:0.5rem;
-        aspect-ratio:1;
-        width:15px;
-        background:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0icmdiKDM1LCAzNSwgMTIzKSI+PHBhdGggZD0iTTguMTIyIDI0bC00LjEyMi00IDgtOC04LTggNC4xMjItNCAxMS44NzggMTJ6Ii8+PC9zdmc+");
-        transition:transform 100ms;
+        padding-right:calc(var(--arrow-link-width) * 1.15);
     }
     &:hover{
         text-decoration:underline;
         &:after{
-            transform:translateX(15%);
+            background-position-x:right;
         }
     }
 }
 :is(h1, h2, h3, h4, h5, h6) .arrow-link{ font-size:inherit }
-h1 .arrow-link:after{ width:30px }
+h1 .arrow-link{ --arrow-link-width:30px }
 
 body:not(:has(#hero)) main > *:first-child{
     margin-top:50px;
@@ -271,6 +277,12 @@ details summary .has-marker:after{
     text-overflow:ellipsis;
 }
 
+.block-scroller{
+    width:calc(100% + var(--lr-padding));
+    overflow-x:auto;
+    padding-bottom:30px;
+}
+
 .key-information{
     display:flex;
     gap:15px;
@@ -308,6 +320,12 @@ details summary .has-marker:after{
         display:none;
     }
 }
+@media screen and (max-width:768px) and (hover: none){
+    .hover-popup{ /* do not show hover popups on mobile devices */
+        opacity:0;
+        display:none;
+    }
+}
 
 .hr-separated:not(:last-child):after{
     content:"";
@@ -340,8 +358,8 @@ details summary .has-marker:after{
         margin-left:var(--left-gap);
     }
 
-    .arrow-link:after{ width:10px }
-    h1 .arrow-link:after{ width:25px }
+    .arrow-link{ --arrow-link-width:10px }
+    h1 .arrow-link{ --arrow-link-width:25px }
 
     #hero{
         margin-bottom:20px;

@@ -27,7 +27,7 @@
             <?= \UK\ElectionResultContainer\General::show(
                 election: "2024",
                 title: ["2024", "General", "Election"],
-                dedicatedPage: '/uk/general-elections/2024'
+                // dedicatedPage: '/uk/general-elections/2024'
             ); ?>
             <?= \UK\ElectionResultContainer\General::show(
                 election: "2019",

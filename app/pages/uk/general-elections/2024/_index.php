@@ -1,4 +1,4 @@
-<?php 
+<?php // this is a 404 for now
     namespace Shared;
     $heroNavItems = [
         [ 'title' => "Election result", 'src' => "/images/uk-nav-results.svg", 'id' => "election-result" ],

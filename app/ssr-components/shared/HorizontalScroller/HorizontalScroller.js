@@ -84,7 +84,7 @@ window.addEventListener('DOMContentLoaded', () => {
         itemsContainer.addEventListener('click', event => {
             const containerWidth = container.scrollWidth
                 - containerStyles.paddingLeft - containerStyles.paddingRight - (container.children.length - 1) * containerStyles.gap;
-            container.scrollLeft = (event.layerX / itemsContainer.clientWidth - window.innerWidth / containerWidth / 2) * container.scrollWidth;
+            container.scrollLeft = (event.offsetX / itemsContainer.clientWidth - window.innerWidth / containerWidth / 2) * container.scrollWidth;
         });
 
         const scrollToNext = (direction) => {

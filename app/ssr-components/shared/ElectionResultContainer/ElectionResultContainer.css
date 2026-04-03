@@ -113,18 +113,17 @@
     gap:5px;
 
     &.arrow-link{
+        --arrow-link-width: 30px;
         position:relative;
         &:before{
             content:"";
             position:absolute;
-            width:calc(100% - 30px - 0.5rem);
+            width:calc(100% - var(--arrow-link-width) - 1rem);
             height:100%;
             top:1px;
             z-index:-1;
         }
         &:after{
-            margin-left:calc(0.5rem - 5px);
-            width:30px;
             align-self:center;
         }
         &:hover{
@@ -242,8 +241,7 @@ button.ElectionResultContainer__messages-button{
     }
 
     .ElectionResultContainer__title h2, .ElectionResultContainer__title h2 a.arrow-link{
-        &:after{ width:25px }
-        &:before{ width:calc(100% - 25px - 0.5rem) }
+        --arrow-link-width: 25px;
         &:hover:before{ border-bottom:2px solid var(--link-color) }
     }
 

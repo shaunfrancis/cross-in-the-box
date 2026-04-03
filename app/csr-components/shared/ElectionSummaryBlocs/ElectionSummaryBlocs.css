@@ -6,7 +6,6 @@
     flex-direction:column;
     gap:5px;
     align-items:center;
-    height:25px;
     opacity:0;
 }
 .ElectionSummaryBlocs.visible{
@@ -15,6 +14,7 @@
 }
 
 .ElectionSummaryBlocs__row{
+    width:100%;
     max-width:calc( ( var(--ElectionSummaryBlocs__bloc-width) + 5px) * var(--ElectionSummaryBlocs__preferred-row-size) );
     display:flex;
     gap:5px;
@@ -23,6 +23,11 @@
     flex-wrap:wrap;
     justify-content:center;
 }
+    .hidden-row{
+        height:0;
+        overflow:visible;
+    }
+    
     .hidden-row > .ElectionSummaryBlocs__bloc{
         max-height:0;
         transition:max-height 100ms ease-in;

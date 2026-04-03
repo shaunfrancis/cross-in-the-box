@@ -1,4 +1,3 @@
-import ElectionSummaryBar from 'components/shared/ElectionSummaryBar/ElectionSummaryBar';
 import PopupBarGraph from 'components/shared/PopupBarGraph/PopupBarGraph';
 
 class USAGubernatorialElectionResultContainer extends USAElectionResultContainer{
@@ -29,8 +28,6 @@ class USAGubernatorialElectionResultContainer extends USAElectionResultContainer
         let newFills = []; // {id: string, color: string, opacity?: number}[]
 
         for(let electionIndex = 3; electionIndex >= 0; electionIndex--){
-            if(this.visibleMap.type === "geographic" && electionIndex !== 0) continue;
-
             const govElectionId = "G" + (parseInt(this.data.election.substring(1)) - electionIndex);
 
             const regionCounts = {};
@@ -74,6 +71,8 @@ class USAGubernatorialElectionResultContainer extends USAElectionResultContainer
                 };
             });
         }
+        console.log(this.data.election);
+        console.log(newFills);
         this.fillMap({ regions: CachedData.regions, fills: newFills });
     }
 
