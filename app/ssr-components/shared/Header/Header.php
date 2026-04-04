@@ -16,22 +16,26 @@ class Header extends \Base\Component{
                 />
             </a>
 
-            <h1><a href="/<?= $countryAbbrev; ?>" class="unstyled">
-                <?php if(!empty($countryFlag)) : ?>
-                    <img src="/public/images/<?= $countryFlag; ?>" class="Header__flag" alt="" />
-                <?php endif; ?>
-                <span><?= $countryName; ?></span>
-            </a></h1>
+            <?php if(!empty($countryAbbrev)) : ?>
+                <h1><a href="/<?= $countryAbbrev; ?>" class="unstyled">
+                    <?php if(!empty($countryFlag)) : ?>
+                        <img src="/public/images/<?= $countryFlag; ?>" class="Header__flag" alt="" />
+                    <?php endif; ?>
+                    <span><?= $countryName; ?></span>
+                </a></h1>
+            <?php endif; ?>
 
-            <nav>
-                <ul>
-                    <?php foreach($links as $link) : ?>
-                        <li class="<?= str_starts_with('/' . implode('/', $_request), $link['path']) ? "Header__selected" : ""; ?>">
-                            <a href="<?= $link['path']; ?>"><?= $link['title']; ?></a>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            </nav>
+            <?php if(!empty($links)) : ?>
+                <nav>
+                    <ul>
+                        <?php foreach($links as $link) : ?>
+                            <li class="<?= str_starts_with('/' . implode('/', $_request), $link['path']) ? "Header__selected" : ""; ?>">
+                                <a href="<?= $link['path']; ?>"><?= $link['title']; ?></a>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </nav>
+            <?php endif; ?>
         </header>
 
     <?php }

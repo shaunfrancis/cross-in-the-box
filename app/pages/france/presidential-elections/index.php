@@ -18,6 +18,7 @@
                 id: "map-type",
                 from: "/images/france-cartographic-icon.svg",
                 to: "/images/france-geographic-icon.svg",
+                ariaLabels: ['off' => 'Cartographic maps', 'on' => 'Geographic maps', 'toggle' => 'Switch map style']
             ) ?>
         </div>
         <?= ElectionResultsSection::open(); ?>

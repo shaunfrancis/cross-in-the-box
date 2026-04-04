@@ -7,12 +7,12 @@ class HorizontalScroller extends \Base\Component{
         string $id,
     ): void { ?>
         <div class="HorizontalScroller" data-id="<?= $id; ?>">
-            <button class="HorizontalScroller__button"></button>
+            <button aria-label="Scroll to the left" class="HorizontalScroller__button"></button>
             <div class="HorizontalScroller__track">
                 <div class="HorizontalScroller__thumb"></div>
                 <div class="HorizontalScroller__items"></div>
             </div>
-            <button class="HorizontalScroller__button"></button>
+            <button aria-label="Scroll to the right" class="HorizontalScroller__button"></button>
         </div>
     <?php }
 

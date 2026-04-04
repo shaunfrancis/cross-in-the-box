@@ -379,7 +379,7 @@ class ElectionResultContainer{
     
                         const span = new Elt({
                             tag: 'a',
-                            classList: ["interactive", "unstyled"],
+                            classList: ["interactive"],
                             href: urlFun(slug, type),
                             innerHTML: displayText
                         });

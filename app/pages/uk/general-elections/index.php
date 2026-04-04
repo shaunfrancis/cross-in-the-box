@@ -19,6 +19,7 @@
                 id: "map-type",
                 from: "/images/uk-cartographic-icon.svg",
                 to: "/images/uk-geographic-icon.svg",
+                ariaLabels: ['off' => 'Cartographic maps', 'on' => 'Geographic maps', 'toggle' => 'Switch map style']
             ) ?>
         </div>
         <?= ElectionResultsSection::open(); ?>

@@ -17,7 +17,7 @@ class HeroNav extends \Base\Component{
         ob_start(); ?>
         
         <li class="HeroNav__item" data-id="<?= $item['id'] ?? ''; ?>"<?= !empty($item['focus']) ? 'data-focus="' . $item['focus'] . '"' : ''; ?>> 
-            <img src="/public/<?= $item['src']; ?>" />
+            <img src="/public/<?= $item['src']; ?>" alt="" />
             <span><?= $item['title']; ?></span>
         </li>
     

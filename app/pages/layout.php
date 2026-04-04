@@ -1,6 +1,6 @@
 <?php namespace Shared; ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <script>
         window.addEventListener("pagereveal", (event) => {
@@ -13,7 +13,10 @@
         if(!empty($_error)) echo ($_error_title ?? $_error) . " | ";
         echo implode(" | ", $_title ?? []); ?><?= count($_title ?? []) > 0 ? " | " : ""; 
     ?>Cross In The Box</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <?php if(!empty($_description) && empty($_error)) : ?><meta name="description" content="<?= $_description[0]; ?>" /><?php endif; ?>
+
     <link rel="stylesheet" type="text/css" href="/compiled/style.css" />
     <?php if(!empty($_country)) : ?><script src="/compiled/<?= $_country; ?>.js"></script><?php endif; ?>
 

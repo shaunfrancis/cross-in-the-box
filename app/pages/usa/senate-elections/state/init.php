@@ -22,3 +22,4 @@ usort($data['events'], function($a, $b){
 });
 
 $_title[] = $region['title'];
+$_description[] = "Browse Senate election results and data for {$region['title']}.";

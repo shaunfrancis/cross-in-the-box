@@ -34,3 +34,4 @@ if(!empty($data['events'][0]['region']['title']) && $data['events'][0]['region']
 }
 
 $_title[] = $region['title'];
+$_description[] = "Browse election results and data for the {$region['title']} constituency.";

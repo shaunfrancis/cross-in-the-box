@@ -34,3 +34,5 @@ if(!empty($data['events'][0]['region']['title']) && $data['events'][0]['region']
 }
 
 $_title[] = $region['title'];
+if($region['id'] === "2014List") $_description[] = "Browse party list vote data for Hungarian parliamentary elections.";
+else $_description[] = "Browse parliamentary election results and data for the {$region['title']} constituency.";

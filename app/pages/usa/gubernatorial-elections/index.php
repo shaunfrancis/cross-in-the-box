@@ -18,6 +18,7 @@
                 id: "map-type",
                 from: "/images/usa-cartographic-icon.svg",
                 to: "/images/usa-geographic-icon.svg",
+                ariaLabels: ['off' => 'Cartographic maps', 'on' => 'Geographic maps', 'toggle' => 'Switch map style']
             ) ?>
         </div>
         <?= ElectionResultsSection::open(); ?>

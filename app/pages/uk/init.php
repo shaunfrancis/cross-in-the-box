@@ -1,6 +1,7 @@
 <?php namespace Shared;
 
 $_title[] = "United Kingdom";
+$_description[] = "Explore election results across the United Kingdom with our interactive maps, including general elections, the Scottish Parliament, the Senedd Cymru (Welsh Parliament) and the Northern Ireland Assembly.";
 $_countryAbbrev = "uk";
 $_countryName = "United Kingdom";
 $_countryFlag = "uk-flag.svg";
