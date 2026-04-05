@@ -127,7 +127,9 @@ class USASenateElectionResultContainer extends USAElectionResultContainer{
                 if(regionIds.includes(result.id)) return; // result overwritten by a later election
 
                 const regionUpdates = (electionIndex !== 0 || this.attributes.showChanges) 
-                    ? CachedData.updates[senateElectionId].filter( update => update.id == result.id )
+                    ? CachedData.updates[senateElectionId].filter( update => {
+                        return update.id == result.id && update.date <= CachedData.elections[this.data.election].date;
+                    })
                     : [];
 
                 let winner = regionUpdates.length > 0 ? regionUpdates[regionUpdates.length - 1].party : result.party;
