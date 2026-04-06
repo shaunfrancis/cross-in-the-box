@@ -12,9 +12,7 @@ class ElectionResultContainer{
 
         this.data = {
             election: this.structure.container.getAttribute('data-election'),
-            regionsType: this.structure.container.getAttribute('data-regions-type')
-        };
-        this.attributes = {
+            regionsType: this.structure.container.getAttribute('data-regions-type'),
             messageGroup: this.structure.messages.container?.getAttribute('data-group'),
             showChanges: this.structure.container.getAttribute('data-show-changes')
         };
@@ -43,10 +41,10 @@ class ElectionResultContainer{
                     const instance = ElectionResultContainer.elementMaps.get(entry.target);
                     if(instance){
                         ElectionResultContainer.elementMaps.delete(entry.target);
-                        await instance.downloadData(instance.data, instance.attributes);
+                        await instance.downloadData(instance.data);
                         instance.addSummary();
-                        instance.updateMap(instance.attributes.showChanges);
-                        if(CachedData.messages[instance.attributes.messageGroup]) instance.addMessages();
+                        instance.updateMap(instance.data.showChanges);
+                        if(CachedData.messages[instance.data.messageGroup]) instance.addMessages();
                     }
                 }
             });
@@ -72,7 +70,7 @@ class ElectionResultContainer{
             },
             additionalContent: (id, regionResults, latestResultsUpdate, election) => {
                 const popupGraphData = { results: latestResultsUpdate?.results.data || regionResults, parties: CachedData.parties };
-                if(this.attributes.showChanges){
+                if(this.data.showChanges){
                     if(latestResultsUpdate) popupGraphData.title = latestResultsUpdate.results.title.join(" ").replace("- ","-");
                 }
                 return [PopupBarGraph.render(popupGraphData)]
@@ -90,8 +88,9 @@ class ElectionResultContainer{
             const regionResults = CachedData.results[this.data.election]
                 .filter( result => result.id == id )
                 .sort( (a,b) => b.votes - a.votes );
+            const regionAttributes = CachedData.attributes.filter( attr => attr.region_id == region.id && attr.applies_to == this.data.election );
             const regionUpdates = CachedData.updates[this.data.election].filter( update => update.id == region.id );
-            const latestResultsUpdate = this.attributes.showChanges && regionUpdates.find( update => update.results );
+            const latestResultsUpdate = this.data.showChanges && regionUpdates.find( update => update.results );
             latestResultsUpdate?.results.data.sort( (a,b) => b.votes - a.votes );
 
 
@@ -104,7 +103,7 @@ class ElectionResultContainer{
             const winnerElt = this.mapHoverFunComponents.winningCandidate(id, regionResults, winner);
             if(winnerElt) popup.appendChild(winnerElt);
 
-            if(this.attributes.showChanges){
+            if(this.data.showChanges){
                 // Party progression blocs
                 const partyProgression = [CachedData.parties.find( party => party.id === initialWinner?.party ) || DefaultParty];
                 regionUpdates.forEach( update => {
@@ -121,6 +120,10 @@ class ElectionResultContainer{
                         return new Elt({ tag: 'li', innerHTML: update.note });
                     })
                 }));
+            }
+            else{ // attributes note; assume changes explained in showChanges updates otherwise
+                const note = regionAttributes.find( attr => attr.label == "map_note" );
+                if(note) popup.append( new Elt({ tag: 'p', innerHTML: note.value }) );
             }
 
             // Additional content
@@ -161,13 +164,14 @@ class ElectionResultContainer{
         }
     }
 
-    async downloadData({ election, regionsType = null }, { messageGroup, showChanges }){
+    async downloadData({ election, regionsType = null, messageGroup, showChanges }){
     
         if(
             CachedData.regions.length === 0 || 
             (regionsType != null && CachedData.regions.filter( region => region.type == regionsType ).length == 0)
         ) await CachedData.fetchRegions(regionsType);
 
+        if(CachedData.attributes.length === 0) await CachedData.fetchAttributes();
         if(CachedData.parties.length === 0) await CachedData.fetchParties();
         if(!CachedData.results[election]) await CachedData.fetchResults(election);
 
@@ -214,7 +218,7 @@ class ElectionResultContainer{
         const summaries = []; // {candidate: string, party : Party, count : number}[]
                 
         this.winFormula(CachedData.results[this.data.election]).forEach( result => {
-            const regionUpdates = this.attributes.showChanges ? CachedData.updates[this.data.election].filter( update => update.id == result.id ) : [];
+            const regionUpdates = this.data.showChanges ? CachedData.updates[this.data.election].filter( update => update.id == result.id ) : [];
 
             let winner = regionUpdates.length > 0 ? regionUpdates[regionUpdates.length - 1].party : result.party;
             let party = CachedData.parties.find( p => p.id === winner) || DefaultParty;
@@ -289,7 +293,7 @@ class ElectionResultContainer{
                 const selector = regionCounts[result.id].total === 1 ? null : regionCounts[result.id].current;
 
                 const regionUpdates = CachedData.updates[this.data.election].filter( u => u.id == result.id );
-                if(this.attributes.showChanges && regionUpdates.length > 0){
+                if(this.data.showChanges && regionUpdates.length > 0){
                     const latestUpdate = regionUpdates[regionUpdates.length - 1];
                     const party = CachedData.parties.find( p => p.id == latestUpdate.party ) || DefaultParty;
                     if(party) newFills.push({
@@ -315,7 +319,7 @@ class ElectionResultContainer{
 
     addMessages({
         dateFun,
-        hideTime = this.attributes.showChanges,
+        hideTime = this.data.showChanges,
         timezoneArgs = {},
         urlFun = (slug, type) => "#",
         childrenFun
@@ -399,7 +403,7 @@ class ElectionResultContainer{
             return spans;
         }
 
-        CachedData.messages[this.attributes.messageGroup].forEach(message => {
+        CachedData.messages[this.data.messageGroup].forEach(message => {
             const square = message.square ? (CachedData.parties.find(p => p.id == message.square) || DefaultParty) : null;
             const oldSquare = message.old_square ? (CachedData.parties.find(p => p.id == message.old_square) || DefaultParty) : null;
 

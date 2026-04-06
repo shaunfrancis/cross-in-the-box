@@ -30,7 +30,7 @@ class HungaryElectionResultContainer extends ElectionResultContainer{
             },
             additionalContent: (id, regionResults, latestResultsUpdate) => {
                 const popupGraphData = { results: latestResultsUpdate?.results.data || regionResults, parties: CachedData.parties };
-                if(this.attributes.showChanges){
+                if(this.data.showChanges){
                     if(latestResultsUpdate) popupGraphData.title = latestResultsUpdate.results.title.join(" ").replace("- ","-");
                     
                 }

@@ -1,4 +1,6 @@
 class CachedData extends CachedDataSkeleton{
+    static fetchAttributes(){ return this.downloadProperty(["attributes"], Endpoint + "/attributes/vatican") }
+
     static fetchParties(){ return this.downloadProperty(["parties"], Endpoint + "/parties/vatican") }
 
     static fetchRegions(type = null){

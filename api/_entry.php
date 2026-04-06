@@ -42,6 +42,10 @@
     if(!in_array($country, $accepted_countries)) exit( json_encode(APIService::fail(404, "Not found")) );
     
     $response = match($resource){
+        "attributes" => AttributesService::call($request, $params),
+                                                                // attributes/{country}
+                                                                // get all region data attributes for a country
+
         "elections" => ElectionsService::call($request, $params),   
                                                                 // elections/{country}/{election}
                                                                 // get election information for a country by election ID

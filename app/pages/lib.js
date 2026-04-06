@@ -14,6 +14,9 @@ class CachedDataSkeleton{
         } );
     }
 
+    static attributes = [];
+    static fetchAttributes(){ return this.fetchArray(); }
+
     static parties = [];
     static fetchParties(){ return this.fetchArray(); }
 

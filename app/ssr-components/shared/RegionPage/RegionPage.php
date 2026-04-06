@@ -109,6 +109,8 @@ class RegionPage extends \Base\Component{
                 return strcmp($surname($a), $surname($b));
             }
         });
+
+        $graph_note = array_find($attributes ?? [], fn($attr) => $attr['label'] == "graph_note" && $attr['applies_to'] == $event['data']['id']);
         ?>
         <article class="block">
             <h2>
@@ -118,6 +120,9 @@ class RegionPage extends \Base\Component{
                     <?= str_replace("- ", "-", implode(" ", $event['data']['title'])); ?>
                 <?php endif; ?>
             </h2>
+            <?php if(!empty($graph_note)) : ?>
+                <span><?= $graph_note['value']; ?></span>
+            <?php endif; ?>
             <?= RegionBarGraph::show(
                 results: $event['data']['results'],
                 subtitles: $graphArgs['subtitles'] ?? [],

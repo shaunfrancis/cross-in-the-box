@@ -7,13 +7,14 @@ class USASenateElectionResultContainer extends USAElectionResultContainer{
         super(elt, USASenate);
     }
 
-    async downloadData({ election, regionsType = null }, { messageGroup, showChanges }){
+    async downloadData({ election, regionsType = null, messageGroup, showChanges }){
     
         if(
             CachedData.regions.length === 0 || 
             (regionsType != null && CachedData.regions.filter( region => region.type == regionsType ).length == 0)
         ) await CachedData.fetchRegions(regionsType);
 
+        if(CachedData.attributes.length === 0) await CachedData.fetchAttributes();
         if(CachedData.parties.length === 0) await CachedData.fetchParties();
 
         for(let i = 0; i <= 2; i++){
@@ -126,7 +127,7 @@ class USASenateElectionResultContainer extends USAElectionResultContainer{
             this.winFormula(CachedData.results[senateElectionId]).forEach( result => {
                 if(regionIds.includes(result.id)) return; // result overwritten by a later election
 
-                const regionUpdates = (electionIndex !== 0 || this.attributes.showChanges) 
+                const regionUpdates = (electionIndex !== 0 || this.data.showChanges) 
                     ? CachedData.updates[senateElectionId].filter( update => {
                         return update.id == result.id && update.date <= CachedData.elections[this.data.election].date;
                     })

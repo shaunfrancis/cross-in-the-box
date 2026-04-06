@@ -49,7 +49,7 @@ class USAElectionResultContainer extends ElectionResultContainer{
                 if(subElections.length === 1){
 
                     const popupGraphData = { results: results, ...params };
-                    if(this.attributes.showChanges && latestResultsUpdate){
+                    if(this.data.showChanges && latestResultsUpdate){
                         popupGraphData.title = latestResultsUpdate.results.title.join(" ").replace("- ","-");
                     }
 
