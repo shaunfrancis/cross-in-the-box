@@ -126,6 +126,14 @@ class ElectionResultContainer{
                 if(note) popup.append( new Elt({ tag: 'p', innerHTML: note.value }) );
             }
 
+            const counted = regionAttributes.find( attr => attr.label == "counted");
+            if(counted && parseFloat(counted.value) > 0){
+                let value;
+                if(counted.value >= 100) value = "Estimated >99% counted";
+                else value = `Estimated ${counted.value}% counted`;
+                popup.append( new Elt({ tag: 'p', innerHTML: value }) );
+            }
+
             // Additional content
             const additionalContent = this.mapHoverFunComponents.additionalContent(id, regionResults, latestResultsUpdate, this.data.election);
             if(additionalContent) popup.append(...additionalContent);
