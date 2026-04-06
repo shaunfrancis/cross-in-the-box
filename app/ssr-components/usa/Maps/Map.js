@@ -31,7 +31,7 @@ class USASenate extends Map{
         hoverFun = (active, popup, id) => {},       // optional function to execute on hover of regions
                                                     // ?(active : boolean, popup : HTMLDivElement, id?: string) => void
 
-        clickFun = (id) => {},                      // optional function to execute on click of regions
+        clickFun = (event, id) => {},               // optional function to execute on click of regions
                                                     // ?(id?: string) => void
 
         loadFun = (mapContainer, electionResultContainer) => {}                 
@@ -83,8 +83,8 @@ class USASenate extends Map{
                     }
                 });
 
-                regionElt.addEventListener('click', () => {
-                    clickFun(regionFills[0].id); // if there are two elections then clickFun just directs to first one
+                regionElt.addEventListener('click', event => {
+                    clickFun(event, regionFills[0].id); // if there are two elections then clickFun just directs to first one
                 }, { signal: this.eventController.signal });
             });
         });

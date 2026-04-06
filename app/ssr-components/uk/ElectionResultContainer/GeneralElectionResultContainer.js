@@ -47,9 +47,9 @@ class UKGeneralElectionResultContainer extends UKElectionResultContainer{
 
     fillMap(data){
 
-        data.clickFun = (id) => {
+        data.clickFun = (event, id) => {
             let region = CachedData.regions.find( r => r.id == id );
-            if(region) window.location.href = '/uk/general-elections/constituency/' + regionToSlug(region.title);
+            if(region) openWindow(event, '/uk/general-elections/constituency/' + regionToSlug(region.title));
         }
 
         super.fillMap(data);

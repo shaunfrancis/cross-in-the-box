@@ -17,9 +17,9 @@ class CanadaElectionResultContainer extends ElectionResultContainer{
 
     fillMap(data){
 
-        data.clickFun = (id) => {
+        data.clickFun = (event, id) => {
             let region = CachedData.regions.find( r => r.id == id );
-            if(region) window.location.href = '/canada/federal-elections/riding/' + regionToSlug(region.title);
+            if(region) openWindow(event, '/canada/federal-elections/riding/' + regionToSlug(region.title));
         }
 
         super.fillMap(data);

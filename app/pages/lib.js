@@ -127,6 +127,11 @@ class CachedDataSkeleton{
     }
 };
 
+const openWindow = (event, path) => {
+    if(event.metaKey || event.ctrlKey) window.open(path, '_blank');
+    else window.location.href = path;
+}
+
 const DefaultParty = window.DefaultParty = {
     id: "?",
     displayId: "?",

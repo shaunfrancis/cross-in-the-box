@@ -235,9 +235,9 @@ class USASenateElectionResultContainer extends USAElectionResultContainer{
 
     fillMap(data){
 
-        data.clickFun = (id) => {
+        data.clickFun = (event, id) => {
             let region = CachedData.regions.find( r => r.id == id );
-            if(region) window.location.href = '/usa/senate-elections/state/' + regionToSlug(region.title);
+            if(region) openWindow(event, '/usa/senate-elections/state/' + regionToSlug(region.title));
         }
 
         data.loadFun = (mapContainer, electionResultContainer) => {

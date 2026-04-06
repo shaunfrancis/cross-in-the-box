@@ -177,9 +177,9 @@ class USAGubernatorialElectionResultContainer extends USAElectionResultContainer
 
     fillMap(data){
 
-        data.clickFun = (id) => {
+        data.clickFun = (event, id) => {
             let region = CachedData.regions.find( r => r.id == id );
-            if(region) window.location.href = '/usa/gubernatorial-elections/state/' + regionToSlug(region.title);
+            if(region) openWindow(event, '/usa/gubernatorial-elections/state/' + regionToSlug(region.title));
         }
 
         super.fillMap(data);

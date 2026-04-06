@@ -34,7 +34,7 @@ class Map{
         hoverFun = (active, popup, id) => {},       // optional function to execute on hover of regions
                                                     // ?(active : boolean, popup : HTMLDivElement, id?: string) => void
 
-        clickFun = (id) => {},                      // optional function to execute on click of regions
+        clickFun = (event, id) => {},               // optional function to execute on click of regions
                                                     // ?(id?: string) => void
 
         loadFun = (mapContainer, electionResultContainer) => {}                 
@@ -69,8 +69,8 @@ class Map{
                     });
 
                     regionElt.removeEventListener('click', this.click);
-                    regionElt.addEventListener('click', () => {
-                        clickFun(region.id);
+                    regionElt.addEventListener('click', event => {
+                        clickFun(event, region.id);
                     }, { signal: this.eventController.signal });
                 });
             });

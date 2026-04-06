@@ -15,9 +15,9 @@ class USAHouseElectionResultContainer extends USAElectionResultContainer{
 
     fillMap(data){
 
-        data.clickFun = (id) => {
+        data.clickFun = (event, id) => {
             let region = CachedData.regions.find( r => r.id == id );
-            if(region) window.location.href = '/usa/house-elections/district/' + regionToSlug(region.title);
+            if(region) openWindow(event, '/usa/house-elections/district/' + regionToSlug(region.title));
         }
 
         super.fillMap(data);

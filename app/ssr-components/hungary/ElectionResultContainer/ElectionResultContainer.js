@@ -41,9 +41,9 @@ class HungaryElectionResultContainer extends ElectionResultContainer{
 
     fillMap(data){
 
-        data.clickFun = (id) => {
+        data.clickFun = (event, id) => {
             let region = CachedData.regions.find( r => r.id == id );
-            if(region) window.location.href = '/hungary/parliamentary-elections/constituency/' + regionToSlug(region.title);
+            if(region) openWindow(event, '/hungary/parliamentary-elections/constituency/' + regionToSlug(region.title));
         }
 
         super.fillMap(data);
