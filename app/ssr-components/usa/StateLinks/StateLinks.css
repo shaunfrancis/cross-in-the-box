@@ -1,0 +1,28 @@
+.StateLinks{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+.StateLinks__button-group{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:10px;
+}
+
+.StateLinks__button{
+    all:unset;
+    display:inline-block;
+    cursor:pointer;
+    border-radius:2px;
+    padding:5px 10px;
+    border:1px solid rgba(200,200,200,1);
+    min-width:75px;
+    position:relative;
+    font-size:16px;
+    background:rgb(240,240,240);
+    color:#000;
+    box-sizing:border-box;
+    &.current{ border:2px solid black }
+}

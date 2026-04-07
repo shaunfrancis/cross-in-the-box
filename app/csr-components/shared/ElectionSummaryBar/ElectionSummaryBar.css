@@ -1,0 +1,69 @@
+.ElectionSummaryBar{
+    margin:5px 0;
+    display:flex;
+    align-items:center;
+    height:25px;
+    gap:2px;
+    width:100%;
+    max-width:750px;
+}
+
+.ElectionSummaryBar__summary-segment{
+    cursor:pointer;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    height:100%;
+    container-name: segment;
+    container-type: size;
+}
+.ElectionSummaryBar__summary-segment:before, .ElectionSummaryBar__summary-segment:after{ content: "" }
+.ElectionSummaryBar__summary-segment:first-child{ border-top-left-radius:2px; border-bottom-left-radius:2px }
+.ElectionSummaryBar__summary-segment:last-child{ border-top-right-radius:2px; border-bottom-right-radius:2px }
+
+@container segment (width < 95px){
+    .ElectionSummaryBar__summary-segment-party.prioritise + .ElectionSummaryBar__summary-segment-count{ display:none }
+}
+@container segment (width < 65px){
+    .ElectionSummaryBar__summary-segment-party:not(.prioritise){ display:none }
+}
+@container segment (width < 28px){ 
+    .ElectionSummaryBar__summary-segment-party, .ElectionSummaryBar__summary-segment-count{ display:none }
+}
+
+.ElectionSummaryBar__summary-segment.outstanding{
+    background-image:linear-gradient(135deg, #eee 22.22%, #ddd 22.22%, #ddd 50%, #eee 50%, #eee 72.22%, #ddd 72.22%, #ddd 100%);
+    background-size:30px 30px;
+}
+
+
+.ElectionSummaryBar__summary-segment-party{
+    font-weight:500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ElectionSummaryBar__summary-segment-count{
+    font-weight:400;
+}
+
+.ElectionSummaryBar__hover-party{
+    display:flex;
+    gap:5px;
+    align-items:center;
+    font-weight:300;
+    width:max-content;
+    & > .square{
+        width:16px;
+        height:16px;
+        border-radius:2px;
+    }
+}
+
+@media screen and (max-width:768px){
+    .ElectionSummaryBar__summary-segment{
+        padding:0 5px;
+    }
+}

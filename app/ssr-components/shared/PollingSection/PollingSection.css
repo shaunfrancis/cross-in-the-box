@@ -1,0 +1,18 @@
+.PollingSection{
+    display:flex;
+    flex-wrap:wrap;
+    margin:0 var(--left-gap);
+    gap:10px;
+}
+
+.PollingSection > div{
+    background:#fff;
+    padding:30px;
+    box-shadow:1px 1px 0 1px var(--box-shadow-color);
+    text-align:center;
+}
+
+.PollingSection__graph, .PollingSection__table{
+    flex:1;
+    max-width:100%;
+}

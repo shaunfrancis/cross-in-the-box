@@ -1,0 +1,74 @@
+.HorizontalScroller{
+    height:30px;
+    width:calc(100% - var(--left-gap) - 50px);
+    margin:0 50px 10px var(--left-gap);
+    display:flex;
+    gap:5px;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    user-select:none;
+    &.hidden{ display:none }
+}
+
+.HorizontalScroller__button{
+    flex:0 0 30px;
+    height:100%;
+    background:#fff center / 10px no-repeat;
+    &:first-child{
+        border-top-right-radius:0;
+        border-bottom-right-radius:0;
+        background-image:url("data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNIDE1Ljg3OCwyNCAyMCwyMCAxMiwxMiAyMCw0IDE1Ljg3OCwwIDQsMTIgWiIvPjwvc3ZnPg==");
+    }
+    &:last-child{
+        border-top-left-radius:0;
+        border-bottom-left-radius:0;
+        background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzAwMCI+PHBhdGggZD0iTTguMTIyIDI0bC00LjEyMi00IDgtOC04LTggNC4xMjItNCAxMS44NzggMTJ6Ii8+PC9zdmc+");
+    }
+}
+
+.HorizontalScroller__track{
+    flex:1;
+    height:100%;
+    position:relative;
+    overflow:hidden;
+}
+
+.HorizontalScroller__thumb{
+    cursor:move;
+    height:100%;
+    background:var(--default-color);
+    position:absolute;
+    top:0;
+    opacity:0.5;
+}
+
+.HorizontalScroller__items{
+    height:100%;
+    width:100%;
+    display:flex;
+    & > div{
+        box-sizing:border-box;
+        height:100%;
+        background:#fbfbfc;
+        border-inline:1px solid #f0f0f0;
+        line-height:30px;
+        padding:0 10px;
+        white-space:nowrap;
+        text-overflow:ellipsis;
+        overflow:hidden;
+        color:var(--default-color);
+        font-size:0.9em;
+        pointer-events:none;
+    }
+}
+
+@media (prefers-contrast: more) {
+    .HorizontalScroller__items > div{ color: #000 }
+}
+
+@media screen and (max-width:768px){
+    .HorizontalScroller{
+        width:calc(100% - 2 * var(--left-gap));
+        margin-right:var(--left-gap);
+    }
+}

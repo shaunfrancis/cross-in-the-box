@@ -1,0 +1,204 @@
+/*  Parent section should have a grid display;
+*   RegionBarGraph will then inherit subgrid.
+*   This ensures that all RegionBarGraphs have the same column widths on the page.
+*   RegionBarGraphs could otherwise differ because of different content widths.
+*/
+    main section:has(> article > .RegionBarGraph){
+        --max-rounds: 3;
+        display:grid;
+        grid-template-columns:30px var(--party-width) repeat(var(--max-rounds), minmax(20px, min-content)) 1fr 30px;
+        row-gap:30px;
+    }
+    main section:has(> article > .RegionBarGraph.without-candidate-names){
+        grid-template-columns:30px var(--party-width) repeat( calc(var(--max-rounds) - 1), minmax(20px, min-content)) 1fr 30px;
+    }
+
+    main section:has(> article > .RegionBarGraph) > *{
+        grid-column: 1 / -1;
+    }
+
+    article:has(> .RegionBarGraph){
+        grid-column: 1 / -1;
+        display:grid;
+        grid-template-columns:subgrid;
+    }
+
+    article:has(> .RegionBarGraph) > *{
+        grid-column: 1 / -1;
+    }
+
+.RegionBarGraph.pre-hydration{
+    .RegionBarGraph__heading > .RegionBarGraph__bloc{
+        background: var(--light-default-color);
+    }
+    & :not(.RegionBarGraph__heading) .RegionBarGraph__bloc:not(.RegionBarGraph__eliminated), .RegionBarGraph__bar{
+        background:var(--default-color);
+    }
+    & :not(.RegionBarGraph__heading) .RegionBarGraph__party{
+        text-transform:uppercase;
+        cursor:default;
+        &:hover .RegionBarGraph__hover{
+            opacity:0;
+        }
+    }
+    & .RegionBarGraph__fusion-total-row:before{ display:none }
+}
+
+.RegionBarGraph{
+    display:grid;
+    grid-template-columns:subgrid;
+    grid-column: 1 / -1;
+    --rounds: 3;
+    margin-top:20px;
+    gap:5px;
+}
+.RegionBarGraph > *{ grid-column: 1 / -1 }
+
+.RegionBarGraph > h3{ margin-bottom: 5px}
+
+.RegionBarGraph__row{
+    color:#fff;
+    font-weight:350;
+    display:grid;
+    grid-template-columns:subgrid;
+    grid-column-start:2;
+    position:relative;
+}
+
+.RegionBarGraph__heading > .RegionBarGraph__bloc{
+    background: var(--light-default-color);
+    color:#555;
+    cursor:default;
+    font-weight:normal;
+}
+
+.RegionBarGraph__fusion-total-row{
+    cursor:pointer;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    user-select:none;
+    & > :is(.bloc, .RegionBarGraph__bar-container){ cursor:pointer }
+
+    &:before{
+        content: "";
+        cursor:pointer;
+        position:absolute;
+        width:10px;
+        height:100%;
+        top:0;
+        left:-20px;
+        background-image:_url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000'%3E%3Cpath d='M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z'/%3E%3C/svg%3E");
+        background-repeat:no-repeat;
+        background-position:left;
+        transform:rotate(180deg);
+    }
+    &.open:before{ transform:rotate(90deg) }
+}
+.RegionBarGraph__fusion-hidden-row{
+    &:not(.visible){ display:none }
+    &:before{
+        content: "";
+        position:absolute;
+        width:2px;
+        height:100%;
+        top:0;
+        left:-16px;
+        background:var(--light-default-color);
+    }
+}
+
+.RegionBarGraph__bloc{
+    cursor:default;
+}
+
+.RegionBarGraph__party{
+    text-align:center;
+    font-weight:450;
+    position:relative;
+    cursor:pointer;
+    overflow:visible;
+    grid-column:1;
+    padding:4px 8px;
+}
+
+.RegionBarGraph__party span{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    display: block;
+}
+
+.RegionBarGraph__hover{
+    position:absolute;
+    background:#fff;
+    color:#000;
+    height:100%;
+    top:0;
+    left:100%;
+    margin-left:5px;
+    border-radius:2px;
+    padding:4px 8px;
+    opacity:0;
+    z-index:2;
+    pointer-events:none;
+    transition:opacity 100ms;
+}
+    .RegionBarGraph__party:hover .RegionBarGraph__hover{
+        opacity:1;
+    }
+
+.RegionBarGraph__candidate{
+    padding:4px 15px;
+    max-width:200px;
+    grid-column:2;
+}
+
+.RegionBarGraph__votes, .RegionBarGraph__percentage{
+    text-align:right;
+    padding:4px 10px 4px 25px;
+}
+
+.RegionBarGraph__eliminated{ background:var(--light-default-color) }
+
+.RegionBarGraph__bar-container{
+    background:var(--light-default-color);
+    border-radius:2px;
+    overflow:hidden;
+    grid-column:calc(var(--rounds) + 2) / -2;
+    display:flex;
+}
+.RegionBarGraph.without-candidate-names .RegionBarGraph__bar-container{
+    grid-column:calc(var(--rounds) + 2 - 1) / -2;
+}
+
+
+.RegionBarGraph__bar{
+    min-width:0;
+    height:100%;
+    padding:0;
+}
+.RegionBarGraph__bar:not(:first-child){
+    border-left:1px solid #fff;
+}
+.RegionBarGraph__bar:last-child{
+    border-top-right-radius:2px;
+    border-bottom-right-radius:2px;
+}
+
+@media screen and (max-width:768px){
+
+    main section:has(> article > .RegionBarGraph){
+        grid-template-columns:15px minmax(20px, 80px) repeat(var(--max-rounds), minmax(20px, min-content)) 1fr 15px;
+    }
+    main section:has(> article > .RegionBarGraph.without-candidate-names){
+        grid-template-columns:15px minmax(20px, 80px) repeat( calc(var(--max-rounds) - 1), minmax(20px, min-content)) 1fr 15px;
+    }
+
+    .RegionBarGraph__candidate, .RegionBarGraph__votes, .RegionBarGraph__percentage{
+        padding:4px 10px;
+    }
+
+    .RegionBarGraph__fusion-total-row:before{ left:-15px }
+    .RegionBarGraph__fusion-hidden-row:before{ left:-11px }
+}

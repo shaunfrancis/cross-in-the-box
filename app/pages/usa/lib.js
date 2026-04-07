@@ -1,0 +1,43 @@
+class CachedData extends CachedDataSkeleton{
+    static fetchAttributes(){ return this.downloadProperty(["attributes"], Endpoint + "/attributes/usa") }
+
+    static fetchParties(){
+        return this.downloadProperty(["parties"], Endpoint + "/parties/usa", { 
+            applyTransform: (data) => {
+                data.forEach( party => party.displayId = partyIdToDisplayId(party.displayId || party.id) );
+            }
+        });
+    }
+
+    static fetchRegions(type = null){
+        return this.downloadProperty( ["regions"], Endpoint + "/regions/usa/" + (type || ""), {
+            applyTransform: (data) => data.forEach( region => region.type = type )
+        } );
+    }
+
+    static fetchElection(election, path = Endpoint + "/elections/usa/" + election){ return super.fetchElection(election, path) }
+
+    static fetchResults(election){ return this.downloadProperty(["results", election], Endpoint + "/results/usa/" + election) }
+
+    static fetchUpdates(election, path = Endpoint + "/updates/usa/" + election){ return super.fetchUpdates(election, path) }
+
+    static fetchMessages(group, path = Endpoint + "/messages/usa/" + group){ return super.fetchMessages(group, path) }
+}
+
+const partyIdToDisplayId = (partyId) => {
+    let displayId = partyId.toUpperCase();
+    if(["VACANT"].includes(displayId)) displayId = partyId.charAt(0).toUpperCase() + partyId.slice(1);
+    else if(displayId.startsWith("IND_")) displayId = displayId.substring(4);
+    return displayId;
+}
+
+/* Duplicated in lib/usa.php */
+const regionToSlug = (title) => {
+    return title.toLowerCase().replace(/ /g, "-").replace(/,|\)|\(/g, "");
+};
+
+/* Duplicated in lib/usa.php */
+const getBaseId = (id) => {
+    // get two-letter state abbreviation from any US region ID
+    return id.replace(/^(S|G|[0-9])/g, '').replace(/[0-9]/g, '').substr(0, 2);
+}

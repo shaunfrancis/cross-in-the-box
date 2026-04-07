@@ -1,0 +1,98 @@
+.DHondtTable.pre-hydration{
+    & .DHondtTable__party{
+        background:var(--default-color);
+        text-transform:uppercase;
+        cursor:default;
+        &:hover .DHondtTable__hover{
+            opacity:0;
+        }
+    }
+    & .DHondtTable__elected{
+        background:var(--default-color);
+    }
+}
+
+.DHondtTable{
+    display:grid;
+    grid-template-columns:85px repeat(calc(var(--max-rounds) + 2), minmax(min-content, 1fr)) var(--lr-padding);
+    gap:5px;
+    margin-top:20px;
+}
+
+.DHondtTable__header{
+    & > .DHondtTable__bloc{
+        color:#000;
+        background:var(--light-default-color);
+        font-weight:450;
+        text-align:center;
+        &:nth-child(2){
+            grid-column: span 2;
+        }
+    }
+}
+
+.DHondtTable :is(tbody, thead, .DHondtTable__row){
+    display:flex;
+    gap:5px;
+    color:#fff;
+    font-weight:350;
+    grid-column: 1 / -1;
+    display:grid;
+    grid-template-columns: subgrid;
+    & > tr > :is(td,th):is(:first-child){
+        position:sticky;
+        box-shadow: 5px 0 0 #fff;
+        left:0;
+        z-index:2;
+    }
+}
+
+.DHondtTable__bloc{
+    cursor:default;
+    text-align:right;
+    color:#000;
+    &.DHondtTable__elected{
+        color:#fff;
+        font-weight:450;
+    }
+}
+.DHondtTable__row:nth-child(2n) .DHondtTable__bloc{ background:var(--light-default-color) }
+.DHondtTable__row:not(.DHondtTable__header):nth-child(2n+1) .DHondtTable__bloc{ background:rgb(248,248,248) }
+
+.DHondtTable__party{
+    text-align:center;
+    font-weight:450;
+    position:relative;
+    cursor:pointer;
+    overflow:visible;
+    grid-column:1;
+    padding:4px 8px;
+    color:#FFF;
+}
+
+.DHondtTable__party span{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    display: block;
+}
+
+.DHondtTable__hover{
+    position:absolute;
+    background:#fff;
+    color:#000;
+    height:100%;
+    top:0;
+    left:100%;
+    margin-left:5px;
+    border-radius:2px;
+    padding:4px 8px;
+    opacity:0;
+    z-index:2;
+    pointer-events:none;
+    transition:opacity 100ms;
+}
+    .DHondtTable__party:hover .DHondtTable__hover{
+        opacity:1;
+    }

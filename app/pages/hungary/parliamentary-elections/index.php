@@ -1,0 +1,54 @@
+<?php 
+    namespace Shared;
+    $heroNavItems = [
+        [ 'title' => "Election results", 'src' => "/images/hungary-nav-results.svg", 'id' => "election-results" ],
+        [ 'title' => "Find a constituency", 'src' => "/images/nav-region.svg", 'id' => "find-a-constituency", 'focus' => ".RegionSearchSection__search-input" ],
+    ];
+?>
+<main>
+    <section id="hero">
+        <h1>Parliamentary Elections</h1>
+        <?= HeroNav::show($heroNavItems); ?>
+    </section>
+
+    <section id="election-results">
+        <div class="section-heading">
+            <h1>Election results</h1>
+            <?= Toggle::show(
+                id: "map-type",
+                from: "/images/hungary-cartographic-icon.svg",
+                to: "/images/hungary-geographic-icon.svg",
+                ariaLabels: ['off' => 'Cartographic maps', 'on' => 'Geographic maps', 'toggle' => 'Switch map style']
+            ); ?>
+        </div>
+        <?= ElectionResultsSection::open(); ?>
+            <?= \Hungary\ElectionResultContainer::show(
+                election: "2026",
+                title: ["2026", "Parliamentary", "Election"],
+                messages: ['group' => "2026", 'open' => TRUE]
+            ); ?>
+
+            <?= \Hungary\ElectionResultContainer::show(
+                election: "2022",
+                title: ["2022", "Parliamentary", "Election"],
+                messages: ['group' => "2022"]
+            ); ?>
+
+            <?= \Hungary\ElectionResultContainer::show(
+                election: "2018",
+                title: ["2018", "Parliamentary", "Election"],
+            ); ?>
+
+            <?= \Hungary\ElectionResultContainer::show(
+                election: "2014",
+                title: ["2014", "Parliamentary", "Election"],
+            ); ?>
+        <?= ElectionResultsSection::close(); ?>
+    </section>
+
+    <section id="find-a-constituency" class="shaded purple">
+        <h1>Find a constituency</h1>
+        <?= \Hungary\RegionSearchSection::show(); ?>
+    </section>
+
+</main>

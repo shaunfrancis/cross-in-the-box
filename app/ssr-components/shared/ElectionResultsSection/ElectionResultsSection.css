@@ -1,0 +1,19 @@
+.ElectionResultsSection{
+    display:flex;
+    overflow:auto;
+    gap:30px;
+    padding:0 50px 30px var(--left-gap);
+    margin-bottom:20px;
+    -ms-overflow-style:none;
+    scrollbar-width:none;
+}
+
+.ElectionResultsSection::-webkit-scrollbar{
+    display:none;
+}
+
+@media screen and (max-width:768px){
+    .ElectionResultsSection{
+        scroll-snap-type:x mandatory;
+    }
+}

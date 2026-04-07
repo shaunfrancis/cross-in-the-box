@@ -1,6 +1,6 @@
 <svg viewBox="0 0 959 593" xmlns="http://www.w3.org/2000/svg"><style>
   .usa-gubernatorial-1960-geo path{
-    cursor:pointer; transition: fill 1000ms, opacity 500ms;
+    cursor:pointer; transition: fill 1000ms, fill-opacity 500ms;
   }
   .usa-gubernatorial-1960-geo-borders{stroke:#FFFFFF; stroke-width:1; pointer-events:none}
   </style>

@@ -1,7 +1,15 @@
 .DS_STORE
 .next
 node_modules
+.parcel-cache
+
+config.php
+
+api/DB.php
+api/cache
+dev
 out
 
-api/credentials.php
-dashboard
+src/built
+
+src-old

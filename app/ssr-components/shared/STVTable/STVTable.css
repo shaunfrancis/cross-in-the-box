@@ -1,0 +1,121 @@
+.STVTable.pre-hydration{
+    & .STVTable__party{
+        background:var(--default-color);
+        text-transform:uppercase;
+        cursor:default;
+        &:hover .STVTable__hover{
+            opacity:0;
+        }
+    }
+    & .STVTable__elected{
+        background:var(--default-color);
+    }
+}
+
+
+.STVTable{
+    display:grid;
+    grid-template-columns:85px repeat(calc(var(--max-rounds) * 2 + 1), minmax(min-content, 1fr)) var(--lr-padding);
+    gap:5px;
+}
+
+.STVTable__header{
+    & > .STVTable__bloc{
+        color:#000;
+        background:var(--light-default-color);
+        font-weight:450;
+        text-align:center;
+        &:nth-child(n+3){
+            grid-column: span 2;
+        }
+    }
+}
+
+.STVTable :is(tbody, thead, .STVTable__row){
+    display:flex;
+    gap:5px;
+    color:#fff;
+    font-weight:350;
+    grid-column: 1 / -1;
+    display:grid;
+    grid-template-columns:subgrid;
+    align-items:center;
+    & > tr > :is(td,th):is(:first-child, :nth-child(2)){
+        position:sticky;
+        box-shadow: 5px 0 0 #fff;
+        left:0;
+        z-index:2;
+    }
+    & > tr > :is(td,th):nth-child(2){ 
+        left:90px;
+        z-index:1;
+    }
+}
+
+.STVTable__bloc{
+    cursor:default;
+    text-align:right;
+    color:#000;
+    background:var(--light-default-color);
+    &.STVTable__elected{
+        color:#fff;
+    }
+}
+
+.STVTable__party{
+    text-align:center;
+    font-weight:450;
+    position:relative;
+    cursor:pointer;
+    overflow:visible;
+    grid-column:1;
+    padding:4px 8px;
+    color:#FFF;
+}
+
+.STVTable__party span{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    display: block;
+}
+
+.STVTable__hover{
+    position:absolute;
+    background:#fff;
+    color:#000;
+    height:100%;
+    top:0;
+    left:100%;
+    margin-left:5px;
+    border-radius:2px;
+    padding:4px 8px;
+    opacity:0;
+    z-index:2;
+    pointer-events:none;
+    transition:opacity 100ms;
+}
+    .STVTable__party:hover .STVTable__hover{
+        opacity:1;
+    }
+
+.STVTable__candidate{
+    text-align:left;
+}
+
+.STVTable__change{
+    color:var(--default-color);
+    background:rgb(248,248,248);
+    text-align:right;
+}
+
+
+.STVTable__previously-elected{
+    color:var(--default-color);
+    background:none;
+}
+
+.STVTable__eliminated{
+   background-image:linear-gradient(to bottom right, transparent, transparent 48%, #DDD 48%, #DDD 52%, transparent 52%, transparent);
+}

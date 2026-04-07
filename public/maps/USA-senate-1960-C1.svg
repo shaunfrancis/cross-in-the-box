@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 850 550">
     <style>
-        #usa-senate-1960-svg rect:not(.border){ cursor:pointer; transition: fill 1000ms, opacity 500ms }
+        #usa-senate-1960-svg rect:not(.border){ cursor:pointer; transition: fill 1000ms, fill-opacity 500ms }
         #usa-senate-1960-svg .border{ stroke-width:2; stroke: white; pointer-events:none; fill:none } 
         #usa-senate-1960-svg text{ fill: #FFF; alignment-baseline: central; text-anchor: middle; font-family: 'Oswald', Helvetica, sans-serif; font-weight: bold; pointer-events: none }
         svg:has(#usa-senate-1960-svg) path{ fill:#FFF; pointer-events: none }

@@ -1,6 +1,0 @@
-.group{
-    display:grid;
-    grid-template-columns:repeat(2, min(50%, 500px));
-    justify-content:center;
-    gap:30px;
-}
