@@ -1,4 +1,5 @@
 <?php
+    include 'config.php';
     $_request = array_values( array_filter( preg_split( '/\//', str_replace(['/elections/'], '', $_SERVER['REQUEST_URI']) ) ) );
     $_initial_request = $_request;
     

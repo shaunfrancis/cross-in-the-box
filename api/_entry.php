@@ -1,6 +1,5 @@
 <?php
     namespace API;
-    header("Access-Control-Allow-Origin: *");
 
     $accepted_countries = array("canada", "france", "hungary", "uk", "usa", "vatican");
     $request = array_filter( preg_split( '/\//', str_replace(['/elections/api/','/api/'], '', $_SERVER['REQUEST_URI']) ) );

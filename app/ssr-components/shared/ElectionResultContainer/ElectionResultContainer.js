@@ -44,7 +44,21 @@ class ElectionResultContainer{
                         await instance.downloadData(instance.data);
                         instance.addSummary();
                         instance.updateMap(instance.data.showChanges);
-                        if(CachedData.messages[instance.data.messageGroup]) instance.addMessages();
+
+                        if(CachedData.messages[instance.data.messageGroup] && instance.structure.messages.container){
+                            if(instance.structure.messages.container.classList.contains("visible")){
+                                instance.addMessages();
+                                return;
+                            }
+                            const mutationObserver = new MutationObserver( entries => {
+                                if(entries[0].target.classList.contains("visible")){
+                                    instance.addMessages();
+                                    mutationObserver.disconnect();
+                                }
+                            });
+                            mutationObserver.observe(instance.structure.messages.container, { attributes: true });
+                        }
+
                     }
                 }
             });
@@ -88,8 +102,8 @@ class ElectionResultContainer{
             const regionResults = CachedData.results[this.data.election]
                 .filter( result => result.id == id )
                 .sort( (a,b) => b.votes - a.votes );
-            const regionAttributes = CachedData.attributes.filter( attr => attr.region_id == region.id && attr.applies_to == this.data.election );
-            const regionUpdates = CachedData.updates[this.data.election].filter( update => update.id == region.id );
+            const regionAttributes = CachedData.attributes.filter( attr => attr.region_id == region?.id && attr.applies_to == this.data.election );
+            const regionUpdates = CachedData.updates[this.data.election].filter( update => update.id == region?.id );
             const latestResultsUpdate = this.data.showChanges && regionUpdates.find( update => update.results );
             latestResultsUpdate?.results.data.sort( (a,b) => b.votes - a.votes );
 
@@ -105,11 +119,15 @@ class ElectionResultContainer{
 
             if(this.data.showChanges){
                 // Party progression blocs
-                const partyProgression = [CachedData.parties.find( party => party.id === initialWinner?.party ) || DefaultParty];
+                const partyProgression = [];
+                if(initialWinner) partyProgression.push(CachedData.parties.find( party => party.id === initialWinner.party ) || DefaultParty);
+
                 regionUpdates.forEach( update => {
                     partyProgression.push( CachedData.parties.find( party => party.id == update.party ) || DefaultParty );
                 });
-                if(partyProgression.length > 1) popup.appendChild( PartyProgressionBlocs.render({ parties: partyProgression }) );
+                if(partyProgression.length > 1 || (!initialWinner && partyProgression.length > 0)){
+                    popup.appendChild( PartyProgressionBlocs.render({ parties: partyProgression }) );
+                }
 
                 // Update notes
                 const updateNotes = regionUpdates.filter(update => update.note);
@@ -307,7 +325,7 @@ class ElectionResultContainer{
                     if(party) newFills.push({
                         id: latestUpdate.id, 
                         selector: this.regionSelector(latestUpdate.id, selector),
-                        color: party.color || "var(--default-color)" 
+                        color: party.id == "vacant" ? "#FFF" : (party.color || "var(--default-color)") 
                     });
                 }
                 else{
@@ -315,7 +333,7 @@ class ElectionResultContainer{
                     if(party) newFills.push({ 
                         id: result.id, 
                         selector: this.regionSelector(result.id, selector),
-                        color: party.color || "var(--default-color)", 
+                        color: party.id == "vacant" ? "#FFF" : (party.color || "var(--default-color)"), 
                         opacity: showChanges ? 0.2 : undefined 
                     });
                 }

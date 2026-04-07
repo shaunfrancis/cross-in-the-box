@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <script>
-        window.addEventListener("pagereveal", (event) => {
+        if("navigation" in window) window.addEventListener("pagereveal", (event) => {
             if(!navigation.activation.from || !navigation.activation.entry) return;
             if(new URL(navigation.activation.from.url).pathname === "/") document.documentElement.classList.add("from-globe");
             if(new URL(navigation.activation.entry.url).pathname === "/") document.documentElement.classList.add("to-globe");
@@ -14,11 +14,12 @@
         echo implode(" | ", $_title ?? []); ?><?= count($_title ?? []) > 0 ? " | " : ""; 
     ?>Cross In The Box</title>
 
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <?php if(!empty($_description) && empty($_error)) : ?><meta name="description" content="<?= $_description[0]; ?>" /><?php endif; ?>
 
-    <link rel="stylesheet" type="text/css" href="/compiled/style.css" />
-    <?php if(!empty($_country)) : ?><script src="/compiled/<?= $_country; ?>.js"></script><?php endif; ?>
+    <link rel="stylesheet" type="text/css" href="/compiled/style.css?v=<?= VERSION; ?>" />
+    <?php if(!empty($_country)) : ?><script src="/compiled/<?= $_country; ?>.js?v=<?= VERSION; ?>"></script><?php endif; ?>
 
     <?php $faviconPath = !empty($_country) ? "/public/favicons/" . $_country : "/public/"; ?>
     <link rel="icon" type="image/png" href="<?= $faviconPath; ?>/favicon-32x32.png" sizes="32x32" />
@@ -28,6 +29,15 @@
     <link rel="shortcut icon" href="<?= $faviconPath; ?>/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="<?= $faviconPath; ?>/apple-touch-icon.png" />
     <link rel="manifest" href="<?= $faviconPath; ?>/site.webmanifest" />
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P2JNCEPZW2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-P2JNCEPZW2');
+    </script>
     
     <?php foreach($_headInjections ?? [] as $content) echo $content; ?>
 </head>

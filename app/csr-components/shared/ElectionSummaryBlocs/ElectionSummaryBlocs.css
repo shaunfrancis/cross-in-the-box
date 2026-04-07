@@ -1,6 +1,7 @@
 .ElectionSummaryBlocs{
     --ElectionSummaryBlocs__bloc-width: 80px;
     --ElectionSummaryBlocs__preferred-row-size: 99;
+    width:100%;
     margin:5px 0;
     display:flex;
     flex-direction:column;

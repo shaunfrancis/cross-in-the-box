@@ -3,6 +3,8 @@
 node_modules
 .parcel-cache
 
+config.php
+
 api/DB.php
 api/cache
 dev

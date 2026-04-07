@@ -24,6 +24,13 @@
         <?= ElectionResultsSection::open(); ?>
             <?= \Canada\ElectionResultContainer::show(
                 election: "2025",
+                title: ["Today"],
+                showChanges: TRUE,
+                messages: ['group' => '2025U', 'open' => TRUE]
+            ); ?>
+
+            <?= \Canada\ElectionResultContainer::show(
+                election: "2025",
                 title: ["2025", "Federal", "Election"]
             ); ?>
 

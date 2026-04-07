@@ -177,7 +177,7 @@ section.shaded > h1{ margin-left: 0 }
     text-decoration:none;
     color:var(--link-color);
     &:after{
-        content: "\200B"; /* zero-width space to give inline elt its height */
+        content: "_ZWSP_CHAR_"; /* zero-width space to give inline elt its height; encoded in parcel-optimizer-zwsp.js */
         background-position-y: 63%; /* magic baseline position */
 
         background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0icmdiKDM1LCAzNSwgMTIzKSI+PHBhdGggZD0iTTguMTIyIDI0bC00LjEyMi00IDgtOC04LTggNC4xMjItNCAxMS44NzggMTJ6Ii8+PC9zdmc+");
