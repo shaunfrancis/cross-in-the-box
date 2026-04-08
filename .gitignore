@@ -8,7 +8,6 @@ config.php
 api/DB.php
 api/cache
 dev
-out
 
 src/built
 

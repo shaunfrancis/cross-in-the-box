@@ -27,11 +27,11 @@ window.addEventListener('DOMContentLoaded', async () => {
 
         let summaries = [];
         Object.entries(averages).forEach( ([party, average]) => {
-            if(party === "other") return;
+            if(party === "other" || average.count < 5) return;
             summaries.push({
                 party: CachedData.parties.find( p => p.id === party ) || DefaultParty,
-                count: average,
-                displayCount: average.toFixed(1) + "%"
+                count: average.value,
+                displayCount: average.value.toFixed(1) + "%"
             })
         });
         summaries.sort( (a,b) => b.count - a.count );
@@ -196,6 +196,11 @@ function drawGraph(containerMap, container){
         polledParties.forEach( party => {
             const color = party.color || "var(--default-color)";
             const relevantPolls = polls.filter(p => p.figures.find(f => f.party == party.id));
+            
+            // do not show lines until there are at least 5 polls in the last month
+            if(relevantPolls.filter( poll => {
+                return poll.centre >= relevantPolls[relevantPolls.length - 1].centre - avgOverDays * dayValue
+            }).length < 5) return;
 
             const x = ( (relevantPolls[0].centre - firstPoll) / (lastPoll - firstPoll) ) * (w - yAxisOffset) + yAxisOffset;
             let d = "m" + x + " " + (1 - relevantPolls[0].figures.find(f => f.party == party.id).figure / yLimit) * (h - xAxisOffset);

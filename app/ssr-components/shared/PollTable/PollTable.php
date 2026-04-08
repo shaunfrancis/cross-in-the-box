@@ -30,6 +30,7 @@ class PollTable extends \Base\Component{
             }
             if($end->format("Y") != $thisYear) $poll['fieldwork'] .= " {$end->format("Y")}";
         }
+        unset($poll);
 
     ?>
         <div class="PollTable<?= $compact ? " compact" : ""; ?> pre-hydration">
@@ -38,7 +39,7 @@ class PollTable extends \Base\Component{
                 <div class="PollTable__fieldwork">Fieldwork</div>
                 <?php if(!$compact) : ?><div class="PollTable__sample">Sample</div><?php endif; ?>
                 <div class="PollTable__figures">
-                    <?php $i = 0; foreach($averages as $party => $average) : 
+                    <?php $i = 0; foreach($averages as $party => $_) : 
                         if(!empty($compact) && $i > 4) break;
                         $i++;
                     ?>
@@ -80,7 +81,7 @@ class PollTable extends \Base\Component{
 
                     <div class="PollTable__figures">
 
-                        <?php $i = 0; foreach($averages as $party => $average) : 
+                        <?php $i = 0; foreach($averages as $party => $_) : 
                             if(!empty($compact) && $i > 4) break;
                             $i++;
 

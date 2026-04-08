@@ -1,5 +1,12 @@
 # Changelog
 
+## 5.0.1 - 2026-04-08
+- Fix Hungary, Scotland and Wales party totals
+- Fix bug showing the last poll twice
+- Fix ordinal indicators for 11, 12 and 13
+- Require at least five polls for a party before it will show in the polling averages
+- Update cache path
+
 ## 5.0.0 - 2026-04-07
 - Refactor: remove Next.js, replace with vanilla PHP
 - Add home page

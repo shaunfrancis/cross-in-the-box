@@ -258,10 +258,12 @@ class ElectionResultContainer{
                 summaries.push({
                     candidate: preferCandidateNames ? result.candidates[0].name : party.displayId,
                     party: party,
-                    count: result.candidates[0].elected
+                    count: result.candidates.reduce( (accumulator, currentValue) => accumulator + currentValue.elected, 0)
                 });
             }
-            else summaries.find( summary => summary.party.id == winner ).count += result.candidates[0].elected;
+            else summaries.find( summary => summary.party.id == winner ).count += result.candidates.reduce( 
+                (accumulator, currentValue) => accumulator + currentValue.elected, 0
+            )
         });
 
         summaries.sort( (a,b) => {
@@ -369,7 +371,7 @@ class ElectionResultContainer{
             let dateString = part("weekday");
 
             let ordinalIndicator = "th";
-            if(![11,12,13].includes(part("day"))) switch(part("day") % 10){
+            if(!(["11","12","13"].includes(part("day")))) switch(part("day") % 10){
                 case 1: ordinalIndicator = "st"; break;
                 case 2: ordinalIndicator = "nd"; break;
                 case 3: ordinalIndicator = "rd";
