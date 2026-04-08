@@ -4,7 +4,11 @@ namespace API;
 class APIService{
     static bool $apiMode = FALSE;
 
+    static string $country = "??";
+
     static function setup(string $country){
+        self::$country = $country;
+
         return (object)[
             'attributes' => $country . "_attributes",
             'boundary_changes' => $country . "_boundary_changes",
@@ -29,7 +33,10 @@ class APIService{
 
     static function fetch($sql, $params = [], $ttl = 86400){
 
-        $cache_path = __DIR__ . "/cache/" . md5($sql . serialize($params));
+        $cache_path = sprintf(
+            "%s/cache/%s-%s-%s", 
+            __DIR__, self::$country, str_replace('API\\', '', static::class), md5($sql . serialize($params))
+        );
 
         if(!empty($ttl) && file_exists($cache_path) && (filemtime($cache_path) + $ttl > time())){
             $results = unserialize(file_get_contents($cache_path));

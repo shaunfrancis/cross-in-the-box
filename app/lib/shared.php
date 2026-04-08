@@ -190,7 +190,7 @@ function combineFusionResults(array $results){ // {id: string, candidates: {name
 }
 
 // Get average polling figures
-function getPollAverages(array $polls, int $nDays = 30){ // {[party]: float, ...}
+function getPollAverages(array $polls, int $nDays = 30){ // {[party]: { value: float, count: int }, ...}
     if(empty($polls)) return [];
 
     $currentDate = $polls[0]['centre']->modify("+{$nDays} days");
@@ -206,15 +206,19 @@ function getPollAverages(array $polls, int $nDays = 30){ // {[party]: float, ...
         $weight = $nDays - ($currentDate->getTimestamp() - $poll['centre']->getTimestamp()) / 86400;
         foreach($poll['figures'] as $figure){
 
-            if(empty($averages[$figure['party']])) $averages[$figure['party']] = ['numerator' => 0, 'denominator' => 0];
+            if(empty($averages[$figure['party']])) $averages[$figure['party']] = ['numerator'=>0, 'denominator'=>0, 'count'=>0];
             $averages[$figure['party']]['numerator'] += $weight * $figure['figure'];
             $averages[$figure['party']]['denominator'] += $weight;
+            $averages[$figure['party']]['count']++;
 
         }
     }
 
     $averages = array_map(function($average){
-        return empty($average['denominator']) ? 0 : $average['numerator'] / $average['denominator'];
+        return [
+            'value' => empty($average['denominator']) ? 0 : $average['numerator'] / $average['denominator'],
+            'count' => $average['count']
+        ];
     }, $averages);
 
     uksort($averages, function($a, $b) use ($averages){
