@@ -35,3 +35,4 @@ if(!empty($data['events'][0]['region']['title']) && $data['events'][0]['region']
 
 $_title[] = $region['title'];
 $_description[] = "Browse Scottish Parliament election results and data for the {$region['title']}" . (str_ends_with($region['title'], "region") ? "." : " constituency.");
+$_breadcrumb = ['title' => $region['title'], 'path' => 'uk/scottish-parliament/constituency/' . UK\regionToSlug($region['title'])];

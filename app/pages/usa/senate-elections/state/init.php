@@ -23,3 +23,4 @@ usort($data['events'], function($a, $b){
 
 $_title[] = $region['title'];
 $_description[] = "Browse Senate election results and data for {$region['title']}.";
+$_breadcrumb = ['title' => $region['title'], 'path' => 'usa/senate-elections/state/' . USA\regionToSlug($region['title'])];

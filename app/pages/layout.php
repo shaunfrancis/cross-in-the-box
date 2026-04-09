@@ -18,6 +18,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <?php if(!empty($_description) && empty($_error)) : ?><meta name="description" content="<?= $_description[0]; ?>" /><?php endif; ?>
 
+    <?php if(empty($_error)) : ?>
+        <link rel="canonical" href="https://crossinthebox.com<?php 
+            $canonical_path = "";
+            if(!empty($_request)) $canonical_path .= "/" . implode("/", $_request);
+            if(!empty($_params['path'])) $canonical_path .= "/" . implode("/", $_params['path']);
+            echo preg_replace('/[^a-zA-Z0-9\/-]/', '', $canonical_path);
+        ?>" />
+    <?php endif; ?>
+
+    <?php if(empty($_request)) : ?>
+        <script type="application/ld+json">
+        {
+            "@context" : "https://schema.org",
+            "@type" : "WebSite",
+            "name" : "Cross In The Box",
+            "url" : "https://crossinthebox.com"
+        }
+        </script>
+    <?php else : ?>
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                <?php foreach($_breadcrumbs ?? [] as $index => $breadcrumb) : ?>{
+                    "@type": "ListItem",
+                    "position": <?= $index + 1; ?>,
+                    "name": "<?= $breadcrumb['title']; ?>",
+                    "item": "https://crossinthebox.com/<?= $breadcrumb['path']; ?>"
+                }<?php if($breadcrumb != end($_breadcrumbs)) : ?>,<?php endif; ?><?php endforeach; ?>
+                    
+            ]
+        }
+        </script>
+    <?php endif; ?>
+
     <link rel="stylesheet" type="text/css" href="/compiled/style.css?v=<?= VERSION; ?>" />
     <?php if(!empty($_country)) : ?><script src="/compiled/<?= $_country; ?>.js?v=<?= VERSION; ?>"></script><?php endif; ?>
 
