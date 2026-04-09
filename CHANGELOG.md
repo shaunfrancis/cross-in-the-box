@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.0.2 - 2026-04-09
+- Add sitemap
+- Add canonical links
+- Add structured data
+- Force non-www and redirect Tennessine subdomain
+
 ## 5.0.1 - 2026-04-08
 - Fix Hungary, Scotland and Wales party totals
 - Fix bug showing the last poll twice

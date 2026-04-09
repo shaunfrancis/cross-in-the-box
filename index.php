@@ -22,6 +22,8 @@
     $_params = [
         'path' => [],
     ];
+    $_breadcrumbs = [];
+
     if(str_contains(end($_request), "?")){
         $query_strings = preg_split( '/(\?|&)/', end($_request) );
         $_request[count($_request) - 1] = array_shift($query_strings);
@@ -186,7 +188,7 @@
     }
 
     function renderPage($path, $_params = []){
-        global $_country, $_params;
+        global $_country, $_request, $_params, $_breadcrumbs;
         
         $fullPath = sprintf('app/pages/%s/index.php', $path);
         if(isSanitaryPath($path) && file_exists($fullPath)){
@@ -195,6 +197,15 @@
             foreach(getInitPaths($path . '/index.php') as $initPath){
                 try{
                     require $initPath;
+                    if(!empty($_breadcrumb)){
+                        array_unshift($_breadcrumbs, $_breadcrumb);
+                        unset($_breadcrumb);
+                    }
+                    else array_unshift($_breadcrumbs, [
+                        'title' => end($_title), 
+                        'path' => preg_replace(['/^app\/pages\//', '/\/init.php$/'], '', $initPath)
+                    ]);
+                    
                     if(!empty($_error)) throw new Exception($_error);
                 }
                 catch(Exception $error){

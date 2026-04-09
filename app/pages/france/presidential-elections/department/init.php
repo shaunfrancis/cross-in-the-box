@@ -35,3 +35,4 @@ if(!empty($data['events'][0]['region']['title']) && $data['events'][0]['region']
 
 $_title[] = $region['title'];
 $_description[] = "Browse presidential election results and data for {$region['title']}.";
+$_breadcrumb = ['title' => $region['title'], 'path' => 'france/presidential-elections/department/' . France\regionToSlug($region['title'])];
