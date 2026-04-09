@@ -35,7 +35,7 @@ class APIService{
 
         $cache_path = sprintf(
             "%s/cache/%s-%s-%s", 
-            __DIR__, self::$country, str_replace('API\\', '', static::class), md5($sql . serialize($params))
+            __DIR__, self::$country, str_replace(['API\\', '\\'], '', static::class), md5($sql . serialize($params))
         );
 
         if(!empty($ttl) && file_exists($cache_path) && (filemtime($cache_path) + $ttl > time())){
