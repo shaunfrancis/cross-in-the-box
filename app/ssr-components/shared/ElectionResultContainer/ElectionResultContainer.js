@@ -14,7 +14,8 @@ class ElectionResultContainer{
             election: this.structure.container.getAttribute('data-election'),
             regionsType: this.structure.container.getAttribute('data-regions-type'),
             messageGroup: this.structure.messages.container?.getAttribute('data-group'),
-            showChanges: this.structure.container.getAttribute('data-show-changes')
+            showChanges: this.structure.container.getAttribute('data-show-changes'),
+            live: this.structure.container.getAttribute('data-live')
         };
         this.structure.container.removeAttribute('data-election');
         this.structure.container.removeAttribute('data-regions-type');

@@ -11,9 +11,10 @@ class ElectionResultContainer extends \Base\Component{
         array $dimensions,                      // [w: string, h: string, minW: string, minH: string]
         ?array $messages = [],                  // [group: string, open: bool?]
         ?bool $showChanges = FALSE,
+        ?bool $live = FALSE,
         ?string $dedicatedPage = NULL,
         ?string $winFormulaName = "default",
-        ?string $regionsType = "default"
+        ?string $regionsType = "default",
     ): void { ?>
 
         <div
@@ -22,6 +23,7 @@ class ElectionResultContainer extends \Base\Component{
             data-win-formula="<?= $winFormulaName; ?>"
             data-regions-type="<?= $regionsType; ?>"
             <?php if($showChanges) : ?>data-show-changes="true"<?php endif; ?>
+            <?php if($live) : ?>data-live="true"<?php endif; ?>
             <?php foreach($dataAttrs as $name => $value) : ?>data-<?= $name; ?>="<?= $value; ?>"<?php endforeach; ?>
             style="height: min(<?= $dimensions['h']; ?>, calc(100vw - 30px)); min-height: <?= $dimensions['minH']; ?>;"
         >
@@ -60,6 +62,8 @@ class ElectionResultContainer extends \Base\Component{
                             <?php endif; ?>
                         </h2>
 
+                        <?php if(!empty($live)) static::renderLiveTitle(); ?>
+
                     </div>
                     
                     <div class="ElectionResultContainer__summary-container"></div>
@@ -72,6 +76,18 @@ class ElectionResultContainer extends \Base\Component{
             <?php //Children ?>
 <?php }
 
-static function renderClose(): void{ echo '</div>'; }
+    static function renderClose(): void{ echo '</div>'; }
+
+    static function renderLiveTitle(): void{ ?>
+        <div class="ElectionResultContainer__live-title">
+            <div class="ElectionResultContainer__title-text ElectionResultContainer__live-title-text">
+                <img src="/public/images/load.svg" class="ElectionResultContainer__live-indicator" />
+            </div>
+            <div class="ElectionResultContainer__subtitle-text">
+                <span>Updating</span>
+                <span>live</span>
+            </div>
+        </div>
+    <?php }
 
 }
