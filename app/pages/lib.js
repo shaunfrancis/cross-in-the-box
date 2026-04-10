@@ -1,6 +1,7 @@
 const Endpoint = "/api";
 
 class CachedDataSkeleton{
+    static country = null;
     static promises = {};
     static requestsCompleted = {};
 
@@ -15,17 +16,27 @@ class CachedDataSkeleton{
     }
 
     static attributes = [];
-    static fetchAttributes(){ return this.fetchArray(); }
+    static fetchAttributes(){ return this.downloadProperty(["attributes"], Endpoint + "/attributes/" + this.country) }
 
     static parties = [];
-    static fetchParties(){ return this.fetchArray(); }
+    static fetchParties(){
+        return this.downloadProperty(["parties"], Endpoint + "/parties/" + this.country, { 
+            applyTransform: (data) => {
+                data.forEach( party => party.displayId = partyIdToDisplayId(party.displayId || party.id) );
+            }
+        });
+    }
 
     static regions = [];
-    static fetchRegions(){ return this.fetchArray(); }
+    static fetchRegions(type = null){
+        return this.downloadProperty( ["regions"], `${Endpoint}/regions/${this.country}/${type || ""}`, {
+            applyTransform: (data) => data.forEach( region => region.type = type )
+        } );
+    }
 
     static elections = {};
-    static fetchElection(election, path){
-        return this.downloadProperty(["elections", election], path, {
+    static fetchElection(election){
+        return this.downloadProperty(["elections", election], `${Endpoint}/elections/${this.country}/${election}`, {
             applyParse: async (response) => {
                 const text = await response.text();
                 const json = parseJSONWithDates(text, 'date');
@@ -35,7 +46,9 @@ class CachedDataSkeleton{
     }
 
     static results = {};
-    static fetchResults(_){ return this.fetchObject(_); }
+    static fetchResults(election){
+        return this.downloadProperty(["results", election], `${Endpoint}/results/${this.country}/${election}`);
+    }
 
     // updates proxies _updates to show empty array for any missing key
     // because updates may not always be required or downloaded but will always be assumed to exist
@@ -46,8 +59,8 @@ class CachedDataSkeleton{
             else return target[prop];
         }
     });
-    static fetchUpdates(election, path){
-        return this.downloadProperty(["_updates", election], path, {
+    static fetchUpdates(election){
+        return this.downloadProperty(["_updates", election], `${Endpoint}/updates/${this.country}/${election}`, {
             applyParse: async (response) => {
                 const text = await response.text();
                 const json = parseJSONWithDates(text, 'date');
@@ -58,8 +71,8 @@ class CachedDataSkeleton{
     }
 
     static messages = {};
-    static fetchMessages(group, path){
-        return this.downloadProperty(["messages", group], path, {
+    static fetchMessages(group){
+        return this.downloadProperty(["messages", group], `${Endpoint}/messages/${this.country}/${group}`, {
             applyParse: async (response) => {
                 const text = await response.text();
                 const json = parseJSONWithDates(text, 'date');

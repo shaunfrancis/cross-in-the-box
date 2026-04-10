@@ -11,7 +11,7 @@ class ElectionResultContainer extends \Shared\ElectionResultContainer{
         ?bool $live = FALSE,
         ?string $dedicatedPage = NULL,
         ?string $winFormulaName = "default",
-        ?string $regionsType = "default"
+        ?string $regionsType = NULL
     ){
 
         $map = self::getMapClass($election);

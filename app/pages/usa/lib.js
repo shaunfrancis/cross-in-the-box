@@ -1,27 +1,5 @@
 class CachedData extends CachedDataSkeleton{
-    static fetchAttributes(){ return this.downloadProperty(["attributes"], Endpoint + "/attributes/usa") }
-
-    static fetchParties(){
-        return this.downloadProperty(["parties"], Endpoint + "/parties/usa", { 
-            applyTransform: (data) => {
-                data.forEach( party => party.displayId = partyIdToDisplayId(party.displayId || party.id) );
-            }
-        });
-    }
-
-    static fetchRegions(type = null){
-        return this.downloadProperty( ["regions"], Endpoint + "/regions/usa/" + (type || ""), {
-            applyTransform: (data) => data.forEach( region => region.type = type )
-        } );
-    }
-
-    static fetchElection(election, path = Endpoint + "/elections/usa/" + election){ return super.fetchElection(election, path) }
-
-    static fetchResults(election){ return this.downloadProperty(["results", election], Endpoint + "/results/usa/" + election) }
-
-    static fetchUpdates(election, path = Endpoint + "/updates/usa/" + election){ return super.fetchUpdates(election, path) }
-
-    static fetchMessages(group, path = Endpoint + "/messages/usa/" + group){ return super.fetchMessages(group, path) }
+    static country = "usa";
 }
 
 const partyIdToDisplayId = (partyId) => {

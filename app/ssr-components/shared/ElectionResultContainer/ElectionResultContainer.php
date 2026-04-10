@@ -14,7 +14,7 @@ class ElectionResultContainer extends \Base\Component{
         ?bool $live = FALSE,
         ?string $dedicatedPage = NULL,
         ?string $winFormulaName = "default",
-        ?string $regionsType = "default",
+        ?string $regionsType = NULL,
     ): void { ?>
 
         <div
