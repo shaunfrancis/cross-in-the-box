@@ -3,6 +3,8 @@ namespace API\USA;
 class StateLinksService extends \API\APIService{
 
     static function call(array $request, ?array $params = []){
+        parent::call($request, $params);
+        
         if(count($request) != 3) return self::fail(404, "Not found");
 
         $baseId = strtoupper($request[2]);

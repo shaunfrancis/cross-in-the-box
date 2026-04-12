@@ -20,6 +20,15 @@ class ElectionResultContainer{
         this.structure.container.removeAttribute('data-election');
         this.structure.container.removeAttribute('data-regions-type');
 
+        if(this.data.live){
+            // add to liveIds to ensure CachedData fetches uncached data
+            CachedData.liveIds.attributes = true;
+            CachedData.liveIds.results.push(this.data.election);
+            if(this.data.messageGroup) CachedData.liveIds.messages.push(this.data.messageGroup);
+
+            this.updateLive();
+        }
+
         Toggle.register('map-type', (bool) => {
             const map = this.maps.find(map => 
                 map.type === (bool ? "geographic" : "cartographic")
@@ -431,21 +440,64 @@ class ElectionResultContainer{
             if(currentUl) spans.push(currentUl);
             return spans;
         }
+            
+        const electionAttributes = CachedData.attributes.filter( attr => attr.applies_to == this.data.election );
 
         CachedData.messages[this.data.messageGroup].forEach(message => {
             const square = message.square ? (CachedData.parties.find(p => p.id == message.square) || DefaultParty) : null;
             const oldSquare = message.old_square ? (CachedData.parties.find(p => p.id == message.old_square) || DefaultParty) : null;
 
-            const children = childrenFun ? [...injectLinks(message.text), ...childrenFun(message)] : injectLinks(message.text);
+            const children = injectLinks(message.text);
 
-            this.structure.messages.innerContainer.appendChild( Message.render({
+            const counted = electionAttributes.find( attr => attr.region_id == message.region_id && attr.label == "counted");
+            if(counted && parseFloat(counted.value) > 0){
+                let value;
+                if(counted.value >= 100) value = "Estimated >99% counted";
+                else value = `Estimated ${counted.value}% counted`;
+                children.push( new Elt({ tag: 'div', classList: ["PopupBarGraph__title"], innerHTML: value }) );
+            }
+
+            if(childrenFun) children.push(...childrenFun(message));
+
+            Message.render({
+                id: message.id,
+                destination: this.structure.messages.innerContainer,
+                isLive: this.data.live,
+                pinned: message.pinned,
+                rawDate: message.date,
                 date: dateFun(message.date),
                 noHeader: message.no_header,
                 oldSquare: oldSquare,
                 square: square,
                 children: children
-            }) );
+            });
         });
         this.structure.messages.container.classList.remove('loading');
+    }
+
+    updateLive(){
+        let lastUpdate = 0;
+
+        const iterate = async () => {
+            await CachedData.fetchResults(this.data.election);
+            await CachedData.fetchAttributes();
+            
+            this.updateMap();
+
+            this.structure.summary.container.innerHTML = "";
+            this.addSummary();
+
+            const date = CachedData.messages[this.data.messageGroup].filter( m => !m.pinned )[0]?.date;
+            if(date){
+                const pad = (n) => n.toString().padStart(2, '0'); 
+                lastUpdate = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+            }
+            await CachedData.fetchMessages(this.data.messageGroup, lastUpdate);
+            this.addMessages();
+
+            setTimeout(iterate, 6000);
+
+        };
+        setTimeout(iterate, 6000);
     }
 }

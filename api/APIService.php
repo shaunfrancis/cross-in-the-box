@@ -3,6 +3,7 @@ namespace API;
 
 class APIService{
     static bool $apiMode = FALSE;
+    static bool $live = FALSE;
 
     static string $country = "??";
 
@@ -29,7 +30,9 @@ class APIService{
         ];
     }
 
-    static function call(array $request, ?array $params = []){}
+    static function call(array $request, ?array $params = []){
+        if(!empty($params['live'])) self::$live = TRUE;
+    }
 
     static function fetch($sql, $params = [], $ttl = 86400){
 
@@ -38,7 +41,7 @@ class APIService{
             __DIR__, self::$country, str_replace(['API\\', '\\'], '', static::class), md5($sql . serialize($params))
         );
 
-        if(!empty($ttl) && file_exists($cache_path) && (filemtime($cache_path) + $ttl > time())){
+        if(!empty($ttl) && !self::$live && file_exists($cache_path) && (filemtime($cache_path) + $ttl > time())){
             $results = unserialize(file_get_contents($cache_path));
             return $results;
         }

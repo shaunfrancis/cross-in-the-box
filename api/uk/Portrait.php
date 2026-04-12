@@ -3,6 +3,8 @@ namespace API\UK;
 class PortraitService extends \API\APIService{
 
     static function call(array $request, ?array $params = []){
+        parent::call($request, $params);
+        
         $tables = parent::setup($request[0]);
         if(count($request) != 3) return self::fail(404, "Not found");
 

@@ -5,6 +5,7 @@
     border-radius:2px;
     box-shadow:1px 1px 0 1px var(--box-shadow-color);
     font-size:1rem;
+    &.hidden{ display:none }
 }
 .Message:first-child{margin-top:0}
 .Message:last-child{margin-bottom:0}

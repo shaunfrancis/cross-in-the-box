@@ -32,17 +32,4 @@ class ElectionResultContainer extends \Shared\ElectionResultContainer{
         }
         return $MapClass;
     }
-
-    static function renderLiveTitle(): void{ ?>
-        <div class="ElectionResultContainer__live-title">
-            <div class="ElectionResultContainer__title-text ElectionResultContainer__live-title-text">
-                <img src="/public/images/load.svg" class="ElectionResultContainer__live-indicator" />
-                <span>??</span>
-            </div>
-            <div class="ElectionResultContainer__subtitle-text">
-                <span>of 106</span>
-                <span>constituencies</span>
-            </div>
-        </div>
-    <?php }
 }

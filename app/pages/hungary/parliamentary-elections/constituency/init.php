@@ -15,7 +15,7 @@ if(empty($region) || !empty($region['error'])){
     throw new Exception(404);
 }
 
-$data = API\RegionService::call(["hungary", $region['id']]);
+$data = API\RegionService::call(["hungary", $region['id']], ['live' => TRUE]);
 
 usort($data['events'], function($a, $b){
     return DateTime::createFromFormat('Y-m-d H:i:s', $a['date']) < DateTime::createFromFormat('Y-m-d H:i:s', $b['date']) ? 1 : -1;

@@ -5,6 +5,12 @@ class CachedDataSkeleton{
     static promises = {};
     static requestsCompleted = {};
 
+    static liveIds = {
+        attributes: false,
+        messages: [],
+        results: []
+    }
+
     // fallback methods
     static fetchArray(){ return new Promise( res => res([]) ); }
     static fetchObject(key){
@@ -16,7 +22,12 @@ class CachedDataSkeleton{
     }
 
     static attributes = [];
-    static fetchAttributes(){ return this.downloadProperty(["attributes"], Endpoint + "/attributes/" + this.country) }
+    static fetchAttributes(){
+        let path = Endpoint + "/attributes/" + this.country;
+        const isLive = this.liveIds.attributes;
+        if(isLive) path += "?live=1";
+        return this.downloadProperty(["attributes"], path, {}, isLive);
+    }
 
     static parties = [];
     static fetchParties(){
@@ -29,7 +40,9 @@ class CachedDataSkeleton{
 
     static regions = [];
     static fetchRegions(type = null){
-        return this.downloadProperty( ["regions"], `${Endpoint}/regions/${this.country}/${type || ""}`, {
+        let path = `${Endpoint}/regions/${this.country}`;
+        if(type) path += "/" + type;
+        return this.downloadProperty( ["regions"], path, {
             applyTransform: (data) => data.forEach( region => region.type = type )
         } );
     }
@@ -47,7 +60,10 @@ class CachedDataSkeleton{
 
     static results = {};
     static fetchResults(election){
-        return this.downloadProperty(["results", election], `${Endpoint}/results/${this.country}/${election}`);
+        let path = `${Endpoint}/results/${this.country}/${election}`;
+        const isLive = this.liveIds.results.includes(election);
+        if(isLive) path += "?live=1";
+        return this.downloadProperty(["results", election], path, {}, isLive);
     }
 
     // updates proxies _updates to show empty array for any missing key
@@ -71,8 +87,14 @@ class CachedDataSkeleton{
     }
 
     static messages = {};
-    static fetchMessages(group){
-        return this.downloadProperty(["messages", group], `${Endpoint}/messages/${this.country}/${group}`, {
+    static fetchMessages(group, since = null){
+        
+        let path = `${Endpoint}/messages/${this.country}/${group}`;
+        const isLive = this.liveIds.messages.includes(group);
+        if(isLive) path += "?live=1";
+        if(since) path += (isLive ? "&" : "?") + "since=" + since;
+
+        return this.downloadProperty(["messages", group], path, {
             applyParse: async (response) => {
                 const text = await response.text();
                 const json = parseJSONWithDates(text, 'date');
@@ -84,10 +106,10 @@ class CachedDataSkeleton{
                         (a.date.valueOf() != b.date.valueOf()) ? b.date.valueOf() - a.date.valueOf() : b.id - a.id;
                 });
             }
-        });
+        }, isLive);
     }
 
-    static downloadProperty(propertyArray, path, { applyParse, applyTransform = (_) => _ } = {} ){
+    static downloadProperty(propertyArray, path, { applyParse, applyTransform = (_) => _ } = {}, isLive = false ){
         return new Promise( async resolve => {
 
             const propertyValue = propertyArray.reduce( (obj, key) => {
@@ -96,13 +118,13 @@ class CachedDataSkeleton{
             }, this);
             
             // check if value already exists
-            if(this.requestsCompleted[path] && propertyValue) return resolve(propertyValue);
+            if(this.requestsCompleted[path] && propertyValue && !isLive) return resolve(propertyValue);
 
             // look in localStorage first (indexedDB?)
             // (implement later!!)
 
             // now download
-            let existingPromise = this.promises[path];
+            let existingPromise = !isLive ? this.promises[path] : null;
             if(!existingPromise){
                 existingPromise = fetch(path).then( async res => {
                     let data;
@@ -129,6 +151,7 @@ class CachedDataSkeleton{
                 }
                 else parent[propertyArray[propertyArray.length - 1]] = data;
             }
+            else if(isLive) parent[propertyArray[propertyArray.length - 1]] = data;
 
             // Mark as path request completed to prevent merging multiple copies in future
             this.requestsCompleted[path] = true;

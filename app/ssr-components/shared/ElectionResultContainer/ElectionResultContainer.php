@@ -83,10 +83,10 @@ class ElectionResultContainer extends \Base\Component{
             <div class="ElectionResultContainer__title-text ElectionResultContainer__live-title-text">
                 <img src="/public/images/load.svg" class="ElectionResultContainer__live-indicator" />
             </div>
-            <div class="ElectionResultContainer__subtitle-text">
+            <!-- <div class="ElectionResultContainer__subtitle-text">
                 <span>Updating</span>
                 <span>live</span>
-            </div>
+            </div> -->
         </div>
     <?php }
 

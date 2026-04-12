@@ -110,6 +110,7 @@ class RegionPage extends \Base\Component{
             }
         });
 
+        $counted = array_find($attributes ?? [], fn($attr) => $attr['label'] == "counted" && $attr['applies_to'] == $event['data']['id']);
         $graph_note = array_find($attributes ?? [], fn($attr) => $attr['label'] == "graph_note" && $attr['applies_to'] == $event['data']['id']);
         ?>
         <article class="block">
@@ -120,6 +121,11 @@ class RegionPage extends \Base\Component{
                     <?= str_replace("- ", "-", implode(" ", $event['data']['title'])); ?>
                 <?php endif; ?>
             </h2>
+            <?php if(!empty($counted)){
+                if(floatval($counted['value'] ?? 0) >= 100) : ?><span>Estimated >99% counted</span>
+                <?php elseif(floatval($counted['value'] ?? 0) > 0): ?><span>Estimated <?= $counted['value']; ?>% counted</span>
+                <?php endif;
+            } ?>
             <?php if(!empty($graph_note)) : ?>
                 <span><?= $graph_note['value']; ?></span>
             <?php endif; ?>
