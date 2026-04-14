@@ -3,6 +3,8 @@ namespace API;
 class ResultsService extends APIService{
 
     static function call(array $request, ?array $params = []){
+        parent::call($request, $params);
+        
         $tables = parent::setup($request[0]);
 
         $compact = !empty($params["compact"]) && $params["compact"] == "true";

@@ -9,6 +9,7 @@
     align-items:center;
     opacity:0;
 }
+[data-live="true"] .ElectionSummaryBlocs{ opacity:1 }
 .ElectionSummaryBlocs.visible{
     opacity:1;
     transition:opacity 500ms;

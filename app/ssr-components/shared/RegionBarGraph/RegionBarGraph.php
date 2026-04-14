@@ -72,7 +72,7 @@ class RegionBarGraph extends \Base\Component{
             $elected = !empty($result['candidates'][0]['elected']);
 
             $votesValue = "";
-            if($totalVotes > 0) $votesValue = number_format($result['votes'], 0, '.', ' ');
+            if($totalVotes > 0) $votesValue = number_format($result['votes'] ?? 0, 0, '.', ' ');
             else if($elected && count($results) === 1) $votesValue = "Unopposed";
             else if($elected) $votesValue = "Elected";
 
