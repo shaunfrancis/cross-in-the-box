@@ -1,8 +1,15 @@
 const Endpoint = "/api";
 
 class CachedDataSkeleton{
+    static country = null;
     static promises = {};
     static requestsCompleted = {};
+
+    static liveIds = {
+        attributes: false,
+        messages: [],
+        results: []
+    }
 
     // fallback methods
     static fetchArray(){ return new Promise( res => res([]) ); }
@@ -15,17 +22,34 @@ class CachedDataSkeleton{
     }
 
     static attributes = [];
-    static fetchAttributes(){ return this.fetchArray(); }
+    static fetchAttributes(){
+        let path = Endpoint + "/attributes/" + this.country;
+        const isLive = this.liveIds.attributes;
+        if(isLive) path += "?live=1";
+        return this.downloadProperty(["attributes"], path, {}, isLive);
+    }
 
     static parties = [];
-    static fetchParties(){ return this.fetchArray(); }
+    static fetchParties(){
+        return this.downloadProperty(["parties"], Endpoint + "/parties/" + this.country, { 
+            applyTransform: (data) => {
+                data.forEach( party => party.displayId = partyIdToDisplayId(party.displayId || party.id) );
+            }
+        });
+    }
 
     static regions = [];
-    static fetchRegions(){ return this.fetchArray(); }
+    static fetchRegions(type = null){
+        let path = `${Endpoint}/regions/${this.country}`;
+        if(type) path += "/" + type;
+        return this.downloadProperty( ["regions"], path, {
+            applyTransform: (data) => data.forEach( region => region.type = type )
+        } );
+    }
 
     static elections = {};
-    static fetchElection(election, path){
-        return this.downloadProperty(["elections", election], path, {
+    static fetchElection(election){
+        return this.downloadProperty(["elections", election], `${Endpoint}/elections/${this.country}/${election}`, {
             applyParse: async (response) => {
                 const text = await response.text();
                 const json = parseJSONWithDates(text, 'date');
@@ -35,7 +59,12 @@ class CachedDataSkeleton{
     }
 
     static results = {};
-    static fetchResults(_){ return this.fetchObject(_); }
+    static fetchResults(election){
+        let path = `${Endpoint}/results/${this.country}/${election}`;
+        const isLive = this.liveIds.results.includes(election);
+        if(isLive) path += "?live=1";
+        return this.downloadProperty(["results", election], path, {}, isLive);
+    }
 
     // updates proxies _updates to show empty array for any missing key
     // because updates may not always be required or downloaded but will always be assumed to exist
@@ -46,8 +75,8 @@ class CachedDataSkeleton{
             else return target[prop];
         }
     });
-    static fetchUpdates(election, path){
-        return this.downloadProperty(["_updates", election], path, {
+    static fetchUpdates(election){
+        return this.downloadProperty(["_updates", election], `${Endpoint}/updates/${this.country}/${election}`, {
             applyParse: async (response) => {
                 const text = await response.text();
                 const json = parseJSONWithDates(text, 'date');
@@ -58,7 +87,13 @@ class CachedDataSkeleton{
     }
 
     static messages = {};
-    static fetchMessages(group, path){
+    static fetchMessages(group, since = null){
+        
+        let path = `${Endpoint}/messages/${this.country}/${group}`;
+        const isLive = this.liveIds.messages.includes(group);
+        if(isLive) path += "?live=1";
+        if(since) path += (isLive ? "&" : "?") + "since=" + since;
+
         return this.downloadProperty(["messages", group], path, {
             applyParse: async (response) => {
                 const text = await response.text();
@@ -71,10 +106,10 @@ class CachedDataSkeleton{
                         (a.date.valueOf() != b.date.valueOf()) ? b.date.valueOf() - a.date.valueOf() : b.id - a.id;
                 });
             }
-        });
+        }, isLive);
     }
 
-    static downloadProperty(propertyArray, path, { applyParse, applyTransform = (_) => _ } = {} ){
+    static downloadProperty(propertyArray, path, { applyParse, applyTransform = (_) => _ } = {}, isLive = false ){
         return new Promise( async resolve => {
 
             const propertyValue = propertyArray.reduce( (obj, key) => {
@@ -83,13 +118,13 @@ class CachedDataSkeleton{
             }, this);
             
             // check if value already exists
-            if(this.requestsCompleted[path] && propertyValue) return resolve(propertyValue);
+            if(this.requestsCompleted[path] && propertyValue && !isLive) return resolve(propertyValue);
 
             // look in localStorage first (indexedDB?)
             // (implement later!!)
 
             // now download
-            let existingPromise = this.promises[path];
+            let existingPromise = !isLive ? this.promises[path] : null;
             if(!existingPromise){
                 existingPromise = fetch(path).then( async res => {
                     let data;
@@ -116,6 +151,7 @@ class CachedDataSkeleton{
                 }
                 else parent[propertyArray[propertyArray.length - 1]] = data;
             }
+            else if(isLive) parent[propertyArray[propertyArray.length - 1]] = data;
 
             // Mark as path request completed to prevent merging multiple copies in future
             this.requestsCompleted[path] = true;

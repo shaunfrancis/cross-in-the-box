@@ -25,6 +25,9 @@ class RegionPage extends \Shared\RegionPage{
         if(!$hasMultipleCandidates) return parent::renderElectionEvent($event, $attributes);
 
         usort($results, function($a, $b){ return $b['votes'] - $a['votes']; });
+        
+        $counted = array_find($attributes ?? [], fn($attr) => $attr['label'] == "counted" && $attr['applies_to'] == $event['data']['id']);
+        $graph_note = array_find($attributes ?? [], fn($attr) => $attr['label'] == "graph_note" && $attr['applies_to'] == $event['data']['id']);
         ?>
 
         <article class="block">
@@ -35,6 +38,14 @@ class RegionPage extends \Shared\RegionPage{
                     <?= str_replace("- ", "-", implode(" ", $event['data']['title'])); ?>
                 <?php endif; ?>
             </h2>
+            <?php if(!empty($counted)){
+                if(floatval($counted['value'] ?? 0) >= 100) : ?><span>Estimated >99% counted</span>
+                <?php else: ?><span>Estimated <?= $counted['value']; ?>% counted</span>
+                <?php endif;
+            } ?>
+            <?php if(!empty($graph_note)) : ?>
+                <span><?= $graph_note['value']; ?></span>
+            <?php endif; ?>
             <?= \Shared\CandidatesMasonryList::render(results: $results, limit: 5); ?>
             <h3>Votes</h3>
             <?= \Shared\RegionBarGraph::show($results, withoutCandidateNames: true); ?>

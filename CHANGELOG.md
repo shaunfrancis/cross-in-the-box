@@ -1,5 +1,8 @@
 # Changelog
 
+## 5.1 - 2026-04-12
+- Add support for live events
+
 ## 5.0.2 - 2026-04-09
 - Add sitemap
 - Add canonical links

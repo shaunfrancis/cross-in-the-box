@@ -27,6 +27,7 @@
             <?= \Hungary\ElectionResultContainer::show(
                 election: "2026",
                 title: ["2026", "Parliamentary", "Election"],
+                live: TRUE
             ); ?>
             <?= \Hungary\ElectionResultContainer::show(
                 election: "2022",

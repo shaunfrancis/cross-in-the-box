@@ -198,8 +198,8 @@
 
 @keyframes phase{
     0%{ opacity:0 }
-    30%{ opacity:0 }
-    35%{ opacity:1 }
+    20%{ opacity:0 }
+    25%{ opacity:1 }
     75%{ opacity:1 }
     80%{ opacity:0 }
     100%{ opacity:0 }
@@ -245,7 +245,7 @@ button.ElectionResultContainer__messages-button{
     }
 
     .ElectionResultContainer__live-title{
-        margin-left:15px;
+        margin-left:0;
     }
 
     .ElectionResultContainer__live-title-text{
