@@ -27,7 +27,6 @@
             <?= \Hungary\ElectionResultContainer::show(
                 election: "2026",
                 title: ["2026", "Parliamentary", "Election"],
-                messages: ['group' => "2026", 'open' => TRUE],
                 live: TRUE
             ); ?>
             <?= \Hungary\ElectionResultContainer::show(
