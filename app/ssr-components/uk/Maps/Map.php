@@ -7,7 +7,6 @@ class General2024 extends \Shared\Map{
         'geographic' => 'public/maps/UK-2024-geographic.svg',
     );
 }
-
 class General2010 extends \Shared\Map{
     static $types = array(
         'cartographic' => 'public/maps/UK-2010.svg',
@@ -23,6 +22,11 @@ class Scotland2011 extends \Shared\Map{
 }
 
 
+class Wales2026 extends \Shared\Map{
+    static $types = array(
+        'cartographic' => 'public/maps/UK-W2026.svg',
+    );
+}
 class Wales2007 extends \Shared\Map{
     static $types = array(
         'cartographic' => 'public/maps/UK-W2007.svg',

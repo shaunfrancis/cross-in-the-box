@@ -3,7 +3,7 @@ include_once './app/lib/uk.php';
 $_dynamic_params_accepted = 1;
 
 if(empty($_params['path'][0])){
-    $region = ['title' => "Constituency or region not found"];
+    $region = ['title' => "Constituency not found"];
     throw new Exception(404);
 }
 
@@ -11,7 +11,7 @@ $slug = UK\slugToLookupSlug($_params['path'][0]);
 $region = API\SlugLookupService::call(["uk", $slug, "wales"]);
 
 if(empty($region) || !empty($region['error'])){
-    $region['title'] = "Constituency or region not found";
+    $region['title'] = "Constituency not found";
     throw new Exception(404);
 }
 

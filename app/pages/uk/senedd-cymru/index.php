@@ -2,7 +2,7 @@
     namespace Shared;
     $heroNavItems = [
         [ 'title' => "Election results", 'src' => "/images/uk-nav-results.svg", 'id' => "election-results" ],
-        [ 'title' => "Find a constituency or region", 'src' => "/images/nav-region.svg", 'id' => "find-a-constituency", 'focus' => ".RegionSearchSection__search-input" ],
+        [ 'title' => "Find a constituency", 'src' => "/images/nav-region.svg", 'id' => "find-a-constituency", 'focus' => ".RegionSearchSection__search-input" ],
     ];
 ?>
 <main>
@@ -22,9 +22,14 @@
         </div>
         <?= ElectionResultsSection::open(); ?>
             <?= \UK\ElectionResultContainer\Wales::show(
+                election: "W2026",
+                title: ["2026", "Senedd Cymru", "Election"],
+                messages: ['group' => "SW2026", 'open' => TRUE]
+            ); ?>
+            <?= \UK\ElectionResultContainer\Wales::show(
                 election: "W2021",
                 title: ["2021", "Senedd Cymru", "Election"],
-                messages: ['group' => "SW2021", 'open' => TRUE]
+                messages: ['group' => "SW2021"]
             ); ?>
             <?= \UK\ElectionResultContainer\Wales::show(
                 election: "W2016",
@@ -38,7 +43,7 @@
     </section>
 
     <section id="find-a-constituency" class="shaded purple">
-        <h1>Find a constituency or region</h1>
+        <h1>Find a constituency</h1>
         <?= \UK\RegionSearchSection::show("wales"); ?>
     </section>
 

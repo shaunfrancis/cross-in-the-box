@@ -1,5 +1,8 @@
 # Changelog
 
+## 5.2 -
+- Add 2026 Senedd Cymru election
+
 ## 5.1 - 2026-04-12
 - Add support for live events
 

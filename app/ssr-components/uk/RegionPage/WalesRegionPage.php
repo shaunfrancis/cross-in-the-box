@@ -32,6 +32,11 @@ class Wales extends \UK\RegionPage{
                 else $divisors[$result['party']]++;
             }
         }
+
+        $fixedRounds = match($event['data']['id']){
+            "W2026" => 6,
+            default => 4
+        };
         ?>
 
         <article class="block">
@@ -44,7 +49,7 @@ class Wales extends \UK\RegionPage{
             </h2>
             <?= \Shared\CandidatesMasonryList::render($results); ?>
             <h3>Votes</h3>
-            <?= \Shared\DHondtTable::render($results, $divisors ?? []); ?>
+            <?= \Shared\DHondtTable::render($results, $divisors ?? [], $fixedRounds); ?>
         </article>
 
     <?php }
