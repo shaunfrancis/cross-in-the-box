@@ -56,6 +56,10 @@
         <?= ElectionResultsSection::open(); ?>
 
             <?= \UK\ElectionResultContainer\Scotland::show(
+                election: "S2026",
+                title: ["2026", "Scottish Parliament", "Election"],
+            ); ?>
+            <?= \UK\ElectionResultContainer\Scotland::show(
                 election: "S2021",
                 title: ["2021", "Scottish Parliament", "Election"],
             ); ?>

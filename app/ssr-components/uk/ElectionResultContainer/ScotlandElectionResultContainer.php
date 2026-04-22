@@ -24,9 +24,11 @@ class Scotland extends \UK\ElectionResultContainer{
 
     static function getMapClass(string $election){
         switch($election){
-            case "S2021": case "S2016": case "S2011": default:
+            case "S2021": case "S2016": case "S2011":
                 $MapClass = '\UK\Maps\Scotland2011';
                 break;
+            case "S2026": default:
+                $MapClass = '\UK\Maps\Scotland2026';
         }
         return $MapClass;
     }

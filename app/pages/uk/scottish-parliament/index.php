@@ -22,9 +22,15 @@
         </div>
         <?= ElectionResultsSection::open(); ?>
             <?= \UK\ElectionResultContainer\Scotland::show(
+                election: "S2026",
+                title: ["2026", "Scottish Parliament", "Election"],
+                messages: ['group' => "SW2026", 'open' => TRUE]
+            ); ?>
+
+            <?= \UK\ElectionResultContainer\Scotland::show(
                 election: "S2021",
                 title: ["2021", "Scottish Parliament", "Election"],
-                messages: ['group' => "SW2021", 'open' => TRUE]
+                messages: ['group' => "SW2021"]
             ); ?>
 
             <?= \UK\ElectionResultContainer\Scotland::show(

@@ -15,7 +15,11 @@ class General2010 extends \Shared\Map{
 }
 
 
-class Scotland2011 extends \Shared\Map{
+class Scotland2026 extends \Shared\Map{
+    static $types = array(
+        'cartographic' => 'public/maps/UK-S2026.svg',
+    );
+}class Scotland2011 extends \Shared\Map{
     static $types = array(
         'cartographic' => 'public/maps/UK-S2011.svg',
     );
