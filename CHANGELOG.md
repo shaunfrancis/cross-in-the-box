@@ -1,7 +1,8 @@
 # Changelog
 
 ## 5.2 -
-- Add 2026 Senedd Cymru election
+- Add 2026 Scottish Parliament and Senedd Cymru elections
+- Start and end live events from database
 
 ## 5.1 - 2026-04-12
 - Add support for live events

@@ -15,6 +15,7 @@ class APIService{
             'boundary_changes' => $country . "_boundary_changes",
             'candidates' => $country . "_candidates",
             'elections' => $country . "_elections",
+            'live_events' => "_live_events",
             'message_links' => $country . "_message_links",
             'messages' => $country . "_messages",
             'parties' => $country . "_parties",

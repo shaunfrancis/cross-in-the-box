@@ -2,13 +2,15 @@
 namespace Hungary;
 
 class ElectionResultContainer extends \Shared\ElectionResultContainer{
+    static $country = "hungary";
+    
     static function render (
         string $election,
         array $title,                               // [string, string, string]
         ?array $dataAttrs = [],                     // [{name} => value: any]
         ?array $messages = [],                      // [group: string, open: bool?]
         ?bool $showChanges = FALSE,
-        ?bool $live = FALSE,
+        ?bool $live = NULL,
         ?string $dedicatedPage = NULL,
         ?string $winFormulaName = "default",
         ?string $regionsType = NULL
