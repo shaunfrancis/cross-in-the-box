@@ -10,8 +10,8 @@
         });
     </script>
     <title><?php
-        if(!empty($_error)) echo ($_error_title ?? $_error) . " | ";
-        echo implode(" | ", $_title ?? []); ?><?= count($_title ?? []) > 0 ? " | " : ""; 
+        if(!empty($_error)) echo ($_error_title ?? $_error) . " - ";
+        echo implode(" - ", $_title ?? []); ?><?= count($_title ?? []) > 0 ? " - " : ""; 
     ?>Cross In The Box</title>
 
     <meta charset="UTF-8" />
