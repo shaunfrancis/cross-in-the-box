@@ -31,12 +31,12 @@
 }
 
 .RegionPage__abolished-container h2{
-    margin:30px 0;
+    margin:30px 0 0 0;
 }
 
 .RegionPage__abolished-links-container{
     display:grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 12em), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 14em), 1fr));
     gap:2em;
 }
 
@@ -45,7 +45,7 @@
     background:#fff;
     border-radius:2px;
     box-shadow:2px 2px 0 2px var(--box-shadow-color);
-    padding:2em;
+    padding:1.5em 2em 2em 2em;
     cursor:pointer;
     &:active{
         box-shadow:none;

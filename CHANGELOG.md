@@ -1,6 +1,6 @@
 # Changelog
 
-## 5.2 -
+## 5.2 - 2026-04-24
 - Add 2026 Scottish Parliament and Senedd Cymru elections
 - Start and end live events from database
 - Delay drawing poll graph lines until at least three recent polls exist
