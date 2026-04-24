@@ -1,3 +1,5 @@
 <?php 
 namespace UK;
-class ElectionResultContainer extends \Shared\ElectionResultContainer{}
+class ElectionResultContainer extends \Shared\ElectionResultContainer{
+    static $country = "uk";
+}

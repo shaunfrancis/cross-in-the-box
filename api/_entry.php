@@ -49,6 +49,10 @@
                                                                 // elections/{country}/{election}
                                                                 // get election information for a country by election ID
 
+        "live-events" => LiveEventsService::call($request, $params),   
+                                                                // live-events/{country}
+                                                                // get list of live events for a country ID
+
         "messages" => MessagesService::call($request, $params), // messages/{country}/{election}
                                                                 // get messages for a country by election ID
                                                                 // [?string since] - messages after a given date

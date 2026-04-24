@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 447.34644 250" stroke-width="1" stroke="#fff" fill="#EEE">
+<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 397.34644 250" stroke-width="1" stroke="#fff" fill="#EEE">
     <style>#uk-W2007-svg rect{ cursor:pointer; transition: fill 1000ms, fill-opacity 500ms }</style>
     <g id="uk-W2007-svg">
 
@@ -43,39 +43,41 @@
         <rect x="150.5" y="200.5" width="24" height="24" name="W2007038" />
         <rect x="150.5" y="225.5" width="24" height="24" name="W2007034" />
 
-        <g name="W2007500" transform="translate(58.545008,91.582959)">
-            <rect x="229.30142" y="63.917038" width="24" height="24" />
-            <rect x="254.30142" y="63.917038" width="24" height="24" />
-            <rect x="229.30142" y="88.917046" width="24" height="24" />
-            <rect x="254.30142" y="88.917046" width="24" height="24" />
-        </g>
+        <g transform="translate(-50,0)">
+            <g name="W2007500" transform="translate(58.545008,91.582959)">
+                <rect x="229.30142" y="63.917038" width="24" height="24" />
+                <rect x="254.30142" y="63.917038" width="24" height="24" />
+                <rect x="229.30142" y="88.917046" width="24" height="24" />
+                <rect x="254.30142" y="88.917046" width="24" height="24" />
+            </g>
 
-        <g name="W2007400" transform="translate(168.54501,91.582959)">
-            <rect height="24" width="24" y="63.917038" x="229.30142" />
-            <rect height="24" width="24" y="63.917038" x="254.30142" />
-            <rect height="24" width="24" y="88.917046" x="229.30142" />
-            <rect height="24" width="24" y="88.917046" x="254.30142" />
-        </g>
+            <g name="W2007400" transform="translate(168.54501,91.582959)">
+                <rect height="24" width="24" y="63.917038" x="229.30142" />
+                <rect height="24" width="24" y="63.917038" x="254.30142" />
+                <rect height="24" width="24" y="88.917046" x="229.30142" />
+                <rect height="24" width="24" y="88.917046" x="254.30142" />
+            </g>
 
-        <g name="W2007300" transform="translate(113.54501,91.582959)">
-            <rect height="24" width="24" y="63.917038" x="229.30142" />
-            <rect height="24" width="24" y="63.917038" x="254.30142" />
-            <rect height="24" width="24" y="88.917046" x="229.30142" />
-            <rect height="24" width="24" y="88.917046" x="254.30142" />
-        </g>
+            <g name="W2007300" transform="translate(113.54501,91.582959)">
+                <rect height="24" width="24" y="63.917038" x="229.30142" />
+                <rect height="24" width="24" y="63.917038" x="254.30142" />
+                <rect height="24" width="24" y="88.917046" x="229.30142" />
+                <rect height="24" width="24" y="88.917046" x="254.30142" />
+            </g>
 
-        <g name="W2007200" transform="translate(77.094886,64.497027)">
-            <rect height="24" width="24" y="-18.997032" x="215.75111" />
-            <rect height="24" width="24" y="-18.997032" x="240.75111" />
-            <rect height="24" width="24" y="-18.997032" x="265.75113" /> 
-            <rect height="24" width="24" y="-18.997032" x="290.75113" />
-        </g>
+            <g name="W2007200" transform="translate(77.094886,64.497027)">
+                <rect height="24" width="24" y="-18.997032" x="215.75111" />
+                <rect height="24" width="24" y="-18.997032" x="240.75111" />
+                <rect height="24" width="24" y="-18.997032" x="265.75113" /> 
+                <rect height="24" width="24" y="-18.997032" x="290.75113" />
+            </g>
 
-        <g name="W2007100" transform="translate(67.574673,68.579991)">
-            <rect x="275.27176" y="6.9200039" width="24" height="24" />
-            <rect x="275.27176" y="31.920004" width="24" height="24" />
-            <rect x="250.27176" y="56.920006" width="24" height="24" />
-            <rect x="275.27176" y="56.920006" width="24" height="24" />
+            <g name="W2007100" transform="translate(67.574673,68.579991)">
+                <rect x="275.27176" y="6.9200039" width="24" height="24" />
+                <rect x="275.27176" y="31.920004" width="24" height="24" />
+                <rect x="250.27176" y="56.920006" width="24" height="24" />
+                <rect x="275.27176" y="56.920006" width="24" height="24" />
+            </g>
         </g>
 
     </g>

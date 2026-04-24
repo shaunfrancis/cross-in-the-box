@@ -13,5 +13,5 @@ const partyIdToDisplayId = (partyId) => {
 
 /* Duplicated in lib/uk.php */
 const regionToSlug = (title) => {
-    return title.toLowerCase().replace(/ /g, "-").replace(/,|\)|\(/g, "").replace(/ô/g, "o");
+    return title.toLowerCase().replace(/ /g, "-").replace(/,|\)|\(/g, "").replace(/ô/g, "o").replace(/ŵ/g, "w");
 };

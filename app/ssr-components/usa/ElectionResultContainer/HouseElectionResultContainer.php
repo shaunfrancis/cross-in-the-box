@@ -8,7 +8,7 @@ class House extends \USA\ElectionResultContainer{
         ?array $dataAttrs = [],                     // [{name} => value: any]
         ?array $messages = [],                      // [group: string, open: bool?]
         ?bool $showChanges = FALSE,
-        ?bool $live = FALSE,
+        ?bool $live = NULL,
         ?string $dedicatedPage = NULL,
         ?string $winFormulaName = "default",
         ?string $regionsType = "house"

@@ -195,20 +195,21 @@ function drawGraph(containerMap, container){
 
         polledParties.forEach( party => {
             const color = party.color || "var(--default-color)";
-            const relevantPolls = polls.filter(p => p.figures.find(f => f.party == party.id));
+            let relevantPolls = polls.filter(p => p.figures.find(f => f.party == party.id));
             
             // do not show lines until there are at least 5 polls in the last month
             if(relevantPolls.filter( poll => {
                 return poll.centre >= relevantPolls[relevantPolls.length - 1].centre - avgOverDays * dayValue
             }).length < 5) return;
 
-            const x = ( (relevantPolls[0].centre - firstPoll) / (lastPoll - firstPoll) ) * (w - yAxisOffset) + yAxisOffset;
-            let d = "m" + x + " " + (1 - relevantPolls[0].figures.find(f => f.party == party.id).figure / yLimit) * (h - xAxisOffset);
+            let d = "";
 
             let currentDate = relevantPolls[0].centre.valueOf();
             let day = ((relevantPolls[0].centre - firstPoll) / dayValue);
             let endDate = Math.min((new Date()).valueOf(), relevantPolls[relevantPolls.length - 1].centre.valueOf() + avgOverDays*dayValue);
             let average = 0;
+            let nextIsMove = true;
+
             while(currentDate < endDate){
                 currentDate += dayValue;
                 day++;
@@ -232,7 +233,17 @@ function drawGraph(containerMap, container){
 
                 average = numerator / denominator;
 
-                d += "L" + (dailyXShift*day + yAxisOffset).toFixed(1) + " " + ((1 - (average / yLimit)) * (h - xAxisOffset)).toFixed(1);
+                let totalPollsInLastMonth;
+                if(lastMonthOfPolls.length < 3) totalPollsInLastMonth = polls.filter( p => {
+                    return p.centre >= currentDate - avgOverDays * dayValue && p.centre <= currentDate;
+                }).length;
+
+                if(lastMonthOfPolls.length >= 3 || (totalPollsInLastMonth <= 6 && !nextIsMove)){
+                    d += nextIsMove ? "M" : "L";
+                    nextIsMove = false;
+                    d += (dailyXShift*day + yAxisOffset).toFixed(1) + " " + ((1 - (average / yLimit)) * (h - xAxisOffset)).toFixed(1);
+                }
+                else nextIsMove = true;
             }
 
             averageLines.push( {

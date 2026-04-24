@@ -21,7 +21,7 @@ class PollGraph extends \Base\Component{
                     'w' => $w,
                     'h' => $h,
                     'polls' => array_map(
-                        fn($p) => ['start'=>$p['start'], 'end'=>$p['end'], 'sample'=>$p['sample'], 'figures'=>$p['figures']], 
+                        fn($p) => ['start'=>$p['start'], 'end'=>$p['end'], 'sample'=>$p['sample'] ?? '–', 'figures'=>$p['figures']], 
                         $polls
                     ),
                     'maxParties' => $maxParties,

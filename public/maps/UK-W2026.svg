@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-26 -11 301 436" stroke-width="1" stroke="#fff" fill="#EEE">
+    <style>#uk-W2026-svg rect{ cursor:pointer; transition: fill 1000ms, fill-opacity 500ms }</style>
+    <g id="uk-W2026-svg">
+        <g name="W2026BCM" transform="translate(-5,-10)">
+            <rect x="50" y="0" width="24" height="24" />
+            <rect x="75" y="0" width="24" height="24" />
+            <rect x="75" y="25" width="24" height="24" />
+            <rect x="100" y="25" width="24" height="24" />
+            <rect x="100" y="50" width="24" height="24" />
+            <rect x="75" y="50" width="24" height="24" />
+        </g>
+        <g name="W2026CLW" transform="translate(0,-10)">
+            <rect x="125" y="25" width="24" height="24" />
+            <rect x="125" y="50" width="24" height="24" />
+            <rect x="150" y="50" width="24" height="24" />
+            <rect x="150" y="25" width="24" height="24" />
+            <rect x="175" y="25" width="24" height="24" />
+            <rect x="175" y="50" width="24" height="24" />
+        </g>
+        <g name="W2026FWR" transform="translate(5,0)">
+            <rect x="200" y="25" width="24" height="24" />
+            <rect x="200" y="50" width="24" height="24" />
+            <rect x="225" y="50" width="24" height="24" />
+            <rect x="225" y="75" width="24" height="24" />
+            <rect x="200" y="75" width="24" height="24" />
+            <rect x="200" y="100" width="24" height="24" />
+        </g>
+        <g name="W2026GMA" transform="translate(-5,-5)">
+            <rect x="50" y="100" width="24" height="24" />
+            <rect x="50" y="75" width="24" height="24" />
+            <rect x="75" y="75" width="24" height="24" />
+            <rect x="100" y="75" width="24" height="24" />
+            <rect x="125" y="75" width="24" height="24" />
+            <rect x="125" y="100" width="24" height="24" />
+        </g>
+        <g name="W2026BTN" transform="translate(0,-5)">
+            <rect x="150" y="75" width="24" height="24" />
+            <rect x="175" y="75" width="24" height="24" />
+            <rect x="175" y="100" width="24" height="24" />
+            <rect x="150" y="100" width="24" height="24" />
+            <rect x="150" y="125" width="24" height="24" />
+            <rect x="175" y="125" width="24" height="24" />
+        </g>
+        <g name="W2026CPE" transform="translate(-5,0)">
+            <rect x="125" y="125" width="24" height="24" />
+            <rect x="125" y="150" width="24" height="24" />
+            <rect x="150" y="150" width="24" height="24" />
+            <rect x="150" y="175" width="24" height="24" />
+            <rect x="125" y="175" width="24" height="24" />
+            <rect x="100" y="175" width="24" height="24" />
+        </g>
+        <g name="W2026BGC" transform="translate(0,0)">
+            <rect x="175" y="150" width="24" height="24" />
+            <rect x="175" y="175" width="24" height="24" />
+            <rect x="200" y="175" width="24" height="24" />
+            <rect x="200" y="200" width="24" height="24" />
+            <rect x="175" y="200" width="24" height="24" />
+            <rect x="200" y="225" width="24" height="24" />
+        </g>
+        <g name="W2026SGA" transform="translate(-15,5)">
+            <rect x="50" y="225" width="24" height="24" />
+            <rect x="75" y="225" width="24" height="24" />
+            <rect x="75" y="200" width="24" height="24" />
+            <rect x="100" y="200" width="24" height="24" />
+            <rect x="100" y="225" width="24" height="24" />
+            <rect x="125" y="200" width="24" height="24" />
+        </g>
+        <g name="W2026PCM" transform="translate(-10,10)">
+            <rect x="150" y="200" width="24" height="24" />
+            <rect x="150" y="225" width="24" height="24" />
+            <rect x="125" y="225" width="24" height="24" />
+            <rect x="125" y="250" width="24" height="24" />
+            <rect x="150" y="250" width="24" height="24" />
+            <rect x="125" y="275" width="24" height="24" />
+        </g>
+        <g name="W2026CIS" transform="translate(-5,5)">
+            <rect x="175" y="225" width="24" height="24" />
+            <rect x="175" y="250" width="24" height="24" />
+            <rect x="200" y="250" width="24" height="24" />
+            <rect x="200" y="275" width="24" height="24" />
+            <rect x="175" y="275" width="24" height="24" />
+            <rect x="200" y="300" width="24" height="24" />
+        </g>
+        <g name="W2026SFT" transform="translate(0,5)">
+            <rect x="225" y="250" width="24" height="24" />
+            <rect x="225" y="275" width="24" height="24" />
+            <rect x="250" y="275" width="24" height="24" />
+            <rect x="250" y="300" width="24" height="24" />
+            <rect x="225" y="300" width="24" height="24" />
+            <rect x="225" y="325" width="24" height="24" />
+        </g>
+        <g name="W2026GAB" transform="translate(-25,10)">
+            <rect x="50" y="250" width="24" height="24" />
+            <rect x="25" y="250" width="24" height="24" />
+            <rect x="25" y="275" width="24" height="24" />
+            <rect x="0" y="275" width="24" height="24" />
+            <rect x="0" y="300" width="24" height="24" />
+            <rect x="25" y="300" width="24" height="24" />
+        </g>
+        <g name="W2026AOR" transform="translate(-20,15)">
+            <rect x="75" y="250" width="24" height="24" />
+            <rect x="100" y="250" width="24" height="24" />
+            <rect x="100" y="275" width="24" height="24" />
+            <rect x="75" y="275" width="24" height="24" />
+            <rect x="50" y="275" width="24" height="24" />
+            <rect x="50" y="300" width="24" height="24" />
+        </g>
+        <g name="W2026PBM" transform="translate(-15,20)">
+            <rect x="75" y="300" width="24" height="24" />
+            <rect x="75" y="325" width="24" height="24" />
+            <rect x="100" y="325" width="24" height="24" />
+            <rect x="100" y="300" width="24" height="24" />
+            <rect x="125" y="300" width="24" height="24" />
+            <rect x="125" y="325" width="24" height="24" />
+        </g>
+        <g name="W2026XFT" transform="translate(-7.5,20)">
+            <rect x="150" y="275" width="24" height="24" />
+            <rect x="150" y="300" width="24" height="24" />
+            <rect x="175" y="300" width="24" height="24" />
+            <rect x="150" y="325" width="24" height="24" />
+            <rect x="175" y="325" width="24" height="24" />
+            <rect x="200" y="325" width="24" height="24" />
+        </g>
+        <g name="W2026XPE" transform="translate(5,25)">
+            <rect x="125" y="350" width="24" height="24" />
+            <rect x="150" y="350" width="24" height="24" />
+            <rect x="150" y="375" width="24" height="24" />
+            <rect x="175" y="375" width="24" height="24" />
+            <rect x="175" y="350" width="24" height="24" />
+            <rect x="200" y="350" width="24" height="24" />
+        </g>
+    </g>
+</svg>

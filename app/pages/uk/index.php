@@ -56,6 +56,10 @@
         <?= ElectionResultsSection::open(); ?>
 
             <?= \UK\ElectionResultContainer\Scotland::show(
+                election: "S2026",
+                title: ["2026", "Scottish Parliament", "Election"],
+            ); ?>
+            <?= \UK\ElectionResultContainer\Scotland::show(
                 election: "S2021",
                 title: ["2021", "Scottish Parliament", "Election"],
             ); ?>
@@ -77,6 +81,10 @@
         </div>
         <?= ElectionResultsSection::open(); ?>
 
+            <?= \UK\ElectionResultContainer\Wales::show(
+                election: "W2026",
+                title: ["2026", "Senedd Cymru", "Election"],
+            ); ?>
             <?= \UK\ElectionResultContainer\Wales::show(
                 election: "W2021",
                 title: ["2021", "Senedd Cymru", "Election"],

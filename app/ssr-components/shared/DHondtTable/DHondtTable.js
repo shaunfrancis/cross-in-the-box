@@ -16,6 +16,9 @@ window.addEventListener('DOMContentLoaded', async () => {
                 bloc.style.background = party.color || "var(--default-color)";
                 if(party.textColor) bloc.style.color = party.textColor;
             });
+            row.querySelectorAll('.DHondtTable__leading').forEach( bloc => {
+                bloc.style.outline = `2px solid ${party.color || "var(--default-color)"}`;
+            });
             
             if(partyBloc) partyBloc.querySelector('span').innerHTML = party.displayId;
             if(party.id != "ind") row.querySelector('.DHondtTable__hover').innerHTML = party.title;

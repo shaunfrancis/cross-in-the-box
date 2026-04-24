@@ -11,11 +11,13 @@ class ElectionResultContainer extends \Base\Component{
         array $dimensions,                      // [w: string, h: string, minW: string, minH: string]
         ?array $messages = [],                  // [group: string, open: bool?]
         ?bool $showChanges = FALSE,
-        ?bool $live = FALSE,
+        ?bool $live = NULL,
         ?string $dedicatedPage = NULL,
         ?string $winFormulaName = "default",
         ?string $regionsType = NULL,
-    ): void { ?>
+    ): void { 
+        if(is_null($live)) $live = static::detectLiveStatus($election);
+    ?>
 
         <div
             class="ElectionResultContainer"
@@ -90,4 +92,11 @@ class ElectionResultContainer extends \Base\Component{
         </div>
     <?php }
 
+    static function detectLiveStatus(string $election): bool{
+        $live_events = \API\LiveEventsService::call([ static::$country ?? ""]);
+        if(!empty($live_events['error'])) return FALSE;
+        
+        if(array_find($live_events, fn($event) => $event['election_id'] == $election)) return TRUE;
+        else return FALSE;
+    }
 }

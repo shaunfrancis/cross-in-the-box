@@ -3,7 +3,7 @@ include_once './app/lib/uk.php';
 $_dynamic_params_accepted = 1;
 
 if(empty($_params['path'][0])){
-    $region = ['title' => "Constituency or region not found"];
+    $region = ['title' => "Constituency not found"];
     throw new Exception(404);
 }
 
@@ -11,11 +11,13 @@ $slug = UK\slugToLookupSlug($_params['path'][0]);
 $region = API\SlugLookupService::call(["uk", $slug, "wales"]);
 
 if(empty($region) || !empty($region['error'])){
-    $region['title'] = "Constituency or region not found";
+    $region['title'] = "Constituency not found";
     throw new Exception(404);
 }
 
-$data = API\RegionService::call(["uk", $region['id']]);
+$live_events = API\LiveEventsService::call(["uk"]);
+if(empty($live_events['error']) && count($live_events) > 0) $regionParams = ['live' => TRUE];
+$data = API\RegionService::call(["uk", $region['id']], $regionParams ?? []);
 
 usort($data['events'], function($a, $b){
     return DateTime::createFromFormat('Y-m-d H:i:s', $a['date']) < DateTime::createFromFormat('Y-m-d H:i:s', $b['date']) ? 1 : -1;

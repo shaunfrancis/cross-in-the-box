@@ -15,7 +15,9 @@ if(empty($region) || !empty($region['error'])){
     throw new Exception(404);
 }
 
-$data = API\RegionService::call(["uk", $region['id']]);
+$live_events = API\LiveEventsService::call(["uk"]);
+if(empty($live_events['error']) && count($live_events) > 0) $regionParams = ['live' => TRUE];
+$data = API\RegionService::call(["uk", $region['id']], $regionParams ?? []);
 
 usort($data['events'], function($a, $b){
     return DateTime::createFromFormat('Y-m-d H:i:s', $a['date']) < DateTime::createFromFormat('Y-m-d H:i:s', $b['date']) ? 1 : -1;
