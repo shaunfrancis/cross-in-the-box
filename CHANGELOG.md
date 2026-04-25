@@ -1,5 +1,8 @@
 # Changelog
 
+## 5.2.1 - 2026-04-25
+- Sort elected list members by list position
+
 ## 5.2 - 2026-04-24
 - Add 2026 Scottish Parliament and Senedd Cymru elections
 - Start and end live events from database
