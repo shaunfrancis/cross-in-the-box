@@ -23,6 +23,7 @@ const highlightData = [
     { code: "VA", name: "Vatican City", color: 0xffd700, href: "/vatican-city", flag: "/public/images/vatican-flag.svg", target:[0.85,-1.16] },
     { code: "CA", name: "Canada", color: 0x05beff, href: "/canada", flag: "/public/images/canada-flag.svg", target:[1.17,0.97] },
     { code: "US", name: "United States", color: 0x81d6a6, href: "/usa", flag: "/public/images/usa-flag.svg", target:[0.85,0.85] },
+    { code: "NZ", name: "New Zealand", color: 0xffaa50, href: "/new-zealand", flag: "/public/images/nz-flag.svg", target:[-0.75,2.24] },
 ];
 let highlightedCountries = new WeakMap();
 
