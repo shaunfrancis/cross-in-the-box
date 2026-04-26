@@ -11,7 +11,11 @@ class RegionBarGraph extends \Base\Component{
         bool $withoutCandidateNames = FALSE,
         ?callable $subElectionSort = null,      // ([subid: any], [subid: any]) => number
     ){
-        $subElectionSort ??= fn($a, $b) => $b['subid'] - $a['subid'];
+        $subElectionSort ??= function($a, $b) {
+            $intCompare = intval($b['subid']) - intval($a['subid']);
+            if($intCompare == 0) return strnatcmp($a['subid'], $b['subid']);
+            else return $intCompare;
+        };
     ?>
             <?php
                 switch($subElectionType){

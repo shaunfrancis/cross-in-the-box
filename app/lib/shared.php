@@ -44,7 +44,7 @@ function combineCandidates(array $results){ // {...Result, candidates: {name: st
 
             $resultExists = FALSE;
             foreach($combinedRegionResults as &$combinedResult){
-                if($combinedResult['result_id'] == $result['result_id']){
+                if(!empty($result['result_id']) && $combinedResult['result_id'] == $result['result_id']){
                     $resultExists = TRUE;
                     $combinedResult['candidates'][] = $candidateArray;
                     break;
@@ -74,7 +74,7 @@ function getResultsBySubElection(array $results){ // {subid : number, results : 
 
     $subids = array_unique(
         array_map(function($result){
-            return intval($result['subid'] ?? 0);
+            return strval($result['subid'] ?? 0);
         }, $results)
     );
     sort($subids, SORT_NUMERIC);

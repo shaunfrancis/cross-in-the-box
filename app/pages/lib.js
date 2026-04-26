@@ -222,8 +222,8 @@ const getResultsBySubElection = (results) => { // {subid : number, results : Res
 
     const subids = [];
     results.forEach( result => {
-        if(!((subids.includes( parseInt(result.subid || 0)) ))){
-            subids.push(parseInt(result.subid || 0));
+        if(!((subids.includes( (result.subid || 0).toString() ) ))){
+            subids.push( (result.subid || 0).toString() );
         }
     });
     subids.sort();

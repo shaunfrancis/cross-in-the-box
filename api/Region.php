@@ -64,7 +64,7 @@ class RegionService extends APIService{
                 elections.date as election_date, elections.title as election_title, 
                 regions.title as region_title
                 FROM $tables->results as results
-                JOIN $tables->candidates as candidates ON candidates.result_id = results.id
+                LEFT JOIN $tables->candidates as candidates ON candidates.result_id = results.id
                 JOIN $tables->elections as elections ON elections.id = results.election_id
                 JOIN $tables->regions as regions ON regions.id = results.region_id
                 WHERE region_id IN (" . str_repeat("?,", count($direct_regions) - 1) . "?)",
