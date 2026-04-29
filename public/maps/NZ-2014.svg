@@ -1,79 +1,78 @@
 <svg fill="#eee" stroke="white" stroke-width=".04" version="1.1" viewBox="0 0 23 21" xmlns="http://www.w3.org/2000/svg">
- <style>#nz-2020-svg rect{ cursor:pointer; transition: fill 1000ms, fill-opacity 500ms }</style>
- <g id="nz-2020-svg">
-  <rect x="5" width="1" height="1" name="2020G32"/>
-  <rect x="5" y="1" width="1" height="1" name="2020G18"/>
-  <rect x="6" y="1" width="1" height="1" name="2020G64"/>
-  <rect x="7" y="1" width="1" height="1" name="2020G63"/>
-  <rect x="6" y="2" width="1" height="1" name="2020G55"/>
-  <rect x="7" y="2" width="1" height="1" name="2020G10"/>
-  <rect x="7" y="3" width="1" height="1" name="2020G31"/>
-  <rect x="8" y="3" width="1" height="1" name="2020G30"/>
-  <rect x="7" y="4" width="1" height="1" name="2020G53"/>
-  <rect x="8" y="4" width="1" height="1" name="2020G19"/>
-  <rect x="10" y="4" width="1" height="1" name="2020G01"/>
-  <rect x="7" y="5" width="1" height="1" name="2020G28"/>
-  <rect x="8" y="5" width="1" height="1" name="2020G24"/>
-  <rect x="9" y="5" width="1" height="1" name="2020G11"/>
-  <rect x="10" y="5" width="1" height="1" name="2020G49"/>
-  <rect x="8" y="6" width="1" height="1" name="2020G25"/>
-  <rect x="9" y="6" width="1" height="1" name="2020G23"/>
-  <rect x="10" y="6" width="1" height="1" name="2020G35"/>
-  <rect x="8" y="7" width="1" height="1" name="2020G21"/>
-  <rect x="9" y="7" width="1" height="1" name="2020G37"/>
-  <rect x="10" y="7" width="1" height="1" name="2020G04"/>
-  <rect x="11" y="7" width="1" height="1" name="2020G07"/>
-  <rect x="8" y="8" width="1" height="1" name="2020G22"/>
-  <rect x="9" y="8" width="1" height="1" name="2020G48"/>
-  <rect x="10" y="8" width="1" height="1" name="2020G38"/>
-  <rect x="11" y="8" width="1" height="1" name="2020G52"/>
-  <rect x="13" y="8" width="1" height="1" name="2020G09"/>
-  <rect x="9" y="9" width="1" height="1" name="2020G39"/>
-  <rect x="10" y="9" width="1" height="1" name="2020G56"/>
-  <rect x="11" y="9" width="1" height="1" name="2020G03"/>
-  <rect x="12" y="9" width="1" height="1" name="2020G44"/>
-  <rect x="13" y="9" width="1" height="1" name="2020G26"/>
-  <rect x="8" y="10" width="1" height="1" name="2020G50"/>
-  <rect x="9" y="10" width="1" height="1" name="2020G13"/>
-  <rect x="10" y="10" width="1" height="1" name="2020G12"/>
-  <rect x="11" y="10" width="1" height="1" name="2020G51"/>
-  <rect x="7" y="11" width="1" height="1" name="2020G29"/>
-  <rect x="8" y="11" width="1" height="1" name="2020G62"/>
-  <rect x="9" y="11" width="1" height="1" name="2020G41"/>
-  <rect x="10" y="11" width="1" height="1" name="2020G36"/>
-  <rect x="11" y="11" width="1" height="1" name="2020G54"/>
-  <rect x="10" y="12" width="1" height="1" name="2020G34"/>
-  <rect x="11" y="12" width="1" height="1" name="2020G58"/>
-  <rect x="9" y="13" width="1" height="1" name="2020G20"/>
-  <rect x="10" y="13" width="1" height="1" name="2020G42"/>
-  <rect x="8" y="14" width="1" height="1" name="2020G33"/>
-  <rect x="9" y="14" width="1" height="1" name="2020G14"/>
-  <rect x="8" y="15" width="1" height="1" name="2020G60"/>
-  <rect x="9" y="15" width="1" height="1" name="2020G43"/>
-  <rect x="5" y="15" width="1" height="1" name="2020G27"/>
-  <rect x="6" y="15" width="1" height="1" name="2020G17"/>
-  <rect x="4" y="16" width="1" height="1" name="2020G57"/>
-  <rect x="5" y="16" width="1" height="1" name="2020G06"/>
-  <rect x="3" y="17" width="1" height="1" name="2020G15"/>
-  <rect x="4" y="17" width="1" height="1" name="2020G05"/>
-  <rect x="2" y="18" width="1" height="1" name="2020G40"/>
-  <rect x="3" y="18" width="1" height="1" name="2020G45"/>
-  <rect x="4" y="18" width="1" height="1" name="2020G65"/>
-  <rect x="5" y="18" width="1" height="1" name="2020G02"/>
-  <rect x="1" y="19" width="1" height="1" name="2020G61"/>
-  <rect x="2" y="19" width="1" height="1" name="2020G59"/>
-  <rect x="3" y="19" width="1" height="1" name="2020G08"/>
-  <rect y="20" width="1" height="1" name="2020G46"/>
-  <rect x="1" y="20" width="1" height="1" name="2020G16"/>
-  <rect x="2" y="20" width="1" height="1" name="2020G47"/>
+ <style>#nz-2014-svg rect{ cursor:pointer; transition: fill 1000ms, fill-opacity 500ms }</style>
+ <g id="nz-2014-svg">
+  <rect x="5" width="1" height="1" name="2014G35"/>
+  <rect x="5" y="1" width="1" height="1" name="2014G15"/>
+  <rect x="6" y="1" width="1" height="1" name="2014G63"/>
+  <rect x="7" y="1" width="1" height="1" name="2014G45"/>
+  <rect x="6" y="2" width="1" height="1" name="2014G55"/>
+  <rect x="7" y="2" width="1" height="1" name="2014G11"/>
+  <rect x="7" y="3" width="1" height="1" name="2014G34"/>
+  <rect x="8" y="3" width="1" height="1" name="2014G33"/>
+  <rect x="7" y="4" width="1" height="1" name="2014G53"/>
+  <rect x="8" y="4" width="1" height="1" name="2014G21"/>
+  <rect x="10" y="4" width="1" height="1" name="2014G01"/>
+  <rect x="7" y="5" width="1" height="1" name="2014G31"/>
+  <rect x="8" y="5" width="1" height="1" name="2014G27"/>
+  <rect x="9" y="5" width="1" height="1" name="2014G12"/>
+  <rect x="10" y="5" width="1" height="1" name="2014G49"/>
+  <rect x="8" y="6" width="1" height="1" name="2014G28"/>
+  <rect x="9" y="6" width="1" height="1" name="2014G26"/>
+  <rect x="10" y="6" width="1" height="1" name="2014G38"/>
+  <rect x="8" y="7" width="1" height="1" name="2014G23"/>
+  <rect x="9" y="7" width="1" height="1" name="2014G24"/>
+  <rect x="10" y="7" width="1" height="1" name="2014G03"/>
+  <rect x="11" y="7" width="1" height="1" name="2014G07"/>
+  <rect x="9" y="8" width="1" height="1" name="2014G25"/>
+  <rect x="10" y="8" width="1" height="1" name="2014G40"/>
+  <rect x="11" y="8" width="1" height="1" name="2014G52"/>
+  <rect x="13" y="8" width="1" height="1" name="2014G10"/>
+  <rect x="9" y="9" width="1" height="1" name="2014G16"/>
+  <rect x="10" y="9" width="1" height="1" name="2014G56"/>
+  <rect x="11" y="9" width="1" height="1" name="2014G02"/>
+  <rect x="12" y="9" width="1" height="1" name="2014G47"/>
+  <rect x="13" y="9" width="1" height="1" name="2014G29"/>
+  <rect x="8" y="10" width="1" height="1" name="2014G50"/>
+  <rect x="9" y="10" width="1" height="1" name="2014G14"/>
+  <rect x="10" y="10" width="1" height="1" name="2014G13"/>
+  <rect x="11" y="10" width="1" height="1" name="2014G51"/>
+  <rect x="7" y="11" width="1" height="1" name="2014G32"/>
+  <rect x="8" y="11" width="1" height="1" name="2014G62"/>
+  <rect x="9" y="11" width="1" height="1" name="2014G43"/>
+  <rect x="10" y="11" width="1" height="1" name="2014G39"/>
+  <rect x="11" y="11" width="1" height="1" name="2014G54"/>
+  <rect x="10" y="12" width="1" height="1" name="2014G37"/>
+  <rect x="11" y="12" width="1" height="1" name="2014G58"/>
+  <rect x="9" y="13" width="1" height="1" name="2014G22"/>
+  <rect x="10" y="13" width="1" height="1" name="2014G44"/>
+  <rect x="8" y="14" width="1" height="1" name="2014G36"/>
+  <rect x="9" y="14" width="1" height="1" name="2014G17"/>
+  <rect x="8" y="15" width="1" height="1" name="2014G60"/>
+  <rect x="9" y="15" width="1" height="1" name="2014G46"/>
+  <rect x="5" y="15" width="1" height="1" name="2014G30"/>
+  <rect x="6" y="15" width="1" height="1" name="2014G20"/>
+  <rect x="4" y="16" width="1" height="1" name="2014G57"/>
+  <rect x="5" y="16" width="1" height="1" name="2014G05"/>
+  <rect x="3" y="17" width="1" height="1" name="2014G18"/>
+  <rect x="4" y="17" width="1" height="1" name="2014G04"/>
+  <rect x="2" y="18" width="1" height="1" name="2014G42"/>
+  <rect x="3" y="18" width="1" height="1" name="2014G48"/>
+  <rect x="4" y="18" width="1" height="1" name="2014G64"/>
+  <rect x="5" y="18" width="1" height="1" name="2014G41"/>
+  <rect x="1" y="19" width="1" height="1" name="2014G61"/>
+  <rect x="2" y="19" width="1" height="1" name="2014G59"/>
+  <rect x="3" y="19" width="1" height="1" name="2014G08"/>
+  <rect y="20" width="1" height="1" name="2014G06"/>
+  <rect x="1" y="20" width="1" height="1" name="2014G19"/>
+  <rect x="2" y="20" width="1" height="1" name="2014G09"/>
   <g transform="translate(1 -0.5)">
-   <rect x="18" y="2" width="1" height="1" name="2020M05"/>
-   <rect x="19" y="3" width="1" height="1" name="2020M03"/>
-   <rect x="20" y="3" width="1" height="1" name="2020M01"/>
-   <rect x="19" y="4" width="1" height="1" name="2020M04"/>
-   <rect x="20" y="4" width="1" height="1" name="2020M07"/>
-   <rect x="19" y="5" width="1" height="1" name="2020M02"/>
-   <rect x="17" y="6" width="1" height="1" name="2020M06"/>
+   <rect x="18" y="2" width="1" height="1" name="2014M05"/>
+   <rect x="19" y="3" width="1" height="1" name="2014M03"/>
+   <rect x="20" y="3" width="1" height="1" name="2014M01"/>
+   <rect x="19" y="4" width="1" height="1" name="2014M04"/>
+   <rect x="20" y="4" width="1" height="1" name="2014M07"/>
+   <rect x="19" y="5" width="1" height="1" name="2014M02"/>
+   <rect x="17" y="6" width="1" height="1" name="2014M06"/>
    <g name="LIST">
     <rect x="17" y="10" width="1" height="1"/>
     <rect x="18" y="10" width="1" height="1"/>
@@ -123,6 +122,7 @@
     <rect x="17" y="19" width="1" height="1"/>
     <rect x="18" y="19" width="1" height="1"/>
     <rect x="19" y="19" width="1" height="1"/>
+    <rect x="20" y="19" width="1" height="1"/>
    </g>
   </g>
  </g>

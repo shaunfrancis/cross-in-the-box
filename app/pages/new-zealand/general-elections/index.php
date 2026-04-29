@@ -33,6 +33,16 @@
                 title: ["2020", "General", "Election"],
             ); ?>
 
+            <?= \NewZealand\ElectionResultContainer::show(
+                election: "2017",
+                title: ["2017", "General", "Election"],
+            ); ?>
+
+            <?= \NewZealand\ElectionResultContainer::show(
+                election: "2014",
+                title: ["2014", "General", "Election"],
+            ); ?>
+
         <?= ElectionResultsSection::close(); ?>
     </section>
 

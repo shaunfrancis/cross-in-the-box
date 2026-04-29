@@ -16,7 +16,6 @@
     display:grid;
     grid-template-columns:85px repeat(calc(var(--max-rounds) + 2), minmax(min-content, 1fr)) var(--lr-padding);
     gap:5px;
-    margin-top:20px;
 }
 
 .DHondtTable__header{

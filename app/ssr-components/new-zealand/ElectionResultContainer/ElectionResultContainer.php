@@ -26,6 +26,9 @@ class ElectionResultContainer extends \Shared\ElectionResultContainer{
 
     static function getMapClass(string $election){
         switch($election){
+            case "2014": case "2017":
+                $MapClass = '\NewZealand\Maps\General2014';
+                break;
             case "2023": case "2020": default:
                 $MapClass = '\NewZealand\Maps\General2020';
                 break;

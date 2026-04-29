@@ -13,7 +13,7 @@
 
     <section id="overview" class="content-section">
         <h1>Overview</h1>
-        <p>New Zealand holds a <a href="/new-zealand/general-elections">general election</a> at least once every three years to elect at least 120 members to its lower house.</p>
+        <p>New Zealand holds a <a href="/new-zealand/general-elections">general election</a> at least once every three years to elect 120 members or more to its unicameral parliament, the New Zealand House of Representatives.</p>
     </section>
 
     <section id="pages">
@@ -32,6 +32,16 @@
             <?= \NewZealand\ElectionResultContainer::show(
                 election: "2020",
                 title: ["2020", "General", "Election"],
+            ); ?>
+
+            <?= \NewZealand\ElectionResultContainer::show(
+                election: "2017",
+                title: ["2017", "General", "Election"],
+            ); ?>
+
+            <?= \NewZealand\ElectionResultContainer::show(
+                election: "2014",
+                title: ["2014", "General", "Election"],
             ); ?>
 
         <?= ElectionResultsSection::close(); ?>

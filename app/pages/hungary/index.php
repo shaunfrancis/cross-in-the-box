@@ -13,7 +13,7 @@
 
     <section id="overview" class="content-section">
         <h1>Overview</h1>
-        <p>Hungary holds a <a href="/hungary/parliamentary-elections">parliamentary election</a> at least once every four years to elect 199 members to its unicameral parliament.</p>
+        <p>Hungary holds a <a href="/hungary/parliamentary-elections">parliamentary election</a> at least once every four years to elect 199 members to its unicameral parliament, the Országgyűlés (National Assembly).</p>
     </section>
 
     <section id="pages">
