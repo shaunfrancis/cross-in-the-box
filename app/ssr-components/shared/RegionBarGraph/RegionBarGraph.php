@@ -83,11 +83,15 @@ class RegionBarGraph extends \Base\Component{
             ?>
 
             <div class="RegionBarGraph__row" data-party="<?= $result['party']; ?>">
-                <div class="RegionBarGraph__party RegionBarGraph__bloc bloc">
+                <div class="RegionBarGraph__party RegionBarGraph__bloc bloc<?php
+                    if(!$withoutCandidateNames && empty($result['candidates'][0]['name'])) : ?>
+                     span-2
+                    <?php endif;
+                ?>">
                     <span><?= $result['party']; ?></span>
                     <div class="RegionBarGraph__hover"></div>
                 </div>
-                <?php if(!$withoutCandidateNames): ?>
+                <?php if(!$withoutCandidateNames && !empty($result['candidates'][0]['name'])): ?>
                     <div
                         class="RegionBarGraph__candidate RegionBarGraph__bloc bloc" 
                         title="<?= $result['candidates'][0]['name']; ?>"

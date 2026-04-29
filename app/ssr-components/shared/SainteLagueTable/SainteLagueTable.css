@@ -1,0 +1,101 @@
+.SainteLagueTable.pre-hydration{
+    & .SainteLagueTable__party{
+        background-color:var(--default-color);
+        text-transform:uppercase;
+        cursor:default;
+        &:hover .SainteLagueTable__hover{
+            opacity:0;
+        }
+    }
+    & .SainteLagueTable__elected{
+        background-color:var(--default-color);
+    }
+}
+
+.SainteLagueTable{
+    display:grid;
+    grid-template-columns:85px repeat(calc(var(--max-rounds) + 2), minmax(min-content, 1fr)) var(--lr-padding);
+    gap:5px;
+}
+
+.SainteLagueTable__header{
+    & > .SainteLagueTable__bloc{
+        color:#000;
+        background-color:var(--light-default-color);
+        font-weight:450;
+        text-align:center;
+        &:nth-child(2){
+            grid-column: span 2;
+        }
+    }
+}
+
+.SainteLagueTable :is(tbody, thead, .SainteLagueTable__row){
+    display:flex;
+    gap:5px;
+    color:#fff;
+    font-weight:350;
+    grid-column: 1 / -1;
+    display:grid;
+    grid-template-columns: subgrid;
+    & > tr > :is(td,th):is(:first-child){
+        position:sticky;
+        box-shadow: 5px 0 0 #fff;
+        left:0;
+        z-index:2;
+    }
+}
+
+.SainteLagueTable__bloc{
+    cursor:default;
+    text-align:right;
+    color:#000;
+    &.SainteLagueTable__elected{
+        color:#fff;
+        font-weight:450;
+    }
+}
+.SainteLagueTable__row:nth-child(2n) .SainteLagueTable__bloc{ background-color:var(--light-default-color) }
+.SainteLagueTable__row:not(.SainteLagueTable__header):nth-child(2n+1) .SainteLagueTable__bloc{ background-color:rgb(248,248,248) }
+
+.SainteLagueTable__party{
+    text-align:center;
+    font-weight:450;
+    position:relative;
+    cursor:pointer;
+    overflow:visible;
+    grid-column:1;
+    padding:4px 8px;
+    color:#FFF;
+}
+
+.SainteLagueTable__party span{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    display: block;
+}
+
+.SainteLagueTable__hover{
+    position:absolute;
+    background:#fff;
+    color:#000;
+    height:100%;
+    top:0;
+    left:100%;
+    margin-left:5px;
+    border-radius:2px;
+    padding:4px 8px;
+    opacity:0;
+    z-index:2;
+    pointer-events:none;
+    transition:opacity 100ms;
+}
+    .SainteLagueTable__party:hover .SainteLagueTable__hover{
+        opacity:1;
+    }
+
+.SainteLagueTable__eliminated{
+    background-image:linear-gradient(to bottom right, transparent, transparent 48%, #DDD 48%, #DDD 52%, transparent 52%, transparent);
+}

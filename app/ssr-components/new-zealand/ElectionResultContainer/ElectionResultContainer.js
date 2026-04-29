@@ -21,15 +21,46 @@ class NZElectionResultContainer extends ElectionResultContainer{
             if(region) openWindow(event, '/new-zealand/general-elections/electorate/' + regionToSlug(region.title));
         }
 
+        data.loadFun = (mapContainer, electionResultContainer) => {
+            const svg = mapContainer.querySelector('svg');
+            if(!svg) return;
+
+            // add overhang list seats
+            let standardNumber;
+            switch(this.data.election){
+                case "2017": case "2014": standardNumber = 49; break;
+                case "2023": case "2020": default: standardNumber = 48;
+            }
+            const listCount = data.fills.filter(f => f.id === "LIST").length;
+            const listGroup = mapContainer.querySelector(`g[name="LIST"]`);
+            for(let i = standardNumber + 1; i <= listCount; i++){
+                const existingRect = mapContainer.querySelector(`rect[data-overhang="${i}"]`);
+                if(existingRect) continue;
+
+                const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                rect.setAttributeNS(null, "data-overhang", i);
+                rect.setAttributeNS(null, "width", 1);
+                rect.setAttributeNS(null, "height", 1);
+                rect.setAttributeNS(null, "x", 17 + ((i - 1) % 5));
+                rect.setAttributeNS(null, "y", 19 + Math.floor( (i - 46) / 5 ) );
+                listGroup.appendChild(rect);
+            }
+        }
+
         super.fillMap(data);
     }
 
     get mapHoverFunComponents(){
         return { ...super.mapHoverFunComponents, 
+            winningCandidate: (id, regionResults, winner) => {
+                const hasMultipleCandidates = regionResults.some( result => result.candidates.length > 1 );
+                if(!hasMultipleCandidates) return super.mapHoverFunComponents.winningCandidate(id, regionResults, winner);
+            },
             additionalContent: (id, regionResults, latestResultsUpdate) => {
                 const results = latestResultsUpdate?.results.data || regionResults;
+                const subElections = getResultsBySubElection(results);
                 return [PopupBarGraph.render({
-                    results: getResultsBySubElection(results).find(s => s.subid === "E").results,
+                    results: subElections.length === 1 ? results : subElections.find(s => s.subid === "E").results,
                     parties: CachedData.parties,
                     partyWidth: "80px"
                 })];
