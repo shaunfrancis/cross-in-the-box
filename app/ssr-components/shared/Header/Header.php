@@ -3,7 +3,7 @@ namespace Shared;
 
 class Header extends \Base\Component{
 
-    static function render(string $countryName, ?string $countryAbbrev = NULL, ?string $countryFlag = NULL, ?array $links = []) : void { 
+    static function render(string $countryName, ?array $countryTranslations = [], ?string $countryAbbrev = NULL, ?string $countryFlag = NULL, ?array $links = []) : void { 
         global $_request;
     ?>
     
@@ -17,12 +17,25 @@ class Header extends \Base\Component{
             </a>
 
             <?php if(!empty($countryAbbrev)) : ?>
-                <h1><a href="/<?= $countryAbbrev; ?>" class="unstyled">
+                <hgroup><a href="/<?= $countryAbbrev; ?>" class="unstyled">
                     <?php if(!empty($countryFlag)) : ?>
                         <img src="/public/images/<?= $countryFlag; ?>" class="Header__flag" alt="" />
                     <?php endif; ?>
-                    <span><?= $countryName; ?></span>
-                </a></h1>
+                    <div>
+                        <h1><?= $countryName; ?></h1>
+                        <?php if(!empty($countryTranslations)) : ?>
+                            <?php if(count($countryTranslations) > 1) : ?>
+                                <span>
+                            <?php endif; ?>
+                                    <?php foreach($countryTranslations as $lang => $label) : ?>
+                                        <span lang="<?= $lang; ?>"><?= $label; ?></span>
+                                    <?php endforeach; ?>
+                            <?php if(count($countryTranslations) > 1) : ?>
+                                </span>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                    </div>
+                </a></hgroup>
             <?php endif; ?>
 
             <?php if(!empty($links)) : ?>
