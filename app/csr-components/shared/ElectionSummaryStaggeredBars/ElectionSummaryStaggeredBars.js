@@ -124,7 +124,7 @@ export default class ElectionSummaryStaggeredBars{
                                 <h3>${row.displayCount || row.count}</h3>
                                 <div class="ElectionSummaryBar__hover-party">
                                     <div class="square" style="background:${row.party.color || "var(--default-color)"}"></div>
-                                    <span>${outputPartyTitles(row.party.titles)}</span>
+                                    <span>${row.party.titles[0].title}</span>
                                 </div>
                             `
                         }) );

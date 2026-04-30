@@ -52,7 +52,7 @@ export default class ElectionSummaryBar{
                         ${row.candidate !== row.party.displayId ? `<h4>${row.candidate}</h4>` : ''}
                         <div class="ElectionSummaryBar__hover-party">
                             <div class="square" style="background:${row.party.color || "var(--default-color)"}"></div>
-                            <span>${outputPartyTitles(row.party.titles)}</span>
+                            <span>${row.party.titles[0].title}</span>
                         </div>
                     `;
                 }
@@ -83,7 +83,7 @@ export default class ElectionSummaryBar{
                                 <h4>${row.displayCount || row.count} &bull; ${row.candidate}</h4>
                                 <div class="ElectionSummaryBar__hover-party">
                                     <div class="square" style="background:${row.party.color || "var(--default-color)"}"></div>
-                                    <span>${outputPartyTitles(row.party.titles)}</span>
+                                    <span>${row.party.titles[0].title}</span>
                                 </div>
                             `
                         }) );
