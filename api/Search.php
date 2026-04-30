@@ -93,7 +93,7 @@ class SearchService extends APIService{
                 candidates.candidate, candidates.elected,
                 regions.id, regions.title,
                 elections.title as election, elections.date,
-                parties.title as party_title, parties.color, parties.textColor
+                parties.color, parties.textColor
                 FROM $tables->results as results
                 JOIN $tables->candidates as candidates ON candidates.result_id = results.id
                 JOIN $tables->regions as regions ON regions.id = results.region_id
@@ -122,8 +122,7 @@ class SearchService extends APIService{
             foreach($candidates as &$candidate){
                 $candidate['election'] = json_decode($candidate['election']);
                 $party = array(
-                    "id" => $candidate['party'],
-                    "title" => $candidate['party_title']
+                    "id" => $candidate['party']
                 );
                 if(isset($candidate['color'])) $party['color'] = $candidate['color'];
                 if(isset($candidate['textColor'])) $party['textColor'] = $candidate['textColor'];

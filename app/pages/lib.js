@@ -215,6 +215,33 @@ const parseJSONWithDates = (text, keys) => {
     });
 }
 
+// Output multilingual party titles
+const outputPartyTitles = (titles) => {
+    let output = new Elt({ tag: 'div', classList: ["party-titles"] });
+    titles.sort( (a,b) => {
+        if(a.primary !== b.primary) return (b.primary || 0) - (a.primary || 0);
+        if (a.lang === "en" && b.lang !== "en") return -1;
+        if (b.lang === "en" && a.lang !== "en") return 1;
+        return a.lang.localeCompare(b.lang);
+    } ).forEach( (title, index) => {
+        output.appendChild( new Elt({
+            tag: 'div',
+            children: [
+                index !== 0 && titles.length > 2 ? new Elt({
+                    tag: 'abbr',
+                    innerHTML: title.lang.toUpperCase(),
+                }) : null,
+                new Elt({
+                    tag: 'bdi',
+                    innerHTML: title.title,
+                    ...(title.lang !== "en" ? {lang: title.lang} : {})
+                })
+            ].filter(Boolean)
+        }) );
+    });
+    return output.outerHTML;
+}
+
 /* Duplicated in lib/shared.php */
 // Split a set of results into an array of [subid, results]
 const getResultsBySubElection = (results) => { // {subid : number, results : Result[]}[]

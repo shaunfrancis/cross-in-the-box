@@ -18,7 +18,7 @@ window.addEventListener('DOMContentLoaded', async () => {
             });
             
             if(partyBloc) partyBloc.querySelector('span').innerHTML = party.displayId;
-            row.querySelector('.STVTable__hover').innerHTML = party.title;
+            row.querySelector('.STVTable__hover').innerHTML = outputPartyTitles(party.titles);
         }
         container.classList.remove('pre-hydration');
     }

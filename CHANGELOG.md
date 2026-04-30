@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.3 - 2026-04-30
+- Add support for translated party names
+- Add country names in their official languages to header
+- Fix header breakpoints
+
 ## 5.2.1 - 2026-04-25
 - Sort elected list members by list position
 
