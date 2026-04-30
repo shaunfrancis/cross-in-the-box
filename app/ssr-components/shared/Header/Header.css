@@ -3,8 +3,9 @@
     box-shadow:1px 1px 0 1px var(--box-shadow-color);
     line-height:1.8em;
     display:flex;
+    flex-wrap:wrap;
     align-items:center;
-    padding:0 var(--left-gap);
+    padding:0 25px 0 var(--left-gap);
     column-gap:50px;
     overflow:hidden;
     position:relative;
@@ -35,7 +36,6 @@
             flex-direction:column;
         }
         & span{
-            font-weight: 350;
             line-height: 1.2em;
             white-space:nowrap;
         }
@@ -54,7 +54,7 @@
 
 #Header nav ul{
     margin:0;
-    padding:0;
+    padding:5px 0;
     display:flex;
     align-items:center;
     gap:30px;
@@ -88,13 +88,17 @@
     }
 
     #Header nav ul{
+        padding:0;
         justify-content:space-between;
         gap:0;
     }
 
-    #Header hgroup > a{
-        gap:5px;
-        white-space:initial;
+    #Header hgroup{
+        padding:10px 0;
+        & > a{
+            gap:5px;
+            white-space:initial;
+        }
     }
     .Header__flag{ height:15px }
 }
