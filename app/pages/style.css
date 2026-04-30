@@ -281,6 +281,7 @@ details summary .has-marker:after{
     width:calc(100% + var(--lr-padding));
     overflow-x:auto;
     padding-bottom:30px;
+    margin-top:20px;
 }
 
 .key-information{

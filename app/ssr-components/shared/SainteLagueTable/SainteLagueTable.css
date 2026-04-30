@@ -1,27 +1,27 @@
-.DHondtTable.pre-hydration{
-    & .DHondtTable__party{
-        background:var(--default-color);
+.SainteLagueTable.pre-hydration{
+    & .SainteLagueTable__party{
+        background-color:var(--default-color);
         text-transform:uppercase;
         cursor:default;
-        &:hover .DHondtTable__hover{
+        &:hover .SainteLagueTable__hover{
             opacity:0;
         }
     }
-    & .DHondtTable__elected{
-        background:var(--default-color);
+    & .SainteLagueTable__elected{
+        background-color:var(--default-color);
     }
 }
 
-.DHondtTable{
+.SainteLagueTable{
     display:grid;
     grid-template-columns:85px repeat(calc(var(--max-rounds) + 2), minmax(min-content, 1fr)) var(--lr-padding);
     gap:5px;
 }
 
-.DHondtTable__header{
-    & > .DHondtTable__bloc{
+.SainteLagueTable__header{
+    & > .SainteLagueTable__bloc{
         color:#000;
-        background:var(--light-default-color);
+        background-color:var(--light-default-color);
         font-weight:450;
         text-align:center;
         &:nth-child(2){
@@ -30,7 +30,7 @@
     }
 }
 
-.DHondtTable :is(tbody, thead, .DHondtTable__row){
+.SainteLagueTable :is(tbody, thead, .SainteLagueTable__row){
     display:flex;
     gap:5px;
     color:#fff;
@@ -46,19 +46,19 @@
     }
 }
 
-.DHondtTable__bloc{
+.SainteLagueTable__bloc{
     cursor:default;
     text-align:right;
     color:#000;
-    &.DHondtTable__elected{
+    &.SainteLagueTable__elected{
         color:#fff;
         font-weight:450;
     }
 }
-.DHondtTable__row:nth-child(2n) .DHondtTable__bloc{ background:var(--light-default-color) }
-.DHondtTable__row:not(.DHondtTable__header):nth-child(2n+1) .DHondtTable__bloc{ background:rgb(248,248,248) }
+.SainteLagueTable__row:nth-child(2n) .SainteLagueTable__bloc{ background-color:var(--light-default-color) }
+.SainteLagueTable__row:not(.SainteLagueTable__header):nth-child(2n+1) .SainteLagueTable__bloc{ background-color:rgb(248,248,248) }
 
-.DHondtTable__party{
+.SainteLagueTable__party{
     text-align:center;
     font-weight:450;
     position:relative;
@@ -69,7 +69,7 @@
     color:#FFF;
 }
 
-.DHondtTable__party span{
+.SainteLagueTable__party span{
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -77,11 +77,11 @@
     display: block;
 }
 
-.DHondtTable__hover{
+.SainteLagueTable__hover{
     position:absolute;
     background:#fff;
     color:#000;
-    min-height:100%;
+    height:100%;
     top:0;
     left:100%;
     margin-left:5px;
@@ -92,6 +92,10 @@
     pointer-events:none;
     transition:opacity 100ms;
 }
-    .DHondtTable__party:hover .DHondtTable__hover{
+    .SainteLagueTable__party:hover .SainteLagueTable__hover{
         opacity:1;
     }
+
+.SainteLagueTable__eliminated{
+    background-image:linear-gradient(to bottom right, transparent, transparent 48%, #DDD 48%, #DDD 52%, transparent 52%, transparent);
+}

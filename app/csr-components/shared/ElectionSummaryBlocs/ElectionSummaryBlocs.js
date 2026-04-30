@@ -14,6 +14,11 @@ export default class ElectionSummaryBlocs{
         rowLength = Infinity,   // number?
         blocWidth = null        // string?
     }){
+        // show Other bloc if data.length > rowLength,
+        // unless data.length is exactly one more than rowLength
+        const shouldShowOther = data.length > rowLength + 1;
+        if(data.length == rowLength + 1) rowLength++;
+
         const styles = {};
         if(blocWidth) styles["--ElectionSummaryBlocs__bloc-width"] = blocWidth;
         if(rowLength != Infinity) styles["--ElectionSummaryBlocs__preferred-row-size"] = rowLength;
@@ -25,7 +30,6 @@ export default class ElectionSummaryBlocs{
         });
         this.activeContainers.push(container);
 
-        const shouldShowOther = data.length > rowLength;
         let totalOther = 0;
         if(shouldShowOther){
             data.slice(rowLength - 1).forEach( result => {
@@ -36,10 +40,10 @@ export default class ElectionSummaryBlocs{
         for(let i = 0; i < (shouldShowOther ? 2 : 1); i++){
             const blocs = [];
             for(let j = 0; j < (i == 0 ? rowLength : data.length - rowLength + 1); j++){
-                const position = (shouldShowOther && (i > 0 || j >= 4)) ? i*rowLength + j - 1 : j;
+                const position = (shouldShowOther && (i > 0 || j >= rowLength - 1)) ? i*rowLength + j - 1 : j;
                 if(position >= data.length) break;
 
-                if(shouldShowOther && i == 0 && j == 4){
+                if(shouldShowOther && i == 0 && j == rowLength - 1){
                     const bloc = new Elt({tag: 'div', classList: ["ElectionSummaryBlocs__bloc", "other-bloc"]});
 
                     bloc.addEventListener('pointermove', () => { this.hover = true });

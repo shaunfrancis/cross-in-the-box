@@ -19,7 +19,7 @@ class ResultsService extends APIService{
                     SELECT results.region_id as id, results.election_subid as s, results.party as p, results.votes as v, 
                     candidates.elected as e 
                     FROM $tables->results as results
-                    JOIN $tables->candidates as candidates ON results.id = candidates.result_id
+                    LEFT JOIN $tables->candidates as candidates ON results.id = candidates.result_id
                     WHERE election_id = :election
                 ";
             }
@@ -27,7 +27,7 @@ class ResultsService extends APIService{
                 SELECT results.region_id as id, results.election_subid as subid, results.party, results.votes, 
                 candidates.result_id, candidates.candidate, candidates.position as candidate_position, candidates.elected
                 FROM $tables->results as results
-                JOIN $tables->candidates as candidates ON results.id = candidates.result_id
+                LEFT JOIN $tables->candidates as candidates ON results.id = candidates.result_id
                 WHERE election_id = :election
             ";
 

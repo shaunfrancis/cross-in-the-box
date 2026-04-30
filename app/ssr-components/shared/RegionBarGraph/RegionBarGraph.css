@@ -119,6 +119,7 @@
     overflow:visible;
     grid-column:1;
     padding:4px 8px;
+    &.span-2{ grid-column: span 2 }
 }
 
 .RegionBarGraph__party span{

@@ -11,7 +11,11 @@ class RegionBarGraph extends \Base\Component{
         bool $withoutCandidateNames = FALSE,
         ?callable $subElectionSort = null,      // ([subid: any], [subid: any]) => number
     ){
-        $subElectionSort ??= fn($a, $b) => $b['subid'] - $a['subid'];
+        $subElectionSort ??= function($a, $b) {
+            $intCompare = intval($b['subid']) - intval($a['subid']);
+            if($intCompare == 0) return strnatcmp($a['subid'], $b['subid']);
+            else return $intCompare;
+        };
     ?>
             <?php
                 switch($subElectionType){
@@ -79,11 +83,15 @@ class RegionBarGraph extends \Base\Component{
             ?>
 
             <div class="RegionBarGraph__row" data-party="<?= $result['party']; ?>">
-                <div class="RegionBarGraph__party RegionBarGraph__bloc bloc">
+                <div class="RegionBarGraph__party RegionBarGraph__bloc bloc<?php
+                    if(!$withoutCandidateNames && empty($result['candidates'][0]['name'])) : ?>
+                     span-2
+                    <?php endif;
+                ?>">
                     <span><?= $result['party']; ?></span>
                     <div class="RegionBarGraph__hover"></div>
                 </div>
-                <?php if(!$withoutCandidateNames): ?>
+                <?php if(!$withoutCandidateNames && !empty($result['candidates'][0]['name'])): ?>
                     <div
                         class="RegionBarGraph__candidate RegionBarGraph__bloc bloc" 
                         title="<?= $result['candidates'][0]['name']; ?>"

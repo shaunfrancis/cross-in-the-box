@@ -112,6 +112,17 @@
                 ]
             ]
         ],
+        'new-zealand' => [
+            'label' => "New Zealand",
+            'href' => '/new-zealand',
+            'flag' => '/public/images/nz-flag.svg',
+            'children' => [
+                [
+                    'label' => "General Elections",
+                    'href' => '/new-zealand/general-elections'
+                ]
+            ]
+        ],
         'uk' => [
             'label' => "United Kingdom",
             'href' => '/uk',

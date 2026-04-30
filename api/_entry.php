@@ -1,7 +1,7 @@
 <?php
     namespace API;
 
-    $accepted_countries = array("canada", "france", "hungary", "uk", "usa", "vatican");
+    $accepted_countries = array("canada", "france", "hungary", "nz", "uk", "usa", "vatican");
     $request = array_filter( preg_split( '/\//', str_replace(['/elections/api/','/api/'], '', $_SERVER['REQUEST_URI']) ) );
     $resource = array_shift($request);
 
