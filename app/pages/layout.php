@@ -78,7 +78,7 @@
     <?php foreach($_headInjections ?? [] as $content) echo $content; ?>
 </head>
 <body>
-    <?= Header::show($_countryName ?? '', $_countryAbbrev ?? NULL, $_countryFlag ?? NULL, $_headerLinks ?? []); ?>
+    <?= Header::show($_countryName ?? '', $_countryTranslations ?? [], $_countryAbbrev ?? NULL, $_countryFlag ?? NULL, $_headerLinks ?? []); ?>
     <?= $_children ?? ""; ?>
     <?= Footer::show(); ?>
 </body>

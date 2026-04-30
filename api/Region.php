@@ -79,20 +79,6 @@ class RegionService extends APIService{
                 $direct_regions
             );
 
-            //get party data
-            $parties = self::fetch(
-                "SELECT DISTINCT parties.id, parties.title, parties.color, parties.textColor 
-                FROM $tables->parties as parties 
-                LEFT JOIN $tables->results as results ON results.party = parties.id AND results.region_id IN (" . str_repeat("?,", count($direct_regions) - 1) . "?)
-                LEFT JOIN $tables->updates as updates ON updates.party = parties.id AND updates.region_id IN (" . str_repeat("?,", count($direct_regions) - 1) . "?)
-                WHERE results.party IS NOT NULL OR updates.party IS NOT NULL",
-                array(...$direct_regions, ...$direct_regions)
-            );
-            foreach($parties as &$party){
-                if(!isset($party['color'])) unset($party['color']);
-                if(!isset($party['textColor'])) unset($party['textColor']);
-            }
-
             //get attributes
             $attributes = self::fetch(
                 "SELECT region_id, label, value, applies_to
@@ -164,7 +150,7 @@ class RegionService extends APIService{
                 $events[] = $new_event;
             }
 
-            return array( "events" => $events, "parties" => $parties, "tree" => $tree_results, "attributes" => $attributes );
+            return array( "events" => $events, "tree" => $tree_results, "attributes" => $attributes );
         }
         catch(\Exception $error){ return self::fail(500, "Internal server error"); }
     }

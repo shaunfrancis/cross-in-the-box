@@ -24,14 +24,24 @@
 }
 ::view-transition-group(logo){ animation:none; z-index: 1 }
 
-#Header h1{
-    font-size:1.5em;
+#Header hgroup{
     cursor:default;
     & > a{
         display:flex;
         align-items:baseline;
         gap:10px;
+        & > div{
+            display:flex;
+            flex-direction:column;
+        }
+        & span{
+            font-weight: 350;
+            line-height: 1.2em;
+            white-space:nowrap;
+        }
+        & span + span:before{ content: " | " }
     }
+    & h1{ font-size:1.5em }
 }
 .Header__flag{
     height:20px;
@@ -82,6 +92,9 @@
         gap:0;
     }
 
-    #Header h1 > a{ gap:5px }
+    #Header hgroup > a{
+        gap:5px;
+        white-space:initial;
+    }
     .Header__flag{ height:15px }
 }

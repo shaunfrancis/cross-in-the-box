@@ -337,6 +337,23 @@ details summary .has-marker:after{
     background:var(--light-default-color);
 }
 
+.party-titles{
+    text-align:left;
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+    &:has(abbr){ padding-right:5px }
+    & > div{
+        display:flex;
+        gap:8px;
+        align-items:center;
+        font-weight:350;
+        &:first-child{ font-weight:450 }
+        & > abbr{ font-size:0.75rem }
+        &:not(:first-child) > bdi{ font-style:italic }
+    }
+}
+
 @media screen and (max-width:768px){
     :root{
         --left-gap:20px;

@@ -26,7 +26,7 @@ window.addEventListener('DOMContentLoaded', async () => {
             });
 
             blocs.party[0].querySelector('span').innerHTML = party.displayId;
-            row.querySelector('.RegionBarGraph__hover').innerHTML = party.title;
+            row.querySelector('.RegionBarGraph__hover').innerHTML = outputPartyTitles(party.titles);
 
             if(isFusionRow){
                 const fusionCount = parseInt(row.getAttribute('data-fusion-count') || 0) - 1;

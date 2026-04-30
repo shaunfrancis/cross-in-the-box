@@ -31,7 +31,7 @@ class ConclaveResultContainer extends \Base\Component{
                 
                 <div class="ConclaveResultContainer__pope-container">
                     <div class="ConclaveResultContainer__papal-name">
-                        <?= $winningParty['title'] ?: "No pope yet"; ?>
+                        <?= $winningParty['titles'][0]['title'] ?: "No pope yet"; ?>
                     </div>
                     <?php if(!empty($winner['candidates'][0]['name'])) : ?>
                         <div class="ConclaveResultContainer__real-name">
@@ -57,7 +57,7 @@ class ConclaveResultContainer extends \Base\Component{
                                 <?php if($result['candidates'][0]['elected']) : ?>
                                     <h3>Habemus Papam</h3>
                                     <?php if(!empty($winningParty)) : ?>
-                                        <span><?= $winningParty['title']; ?> was elected<span>
+                                        <span><?= $winningParty['titles'][0]['title']; ?> was elected<span>
                                     <?php endif; ?>
                                 <?php elseif($result['votes'] == 0) : // used in rare case that conclave is currently ongoing ?>
                                     <h3>Awaiting smoke</h3>
