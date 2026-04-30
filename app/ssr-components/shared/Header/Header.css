@@ -3,8 +3,9 @@
     box-shadow:1px 1px 0 1px var(--box-shadow-color);
     line-height:1.8em;
     display:flex;
+    flex-wrap:wrap;
     align-items:center;
-    padding:0 var(--left-gap);
+    padding:0 25px 0 var(--left-gap);
     column-gap:50px;
     overflow:hidden;
     position:relative;
@@ -24,14 +25,23 @@
 }
 ::view-transition-group(logo){ animation:none; z-index: 1 }
 
-#Header h1{
-    font-size:1.5em;
+#Header hgroup{
     cursor:default;
     & > a{
         display:flex;
         align-items:baseline;
         gap:10px;
+        & > div{
+            display:flex;
+            flex-direction:column;
+        }
+        & span{
+            line-height: 1.2em;
+            white-space:nowrap;
+        }
+        & span + span:before{ content: " | " }
     }
+    & h1{ font-size:1.5em }
 }
 .Header__flag{
     height:20px;
@@ -44,7 +54,7 @@
 
 #Header nav ul{
     margin:0;
-    padding:0;
+    padding:5px 0;
     display:flex;
     align-items:center;
     gap:30px;
@@ -78,10 +88,17 @@
     }
 
     #Header nav ul{
+        padding:0;
         justify-content:space-between;
         gap:0;
     }
 
-    #Header h1 > a{ gap:5px }
+    #Header hgroup{
+        padding:10px 0;
+        & > a{
+            gap:5px;
+            white-space:initial;
+        }
+    }
     .Header__flag{ height:15px }
 }

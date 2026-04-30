@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.3 - 2026-04-30
+- Add support for translated party names
+- Add country names in their official languages to header
+- Fix header breakpoints
+
+## 5.2.1 - 2026-04-25
+- Sort elected list members by list position
+
 ## 5.2 - 2026-04-24
 - Add 2026 Scottish Parliament and Senedd Cymru elections
 - Start and end live events from database

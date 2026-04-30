@@ -20,6 +20,7 @@ class APIService{
             'messages' => $country . "_messages",
             'parties' => $country . "_parties",
             'party_links' => $country . "_party_links",
+            'party_titles' => $country . "_party_titles",
             'polls' => $country . "_polls",
             'poll_figures' => $country . "_poll_figures",
             'pollsters' => $country . "_pollsters",

@@ -14,6 +14,7 @@ class ElectedCandidatesMasonryList extends \Base\Component{
 
                     <?php foreach($results as $result): 
                         $winners = array_filter($result['candidates'], fn($candidate) => $candidate['elected']);
+                        usort($winners, fn ($a, $b) => $a['position'] <=> $b['position']);
                         if(empty($winners)) continue;
                     ?>
                         <div
