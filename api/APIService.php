@@ -36,7 +36,7 @@ class APIService{
         if(!empty($params['live'])) self::$live = TRUE;
     }
 
-    static function fetch($sql, $params = [], $ttl = (ENV === "dev") ? 0 : 86400){
+    static function fetch($sql, $params = [], $ttl = (\ENV === "dev") ? 0 : 86400){
 
         $cache_path = sprintf(
             "%s/cache/%s-%s-%s", 
