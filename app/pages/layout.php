@@ -66,14 +66,16 @@
     <link rel="apple-touch-icon" sizes="180x180" href="<?= $faviconPath; ?>/apple-touch-icon.png" />
     <link rel="manifest" href="<?= $faviconPath; ?>/site.webmanifest" />
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P2JNCEPZW2"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
+    <?php if(ENV === "prod") : ?>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-P2JNCEPZW2"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
 
-        gtag('config', 'G-P2JNCEPZW2');
-    </script>
+            gtag('config', 'G-P2JNCEPZW2');
+        </script>
+    <?php endif; ?>
     
     <?php foreach($_headInjections ?? [] as $content) echo $content; ?>
 </head>
