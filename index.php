@@ -201,10 +201,13 @@
                         array_unshift($_breadcrumbs, $_breadcrumb);
                         unset($_breadcrumb);
                     }
-                    else array_unshift($_breadcrumbs, [
-                        'title' => end($_title), 
-                        'path' => preg_replace(['/^app\/pages\//', '/\/init.php$/'], '', $initPath)
-                    ]);
+                    else{
+                        if(empty($_title)) $_title = [];
+                        array_unshift($_breadcrumbs, [
+                            'title' => end($_title), 
+                            'path' => preg_replace(['/^app\/pages\//', '/\/init.php$/'], '', $initPath)
+                        ]);
+                    }
                     
                     if(!empty($_error)) throw new Exception($_error);
                 }

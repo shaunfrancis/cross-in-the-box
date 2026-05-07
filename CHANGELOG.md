@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.3.3 - 2026-05-07
+- Add graph notes to Scotland and Wales region pages
+- Fix live message polling timezone
+
 ## 5.3.2 - 2026-05-07
 - Shorten message date display to remove parts of the date when timestamp is recent
 - Fix incorrect message timezones

@@ -13,7 +13,7 @@ class LiveEventsService extends APIService{
             $live_events = self::fetch(
                 "SELECT election_id, election_subid FROM $tables->live_events WHERE country = :country AND started < NOW() AND (ended > NOW() OR ended IS NULL OR ended = '')",
                 [':country' => self::$country],
-                ttl: 3600
+                ttl: (\ENV === "dev") ? 0 : 3600
             );
             return $live_events;
         }

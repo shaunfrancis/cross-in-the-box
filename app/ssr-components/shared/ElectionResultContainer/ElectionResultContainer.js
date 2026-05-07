@@ -514,7 +514,7 @@ class ElectionResultContainer{
             const date = CachedData.messages[this.data.messageGroup].filter( m => !m.pinned )[0]?.date;
             if(date){
                 const pad = (n) => n.toString().padStart(2, '0'); 
-                lastUpdate = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+                lastUpdate = `${date.getUTCFullYear()}-${pad(date.getUTCMonth() + 1)}-${pad(date.getUTCDate())}T${pad(date.getUTCHours())}:${pad(date.getUTCMinutes())}:${pad(date.getUTCSeconds())}`;
             }
             await CachedData.fetchMessages(this.data.messageGroup, lastUpdate);
             this.addMessages();
