@@ -1,5 +1,6 @@
 <?php
     namespace API;
+    include_once __DIR__ . '../../config.php';
 
     $accepted_countries = array("canada", "france", "hungary", "uk", "usa", "vatican");
     $request = array_filter( preg_split( '/\//', str_replace(['/elections/api/','/api/'], '', $_SERVER['REQUEST_URI']) ) );
