@@ -36,7 +36,9 @@ class Wales extends \UK\RegionPage{
         $fixedRounds = match($event['data']['id']){
             "W2026" => 6,
             default => 4
-        };
+        };        
+        
+        $graph_note = array_find($attributes ?? [], fn($attr) => $attr['label'] == "graph_note" && $attr['applies_to'] == $event['data']['id']);
         ?>
 
         <article class="block">
@@ -47,6 +49,9 @@ class Wales extends \UK\RegionPage{
                     <?= str_replace("- ", "-", implode(" ", $event['data']['title'])); ?>
                 <?php endif; ?>
             </h2>
+            <?php if(!empty($graph_note)) : ?>
+                <span><?= $graph_note['value']; ?></span>
+            <?php endif; ?>
             <?= \Shared\CandidatesMasonryList::render($results); ?>
             <h3>Votes</h3>
             <?= \Shared\DHondtTable::render($results, $divisors ?? [], $fixedRounds); ?>

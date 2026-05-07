@@ -9,6 +9,8 @@ api/DB.php
 api/cache
 dev
 
+app/pages/admin
+
 src/built
 
 src-old
