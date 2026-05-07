@@ -210,7 +210,10 @@ class SearchHandler{
 const parseJSONWithDates = (text, keys) => {
     if(typeof keys === "string") keys = [keys];
     return JSON.parse(text, (key, value) => {
-        if(keys.includes(key)) return new Date(value);
+        if(keys.includes(key)){
+            if(!value || value.trim() === "") return new Date(0);
+            return new Date(value + "Z");
+        }
         return value;
     });
 }

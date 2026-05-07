@@ -370,28 +370,52 @@ class ElectionResultContainer{
                 day: "numeric",
                 month: "long",
                 year: "numeric",
-                hour: !hideTime ? "2-digit" : undefined,
-                minute: !hideTime ? "2-digit" : undefined,
+                hour: "2-digit" ,
+                minute: "2-digit",
                 hour12: false,
                 timeZoneName: "short"
             });
-            const parts = formatter.formatToParts(date);
-            const part = (key) => parts.find(p => p.type === key).value;
 
-            let dateString = part("weekday");
+            const messageDate = Object.fromEntries(
+                ["year","month","day","weekday","hour","minute","timeZoneName"].map( key => {
+                    return [key, formatter.formatToParts(date).find(p => p.type === key).value]
+                })
+            );
 
-            let ordinalIndicator = "th";
-            if(!(["11","12","13"].includes(part("day")))) switch(part("day") % 10){
-                case 1: ordinalIndicator = "st"; break;
-                case 2: ordinalIndicator = "nd"; break;
-                case 3: ordinalIndicator = "rd";
+            const now = new Date();
+            const dayDates = {
+                now: new Date(now.getFullYear(), now.getMonth(), now.getDate()),
+                message: new Date(date.getFullYear(), date.getMonth(), date.getDate())
             }
 
-            dateString += ` ${part("day")}${ordinalIndicator} ${part("month")}`;
+            const shouldShowWeekday = dayDates.now > dayDates.message;
+            const shouldShowDate = Math.round( (dayDates.now - dayDates.message) / (24 * 60 * 60 * 1000) ) >= 7;
+            const isYesterday = Math.round( (dayDates.now - dayDates.message) / (24 * 60 * 60 * 1000) ) == 1;
 
-            if(date.getFullYear() !== (new Date()).getFullYear()) dateString += ` ${part("year")}`;
+            let dateString = "";
 
-            if(!hideTime) dateString += `, ${part("hour")}:${part("minute")} <span class="Message__timezone">${part("timeZoneName")}</span>`;
+            if(shouldShowWeekday){
+                dateString += isYesterday ? "Yesterday" : messageDate.weekday;
+
+                if(shouldShowDate){
+
+                    let ordinalIndicator = "th";
+                    if(!(["11","12","13"].includes(messageDate.day))) switch(messageDate.day % 10){
+                        case 1: ordinalIndicator = "st"; break;
+                        case 2: ordinalIndicator = "nd"; break;
+                        case 3: ordinalIndicator = "rd";
+                    }
+
+                    dateString += ` ${messageDate.day}${ordinalIndicator} ${messageDate.month}`;
+
+                    if(date.getFullYear() !== (new Date()).getFullYear()) dateString += ` ${messageDate.year}`;
+                }
+            }
+
+            if(!hideTime){
+                if(shouldShowWeekday) dateString += ", ";
+                dateString += `${messageDate.hour}:${messageDate.minute} <span class="Message__timezone">${messageDate.timeZoneName}</span>`;
+            }
 
             return dateString;
         };

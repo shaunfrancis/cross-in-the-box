@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.3.2 - 2026-05-07
+- Shorten message date display to remove parts of the date when timestamp is recent
+- Fix incorrect message timezones
+
 ## 5.3.1 - 2026-05-06
 - Remove 404 link to uk/general-elections/2024
 - Disable cache and analytics in dev
