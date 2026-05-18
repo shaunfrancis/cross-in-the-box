@@ -212,7 +212,8 @@ const parseJSONWithDates = (text, keys) => {
     return JSON.parse(text, (key, value) => {
         if(keys.includes(key)){
             if(!value || value.trim() === "") return new Date(0);
-            return new Date(value + "Z");
+            else if(!value.includes(":")) return new Date(value);
+            else return new Date(value + "Z");
         }
         return value;
     });
