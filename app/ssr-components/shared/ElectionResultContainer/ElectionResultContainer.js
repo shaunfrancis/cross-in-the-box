@@ -388,9 +388,13 @@ class ElectionResultContainer{
                 message: new Date(date.getFullYear(), date.getMonth(), date.getDate())
             }
 
-            const shouldShowWeekday = dayDates.now > dayDates.message;
-            const shouldShowDate = Math.round( (dayDates.now - dayDates.message) / (24 * 60 * 60 * 1000) ) >= 7;
-            const isYesterday = Math.round( (dayDates.now - dayDates.message) / (24 * 60 * 60 * 1000) ) == 1;
+            let shouldShowWeekday = dayDates.now > dayDates.message;
+            let shouldShowDate = Math.round( (dayDates.now - dayDates.message) / (24 * 60 * 60 * 1000) ) >= 7;
+            let isYesterday = Math.round( (dayDates.now - dayDates.message) / (24 * 60 * 60 * 1000) ) == 1;
+            if(hideTime){
+                shouldShowWeekday = shouldShowDate = true;
+                isYesterday = false;
+            }
 
             let dateString = "";
 

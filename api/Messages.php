@@ -16,12 +16,17 @@ class MessagesService extends APIService{
             1: raw table
         */
 
-        $messages_sql = "SELECT messages.id, messages.date, messages.square, messages.old_square, messages.header, messages.pinned, messages.text, links.id as link, links.region_id, links.type, links.title as link_title, results.party, results.votes 
+        $messages_sql = "SELECT messages.id, messages.date, messages.square, messages.old_square, messages.header, messages.pinned, messages.text, links.id as link, links.region_id, links.type, links.title as link_title, results.party, results.votes, candidates.elected_count
         FROM $tables->messages as messages
         LEFT JOIN $tables->message_links as links
         ON links.message_id = messages.id
         LEFT JOIN $tables->results as results
         ON results.election_id = links.election_id AND results.region_id = links.region_id AND (links.election_subid IS NULL OR results.election_subid = links.election_subid)
+        LEFT JOIN (
+            SELECT result_id, SUM(elected) as elected_count FROM $tables->candidates
+            GROUP BY result_id
+        ) as candidates
+        ON candidates.result_id = results.id
         WHERE messages.group_id = :group";
 
         if(!empty($params["since"])){
@@ -54,12 +59,16 @@ class MessagesService extends APIService{
                 foreach($parsed_messages as &$parsed_message){
                     if($parsed_message['id'] == $message['id']){
                         $match = true;
-                        $parsed_message['results'][] = array("party" => $message['party'], "votes" => $message['votes']);
+                        $results_array = array("party" => $message['party'], "votes" => $message['votes']);
+                        if(!empty($message['elected_count'])) $results_array['elected'] = $message['elected_count'];
+                        $parsed_message['results'][] = $results_array;
                         break;
                     }
                 }
 
                 if(!$match){
+                    $results_array = array("party" => $message['party'], "votes" => $message['votes']);
+                    if(!empty($message['elected_count'])) $results_array['elected'] = $message['elected_count'];
                     $message_array = array(
                         "id" => $message['id'],
                         "date" => $message['date'],
@@ -67,7 +76,7 @@ class MessagesService extends APIService{
                         "old_square" => $message['old_square'],
                         "text" => $message['text'],
                         "results" => array(
-                            array("party" => $message['party'], "votes" => $message['votes'])
+                            $results_array
                         )
                     );
                     if($message['header'] == '0') $message_array['no_header'] = true;

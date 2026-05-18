@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.3.5 - 2026-05-18
+- Do not cache search results
+
+## 5.3.4 - 2026-05-08
+- Include elected_count in Messages API
+- Add 'seats won' graph for Scotland/Wales constituencies
+- Fix date issues
+
 ## 5.3.3 - 2026-05-07
 - Add graph notes to Scotland and Wales region pages
 - Fix live message polling timezone
