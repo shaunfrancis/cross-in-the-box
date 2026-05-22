@@ -2,6 +2,7 @@
     header('Content-type: application/xml; charset=utf-8');
 
     // autoload API services
+    include 'config.php';
     require_once sprintf('%s/api/APIService.php', __DIR__);
     spl_autoload_register( function($class) {        
         $classPath = explode("\\", $class);

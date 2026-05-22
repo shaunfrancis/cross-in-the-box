@@ -1,5 +1,8 @@
 # Changelog
 
+## 5.3.6 - 2026-05-23
+- Fix sitemap
+
 ## 5.3.5 - 2026-05-18
 - Do not cache search results
 
