@@ -15,7 +15,7 @@ import TileLayer from 'ol/layer/Tile';
 window.addEventListener('DOMContentLoaded', () => {
     [...document.querySelectorAll('.RidingMap')].forEach( async ridingMap => {
         const id = ridingMap.getAttribute('data-region-id');
-        if(!id || id.substring(0, 4) !== "2025") return ridingMap.remove();
+        if(!id || (id.substring(0, 4) !== "2025" && id.substring(0, 4) !== "2026")) return ridingMap.remove();
 
         const geoJsonUrl = `https://maps-cartes.services.geo.ca/server_serveur/rest/services/ELECTIONS/FED_CA_2023_106_en/MapServer/0/query?where=FED_NUM%3D${id.substring(4)}&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&units=esriSRUnit_Foot&returnGeometry=true&returnTrueCurves=false&returnIdsOnly=false&returnCountOnly=false&returnZ=false&returnM=false&returnDistinctValues=false&returnExtentOnly=false&featureEncoding=esriDefault&f=geojson`;
 

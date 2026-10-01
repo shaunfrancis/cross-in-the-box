@@ -1,5 +1,17 @@
 # Changelog
 
+## 5.3.8 - 2026-10-01
+- Do not output empty updates
+- Show Canada riding maps for 2026-prefixed region IDs
+- Add version to bespoke scripts
+- Add UK polling graph label
+
+## 5.3.7 - 2026-06-01
+- Update sitemap
+
+## 5.3.6 - 2026-05-23
+- Fix sitemap
+
 ## 5.3.5 - 2026-05-18
 - Do not cache search results
 

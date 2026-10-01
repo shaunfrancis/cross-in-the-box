@@ -22,7 +22,8 @@ class PollGraph extends \Shared\PollGraph{
         [ 'date' => "2024-11-02", 'stack' => 1, 'title' => ["Badenoch elected","Conservative leader"] ],
         [ 'date' => "2025-05-01", 'stack' => 0, 'title' => ["Local elections",""] ],
         [ 'date' => "2025-09-02", 'stack' => 0, 'title' => ["Polanski elected","Green leader"] ],
-        [ 'date' => "2026-05-07", 'stack' => 0, 'title' => ["Local elections",""] ]
+        [ 'date' => "2026-05-07", 'stack' => 0, 'title' => ["Local elections",""] ],
+        [ 'date' => "2026-07-20", 'stack' => 0, 'title' => ["Burnham","becomes PM"] ],
     ];
     
 }
