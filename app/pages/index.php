@@ -1,6 +1,6 @@
 <?php namespace Shared; 
 $_description[] = "Election results from around the globe. Explore our interactive maps for elections across Canada, France, Hungary, the UK, USA and Vatican City.";
-$_headInjections[] = '<script src="/compiled/bespoke/LandingGlobe.bespoke.js" defer></script>';
+$_headInjections[] = sprintf('<script src="/compiled/bespoke/LandingGlobe.bespoke.js?v=%s" defer></script>', VERSION);
 
 $_headInjections[] = '<meta name="twitter:card" content="summary_large_image" />';
 $_headInjections[] = '<meta name="twitter:site" content="@crossinthebox" />';

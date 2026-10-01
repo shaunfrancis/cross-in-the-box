@@ -29,7 +29,7 @@
         $pageRoot = new RecursiveDirectoryIterator('app/pages', RecursiveDirectoryIterator::SKIP_DOTS);
         $iterator = new RecursiveIteratorIterator($pageRoot, RecursiveIteratorIterator::SELF_FIRST);
         foreach($iterator as $item){
-            if($item->isDir()){
+            if($item->isDir() && !str_starts_with($item->getPathname(), "app/pages/admin")){
 
                 if(file_exists($item->getPathname() . '/sitemap.php')) :
                     include $item->getPathname() . '/sitemap.php';
