@@ -33,7 +33,12 @@ class Senate1960C3 extends \Shared\Map{
     );
 }
 
-class House2024 extends \Shared\Map{
+class House2026 extends \Shared\Map{
+    static $types = array(
+        'cartographic' => 'public/maps/USA-house-2022.svg',
+        'geographic' => 'public/maps/USA-house-2026-geographic.svg',
+    );
+}class House2024 extends \Shared\Map{
     static $types = array(
         'cartographic' => 'public/maps/USA-house-2022.svg',
         'geographic' => 'public/maps/USA-house-2024-geographic.svg',

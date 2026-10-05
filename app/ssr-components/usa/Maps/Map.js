@@ -102,6 +102,8 @@ class USAHouse extends Map{
         // mid-decade redistricting should use same cartographic map with name attributes swapped out onload
         const replaces = [];
         switch(this.election){
+            case "H2026":
+                // todo
             case "H2024":
                 replaces.push({state: "AL", from: "2022", to: "2024"});
                 replaces.push({state: "GA", from: "2022", to: "2024"});

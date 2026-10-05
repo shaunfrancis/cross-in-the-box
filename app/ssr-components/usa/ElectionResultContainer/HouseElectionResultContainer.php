@@ -29,7 +29,8 @@ class House extends \USA\ElectionResultContainer{
             case "H2018": $MapClass = '\USA\Maps\House2018'; break;
             case "H2020": $MapClass = '\USA\Maps\House2020'; break;
             case "H2022": $MapClass = '\USA\Maps\House2022'; break;
-            case "H2024": default: $MapClass = '\USA\Maps\House2024';
+            case "H2024": $MapClass = '\USA\Maps\House2024'; break;
+            case "H2026": default: $MapClass = '\USA\Maps\House2026';
         }
         return $MapClass;
     }
