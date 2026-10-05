@@ -55,14 +55,15 @@ class SearchService extends APIService{
 
             $regions = self::fetch( $regions_sql, $params, 0 );
             
-            //remove abolished regions with identical names (up to commas) to current regions
-            $regions = array_filter( $regions, function($region) use ($regions){
+            //remove abolished regions with identical names (up to commas) to other regions
+            $regions = array_filter( $regions, function($region, $index) use ($regions){
                 if($region['current'] == 1) return TRUE;
-                foreach($regions as $r){
-                    if($r['current'] == 1 && str_replace(",","",$r['title']) == str_replace(",","",$region['title'])) return FALSE;
+                for($i = $index + 1; $i < count($regions); $i++){
+                    $r = $regions[$i];
+                    if(str_replace(",","",$r['title']) == str_replace(",","",$region['title'])) return FALSE;
                 }
                 return TRUE;
-            });
+            }, ARRAY_FILTER_USE_BOTH);
 
             usort($regions, function($a, $b) use ($query){ //sort by currentness, then overlap, then title
                 $overlap = get_overlap($b['title'], $query) <=> get_overlap($a['title'], $query);
