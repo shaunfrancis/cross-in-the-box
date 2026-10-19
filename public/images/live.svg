@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1.2 1.2" stroke-width="0.2" fill="none">
+    <defs>
+        <style>
+            #inner{
+                animation: livePulse 4s cubic-bezier(0.6, 0.2, 0.4, 0.8) forwards infinite;
+            }
+            @keyframes livePulse{
+                0%{
+                    opacity:1;
+                }
+                50%{
+                    opacity:0.5;
+                }
+                100%{
+                    opacity:1;
+                }
+            }
+        </style>
+        <mask id="cutout">
+            <rect id="a" x="0.1" y="0.1" width="1" height="1" stroke-linejoin="round" stroke-linecap="round" stroke="#fff" fill="#fff" />
+            <rect id="b" x="0.3" y="0.3" width="0.6" height="0.6" stroke-linejoin="round" stroke-linecap="round" stroke="#000" fill="#000" />
+        </mask>
+    </defs>
+    <rect id="outer" x="0.1" y="0.1" width="1" height="1" stroke-linejoin="round" stroke-linecap="round" stroke="#fff" fill="#fff" mask="url(#cutout)" />
+    <rect id="inner" x="0.4" y="0.4" width="0.4" height="0.4" stroke-linejoin="round" stroke-linecap="round" stroke="#fff" fill="#fff" />
+</svg>
