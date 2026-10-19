@@ -39,7 +39,7 @@ class ElectedCandidatesMasonryList extends \Base\Component{
                                             <?php break; ?>
                                             <?php else: ?>
                                                 <tr>
-                                                    <td title="<?= $candidate['name']; ?>" class="bloc"><?= $candidate['name']; ?></td>
+                                                    <td title="<?= htmlspecialchars($candidate['name']); ?>" class="bloc"><?= $candidate['name']; ?></td>
                                                 </tr>
                                             <?php endif;?>
                                     <?php endforeach; ?>

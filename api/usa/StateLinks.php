@@ -10,9 +10,9 @@ class StateLinksService extends \API\APIService{
         $baseId = strtoupper($request[2]);
         
         try{
-            $president = "2024" . $baseId . "%";
+            $president = "^[0-9]{4}" . $baseId . "([0-9]|A)?$";
             $senate = "S" . $baseId . "%";
-            $house = "2022" . $baseId . "%";
+            $house = "^[0-9]{4}" . $baseId . "([0-9]{2}|AL)$";
             $governor = "G" . $baseId;
 
             $sql = "WITH data AS (
@@ -21,20 +21,20 @@ class StateLinksService extends \API\APIService{
                         usa_candidates.elected,
                         usa_parties.color, usa_parties.textColor,
                         usa_elections.date,
-                        ROW_NUMBER() OVER (PARTITION BY usa_results.region_id ORDER BY usa_elections.date DESC, usa_candidates.elected DESC) as row
+                        ROW_NUMBER() OVER (PARTITION BY usa_results.region_id ORDER BY usa_elections.date DESC, usa_candidates.elected DESC, usa_results.id) as row
                         FROM usa_results
                         JOIN usa_candidates ON usa_results.id = usa_candidates.result_id
                         JOIN usa_regions ON usa_regions.id = usa_results.region_id
                         JOIN usa_elections ON usa_elections.id = usa_results.election_id
                         LEFT JOIN usa_parties ON usa_parties.id = usa_results.party
                         WHERE usa_regions.current = 1
-                        AND (usa_regions.id LIKE :president OR usa_regions.id LIKE :senate OR usa_regions.id LIKE :house OR usa_regions.id LIKE :governor)
+                        AND (usa_regions.id REGEXP :president OR usa_regions.id LIKE :senate OR usa_regions.id REGEXP :house OR usa_regions.id LIKE :governor)
                     )
                     SELECT title, region_id, elected, color, textColor, type, date
                     FROM data
                     WHERE row = 1
                 ";
-
+                
             $links = self::fetch(
                 $sql,
                 [':president' => $president, ':senate' => $senate, ':house' => $house, ':governor' => $governor]

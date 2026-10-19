@@ -12,5 +12,4 @@ dev
 app/pages/admin
 
 src/built
-
-src-old
+compiled
