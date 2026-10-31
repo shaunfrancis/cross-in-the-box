@@ -103,12 +103,20 @@ class USAHouse extends Map{
         const replaces = [];
         switch(this.election){
             case "H2026":
-                // todo
+                replaces.push({state: "AL", from: "2022", to: "2026"});
+                replaces.push({state: "CA", from: "2022", to: "2026"});
+                replaces.push({state: "FL", from: "2022", to: "2026"});
+                replaces.push({state: "LA", from: "2022", to: "2026"});
+                replaces.push({state: "NC", from: "2022", to: "2026"});
+                replaces.push({state: "OH", from: "2022", to: "2026"});
+                replaces.push({state: "TN", from: "2022", to: "2026"});
+                replaces.push({state: "TX", from: "2022", to: "2026"});
+                replaces.push({state: "UT", from: "2022", to: "2026"});
             case "H2024":
-                replaces.push({state: "AL", from: "2022", to: "2024"});
+                this.election === "H2024" && replaces.push({state: "AL", from: "2022", to: "2024"});
+                this.election === "H2024" && replaces.push({state: "LA", from: "2022", to: "2024"});
+                this.election === "H2024" && replaces.push({state: "NC", from: "2022", to: "2024"});
                 replaces.push({state: "GA", from: "2022", to: "2024"});
-                replaces.push({state: "LA", from: "2022", to: "2024"});
-                replaces.push({state: "NC", from: "2022", to: "2024"});
                 replaces.push({state: "NY", from: "2022", to: "2024"});
                 break;
 
@@ -119,7 +127,7 @@ class USAHouse extends Map{
             case "H2016":
                 replaces.push({state: "FL", from: "2012", to: "2016"});
                 replaces.push({state: "VA", from: "2012", to: "2016"});
-                this.election != "H2020" && replaces.push({state: "NC", from: "2012", to: "2016"});
+                this.election !== "H2020" && replaces.push({state: "NC", from: "2012", to: "2016"});
                 break;
         }
 

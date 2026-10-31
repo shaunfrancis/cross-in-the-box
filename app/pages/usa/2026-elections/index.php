@@ -1,13 +1,13 @@
 <?php 
     namespace Shared;
     $heroNavItems = [
-        [ 'title' => "Election results", 'src' => "/images/usa-nav-presidential-results.svg", 'id' => "election-results" ],
+        [ 'title' => "Election results", 'src' => "/images/usa-nav-results.svg", 'id' => "election-results" ],
         [ 'title' => "Find a state", 'src' => "/images/nav-region.svg", 'id' => "find-a-state", 'focus' => ".RegionSearchSection__search-input" ],
     ];
 ?>
 <main>
     <section id="hero">
-        <h1>2026 elections</h1>
+        <h1>2026 midterm elections</h1>
         <?= HeroNav::show($heroNavItems); ?>
     </section>
 

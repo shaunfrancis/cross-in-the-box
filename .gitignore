@@ -2,6 +2,7 @@
 .next
 node_modules
 .parcel-cache
+.ddev
 
 config.php
 
