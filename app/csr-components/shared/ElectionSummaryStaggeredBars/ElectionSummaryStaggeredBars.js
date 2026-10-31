@@ -12,7 +12,6 @@ export default class ElectionSummaryStaggeredBars{
         ) || 1,    // number?
     }){
         const popup = new Elt({ tag: 'div', classList: ["ElectionSummaryBar__hover-popup", "hover-popup", "hidden"] });
-        document.body.appendChild(popup); // ensure always on top
 
         const groups = [];
 
