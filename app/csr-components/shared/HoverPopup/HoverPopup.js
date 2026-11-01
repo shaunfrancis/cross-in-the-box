@@ -6,7 +6,7 @@ export default class HoverPopup{
         signal = null,      // AbortSignal?
     }){
         const init = (container) => {
-            document.querySelectorAll('.hover-popup').forEach( stalePopup => {
+            document.querySelectorAll('body > .hover-popup').forEach( stalePopup => {
                 if(stalePopup === container) return;
                 stalePopup.remove();
             } );
