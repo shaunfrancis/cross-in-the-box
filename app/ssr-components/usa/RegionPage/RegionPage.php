@@ -4,6 +4,9 @@ namespace USA;
 class RegionPage extends \Shared\RegionPage{
 
     static $dedicatedPages = [
+        'S2026' => '/usa/2026-elections',
+        'H2026' => '/usa/2026-elections',
+        'G2026' => '/usa/2026-elections',
         'P2024' => '/usa/2024-elections',
         'S2024' => '/usa/2024-elections',
         'H2024' => '/usa/2024-elections',

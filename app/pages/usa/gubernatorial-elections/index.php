@@ -24,6 +24,13 @@
         <?= ElectionResultsSection::open(); ?>
 
             <?= \USA\ElectionResultContainer\Gubernatorial::show(
+                election: "G2026",
+                title: ["2026", "Gubernatorial", "Elections"],
+                messages: ['group' => "2026", 'open' => TRUE],
+                dedicatedPage: '/usa/2026-elections'
+            ); ?>
+
+            <?= \USA\ElectionResultContainer\Gubernatorial::show(
                 election: "G2025",
                 title: ["2025", "Gubernatorial", "Elections"]
             ); ?>

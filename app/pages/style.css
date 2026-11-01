@@ -76,6 +76,7 @@ h4{ font-weight: 400 }
 
 p:first-child{ margin-top:0 }
 p:last-child{ margin-bottom:0 }
+strong{ font-weight: 500 }
 
 a.unstyled{
     text-decoration:inherit;
@@ -351,6 +352,13 @@ details summary .has-marker:after{
         & > abbr{ font-size:0.75rem }
         &:not(:first-child) > bdi{ font-style:italic }
     }
+}
+
+#map-defs{
+    position:absolute;
+    top:0;
+    pointer-events:none;
+    z-index:-1;
 }
 
 @media screen and (max-width:768px){

@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.4 - 2026-11-01
+- Add US midterm elections
+- Add 'awaiting results' fill pattern
+- Add ability to show live banner across the site
+
 ## 5.3.9 - 2026-10-02
 - Remove duplicate abolished regions in search results
 

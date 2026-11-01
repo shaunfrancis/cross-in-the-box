@@ -110,6 +110,9 @@ class USASenateElectionResultContainer extends USAElectionResultContainer{
                 };
             });
         }
+        
+        this.addAwaitingResultFills(newFills);
+
         this.fillMap({ regions: CachedData.regions, fills: newFills, stripePatterns: stripePatterns });
     }
 
@@ -177,7 +180,7 @@ class USASenateElectionResultContainer extends USAElectionResultContainer{
             },
             winningCandidate: (id, regionResults, winner) => {
                 if(winner) return super.mapHoverFunComponents.winningCandidate(id, regionResults, winner);
-                else if(this.visibleMap.type === "geographic") return new Elt({
+                else if(regionResults.length === 0 && this.visibleMap.type === "geographic") return new Elt({
                     tag: 'h4',
                     innerHTML: "No election this year"
                 });
