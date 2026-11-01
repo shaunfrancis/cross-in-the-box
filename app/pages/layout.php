@@ -82,6 +82,22 @@
 <body>
     <?= Header::show($_countryName ?? '', $_countryTranslations ?? [], $_countryAbbrev ?? NULL, $_countryFlag ?? NULL, $_headerLinks ?? []); ?>
     <?= $_children ?? ""; ?>
+    <svg id="map-defs">
+        <defs>
+            <pattern id="awaiting_result" width="10" height="10" patternUnits="userSpaceOnUse">
+                <rect x="0" y="0" width="5" height="5" fill="#ddd" />
+                <rect x="5" y="0" width="5" height="5" fill="#ccc" />
+                <rect x="0" y="5" width="5" height="5" fill="#ccc" />
+                <rect x="5" y="5" width="5" height="5" fill="#ddd" />
+            </pattern>
+            <pattern id="highlighted_awaiting_result" width="10" height="10" patternUnits="userSpaceOnUse">
+                <rect x="0" y="0" width="5" height="5" fill="#aaa" />
+                <rect x="5" y="0" width="5" height="5" fill="#999" />
+                <rect x="0" y="5" width="5" height="5" fill="#999" />
+                <rect x="5" y="5" width="5" height="5" fill="#aaa" />
+            </pattern>
+        </defs>
+    </svg>
     <?= Footer::show(); ?>
 </body>
 </html>

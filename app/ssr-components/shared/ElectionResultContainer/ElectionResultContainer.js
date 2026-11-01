@@ -150,7 +150,7 @@ class ElectionResultContainer{
                 }));
             }
             else{ // attributes note; assume changes explained in showChanges updates otherwise
-                const note = regionAttributes.find( attr => attr.label == "map_note" );
+                const note = regionAttributes.find( attr => attr.label === "map_note" || attr.label === "to_watch" );
                 if(note) popup.append( new Elt({ tag: 'p', innerHTML: note.value }) );
             }
 
@@ -351,8 +351,26 @@ class ElectionResultContainer{
                 }
             };
         });
+
+        this.addAwaitingResultFills(newFills);
         
         this.fillMap({ regions: CachedData.regions, fills: newFills });
+    }
+
+    addAwaitingResultFills(newFills){
+        Object.entries(
+            Object.groupBy(CachedData.results[this.data.election], result => result.id)
+        ).forEach( ([id, regionResults]) => {
+            if(this.winFormula(regionResults).length === 0){
+                const color = CachedData.attributes.find( attr => attr.region_id == id && attr.applies_to == this.data.election && attr.label == "to_watch") ? "url(#highlighted_awaiting_result)" : "url(#awaiting_result)";
+                const existingFill = newFills.find( fill => fill.id === id );
+                if(existingFill){
+                    existingFill.color = color;
+                    delete existingFill.opacity;
+                }
+                else newFills.push({ id, color, selector: this.regionSelector(id) });   
+            }
+        });
     }
 
     addMessages({
@@ -515,13 +533,15 @@ class ElectionResultContainer{
             this.structure.summary.container.innerHTML = "";
             this.addSummary();
 
-            const date = CachedData.messages[this.data.messageGroup].filter( m => !m.pinned )[0]?.date;
-            if(date){
-                const pad = (n) => n.toString().padStart(2, '0'); 
-                lastUpdate = `${date.getUTCFullYear()}-${pad(date.getUTCMonth() + 1)}-${pad(date.getUTCDate())}T${pad(date.getUTCHours())}:${pad(date.getUTCMinutes())}:${pad(date.getUTCSeconds())}`;
+            if(this.data.messageGroup){
+                const date = CachedData.messages[this.data.messageGroup].filter( m => !m.pinned )[0]?.date;
+                if(date){
+                    const pad = (n) => n.toString().padStart(2, '0'); 
+                    lastUpdate = `${date.getUTCFullYear()}-${pad(date.getUTCMonth() + 1)}-${pad(date.getUTCDate())}T${pad(date.getUTCHours())}:${pad(date.getUTCMinutes())}:${pad(date.getUTCSeconds())}`;
+                }
+                await CachedData.fetchMessages(this.data.messageGroup, lastUpdate);
+                this.addMessages();
             }
-            await CachedData.fetchMessages(this.data.messageGroup, lastUpdate);
-            this.addMessages();
 
             setTimeout(iterate, 6000);
 

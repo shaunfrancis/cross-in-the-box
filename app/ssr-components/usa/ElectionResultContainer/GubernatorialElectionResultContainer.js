@@ -72,6 +72,9 @@ class USAGubernatorialElectionResultContainer extends USAElectionResultContainer
                 };
             });
         }
+        
+        this.addAwaitingResultFills(newFills);
+        
         this.fillMap({ regions: CachedData.regions, fills: newFills });
     }
 
