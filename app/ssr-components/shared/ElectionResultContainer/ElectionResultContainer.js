@@ -239,7 +239,7 @@ class ElectionResultContainer{
             }
 
             default: // any elected
-                const winners = results.filter( result => result.candidates.some( candidate => candidate.elected ) );
+                const winners = results.filter( result => result.candidates?.some( candidate => candidate.elected ) );
                 winners.forEach( result => result.candidates = result.candidates.filter( candidate => candidate.elected ) );
                 return winners;
         }
