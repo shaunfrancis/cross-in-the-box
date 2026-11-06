@@ -1,5 +1,8 @@
 # Changelog
 
+## 5.4.1 - 2026-1103
+- Fix bug preventing gubernatorial elections from updating live
+
 ## 5.4 - 2026-11-01
 - Add US midterm elections
 - Add 'awaiting results' fill pattern
