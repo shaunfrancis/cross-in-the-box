@@ -2,6 +2,7 @@
     header('Content-type: application/xml; charset=utf-8');
 
     // autoload API services
+    include 'config.php';
     require_once sprintf('%s/api/APIService.php', __DIR__);
     spl_autoload_register( function($class) {        
         $classPath = explode("\\", $class);
@@ -28,7 +29,7 @@
         $pageRoot = new RecursiveDirectoryIterator('app/pages', RecursiveDirectoryIterator::SKIP_DOTS);
         $iterator = new RecursiveIteratorIterator($pageRoot, RecursiveIteratorIterator::SELF_FIRST);
         foreach($iterator as $item){
-            if($item->isDir()){
+            if($item->isDir() && !str_starts_with($item->getPathname(), "app/pages/admin")){
 
                 if(file_exists($item->getPathname() . '/sitemap.php')) :
                     include $item->getPathname() . '/sitemap.php';

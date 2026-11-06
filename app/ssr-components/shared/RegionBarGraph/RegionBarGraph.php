@@ -94,7 +94,7 @@ class RegionBarGraph extends \Base\Component{
                 <?php if(!$withoutCandidateNames && !empty($result['candidates'][0]['name'])): ?>
                     <div
                         class="RegionBarGraph__candidate RegionBarGraph__bloc bloc" 
-                        title="<?= $result['candidates'][0]['name']; ?>"
+                        title="<?= htmlspecialchars($result['candidates'][0]['name']); ?>"
                     >
                         <?= $result['candidates'][0]['name']; ?>
                     </div>
@@ -176,7 +176,7 @@ class RegionBarGraph extends \Base\Component{
                 <?php if(!$withoutCandidateNames): ?>
                     <div
                         class="RegionBarGraph__candidate RegionBarGraph__bloc bloc" 
-                        title="<?= $result['candidates'][0]['name']; ?>"
+                        title="<?= htmlspecialchars($result['candidates'][0]['name']); ?>"
                     >
                         <?= $result['candidates'][0]['name']; ?>
                     </div>
@@ -262,7 +262,7 @@ class RegionBarGraph extends \Base\Component{
                     <?php if(!$withoutCandidateNames): ?>
                         <div
                             class="RegionBarGraph__candidate RegionBarGraph__bloc bloc" 
-                            title="<?= $candidate['candidates'][0]['name']; ?>"
+                            title="<?= htmlspecialchars($candidate['candidates'][0]['name']); ?>"
                         >
                             <?= $candidate['candidates'][0]['name']; ?>
                         </div>

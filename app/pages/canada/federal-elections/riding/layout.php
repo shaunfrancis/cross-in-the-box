@@ -1,7 +1,7 @@
 <?php 
     namespace Shared;
-    $_headInjections[] = '<script src="/compiled/bespoke/CanadaRidingMap.bespoke.js" defer></script>';
-    $_headInjections[] = '<link rel="stylesheet" type="text/css" href="/compiled/bespoke/CanadaRidingMap.bespoke.css" />';
+    $_headInjections[] = sprintf('<script src="/compiled/bespoke/CanadaRidingMap.bespoke.js?v=%s" defer></script>', VERSION);
+    $_headInjections[] = sprintf('<link rel="stylesheet" type="text/css" href="/compiled/bespoke/CanadaRidingMap.bespoke.css?v=%s" />', VERSION);
     $heroNavItems = [
         [ 'title' => "Results and changes", 'src' => "/images/nav-region.svg", 'id' => "election-results" ],
     ];

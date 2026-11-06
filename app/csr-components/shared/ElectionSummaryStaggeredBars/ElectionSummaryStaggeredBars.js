@@ -12,7 +12,6 @@ export default class ElectionSummaryStaggeredBars{
         ) || 1,    // number?
     }){
         const popup = new Elt({ tag: 'div', classList: ["ElectionSummaryBar__hover-popup", "hover-popup", "hidden"] });
-        document.body.appendChild(popup); // ensure always on top
 
         const groups = [];
 
@@ -124,7 +123,7 @@ export default class ElectionSummaryStaggeredBars{
                                 <h3>${row.displayCount || row.count}</h3>
                                 <div class="ElectionSummaryBar__hover-party">
                                     <div class="square" style="background:${row.party.color || "var(--default-color)"}"></div>
-                                    <span>${outputPartyTitles(row.party.titles)}</span>
+                                    <span>${row.party.titles[0].title}</span>
                                 </div>
                             `
                         }) );

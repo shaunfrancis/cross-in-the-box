@@ -1,5 +1,53 @@
 # Changelog
 
+## 5.4.1 - 2026-1103
+- Fix bug preventing gubernatorial elections from updating live
+
+## 5.4 - 2026-11-01
+- Add US midterm elections
+- Add 'awaiting results' fill pattern
+- Add ability to show live banner across the site
+
+## 5.3.9 - 2026-10-02
+- Remove duplicate abolished regions in search results
+
+## 5.3.8 - 2026-10-01
+- Do not output empty updates
+- Show Canada riding maps for 2026-prefixed region IDs
+- Add version to bespoke scripts
+- Add UK polling graph label
+
+## 5.3.7 - 2026-06-01
+- Update sitemap
+
+## 5.3.6 - 2026-05-23
+- Fix sitemap
+
+## 5.3.5 - 2026-05-18
+- Do not cache search results
+
+## 5.3.4 - 2026-05-08
+- Include elected_count in Messages API
+- Add 'seats won' graph for Scotland/Wales constituencies
+- Fix date issues
+
+## 5.3.3 - 2026-05-07
+- Add graph notes to Scotland and Wales region pages
+- Fix live message polling timezone
+
+## 5.3.2 - 2026-05-07
+- Shorten message date display to remove parts of the date when timestamp is recent
+- Fix incorrect message timezones
+
+## 5.3.1 - 2026-05-06
+- Remove 404 link to uk/general-elections/2024
+- Disable cache and analytics in dev
+
+## 5.3 - 2026-04-30
+- Add support for translated party names
+- Add country names in their official languages to header
+- Fix header breakpoints
+
 ## 5.2.1 - 2026-04-25
 - Sort elected list members by list position
 

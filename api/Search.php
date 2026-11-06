@@ -53,16 +53,17 @@ class SearchService extends APIService{
             $regions_sql = "SELECT id, title, current FROM $tables->regions WHERE (" . str_repeat("LOWER(title) LIKE ? OR ", count($words) - 1) . "LOWER(title) LIKE ?)";
             if(isset($type)) $regions_sql .= " AND type = ?";
 
-            $regions = self::fetch( $regions_sql, $params );
+            $regions = self::fetch( $regions_sql, $params, 0 );
             
-            //remove abolished regions with identical names (up to commas) to current regions
-            $regions = array_filter( $regions, function($region) use ($regions){
+            //remove abolished regions with identical names (up to commas) to other regions
+            $regions = array_filter( $regions, function($region, $index) use ($regions){
                 if($region['current'] == 1) return TRUE;
-                foreach($regions as $r){
-                    if($r['current'] == 1 && str_replace(",","",$r['title']) == str_replace(",","",$region['title'])) return FALSE;
+                for($i = $index + 1; $i < count($regions); $i++){
+                    $r = $regions[$i];
+                    if(str_replace(",","",$r['title']) == str_replace(",","",$region['title'])) return FALSE;
                 }
                 return TRUE;
-            });
+            }, ARRAY_FILTER_USE_BOTH);
 
             usort($regions, function($a, $b) use ($query){ //sort by currentness, then overlap, then title
                 $overlap = get_overlap($b['title'], $query) <=> get_overlap($a['title'], $query);
@@ -79,7 +80,8 @@ class SearchService extends APIService{
                 if(count($region_titles) > 0){
                     $postcode_regions = self::fetch(
                         "SELECT id, title, current FROM $tables->regions WHERE current = 1 AND (" . str_repeat("LOWER(title) LIKE ? OR ", count($region_titles) - 1) . "LOWER(title) LIKE ?)",
-                        $region_titles
+                        $region_titles,
+                        0
                     );
                     
                     $regions = array_merge($postcode_regions, $regions);
@@ -108,7 +110,8 @@ class SearchService extends APIService{
 
             $candidates = self::fetch(
                 $candidates_sql,
-                $params
+                $params,
+                0
             );
             usort($candidates, function($a, $b) use ($query){
                 $overlap = get_overlap($b['candidate'], $query) <=> get_overlap($a['candidate'], $query);

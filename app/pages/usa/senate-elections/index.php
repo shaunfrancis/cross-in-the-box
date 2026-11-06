@@ -24,10 +24,18 @@
         <?= ElectionResultsSection::open(); ?>
 
             <?= \USA\ElectionResultContainer\Senate::show(
+                election: "S2026",
+                dataAttrs: ['class-no' => 2],
+                title: ["2026", "Senate", "Election"],
+                messages: ['group' => "2026", 'open' => TRUE],
+                dedicatedPage: '/usa/2026-elections'
+            ); ?>
+
+            <?= \USA\ElectionResultContainer\Senate::show(
                 election: "S2024",
                 dataAttrs: ['class-no' => 1],
                 title: ["2024", "Senate", "Election"],
-                messages: ['group' => "2024", 'open' => TRUE],
+                messages: ['group' => "2024"],
                 dedicatedPage: '/usa/2024-elections'
             ); ?>
 

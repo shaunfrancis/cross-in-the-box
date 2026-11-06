@@ -137,7 +137,9 @@ class RegionPage extends \Base\Component{
         </article>
     <?php }
 
-    static function renderUpdateEvent($event, $attributes = NULL){ ?>
+    static function renderUpdateEvent($event, $attributes = NULL){ 
+        if(empty(trim($event['data']['note'] ?? ""))) return;
+        ?>
         <article class="RegionPage__update-note">
 
             <div class="RegionPage__party-bloc" data-party="<?= $event['data']['party']; ?>">

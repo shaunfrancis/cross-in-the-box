@@ -2,6 +2,7 @@
 .next
 node_modules
 .parcel-cache
+.ddev
 
 config.php
 
@@ -9,6 +10,7 @@ api/DB.php
 api/cache
 dev
 
-src/built
+app/pages/admin
 
-src-old
+src/built
+compiled

@@ -5,6 +5,14 @@ export default class HoverPopup{
         content = (container) => {},
         signal = null,      // AbortSignal?
     }){
+        const init = (container) => {
+            document.querySelectorAll('body > .hover-popup').forEach( stalePopup => {
+                if(stalePopup === container) return;
+                stalePopup.remove();
+            } );
+            if(!container.parentElement) document.body.appendChild(container); // ensure always on top
+        };
+
         const position = (event) => {
             const coordinates = [event.clientX, event.clientY];
             const width = container.offsetWidth;
@@ -19,7 +27,11 @@ export default class HoverPopup{
             container.classList.remove('hidden');
         };
 
-        trigger.addEventListener('mouseover', (event) => { content(container); position(event); }, signal && { signal: signal });
+        trigger.addEventListener('mouseover', (event) => {
+            init(container);
+            content(container);
+            position(event); 
+        }, signal && { signal: signal });
 
         trigger.addEventListener('mousemove', position, signal && { signal: signal });
 

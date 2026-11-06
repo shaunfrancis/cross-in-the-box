@@ -47,7 +47,7 @@ class CandidatesMasonryList extends \Base\Component{
                                             <?php break; ?>
                                             <?php else: ?>
                                                 <tr>
-                                                    <td title="<?= $candidate['name']; ?>" class="bloc"><?= $candidate['name']; ?></td>
+                                                    <td title="<?= htmlspecialchars($candidate['name']); ?>" class="bloc"><?= $candidate['name']; ?></td>
                                                 </tr>
                                             <?php endif;?>
                                     <?php endforeach; ?>
@@ -84,7 +84,7 @@ class CandidatesMasonryList extends \Base\Component{
                                 ?>
                                     <tr<?= $candidate['elected'] ? ' class="CandidatesMasonryList__elected"' : ''; ?>>
                                         <td class="bloc tnum"><?= $candidate['position'] ?? $index + 1; ?></td>
-                                        <td title="<?= $candidate['name']; ?>" class="bloc"><?= $candidate['name']; ?></td>
+                                        <td title="<?= htmlspecialchars($candidate['name']); ?>" class="bloc"><?= $candidate['name']; ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>

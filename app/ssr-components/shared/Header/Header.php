@@ -5,6 +5,9 @@ class Header extends \Base\Component{
 
     static function render(string $countryName, ?array $countryTranslations = [], ?string $countryAbbrev = NULL, ?string $countryFlag = NULL, ?array $links = []) : void { 
         global $_request;
+
+        $live_event = \API\LiveEventsService::call([])[0] ?? NULL;
+        if(!empty($live_event) && $countryAbbrev === $live_event['country']) $live_event['local'] = TRUE;
     ?>
     
         <header id="Header">
@@ -50,6 +53,28 @@ class Header extends \Base\Component{
                 </nav>
             <?php endif; ?>
         </header>
+
+        <?php if(
+            !empty($_request[0]) &&
+            !empty($live_event) && 
+            !str_starts_with('/' . implode('/', $_request), $live_event['destination']) &&
+            (!empty($live_event['local']) || !empty($live_event['global_notification'])
+        )) : ?>
+            <div id="Header__notification">
+                <div>
+                    <img src="/public/images/live.svg" alt="" />
+                    <p>Live now: <a href="<?= $live_event['destination'] ?? "#"; ?>"><?php
+                        if(!empty($live_event['local'])){
+                            echo $live_event['local_notification'] ?? $live_event['global_notification'];
+                        }
+                        else echo $live_event['global_notification'];
+                    ?></a></p>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M 7.33,0 4.5,2.829 13.839,12.004 4.5,21.171 7.33,24 19.5,12.004 Z"/>
+                </svg>
+            </div>
+        <?php endif; ?>
 
     <?php }
 }

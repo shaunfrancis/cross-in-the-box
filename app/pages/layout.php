@@ -66,20 +66,38 @@
     <link rel="apple-touch-icon" sizes="180x180" href="<?= $faviconPath; ?>/apple-touch-icon.png" />
     <link rel="manifest" href="<?= $faviconPath; ?>/site.webmanifest" />
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P2JNCEPZW2"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
+    <?php if(ENV === "prod") : ?>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-P2JNCEPZW2"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
 
-        gtag('config', 'G-P2JNCEPZW2');
-    </script>
+            gtag('config', 'G-P2JNCEPZW2');
+        </script>
+    <?php endif; ?>
     
     <?php foreach($_headInjections ?? [] as $content) echo $content; ?>
 </head>
 <body>
     <?= Header::show($_countryName ?? '', $_countryTranslations ?? [], $_countryAbbrev ?? NULL, $_countryFlag ?? NULL, $_headerLinks ?? []); ?>
     <?= $_children ?? ""; ?>
+    <svg id="map-defs">
+        <defs>
+            <pattern id="awaiting_result" width="10" height="10" patternUnits="userSpaceOnUse">
+                <rect x="0" y="0" width="5" height="5" fill="#ddd" />
+                <rect x="5" y="0" width="5" height="5" fill="#ccc" />
+                <rect x="0" y="5" width="5" height="5" fill="#ccc" />
+                <rect x="5" y="5" width="5" height="5" fill="#ddd" />
+            </pattern>
+            <pattern id="highlighted_awaiting_result" width="10" height="10" patternUnits="userSpaceOnUse">
+                <rect x="0" y="0" width="5" height="5" fill="#aaa" />
+                <rect x="5" y="0" width="5" height="5" fill="#999" />
+                <rect x="0" y="5" width="5" height="5" fill="#999" />
+                <rect x="5" y="5" width="5" height="5" fill="#aaa" />
+            </pattern>
+        </defs>
+    </svg>
     <?= Footer::show(); ?>
 </body>
 </html>

@@ -18,7 +18,8 @@ class Scotland extends \UK\RegionPage{
 
         usort($results, function($a, $b){ return $b['votes'] - $a['votes']; });
 
-        $constituency_relationship = array_find($attributes ?? [], fn($attribute) => $attribute['label'] === "constituency_relationship");
+        $constituency_relationship = array_find($attributes ?? [], fn($attribute) => $attribute['label'] === "constituency_relationship" && $attribute['region_id'] === $event['region']['id']);
+
         if(!empty($constituency_relationship)){
             $constituency_results = \API\RelationshipService::call(
                 ["uk", $constituency_relationship['value']],
@@ -32,6 +33,8 @@ class Scotland extends \UK\RegionPage{
                 else $divisors[$result['party']]++;
             }
         }
+
+        $graph_note = array_find($attributes ?? [], fn($attr) => $attr['label'] == "graph_note" && $attr['applies_to'] == $event['data']['id']);
         ?>
 
         <article class="block">
@@ -42,6 +45,9 @@ class Scotland extends \UK\RegionPage{
                     <?= str_replace("- ", "-", implode(" ", $event['data']['title'])); ?>
                 <?php endif; ?>
             </h2>
+            <?php if(!empty($graph_note)) : ?>
+                <span><?= $graph_note['value']; ?></span>
+            <?php endif; ?>
             <?php switch($event['data']['id']):
                 case "S2011": // full list candidate data is not available for S2011 ?>
                     <?= \Shared\ElectedCandidatesMasonryList::render($results); ?>
